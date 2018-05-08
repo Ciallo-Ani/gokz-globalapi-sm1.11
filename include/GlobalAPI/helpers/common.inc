@@ -1,5 +1,9 @@
 // =========================================================== //
 
+#include <json>
+
+// =========================================================== //
+
 methodmap APICommonHelper < StringMap
 {
 	public APICommonHelper(StringMap hData)

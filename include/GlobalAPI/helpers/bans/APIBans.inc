@@ -1,20 +1,20 @@
 // =========================================================== //
 
-methodmap APIBans < Handle
+methodmap APIBans < JSON_Object
 {
-	public APIBans(Handle hBans)
+	public APIBans(JSON_Object hBans)
 	{
 		return view_as<APIBans>(hBans);
 	}
 	
 	property int Count
 	{
-		public get() { return json_array_size(this); }
+		public get() { return this.Length; }
 	}
 	
 	public Handle GetById(int index)
 	{
-		return json_array_get(this, index);
+		return this.GetObjectIndexed(index);
 	}
 }
 

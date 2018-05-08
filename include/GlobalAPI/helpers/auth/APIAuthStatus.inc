@@ -1,25 +1,25 @@
 // =========================================================== //
 
-methodmap APIAuthStatus < Handle
+methodmap APIAuthStatus < JSON_Object
 {
-	public APIAuthStatus(Handle hAuth)
+	public APIAuthStatus(JSON_Object hAuth)
 	{
 		return view_as<APIAuthStatus>(hAuth);
 	}
 	
 	public bool GetType(char[] buffer, int maxlength)
 	{
-		return json_object_get_string(this, "type", buffer, maxlength) > 0;
+		return this.GetString("type", buffer, maxlength);
 	}
 	
 	property bool isValid
 	{
-		public get() { return json_object_get_bool(this, "isValid"); }
+		public get() { return this.GetBool("isValid"); }
 	}
 	
 	property int Identity
 	{
-		public get() { return json_object_get_int(this, "identity"); }
+		public get() { return this.GetInt("identity"); }
 	}
 }
 

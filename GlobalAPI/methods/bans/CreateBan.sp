@@ -20,7 +20,7 @@ public bool CreateBan(StringMap hData)
 	body.AddAll(hData);
 
 	char json[MAX_CREATE_BAN_JSON_LENGTH];
-	json_dump(body.ToJSONHandle(), json, sizeof(json), 0, true, true, false);
+	json_encode(body, json, sizeof(json));
 
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodPOST);
 	
@@ -56,7 +56,7 @@ public int CreateBan_DataReceived(Handle request, bool failure, int offset, int 
 		any data = INVALID_HANDLE;
 		hData.GetValue("data", data);
 
-		CallForward(hFwd, true, INVALID_HANDLE, data);
+		CallForward(hFwd, true, INVALID_HANDLE, hData, data);
 		
 		delete hFwd;
 		delete hData;
@@ -72,7 +72,7 @@ public int CreateBan_DataReceived(Handle request, bool failure, int offset, int 
 
 public int CreateBan_Data(const char[] response, StringMap hData)
 {
-	Handle hJson = json_load(response);
+	Handle hJson = json_decode(response);
 	
 	Handle hFwd = null;
 	hData.GetValue("callback", hFwd);
@@ -83,7 +83,7 @@ public int CreateBan_Data(const char[] response, StringMap hData)
 	any data = INVALID_HANDLE;
 	hData.GetValue("data", data);
 
-	CallForward(hFwd, bFailure, hJson, data);
+	CallForward(hFwd, bFailure, hJson, hData, data);
 
 	delete hFwd;
 	delete hJson;

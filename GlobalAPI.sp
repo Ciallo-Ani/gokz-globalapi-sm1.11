@@ -10,9 +10,9 @@
 // =========================================================== //
 
 #include <sourcemod>
-#include <smjansson>
 #include <SteamWorks>
 
+#include <json>
 #include <GlobalAPI>
 #include <GlobalAPI/body>
 #include <GlobalAPI/params>
@@ -82,22 +82,30 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetJumpstats(OnJumpstats, 69, .steamId = "STEAM_1:1:21505111", .jumpType = "longjump");
+	GlobalAPI_GetJumpstats(OnJumpstats, 69, .steamId = "STEAM_1:1:21505111", .jumpType = "longjump", .limit = 1);
 }
 
-public void OnJumpstats(bool bFailure, Handle hJumps, any data)
+public void OnJumpstats(bool bFailure, JSON_Object hJson, StringMap hData, any data)
 {
-	PrintToServer("Callback received data: %d", data);
-	
+	char limit[10];
+	hData.GetString("limit", limit, sizeof(limit));
+
+	char url[128];
+	hData.GetString("url", url, sizeof(url));
+
+	PrintToServer("<OnGetJumpstats> Data was: %d", data);
+	PrintToServer("<OnGetJumpstats> Limit was: %s", limit);
+	PrintToServer("<OnGetJumpstats> Url was: %s", url);
+
 	if (!bFailure)
 	{
-		APIJumpstats jumps = new APIJumpstats(hJumps);
-		PrintToServer("Found %d jumps!", jumps.Count);
-	}
-	
-	else
-	{
-		PrintToServer("<OnJumpstats> Failure occured during HTTP request!");
+		APIJumpstats jumps = new APIJumpstats(hJson);
+		APIJumpstat jump = new APIJumpstat(jumps.GetById(0));
+
+		if (jump != INVALID_HANDLE)
+		{
+			PrintToServer("<OnGetJumpstats> Distance: %f", jump.Distance);
+		}
 	}
 }
 
@@ -111,10 +119,6 @@ public int HTTPHeaders(Handle request, bool failure, any data, any data2)
 public int HTTPCompleted(Handle request, bool failure, bool requestSuccessful, EHTTPStatusCode statusCode, any data, any data2)
 {
 	PrintToServer("HTTP Request completed");
-	PrintToServer("Stringmaps are cool, you have all of these available!");
-	
-	APICommonHelper common = new APICommonHelper(data);
-	common.DumpProperties();
 }
 
 // =========================================================== //

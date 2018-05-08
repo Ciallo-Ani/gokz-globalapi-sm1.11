@@ -4,51 +4,33 @@
 
 // =========================================================== //
 
-methodmap GlobalAPIRequestBody < Handle
+methodmap GlobalAPIRequestBody < JSON_Object
 {
 	public GlobalAPIRequestBody()
 	{
-		return view_as<GlobalAPIRequestBody>(json_object());
-	}
-	
-	public void AddString(char[] key, char[] value)
-	{
-		json_object_set_new(this, key, json_string(value));
-	}
-	
-	public void AddNum(char[] key, int value)
-	{
-		json_object_set_new(this, key, json_integer(value));
-	}
-	
-	public void AddFloat(char[] key, float value)
-	{
-		json_object_set_new(this, key, json_real(value));
+		return view_as<GlobalAPIRequestBody>(new JSON_Object());
 	}
 	
 	public void AddAll(StringMap hData)
 	{
+		int maxlength;
+		char value[1024];
 		StringMapSnapshot keys = hData.Snapshot();
-		
-		char key[MAX_QUERYPARAM_LENGTH];
-		char value[MAX_QUERYPARAM_LENGTH * 16];
 		
 		for (int i; i < keys.Length; i++)
 		{
-			keys.GetKey(i, key, sizeof(key));
-			
+			maxlength = keys.KeyBufferSize(i);
+			char[] key = new char[maxlength];
+
+			keys.GetKey(i, key, maxlength);
+
 			if (!StrEqual(key, "callback") && !StrEqual(key, "data") && !StrEqual(key, "url"))
 			{
 				hData.GetString(key, value, sizeof(value));
-				this.AddString(key, value);
+				this.SetString(key, value);
 			}
 		}
-		keys.Close();
-	}
-	
-	public Handle ToJSONHandle()
-	{
-		return this;
+		delete keys;
 	}
 }
 

@@ -24,12 +24,15 @@ methodmap GlobalAPIRequestParams < StringMap
 	{
 		StringMapSnapshot params = hData.Snapshot();
 		
-		char key[MAX_QUERYPARAM_LENGTH];
+		int maxlength;
 		char value[MAX_QUERYPARAM_LENGTH];
 		
 		for (int i; i < params.Length; i++)
 		{
-			params.GetKey(i, key, sizeof(key));
+			maxlength = params.KeyBufferSize(i);
+			char[] key = new char[maxlength];
+
+			params.GetKey(i, key, maxlength);
 
 			if (!StrEqual(key, "callback") && !StrEqual(key, "data") && !StrEqual(key, "url"))
 			{
@@ -37,7 +40,7 @@ methodmap GlobalAPIRequestParams < StringMap
 				this.Add(key, value);
 			}
 		}
-		params.Close();
+		delete params;
 	}
 	
 	public void Build(char[] queryString, int maxlength)

@@ -1,20 +1,20 @@
 // =========================================================== //
 
-methodmap APIJumpstats < Handle
+methodmap APIJumpstats < JSON_Object
 {
-	public APIJumpstats(Handle hJumps)
+	public APIJumpstats(JSON_Object hJumps)
 	{
 		return view_as<APIJumpstats>(hJumps);
 	}
 	
 	property int Count
 	{
-		public get() { return json_array_size(this); }
+		public get() { return this.Length; }
 	}
 	
-	public Handle GetById(int index)
+	public JSON_Object GetById(int index)
 	{
-		return json_array_get(this, index);
+		return this.GetObjectIndexed(index);
 	}
 }
 

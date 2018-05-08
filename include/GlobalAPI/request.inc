@@ -11,16 +11,6 @@ methodmap GlobalAPIRequest < Handle
 		Handle request = SteamWorks_CreateHTTPRequest(method, url);
 		return view_as<GlobalAPIRequest>(request);
 	}
-	
-	property bool isTimedOut
-	{
-		public get()
-		{ 
-			bool value; 
-			SteamWorks_GetHTTPRequestWasTimedOut(this, value);
-			return value;
-		}
-	}
 
 	public bool SetTimeout(int seconds)
 	{

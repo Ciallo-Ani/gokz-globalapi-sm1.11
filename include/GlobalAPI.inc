@@ -24,8 +24,8 @@
 
 typeset OnAPICallFinished
 {
-	function void(bool bFailure, Handle hJson);
-	function void(bool bFailure, Handle hJson, any data);
+	function void(bool bFailure, JSON_Object hJson, StringMap hData);
+	function void(bool bFailure, JSON_Object hJson, StringMap hData, any data);
 }
 
 // ======================= FORWARDS ========================== //

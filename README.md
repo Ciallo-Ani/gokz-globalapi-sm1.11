@@ -20,7 +20,6 @@ Instead you are given a JSON handle and a bunch of helpers to help you handle th
 ## **Dependancies**
 **(These might or might not change)**
 
-* **[SMJansson](https://forums.alliedmods.net/showthread.php?t=184604)**
 * **[SteamWorks](https://forums.alliedmods.net/showthread.php?t=229556)**
 
 ---

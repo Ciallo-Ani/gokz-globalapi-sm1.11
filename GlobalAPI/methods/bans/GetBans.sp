@@ -52,7 +52,7 @@ public int GetBans_DataReceived(Handle request, bool failure, int offset, int st
 		any data = INVALID_HANDLE;
 		hData.GetValue("data", data);
 		
-		CallForward(hFwd, true, INVALID_HANDLE, data);
+		CallForward(hFwd, true, INVALID_HANDLE, hData, data);
 		
 		delete hFwd;
 		delete hData;
@@ -68,7 +68,7 @@ public int GetBans_DataReceived(Handle request, bool failure, int offset, int st
 
 public int GetBans_Data(const char[] response, StringMap hData)
 {
-	Handle hJson = json_load(response);
+	Handle hJson = json_decode(response);
 	
 	Handle hFwd = null;
 	hData.GetValue("callback", hFwd);
@@ -79,7 +79,7 @@ public int GetBans_Data(const char[] response, StringMap hData)
 	any data = INVALID_HANDLE;
 	hData.GetValue("data", data);
 
-	CallForward(hFwd, bFailure, hJson, data);
+	CallForward(hFwd, bFailure, hJson, hData, data);
 
 	delete hFwd;
 	delete hJson;
