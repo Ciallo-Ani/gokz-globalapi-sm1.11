@@ -4,70 +4,128 @@
 
 // =========================================================== //
 
-methodmap GlobalAPIRequestParams < StringMap
+methodmap GlobalAPIRequestParams < JSON_Object
 {
 	public GlobalAPIRequestParams()
 	{
-		return view_as<GlobalAPIRequestParams>(new StringMap());
+		return view_as<GlobalAPIRequestParams>(new JSON_Object());
 	}
-	
-	public void Add(char[] key, char[] value)
+
+	public void AddUrl(char[] url)
 	{
-		TrimString(value);
-		if (!StrEqual(value, "") && !StrEqual(value, "-1") && !StrEqual(value, "-1.000000"))
+		this.SetString("url", url);
+		this.SetKeyHidden("url", true);
+	}
+
+	public void AddData(any data)
+	{
+		this.SetInt("data", view_as<int>(data));
+		this.SetKeyHidden("data", true);
+	}
+
+	public void AddCallback(Handle hFwd)
+	{
+		this.SetHandle("callback", hFwd);
+		this.SetKeyHidden("callback", true);
+	}
+
+	public void AddNum(char[] key, int value)
+	{
+		this.SetInt(key, value);
+		if (value == -1)
 		{
-			this.SetString(key, value);
+			this.SetKeyHidden(key, true);
 		}
 	}
-	
-	public void AddAll(StringMap hData)
+
+	public void AddFloat(char[] key, float value)
 	{
-		StringMapSnapshot params = hData.Snapshot();
-		
-		int maxlength;
-		char value[MAX_QUERYPARAM_LENGTH];
-		
-		for (int i; i < params.Length; i++)
+		this.SetFloat(key, value);
+		if (value == -1.000000)
 		{
-			maxlength = params.KeyBufferSize(i);
-			char[] key = new char[maxlength];
-
-			params.GetKey(i, key, maxlength);
-
-			if (!StrEqual(key, "callback") && !StrEqual(key, "data") && !StrEqual(key, "url"))
-			{
-				hData.GetString(key, value, sizeof(value));
-				this.Add(key, value);
-			}
+			this.SetKeyHidden(key, true);
 		}
-		delete params;
 	}
-	
-	public void Build(char[] queryString, int maxlength)
-	{
-		static char key[MAX_QUERYPARAM_LENGTH];
-		static char value[MAX_QUERYPARAM_LENGTH];
 
+	public void AddString(char[] key, char[] value)
+	{
+		this.SetString(key, value);
+		if (StrEqual(value, ""))
+		{
+			this.SetKeyHidden(key, true);
+		}
+	}
+
+	public void AddBool(char[] key, bool value)
+	{
+		this.SetBool(key, value);
+		if (value != true && value != false)
+		{
+			this.SetKeyHidden(key, true);
+		}
+	}
+
+	public void ToString(char[] queryString, int maxlength)
+	{
 		StringMapSnapshot paramsMap = this.Snapshot();
-		
+
+		char key[128];
+		char value[MAX_QUERYPARAM_LENGTH * 16];
+
+		int paramCount = 0;
+
 		for (int i = 0; i < paramsMap.Length; i++)
 		{
 			paramsMap.GetKey(i, key, sizeof(key));
-			this.GetString(key, value, sizeof(value));
-			
-			if (i == 0)
+
+			if (!this.GetKeyHidden(key) && !json_is_meta_key(key))
 			{
-				Format(queryString, maxlength, "?%s=%s", key, value);
-			}
-			
-			else
-			{
-				Format(queryString, maxlength, "%s&%s=%s", queryString, key, value);
+				switch(this.GetKeyType(key))
+				{
+					case Type_String:
+					{
+						this.GetString(key, value, sizeof(value));
+					}
+					case Type_Float:
+					{
+						float temp = this.GetFloat(key);
+						FloatToString(temp, value, sizeof(value));
+					}
+					case Type_Int:
+					{
+						int temp = this.GetInt(key);
+						IntToString(temp, value, sizeof(value));
+					}
+					case Type_Bool:
+					{
+						bool temp = this.GetBool(key);
+						BoolToString(temp, value, sizeof(value));
+					}
+				}
+				AppendToQueryString(paramCount, queryString, maxlength, key, value);
+				paramCount++;
 			}
 		}
-		
 		delete paramsMap;
-		delete this;
+	}
+}
+
+// ======================== HELPERS ========================== //
+
+static void BoolToString(bool value, char[] buffer, int maxlength)
+{
+	FormatEx(buffer, maxlength, "%s", value ? "true" : "false");
+}
+
+static void AppendToQueryString(int index, char[] buffer, int maxlength, char[] key, char[] value)
+{
+	if (index == 0)
+	{
+		Format(buffer, maxlength, "?%s=%s", key, value);
+	}
+	else
+	{
+		Format(buffer, maxlength, "%s&%s=%s", buffer, key, value);
 	}
 }
 

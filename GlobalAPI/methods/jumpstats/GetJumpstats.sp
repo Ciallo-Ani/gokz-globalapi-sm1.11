@@ -1,24 +1,24 @@
 // =========================================================== //
 
 /*
-native bool GlobalAPI_GetJumpstats(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id = -1,
-									int serverId = -1, int steamId64 = -1, char[] steamId = "", char[] jumpType = "",
-									char[] steamId64List = "", char[] jumpTypeList = "", float greaterThanDistance = -1.0,
-									float lessThanDistance = -1.0, char[] isMsl = "", char[] isCrouchBind = "", char[] isForwardBind = "",
-									char[] isCrouchBoost = "", int updatedById = -1, char[] createdSince = "", char[] updatedSince = "", 
-									int offset = -1, int limit = -1);
+	native bool GlobalAPI_GetJumpstats(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id = DEFAULT_INT,
+										int serverId = DEFAULT_INT, int steamId64 = DEFAULT_INT, char[] steamId = DEFAULT_STRING,
+										char[] jumpType = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING, 
+										char[] jumpTypeList = DEFAULT_STRING, float greaterThanDistance = DEFAULT_FLOAT,
+										float lessThanDistance = DEFAULT_FLOAT, char[] isMsl = DEFAULT_STRING,
+										char[] isCrouchBind = DEFAULT_STRING, char[] isForwardBind = DEFAULT_STRING,
+										char[] isCrouchBoost = DEFAULT_STRING, int updatedById = DEFAULT_INT,
+										char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
+										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 */
-public bool GetJumpstats(StringMap hData)
+public bool GetJumpstats(GlobalAPIRequestParams hData)
 {
 	char requestParams[MAX_QUERYPARAM_NUM * MAX_QUERYPARAM_LENGTH];
-	
-	GlobalAPIRequestParams params = new GlobalAPIRequestParams();
-	params.AddAll(hData);
-	params.Build(requestParams, sizeof(requestParams));
+	hData.ToString(requestParams, sizeof(requestParams));
 	
 	char requestUrl[MAX_QUERYURL_LENGTH];
 	Format(requestUrl, sizeof(requestUrl), "%s/jumpstats%s", gC_baseUrl, requestParams);
-	hData.SetString("url", requestUrl);
+	hData.AddUrl(requestUrl);
 	
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodGET);
 	

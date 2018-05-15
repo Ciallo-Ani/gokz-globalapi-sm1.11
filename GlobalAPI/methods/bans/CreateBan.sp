@@ -4,7 +4,7 @@
 	native bool GlobalAPI_CreateBan(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
 									char[] steamId, char[] banType, char[] stats, char[] notes, char[] ip);
 */
-public bool CreateBan(StringMap hData)
+public bool CreateBan(GlobalAPIRequestParams hData)
 {
 	if (!gB_usingAPIKey && !gB_suppressWarnings)
 	{
@@ -14,13 +14,10 @@ public bool CreateBan(StringMap hData)
 	
 	char requestUrl[MAX_QUERYURL_LENGTH];
 	Format(requestUrl, sizeof(requestUrl), "%s/bans", gC_baseUrl);
-	hData.SetString("url", requestUrl);
-	
-	GlobalAPIRequestBody body = new GlobalAPIRequestBody();
-	body.AddAll(hData);
+	hData.AddUrl(requestUrl);
 
 	char json[MAX_CREATE_BAN_JSON_LENGTH];
-	json_encode(body, json, sizeof(json));
+	json_encode(hData, json, sizeof(json));
 
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodPOST);
 	
@@ -45,11 +42,11 @@ public bool CreateBan(StringMap hData)
 
 public int CreateBan_DataReceived(Handle request, bool failure, int offset, int statuscode, StringMap hData)
 {
-	hData.SetValue("failure", failure);
-	
 	// Special case for timeout / failure
 	if (statuscode == 0 || failure)
 	{
+		hData.SetValue("failure", true);
+
 		Handle hFwd = null;
 		hData.GetValue("callback", hFwd);
 
@@ -64,6 +61,7 @@ public int CreateBan_DataReceived(Handle request, bool failure, int offset, int 
 	
 	else
 	{
+		hData.SetValue("failure", false);
 		SteamWorks_GetHTTPResponseBodyCallback(request, CreateBan_Data, hData);
 	}
 

@@ -3,7 +3,7 @@
 /*
 	native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
 */
-public bool GetAuthStatus(StringMap hData)
+public bool GetAuthStatus(GlobalAPIRequestParams hData)
 {
 	if (!gB_usingAPIKey && !gB_suppressWarnings)
 	{
@@ -13,7 +13,7 @@ public bool GetAuthStatus(StringMap hData)
  	
 	char requestUrl[MAX_QUERYURL_LENGTH];
 	Format(requestUrl, sizeof(requestUrl), "%s/auth/status", gC_baseUrl);
-	hData.SetString("url", requestUrl);
+	hData.AddUrl(requestUrl);
 	
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodGET);
 

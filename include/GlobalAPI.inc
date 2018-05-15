@@ -16,6 +16,11 @@
 #define GlobalAPI_Plugin_Desc "Plugin helper for GlobalAPI " ... GlobalAPI_Version
 #define GlobalAPI_Plugin_Url "https://bitbucket.org/kztimerglobalteam/GlobalAPI-SMPlugin"
 
+#define DEFAULT_INT -1
+#define DEFAULT_STRING ""
+#define DEFAULT_FLOAT -1.0
+#define DEFAULT_BOOL view_as<bool>(-1)
+
 // ======================= ENUMS ============================= //
 
 //...
@@ -24,8 +29,8 @@
 
 typeset OnAPICallFinished
 {
-	function void(bool bFailure, JSON_Object hJson, StringMap hData);
-	function void(bool bFailure, JSON_Object hJson, StringMap hData, any data);
+	function void(bool bFailure, JSON_Object hJson, GlobalAPIRequestParams hData);
+	function void(bool bFailure, JSON_Object hJson, GlobalAPIRequestParams hData, any data);
 }
 
 // ======================= FORWARDS ========================== //
@@ -39,21 +44,37 @@ native void GlobalAPI_GetAPIKey(char[] buffer, int maxlength);
 native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
 
 
-native bool GlobalAPI_GetBans(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] banTypes = "",
-								char[] banTypesList = "", char[] isExpired = "", char[] ipAddress = "",
-								int steamId64 = -1, char[] steamId = "",char[] notesContain = "",
-								char[] statsContain = "", int serverId = -1, char[] createdSince = "",
-								char[] updatedSince = "", int offset = -1, int limit = -1);
+native bool GlobalAPI_GetBans(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] banTypes = DEFAULT_STRING,
+								char[] banTypesList = DEFAULT_STRING, bool isExpired = DEFAULT_BOOL, char[] ipAddress = DEFAULT_STRING,
+								int steamId64 = DEFAULT_INT, char[] steamId = DEFAULT_STRING, char[] notesContain = DEFAULT_STRING,
+								char[] statsContain = DEFAULT_STRING, int serverId = DEFAULT_INT, char[] createdSince = DEFAULT_STRING,
+								char[] updatedSince = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 								
 native bool GlobalAPI_CreateBan(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
 								char[] steamId, char[] banType, char[] stats, char[] notes, char[] ip);
 
-native bool GlobalAPI_GetJumpstats(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id = -1,
-									int serverId = -1, int steamId64 = -1, char[] steamId = "", char[] jumpType = "",
-									char[] steamId64List = "", char[] jumpTypeList = "", float greaterThanDistance = -1.0,
-									float lessThanDistance = -1.0, char[] isMsl = "", char[] isCrouchBind = "", char[] isForwardBind = "",
-									char[] isCrouchBoost = "", int updatedById = -1, char[] createdSince = "", char[] updatedSince = "", 
-									int offset = -1, int limit = -1);
+native bool GlobalAPI_GetJumpstats(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id = DEFAULT_INT,
+									int serverId = DEFAULT_INT, int steamId64 = DEFAULT_INT, char[] steamId = DEFAULT_STRING,
+									char[] jumpType = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING, 
+									char[] jumpTypeList = DEFAULT_STRING, float greaterThanDistance = DEFAULT_FLOAT,
+									float lessThanDistance = DEFAULT_FLOAT, char[] isMsl = DEFAULT_STRING,
+									char[] isCrouchBind = DEFAULT_STRING, char[] isForwardBind = DEFAULT_STRING,
+									char[] isCrouchBoost = DEFAULT_STRING, int updatedById = DEFAULT_INT,
+									char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
+									int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+
+native bool GlobalAPI_CreateJumpstat(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId,
+										int jumpType, float distance, char[] jumpJsonInfo, int tickRate, int mslCount,
+										bool isCrouchBind, bool isForwardBind, bool isCrouchBoost, int strafeCount);
+
+native bool GlobalAPI_GetJumpstatTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] jumpType,
+										int id = DEFAULT_INT, int serverId = DEFAULT_INT, char[] steamId64 = DEFAULT_STRING,
+										char[] steamId = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING,
+										char[] jumpTypeList = DEFAULT_STRING, float greaterThanDistance = DEFAULT_FLOAT,
+										float lessThanDistance = DEFAULT_FLOAT, bool isMsl = DEFAULT_BOOL,
+										bool isCrouchBind = DEFAULT_BOOL,bool isCrouchBoost = DEFAULT_BOOL,
+										int updatedById = DEFAULT_INT, char[] createdSince = DEFAULT_STRING,
+										char[] updatedSince = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
 // ======================= PLUGIN INFO ======================= //
 
