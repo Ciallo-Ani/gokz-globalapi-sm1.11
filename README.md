@@ -17,7 +17,7 @@ Instead you are given a JSON handle and a bunch of helpers to help you handle th
 
 ---
 
-## **Dependancies**
+## **Dependencies**
 **(These might or might not change)**
 
 * **[SteamWorks](https://forums.alliedmods.net/showthread.php?t=229556)**
