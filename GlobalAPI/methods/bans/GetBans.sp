@@ -39,7 +39,7 @@ public bool GetBans(GlobalAPIRequestParams hData)
 public int GetBans_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestParams hData)
 {
 	// Special case for timeout / failure
-	if (statuscode == 0 || failure)
+	if (statuscode == 0 || failure || statuscode == 500)
 	{
 		hData.AddFailure(true);
 		

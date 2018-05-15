@@ -43,7 +43,7 @@ public bool GetJumpstats(GlobalAPIRequestParams hData)
 public int GetJumpstats_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestParams hData)
 {
 	// Special case for timeout / failure
-	if (statuscode == 0 || failure)
+	if (statuscode == 0 || failure || statuscode == 500)
 	{
 		hData.AddFailure(true);
 		

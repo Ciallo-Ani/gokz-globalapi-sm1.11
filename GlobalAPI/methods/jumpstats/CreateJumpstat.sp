@@ -46,11 +46,10 @@ public int CreateJumpstat_DataReceived(Handle request, bool failure, int offset,
 	// Special case for timeout / failure
 	if (statuscode == 0 || failure || statuscode == 500)
 	{
-		hData.SetBool("failure", true);
-		hData.SetKeyHidden("failure", true);
+		hData.AddFailure(true);
 		
-		Handle hFwd = hData.GetHandle("callback");
 		any data = hData.GetInt("data");
+		Handle hFwd = hData.GetHandle("callback");
 
 		CallForward(hFwd, true, INVALID_HANDLE, hData, data);
 		
@@ -60,9 +59,7 @@ public int CreateJumpstat_DataReceived(Handle request, bool failure, int offset,
 	
 	else
 	{
-		hData.SetBool("failure", false);
-		hData.SetKeyHidden("failure", true);
-
+		hData.AddFailure(false);
 		SteamWorks_GetHTTPResponseBodyCallback(request, CreateJumpstat_Data, hData);
 	}
 
@@ -72,9 +69,10 @@ public int CreateJumpstat_DataReceived(Handle request, bool failure, int offset,
 public int CreateJumpstat_Data(const char[] response, GlobalAPIRequestParams hData)
 {
 	Handle hJson = json_decode(response);
-	Handle hFwd = hData.GetHandle("callback");
-	bool bFailure = hData.GetBool("failure");
+
 	any data = hData.GetInt("data");
+	bool bFailure = hData.GetBool("failure");
+	Handle hFwd = hData.GetHandle("callback");
 
 	CallForward(hFwd, bFailure, hJson, hData, data);
 
