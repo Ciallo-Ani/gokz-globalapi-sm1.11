@@ -40,18 +40,15 @@ public bool CreateBan(GlobalAPIRequestParams hData)
 	return true;
 }
 
-public int CreateBan_DataReceived(Handle request, bool failure, int offset, int statuscode, StringMap hData)
+public int CreateBan_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestParams hData)
 {
 	// Special case for timeout / failure
 	if (statuscode == 0 || failure)
 	{
-		hData.SetValue("failure", true);
+		hData.AddFailure(true);
 
-		Handle hFwd = null;
-		hData.GetValue("callback", hFwd);
-
-		any data = INVALID_HANDLE;
-		hData.GetValue("data", data);
+		any data = hData.GetInt("data");
+		Handle hFwd = hData.GetHandle("callback");
 
 		CallForward(hFwd, true, INVALID_HANDLE, hData, data);
 		
@@ -61,25 +58,20 @@ public int CreateBan_DataReceived(Handle request, bool failure, int offset, int 
 	
 	else
 	{
-		hData.SetValue("failure", false);
+		hData.AddFailure(false);
 		SteamWorks_GetHTTPResponseBodyCallback(request, CreateBan_Data, hData);
 	}
 
 	delete request;
 }
 
-public int CreateBan_Data(const char[] response, StringMap hData)
+public int CreateBan_Data(const char[] response, GlobalAPIRequestParams hData)
 {
 	Handle hJson = json_decode(response);
 	
-	Handle hFwd = null;
-	hData.GetValue("callback", hFwd);
-	
-	bool bFailure = false;
-	hData.GetValue("failure", bFailure);
-	
-	any data = INVALID_HANDLE;
-	hData.GetValue("data", data);
+	any data = hData.GetInt("data");
+	bool bFailure = hData.GetBool("failure");
+	Handle hFwd = hData.GetHandle("callback");
 
 	CallForward(hFwd, bFailure, hJson, hData, data);
 

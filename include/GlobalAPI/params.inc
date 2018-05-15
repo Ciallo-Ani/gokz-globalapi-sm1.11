@@ -17,6 +17,12 @@ methodmap GlobalAPIRequestParams < JSON_Object
 		this.SetKeyHidden("url", true);
 	}
 
+	public void AddFailure(bool failure)
+	{
+		this.SetBool("failure", failure);
+		this.SetKeyHidden("failure", true);
+	}
+
 	public void AddData(any data)
 	{
 		this.SetInt("data", view_as<int>(data));

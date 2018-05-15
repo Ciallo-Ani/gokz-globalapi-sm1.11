@@ -43,8 +43,6 @@ public bool CreateJumpstat(GlobalAPIRequestParams hData)
 
 public int CreateJumpstat_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestParams hData)
 {
-	PrintToServer("Status: %d", statuscode);
-	
 	// Special case for timeout / failure
 	if (statuscode == 0 || failure || statuscode == 500)
 	{
