@@ -1,6 +1,13 @@
+// ================== DOUBLE INCLUDE ========================= //
+
+#if defined _GlobalAPI_Common_Helper_included_
+#endinput
+#endif
+#define _GlobalAPI_Common_Helper_included_
+
 // =========================================================== //
 
-#include <json>
+#include <GlobalAPI/params>
 
 // =========================================================== //
 

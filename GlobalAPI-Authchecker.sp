@@ -8,9 +8,11 @@
 
 #include <GlobalAPI>
 #include <GlobalAPI/helpers/auth>
+#include <GlobalAPI/helpers/common>
 
 // ====================== FORMATTING ========================= //
 
+#pragma dynamic 131072
 #pragma newdecls required
 
 // ====================== VARIABLES ========================== //
@@ -53,7 +55,7 @@ public Action Command_AuthCheck(int client, int args)
 	GlobalAPI_GetAuthStatus(OnAuth);
 }
 
-public void OnAuth(bool bFailure, Handle hAuth)
+public void OnAuth(bool bFailure, JSON_Object hAuth, GlobalAPIRequestParams hData)
 {
 	if (!bFailure)
 	{
@@ -61,7 +63,7 @@ public void OnAuth(bool bFailure, Handle hAuth)
 	
 		char serverType[30];
 		status.GetType(serverType, sizeof(serverType));
-	
+
 		PrintToServer("[GlobalAPI Auth] Server ID: %d", status.Identity);
 		PrintToServer("[GlobalAPI Auth] Server Type: %s", serverType);
 		PrintToServer("[GlobalAPI Auth] Validated: %s", status.isValid ? "YES" : "NO");
@@ -71,6 +73,9 @@ public void OnAuth(bool bFailure, Handle hAuth)
 	{
 		PrintToServer("[GlobalAPI Auth] Failure during HTTP Request!");
 	}
+
+	APICommonHelper helper = new APICommonHelper(hData);
+	helper.DumpProperties();
 }
 
 // =========================================================== //

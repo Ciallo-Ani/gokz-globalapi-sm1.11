@@ -1,3 +1,14 @@
+// ================== DOUBLE INCLUDE ========================= //
+
+#if defined _GlobalAPI_Bans_Helper_included_
+#endinput
+#endif
+#define _GlobalAPI_Bans_Helper_included_
+
+// =========================================================== //
+
+#include <json>
+
 // =========================================================== //
 
 methodmap APIBans < JSON_Object

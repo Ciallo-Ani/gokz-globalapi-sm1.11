@@ -5,6 +5,10 @@
 #endif
 #define _GlobalAPI_included_
 
+// =========================================================== //
+
+#include <GlobalAPI/params>
+
 // ======================= DEFINITIONS ======================= //
 
 #define GlobalAPI_Version "v1.0"

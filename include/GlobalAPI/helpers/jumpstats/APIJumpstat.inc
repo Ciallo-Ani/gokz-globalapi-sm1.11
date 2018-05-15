@@ -1,3 +1,14 @@
+// ================== DOUBLE INCLUDE ========================= //
+
+#if defined _GlobalAPI_Jumpstat_Helper_included_
+#endinput
+#endif
+#define _GlobalAPI_Jumpstat_Helper_included_
+
+// =========================================================== //
+
+#include <json>
+
 // =========================================================== //
 
 methodmap APIJumpstat < JSON_Object

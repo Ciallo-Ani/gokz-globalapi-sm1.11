@@ -1,6 +1,13 @@
+// ================== DOUBLE INCLUDE ========================= //
+
+#if defined _GlobalAPI_Params_included_
+#endinput
+#endif
+#define _GlobalAPI_Params_included_
+
 // =========================================================== //
 
-//...
+#include <json>
 
 // =========================================================== //
 
@@ -76,7 +83,7 @@ methodmap GlobalAPIRequestParams < JSON_Object
 		StringMapSnapshot paramsMap = this.Snapshot();
 
 		char key[128];
-		char value[MAX_QUERYPARAM_LENGTH * 16];
+		char value[1024]; // MAX_QUERYPARAM_LENGTH * 16
 
 		int paramCount = 0;
 
@@ -118,12 +125,12 @@ methodmap GlobalAPIRequestParams < JSON_Object
 
 // ======================== HELPERS ========================== //
 
-static void BoolToString(bool value, char[] buffer, int maxlength)
+stock void BoolToString(bool value, char[] buffer, int maxlength)
 {
 	FormatEx(buffer, maxlength, "%s", value ? "true" : "false");
 }
 
-static void AppendToQueryString(int index, char[] buffer, int maxlength, char[] key, char[] value)
+stock void AppendToQueryString(int index, char[] buffer, int maxlength, char[] key, char[] value)
 {
 	if (index == 0)
 	{
