@@ -1,20 +1,31 @@
+// ================== DOUBLE INCLUDE ========================= //
+
+#if defined _GlobalAPI_Bans_Helper_included_
+#endinput
+#endif
+#define _GlobalAPI_Bans_Helper_included_
+
 // =========================================================== //
 
-methodmap APIBans < Handle
+#include <json>
+
+// =========================================================== //
+
+methodmap APIBans < JSON_Object
 {
-	public APIBans(Handle hBans)
+	public APIBans(JSON_Object hBans)
 	{
 		return view_as<APIBans>(hBans);
 	}
 	
 	property int Count
 	{
-		public get() { return json_array_size(this); }
+		public get() { return this.Length; }
 	}
 	
 	public Handle GetById(int index)
 	{
-		return json_array_get(this, index);
+		return this.GetObjectIndexed(index);
 	}
 }
 

@@ -3,7 +3,7 @@
 /*
 	native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
 */
-public bool GetAuthStatus(StringMap hData)
+public bool GetAuthStatus(GlobalAPIRequestParams hData)
 {
 	if (!gB_usingAPIKey && !gB_suppressWarnings)
 	{
@@ -13,7 +13,7 @@ public bool GetAuthStatus(StringMap hData)
  	
 	char requestUrl[MAX_QUERYURL_LENGTH];
 	Format(requestUrl, sizeof(requestUrl), "%s/auth/status", gC_baseUrl);
-	hData.SetString("url", requestUrl);
+	hData.AddUrl(requestUrl);
 	
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodGET);
 
@@ -35,20 +35,17 @@ public bool GetAuthStatus(StringMap hData)
 	return true;
 }
 
-public int GetAuthStatus_DataReceived(Handle request, bool failure, int offset, int statuscode, StringMap hData)
+public int GetAuthStatus_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestParams hData)
 {
-	hData.SetValue("failure", failure);
-	
 	// Special case for timeout / failure
-	if (statuscode == 0 || failure)
+	if (statuscode == 0 || failure || statuscode == 500)
 	{
-		Handle hFwd = null;
-		hData.GetValue("callback", hFwd);
+		hData.AddFailure(true);
 
-		any data = INVALID_HANDLE;
-		hData.GetValue("data", data);
+		any data = hData.GetInt("data");
+		Handle hFwd = hData.GetHandle("callback");
 		
-		CallForward(hFwd, true, INVALID_HANDLE, data);
+		CallForward(hFwd, true, INVALID_HANDLE, hData, data);
 		
 		delete hFwd;
 		delete hData;
@@ -56,26 +53,22 @@ public int GetAuthStatus_DataReceived(Handle request, bool failure, int offset, 
 	
 	else
 	{
+		hData.AddFailure(false);
 		SteamWorks_GetHTTPResponseBodyCallback(request, GetAuthStatus_Data, hData);
 	}
 
 	delete request;
 }
 
-public int GetAuthStatus_Data(const char[] response, StringMap hData)
+public int GetAuthStatus_Data(const char[] response, GlobalAPIRequestParams hData)
 {
-	Handle hJson = json_load(response);
+	Handle hJson = json_decode(response);
 	
-	Handle hFwd = null;
-	hData.GetValue("callback", hFwd);
-	
-	bool bFailure = false;
-	hData.GetValue("failure", bFailure);
-	
-	any data = INVALID_HANDLE;
-	hData.GetValue("data", data);
+	any data = hData.GetInt("data");
+	bool bFailure = hData.GetBool("failure");
+	Handle hFwd = hData.GetHandle("callback");
 
-	CallForward(hFwd, bFailure, hJson, data);
+	CallForward(hFwd, bFailure, hJson, hData, data);
 
 	delete hFwd;
 	delete hJson;

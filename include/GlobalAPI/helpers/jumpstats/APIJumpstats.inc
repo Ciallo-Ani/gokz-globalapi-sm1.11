@@ -1,20 +1,31 @@
+// ================== DOUBLE INCLUDE ========================= //
+
+#if defined _GlobalAPI_Jumpstats_Helper_included_
+#endinput
+#endif
+#define _GlobalAPI_Jumpstats_Helper_included_
+
 // =========================================================== //
 
-methodmap APIJumpstats < Handle
+#include <json>
+
+// =========================================================== //
+
+methodmap APIJumpstats < JSON_Object
 {
-	public APIJumpstats(Handle hJumps)
+	public APIJumpstats(JSON_Object hJumps)
 	{
 		return view_as<APIJumpstats>(hJumps);
 	}
 	
 	property int Count
 	{
-		public get() { return json_array_size(this); }
+		public get() { return this.Length; }
 	}
 	
-	public Handle GetById(int index)
+	public JSON_Object GetById(int index)
 	{
-		return json_array_get(this, index);
+		return this.GetObjectIndexed(index);
 	}
 }
 

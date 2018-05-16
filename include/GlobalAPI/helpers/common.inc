@@ -1,45 +1,64 @@
+// ================== DOUBLE INCLUDE ========================= //
+
+#if defined _GlobalAPI_Common_Helper_included_
+#endinput
+#endif
+#define _GlobalAPI_Common_Helper_included_
+
 // =========================================================== //
 
-methodmap APICommonHelper < StringMap
+#include <GlobalAPI/params>
+
+// =========================================================== //
+
+methodmap APICommonHelper < GlobalAPIRequestParams
 {
-	public APICommonHelper(StringMap hData)
+	public APICommonHelper(GlobalAPIRequestParams params)
 	{
-		return view_as<APICommonHelper>(hData);
+		return view_as<APICommonHelper>(params);
 	}
-	
-	public void GetUrl(char[] buffer, int maxlength)
-	{
-		this.GetString("url", buffer, maxlength);
-	}
-	
-	property int statusCode
-	{
-		public get() { int value; return this.GetValue("status", value); }
-	}
-	
+
 	public void DumpProperties()
 	{
+		int maxlength;
 		StringMapSnapshot keys = this.Snapshot();
 
-		char key[128];
-		char value[1024];
-		int valueInt;
+		char value[80000];
 
 		for (int i; i < keys.Length; i++)
 		{
-			keys.GetKey(i, key, sizeof(key));
+			maxlength = keys.KeyBufferSize(i);
+			char[] key = new char[maxlength];
 
-			if (this.GetValue(key, valueInt))
-			{
-				IntToString(valueInt, value, sizeof(value));
-			}
+			keys.GetKey(i, key, maxlength);
 
-			else
+			switch (this.GetKeyType(key))
 			{
-				this.GetString(key, value, sizeof(value));
+				case Type_String:
+				{
+					this.GetString(key, value, sizeof(value));
+					PrintToServer("[String] %s => \"%s\"", key, value);
+				}
+				case Type_Float:
+				{
+					float floatValue = this.GetFloat(key);
+					PrintToServer("[Float] %s => %f", key, floatValue);
+				}
+				case Type_Int:
+				{
+					int intValue = this.GetInt(key);
+					PrintToServer("[Integer] %s => %d", key, intValue);
+				}
+				case Type_Bool:
+				{
+					bool boolValue = this.GetBool(key);
+					PrintToServer("[Boolean] %s => %s", key, boolValue ? "true" : "false");
+				}
+				case Type_Null:
+				{
+					PrintToServer("[Default] %s", key);
+				}
 			}
-		
-			PrintToServer("Key: %s -> %s", key, value);
 		}
 		delete keys;
 	}

@@ -1,24 +1,25 @@
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_CreateBan(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
-									char[] steamId, char[] banType, char[] stats, char[] notes, char[] ip);
+	native bool GlobalAPI_CreateJumpstat(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId,
+										int jumpType, float distance, char[] jumpJsonInfo, int tickRate, int mslCount,
+										bool isCrouchBind, bool isForwardBind, bool isCrouchBoost, int strafeCount);
 */
-public bool CreateBan(GlobalAPIRequestParams hData)
+public bool CreateJumpstat(GlobalAPIRequestParams hData)
 {
 	if (!gB_usingAPIKey && !gB_suppressWarnings)
 	{
-		LogMessage("[GlobalAPI] Using the method <CreateBan> requires an API key, and you dont seem to have one setup!");
+		LogMessage("[GlobalAPI] Using the method <CreateJumpstats> requires an API key, and you dont seem to have one setup!");
 		return false;
 	}
 	
 	char requestUrl[MAX_QUERYURL_LENGTH];
-	Format(requestUrl, sizeof(requestUrl), "%s/bans", gC_baseUrl);
+	Format(requestUrl, sizeof(requestUrl), "%s/jumpstats", gC_baseUrl);
 	hData.AddUrl(requestUrl);
-
-	char json[MAX_CREATE_BAN_JSON_LENGTH];
+	
+	char json[MAX_CREATE_JUMPSTAT_JSON_LENGTH];
 	json_encode(hData, json, sizeof(json));
-
+	
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodPOST);
 	
 	if (request == null)
@@ -34,19 +35,19 @@ public bool CreateBan(GlobalAPIRequestParams hData)
 	request.SetAcceptHeaders();
 	request.SetPoweredByHeader();
 	request.SetBody(json, sizeof(json));
-	request.SetCallback(CreateBan_DataReceived);
-	//request.Send();
+	request.SetCallback(CreateJumpstat_DataReceived);
+	request.Send();
 
 	return true;
 }
 
-public int CreateBan_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestParams hData)
+public int CreateJumpstat_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestParams hData)
 {
 	// Special case for timeout / failure
 	if (statuscode == 0 || failure || statuscode == 500)
 	{
 		hData.AddFailure(true);
-
+		
 		any data = hData.GetInt("data");
 		Handle hFwd = hData.GetHandle("callback");
 
@@ -59,16 +60,16 @@ public int CreateBan_DataReceived(Handle request, bool failure, int offset, int 
 	else
 	{
 		hData.AddFailure(false);
-		SteamWorks_GetHTTPResponseBodyCallback(request, CreateBan_Data, hData);
+		SteamWorks_GetHTTPResponseBodyCallback(request, CreateJumpstat_Data, hData);
 	}
 
 	delete request;
 }
 
-public int CreateBan_Data(const char[] response, GlobalAPIRequestParams hData)
+public int CreateJumpstat_Data(const char[] response, GlobalAPIRequestParams hData)
 {
 	Handle hJson = json_decode(response);
-	
+
 	any data = hData.GetInt("data");
 	bool bFailure = hData.GetBool("failure");
 	Handle hFwd = hData.GetHandle("callback");
