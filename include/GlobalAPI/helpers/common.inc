@@ -37,22 +37,26 @@ methodmap APICommonHelper < GlobalAPIRequestParams
 				case Type_String:
 				{
 					this.GetString(key, value, sizeof(value));
-					PrintToServer("[String] %s -> \"%s\"", key, value);
+					PrintToServer("[String] %s => \"%s\"", key, value);
 				}
 				case Type_Float:
 				{
 					float floatValue = this.GetFloat(key);
-					PrintToServer("[Float] %s -> %f", key, floatValue);
+					PrintToServer("[Float] %s => %f", key, floatValue);
 				}
 				case Type_Int:
 				{
 					int intValue = this.GetInt(key);
-					PrintToServer("[Integer] %s -> %d", key, intValue);
+					PrintToServer("[Integer] %s => %d", key, intValue);
 				}
 				case Type_Bool:
 				{
 					bool boolValue = this.GetBool(key);
-					PrintToServer("[Boolean] %s -> %s", key, boolValue ? "true" : "false");
+					PrintToServer("[Boolean] %s => %s", key, boolValue ? "true" : "false");
+				}
+				case Type_Null:
+				{
+					PrintToServer("[Default] %s", key);
 				}
 			}
 		}

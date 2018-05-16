@@ -18,6 +18,12 @@ methodmap GlobalAPIRequestParams < JSON_Object
 		return view_as<GlobalAPIRequestParams>(new JSON_Object());
 	}
 
+	public void SetDefault(char[] key)
+	{
+		this.SetKeyHidden(key, true);
+		this.SetKeyType(key, Type_Null);
+	}
+
 	public void AddUrl(char[] url)
 	{
 		this.SetString("url", url);
@@ -32,7 +38,7 @@ methodmap GlobalAPIRequestParams < JSON_Object
 
 	public void AddData(any data)
 	{
-		this.SetInt("data", view_as<int>(data));
+		this.SetInt("data", data);
 		this.SetKeyHidden("data", true);
 	}
 
@@ -40,6 +46,7 @@ methodmap GlobalAPIRequestParams < JSON_Object
 	{
 		this.SetHandle("callback", hFwd);
 		this.SetKeyHidden("callback", true);
+		this.SetKeyType("callback", Type_Int);
 	}
 
 	public void AddNum(char[] key, int value)
@@ -47,7 +54,7 @@ methodmap GlobalAPIRequestParams < JSON_Object
 		this.SetInt(key, value);
 		if (value == -1)
 		{
-			this.SetKeyHidden(key, true);
+			this.SetDefault(key);
 		}
 	}
 
@@ -56,7 +63,7 @@ methodmap GlobalAPIRequestParams < JSON_Object
 		this.SetFloat(key, value);
 		if (value == -1.000000)
 		{
-			this.SetKeyHidden(key, true);
+			this.SetDefault(key);
 		}
 	}
 
@@ -65,7 +72,7 @@ methodmap GlobalAPIRequestParams < JSON_Object
 		this.SetString(key, value);
 		if (StrEqual(value, ""))
 		{
-			this.SetKeyHidden(key, true);
+			this.SetDefault(key);
 		}
 	}
 
@@ -74,7 +81,7 @@ methodmap GlobalAPIRequestParams < JSON_Object
 		this.SetBool(key, value);
 		if (value != true && value != false)
 		{
-			this.SetKeyHidden(key, true);
+			this.SetDefault(key);
 		}
 	}
 

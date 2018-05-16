@@ -81,11 +81,14 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetBans(OnBans, _, .steamId = "STEAM_1:1:21505111", .isExpired = true);
+	StringMap temp = new StringMap();
+	PrintToServer("Created stringmap with handle %d", temp);
+	GlobalAPI_GetJumpstatTop(OnJumps, temp, "longjump", .id = 108021, .isForwardBind = true);
 }
 
-public void OnBans(bool bFailure, Handle hJson, GlobalAPIRequestParams hData)
+public void OnJumps(bool bFailure, Handle hJson, GlobalAPIRequestParams hData, any data)
 {
+	PrintToServer("Received stringmap with handle %d", data);
 	APICommonHelper helper = new APICommonHelper(hData);
 	helper.DumpProperties();
 }

@@ -9,6 +9,7 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_CreateBan", Native_CreateBan);
 	CreateNative("GlobalAPI_GetJumpstats", Native_GetJumpstats);
 	CreateNative("GlobalAPI_CreateJumpstat", Native_CreateJumpstat);
+	CreateNative("GlobalAPI_GetJumpstatTop", Native_GetJumpstatTop);
 }
 
 // =========================================================== //
@@ -91,19 +92,19 @@ public int Native_GetBans(Handle plugin, int numParams)
 	int limit = GetNativeCell(15);
 
 	GlobalAPIRequestParams hData = new GlobalAPIRequestParams();
-	hData.AddNum("limit", limit);
-	hData.AddNum("offset", offset);
-	hData.AddString("ip", ipAddress);
-	hData.AddNum("server_id", serverId);
-	hData.AddString("steam_id", steamId);
-	hData.AddNum("steamid64", steamId64);
-	hData.AddBool("is_expired", isExpired);
 	hData.AddString("ban_types", banTypes);
-	hData.AddString("created_since", createdSince);
-	hData.AddString("updated_since", updatedSince);
 	hData.AddString("ban_types_list", banTypesList);
+	hData.AddBool("is_expired", isExpired);
+	hData.AddString("ip", ipAddress);
+	hData.AddNum("steamid64", steamId64);
+	hData.AddString("steam_id", steamId);
 	hData.AddString("notes_contains", notesContain);
 	hData.AddString("stats_contains", statsContain);
+	hData.AddNum("server_id", serverId);
+	hData.AddString("created_since", createdSince);
+	hData.AddString("updated_since", updatedSince);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -142,8 +143,8 @@ public int Native_CreateBan(Handle plugin, int numParams)
 	GlobalAPIRequestParams hData = new GlobalAPIRequestParams();
 	hData.AddString("steam_id", steamId);
 	hData.AddString("ban_type", banType);
-	hData.AddString("notes", notes);
 	hData.AddString("stats", stats);
+	hData.AddString("notes", notes);
 	hData.AddString("ip", ip);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
@@ -161,9 +162,9 @@ public int Native_CreateBan(Handle plugin, int numParams)
 										int serverId = DEFAULT_INT, int steamId64 = DEFAULT_INT, char[] steamId = DEFAULT_STRING,
 										char[] jumpType = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING, 
 										char[] jumpTypeList = DEFAULT_STRING, float greaterThanDistance = DEFAULT_FLOAT,
-										float lessThanDistance = DEFAULT_FLOAT, char[] isMsl = DEFAULT_STRING,
-										char[] isCrouchBind = DEFAULT_STRING, char[] isForwardBind = DEFAULT_STRING,
-										char[] isCrouchBoost = DEFAULT_STRING, int updatedById = DEFAULT_INT,
+										float lessThanDistance = DEFAULT_FLOAT, bool isMsl = DEFAULT_BOOL,
+										bool isCrouchBind = DEFAULT_BOOL, bool isForwardBind = DEFAULT_BOOL,
+										bool isCrouchBoost = DEFAULT_BOOL, int updatedById = DEFAULT_INT,
 										char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
 										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 */
@@ -210,23 +211,23 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 
 	GlobalAPIRequestParams hData = new GlobalAPIRequestParams();
 	hData.AddNum("id", id);
-	hData.AddNum("limit", limit);
-	hData.AddNum("offset", offset);
-	hData.AddBool("is_msl", isMsl);
 	hData.AddNum("server_id", serverId);
 	hData.AddNum("steamid64", steamId64);
 	hData.AddString("steam_id", steamId);
 	hData.AddString("jumptype", jumpType);
-	hData.AddNum("updated_by_id", updatedById);
-	hData.AddBool("is_crouch_bind", isCrouchBind);
-	hData.AddString("created_since", createdSince);
-	hData.AddString("updated_since", updatedSince);
+	hData.AddString("steamid64_list", steamId64List);
 	hData.AddString("jumptype_list", jumpTypeList);
+	hData.AddFloat("greater_than_distance", greaterThanDistance);
+	hData.AddFloat("lower_than_distance", lowerThanDistance);
+	hData.AddBool("is_msl", isMsl);
+	hData.AddBool("is_crouch_bind", isCrouchBind);
 	hData.AddBool("is_forward_bind", isForwardBind);
 	hData.AddBool("is_crouch_boost", isCrouchBoost);
-	hData.AddString("steamid64_list", steamId64List);
-	hData.AddFloat("lower_than_distance", lowerThanDistance);
-	hData.AddFloat("greater_than_distance", greaterThanDistance);
+	hData.AddNum("updated_by_id", updatedById);
+	hData.AddString("created_since", createdSince);
+	hData.AddString("updated_since", updatedSince);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -265,16 +266,16 @@ public int Native_CreateJumpstat(Handle plugin, int numParams)
 	int strafeCount = GetNativeCell(12);
 
 	GlobalAPIRequestParams hData = new GlobalAPIRequestParams();
-	hData.AddNum("tickrate", tickRate);
-	hData.AddNum("jump_type", jumpType);
-	hData.AddNum("msl_count", mslCount);
-	hData.AddFloat("distance", distance);
 	hData.AddString("steam_id", steamId);
-	hData.AddNum("strafe_count", strafeCount);
-	hData.AddNum("is_crouch_bind", isCrouchBind);
-	hData.AddNum("is_forward_bind", isForwardBind);
-	hData.AddNum("is_crouch_boost", isCrouchBoost);
+	hData.AddNum("jump_type", jumpType);
+	hData.AddFloat("distance", distance);
 	hData.AddString("json_jump_info", jumpJsonInfo);
+	hData.AddNum("tickrate", tickRate);
+	hData.AddNum("msl_count", mslCount);
+	hData.AddBool("is_crouch_bind", isCrouchBind);
+	hData.AddBool("is_forward_bind", isForwardBind);
+	hData.AddBool("is_crouch_boost", isCrouchBoost);
+	hData.AddNum("strafe_count", strafeCount);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -282,6 +283,88 @@ public int Native_CreateJumpstat(Handle plugin, int numParams)
 	hData.AddCallback(hFwd);
 
 	return CreateJumpstat(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetJumpstatTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] jumpType,
+										int id = DEFAULT_INT, int serverId = DEFAULT_INT, int steamId64 = DEFAULT_INT,
+										char[] steamId = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING,
+										char[] jumpTypeList = DEFAULT_STRING, float greaterThanDistance = DEFAULT_FLOAT,
+										float lessThanDistance = DEFAULT_FLOAT, bool isMsl = DEFAULT_BOOL,
+										bool isCrouchBind = DEFAULT_BOOL, bool isForwardBind = DEFAULT_BOOL,
+										bool isCrouchBoost = DEFAULT_BOOL, int updatedById = DEFAULT_INT,
+										char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
+										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+*/
+public int Native_GetJumpstatTop(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char jumpType[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, jumpType, sizeof(jumpType));
+
+	int id = GetNativeCell(4);
+	int serverId = GetNativeCell(5);
+	int steamId64 = GetNativeCell(6);
+
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(7, steamId, sizeof(steamId));
+
+	char steamId64List[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(8, steamId64List, sizeof(steamId64List));
+
+	char jumpTypeList[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(9, jumpTypeList, sizeof(jumpTypeList));
+
+	float greaterThanDistance = GetNativeCell(10);
+	float lessThanDistance = GetNativeCell(11);
+	bool isMsl = GetNativeCell(12);
+	bool isCrouchBind = GetNativeCell(13);
+	bool isForwardBind = GetNativeCell(14);
+	bool isCrouchBoost = GetNativeCell(15);
+	int updatedById = GetNativeCell(16);
+
+	char createdSince[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(17, createdSince, sizeof(createdSince));
+
+	char updatedSince[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(18, updatedSince, sizeof(updatedSince));
+
+	int offset = GetNativeCell(19);
+	int limit = GetNativeCell(20);
+
+	GlobalAPIRequestParams hData = new GlobalAPIRequestParams();
+	hData.AddString("jumpType", jumpType);
+	hData.AddNum("id", id);
+	hData.AddNum("server_id", serverId);
+	hData.AddNum("steamid64", steamId64);
+	hData.AddString("steam_id", steamId);
+	hData.AddString("steamid64_list", steamId64List);
+	hData.AddString("jumptype_list", jumpTypeList);
+	hData.AddFloat("greater_than_distance", greaterThanDistance);
+	hData.AddFloat("less_than_distance", lessThanDistance);
+	hData.AddBool("is_msl", isMsl);
+	hData.AddBool("is_crouch_bind", isCrouchBind);
+	hData.AddBool("is_forward_bind", isForwardBind);
+	hData.AddBool("is_crouch_boost", isCrouchBoost);
+	hData.AddNum("updated_by_id", updatedById);
+	hData.AddString("created_since", createdSince);
+	hData.AddString("updated_since", updatedSince);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.AddData(data);
+	hData.AddCallback(hFwd);
+
+	// This is a URL param so set it hidden
+	hData.SetKeyHidden("jumpType", true);
+
+	return GetJumpstatTop(hData);
 }
 
 // =========================================================== //

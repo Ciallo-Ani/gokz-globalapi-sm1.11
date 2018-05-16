@@ -5,9 +5,9 @@
 										int serverId = DEFAULT_INT, int steamId64 = DEFAULT_INT, char[] steamId = DEFAULT_STRING,
 										char[] jumpType = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING, 
 										char[] jumpTypeList = DEFAULT_STRING, float greaterThanDistance = DEFAULT_FLOAT,
-										float lessThanDistance = DEFAULT_FLOAT, char[] isMsl = DEFAULT_STRING,
-										char[] isCrouchBind = DEFAULT_STRING, char[] isForwardBind = DEFAULT_STRING,
-										char[] isCrouchBoost = DEFAULT_STRING, int updatedById = DEFAULT_INT,
+										float lessThanDistance = DEFAULT_FLOAT, bool isMsl = DEFAULT_BOOL,
+										bool isCrouchBind = DEFAULT_BOOL, bool isForwardBind = DEFAULT_BOOL,
+										bool isCrouchBoost = DEFAULT_BOOL, int updatedById = DEFAULT_INT,
 										char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
 										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 */
