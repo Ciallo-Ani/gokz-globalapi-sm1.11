@@ -105,6 +105,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_GetBans");
 	MarkNativeAsOptional("GlobalAPI_CreateBan");
 	MarkNativeAsOptional("GlobalAPI_GetJumpstats");
+	MarkNativeAsOptional("GlobalAPI_GetJumpstatTop");
 }
 #endif
 
