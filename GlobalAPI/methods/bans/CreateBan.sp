@@ -50,8 +50,11 @@ public int CreateBan_DataReceived(Handle request, bool failure, int offset, int 
 		any data = hData.GetInt("data");
 		Handle hFwd = hData.GetHandle("callback");
 
-		CallForward(hFwd, true, INVALID_HANDLE, hData, data);
+		CallForward(hFwd, true, null, hData, data);
 		
+		// Cleanup
+		hData.Cleanup();
+
 		delete hFwd;
 		delete hData;
 	}
@@ -67,13 +70,17 @@ public int CreateBan_DataReceived(Handle request, bool failure, int offset, int 
 
 public int CreateBan_Data(const char[] response, GlobalAPIRequestParams hData)
 {
-	Handle hJson = json_decode(response);
+	JSON_Object hJson = json_decode(response);
 	
 	any data = hData.GetInt("data");
 	bool bFailure = hData.GetBool("failure");
 	Handle hFwd = hData.GetHandle("callback");
 
 	CallForward(hFwd, bFailure, hJson, hData, data);
+
+	// Cleanup
+	hJson.Cleanup();
+	hData.Cleanup();
 
 	delete hFwd;
 	delete hJson;

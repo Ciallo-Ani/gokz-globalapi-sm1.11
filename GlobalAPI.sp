@@ -63,7 +63,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	
 	CreateConvars();
 	CreateNatives();
-	CreateForwards(); 
+	CreateForwards();
 	CreateCommands();
 }
 
@@ -81,27 +81,23 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetJumpstatTop30(OnJumps, 69, "longjump");
+	GlobalAPI_GetJumpstatTop30(OnJumps, _, "longjump");
 }
 
-public void OnJumps(bool bFailure, JSON_Object hJson, GlobalAPIRequestParams hData, any data)
+public void OnJumps(bool bFailure, JSON_Object hJson, GlobalAPIRequestParams hData)
 {
-	APIJumpstats jumps = new APIJumpstats(hJson);
-	APIJumpstat jump = new APIJumpstat(jumps.GetById(0));
-	PrintToServer("Furthest longjump is %f", jump.Distance);
-	
 	APICommonHelper helper = new APICommonHelper(hData);
 	helper.DumpProperties();
 }
 
 // ================== GLOBAL HTTP CALLBACKS ================== //
 
-public int HTTPHeaders(Handle request, bool failure, StringMap hData)
+public int HTTPHeaders(Handle request, bool failure, GlobalAPIRequestParams hData)
 {
 	PrintToServer("HTTP Headers received");
 }
 
-public int HTTPCompleted(Handle request, bool failure, bool requestSuccessful, EHTTPStatusCode statusCode, StringMap hData)
+public int HTTPCompleted(Handle request, bool failure, bool requestSuccessful, EHTTPStatusCode statusCode, GlobalAPIRequestParams hData)
 {
 	PrintToServer("HTTP Request completed");
 }
