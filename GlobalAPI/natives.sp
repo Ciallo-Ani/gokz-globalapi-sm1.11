@@ -10,6 +10,7 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_GetJumpstats", Native_GetJumpstats);
 	CreateNative("GlobalAPI_CreateJumpstat", Native_CreateJumpstat);
 	CreateNative("GlobalAPI_GetJumpstatTop", Native_GetJumpstatTop);
+	CreateNative("GlobalAPI_GetJumpstatTop30", Native_GetJumpstatTop30);
 }
 
 // =========================================================== //
@@ -365,6 +366,33 @@ public int Native_GetJumpstatTop(Handle plugin, int numParams)
 	hData.SetKeyHidden("jumpType", true);
 
 	return GetJumpstatTop(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetJumpstatTop30(OnAPICallFinished callback = INVALID_HANDLE, any data = INVALID_HANDLE, char[] jumpType);
+*/
+public int Native_GetJumpstatTop30(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+	
+	char jumpType[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, jumpType, sizeof(jumpType));
+	
+	GlobalAPIRequestParams hData = new GlobalAPIRequestParams();
+	hData.AddString("jumpType", jumpType);
+	
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.AddData(data);
+	hData.AddCallback(hFwd);
+
+	// This is a URL param so set it hidden
+	hData.SetKeyHidden("jumpType", true);
+
+	return GetJumpstatTop30(hData);
 }
 
 // =========================================================== //

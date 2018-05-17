@@ -81,14 +81,15 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	StringMap temp = new StringMap();
-	PrintToServer("Created stringmap with handle %d", temp);
-	GlobalAPI_GetJumpstatTop(OnJumps, temp, "longjump", .id = 108021, .isForwardBind = true);
+	GlobalAPI_GetJumpstatTop30(OnJumps, 69, "longjump");
 }
 
-public void OnJumps(bool bFailure, Handle hJson, GlobalAPIRequestParams hData, any data)
+public void OnJumps(bool bFailure, JSON_Object hJson, GlobalAPIRequestParams hData, any data)
 {
-	PrintToServer("Received stringmap with handle %d", data);
+	APIJumpstats jumps = new APIJumpstats(hJson);
+	APIJumpstat jump = new APIJumpstat(jumps.GetById(0));
+	PrintToServer("Furthest longjump is %f", jump.Distance);
+	
 	APICommonHelper helper = new APICommonHelper(hData);
 	helper.DumpProperties();
 }
