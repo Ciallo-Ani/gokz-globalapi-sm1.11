@@ -27,60 +27,13 @@ public bool GetBans(GlobalAPIRequestData hData)
 
 	request.SetData(hData);
 	request.SetTimeout(5);
+	request.SetCallbacks();
 	request.SetAuthHeader();
 	request.SetAcceptHeaders();
 	request.SetPoweredByHeader();
-	request.SetCallback(GetBans_DataReceived);
 	request.Send();
 
 	return true;
-}
-
-public int GetBans_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestData hData)
-{
-	// Special case for timeout / failure
-	if (statuscode == 0 || failure || statuscode == 500)
-	{
-		hData.AddFailure(true);
-		
-		any data = hData.GetInt("data");
-		Handle hFwd = hData.GetHandle("callback");
-		
-		CallForward(hFwd, true, null, hData, data);
-		
-		// Cleanup
-		hData.Cleanup();
-
-		delete hFwd;
-		delete hData;
-	}
-	
-	else
-	{
-		hData.AddFailure(false);
-		SteamWorks_GetHTTPResponseBodyCallback(request, GetBans_Data, hData);
-	}
-
-	delete request;
-}
-
-public int GetBans_Data(const char[] response, GlobalAPIRequestData hData)
-{
-	JSON_Object hJson = json_decode(response);
-	
-	any data = hData.GetInt("data");
-	bool bFailure = hData.GetBool("failure");
-	Handle hFwd = hData.GetHandle("callback");
-
-	CallForward(hFwd, bFailure, hJson, hData, data);
-
-	// Cleanup
-	hJson.Cleanup();
-	hData.Cleanup();
-
-	delete hFwd;
-	delete hJson;
-	delete hData;
 }
 
 // =========================================================== //

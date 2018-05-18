@@ -32,9 +32,9 @@ methodmap GlobalAPIRequest < Handle
 		return SteamWorks_SetHTTPRequestContextValue(this, data1, data2);
 	}
 	
-	public void SetCallback(SteamWorksHTTPDataReceived dataReceived)
+	public void SetCallbacks()
 	{
-		SteamWorks_SetHTTPCallbacks(this, HTTPCompleted, HTTPHeaders, dataReceived);
+		SteamWorks_SetHTTPCallbacks(this, Global_HTTP_Completed, Global_HTTP_Headers, Global_HTTP_DataReceived);
 	}
 	
 	public bool SetAuthHeader()

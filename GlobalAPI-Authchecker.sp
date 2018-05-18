@@ -55,7 +55,7 @@ public Action Command_AuthCheck(int client, int args)
 	GlobalAPI_GetAuthStatus(OnAuth);
 }
 
-public void OnAuth(bool bFailure, JSON_Object hAuth, GlobalAPIRequestParams hData)
+public void OnAuth(bool bFailure, JSON_Object hAuth, GlobalAPIRequestData hData)
 {
 	if (!bFailure)
 	{
