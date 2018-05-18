@@ -54,9 +54,9 @@ methodmap GlobalAPIRequest < Handle
 		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-Powered-By", "GlobalAPI Plugin " ... GlobalAPI_Plugin_Version);
 	}
 
-	public bool Send()
+	public bool Send(GlobalAPIRequestData hData)
 	{
-		return SendRequest(this);
+		return SendRequest(this, hData);
 	}
 }
 

@@ -36,7 +36,7 @@ public bool CreateJumpstat(GlobalAPIRequestData hData)
 	request.SetAcceptHeaders();
 	request.SetPoweredByHeader();
 	request.SetBody(json, sizeof(json));
-	request.Send();
+	request.Send(hData);
 
 	return true;
 }

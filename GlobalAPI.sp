@@ -88,20 +88,12 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetJumpstats(OnJumps);
 	GlobalAPI_GetMaps(OnMaps, .limit = 100);
-}
-
-public void OnJumps(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData)
-{
-	PrintToServer("Here I am");
-	APICommonHelper helper = new APICommonHelper(hData);
-	helper.DumpProperties();
 }
 
 public void OnMaps(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData)
 {
-	PrintToServer("Here I am 2");
+	PrintToServer("Maps Callback");
 	APICommonHelper helper = new APICommonHelper(hData);
 	helper.DumpProperties();
 }

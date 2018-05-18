@@ -1,9 +1,9 @@
 // =========================================================== //
 
 // Could be expanded later to add logging...
-public int Global_HTTP_Headers(Handle request, bool failure, GlobalAPIRequestData hData)
+public void Global_HTTP_Started(Handle request, GlobalAPIRequestData hData)
 {
-	PrintToServer("HTTP Response headers received...");
+	PrintToServer("HTTP Request started...");
 }
 
 // =========================================================== //

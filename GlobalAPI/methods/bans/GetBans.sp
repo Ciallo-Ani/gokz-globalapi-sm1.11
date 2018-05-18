@@ -31,7 +31,7 @@ public bool GetBans(GlobalAPIRequestData hData)
 	request.SetAuthHeader();
 	request.SetAcceptHeaders();
 	request.SetPoweredByHeader();
-	request.Send();
+	request.Send(hData);
 
 	return true;
 }

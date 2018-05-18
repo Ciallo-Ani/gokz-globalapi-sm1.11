@@ -25,7 +25,7 @@ public bool GetJumpstatTop30(GlobalAPIRequestData hData)
 	request.SetAuthHeader();
 	request.SetAcceptHeaders();
 	request.SetPoweredByHeader();
-	request.Send();
+	request.Send(hData);
 	
 	return true;
 }
