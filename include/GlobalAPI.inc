@@ -80,6 +80,8 @@ native bool GlobalAPI_GetJumpstatTop(OnAPICallFinished callback = INVALID_FUNCTI
 										bool isCrouchBoost = DEFAULT_BOOL, int updatedById = DEFAULT_INT,
 										char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
 										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+										
+native bool GlobalAPI_GetJumpstatTop30(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] jumpType);
 
 // ======================= PLUGIN INFO ======================= //
 
@@ -106,6 +108,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_CreateBan");
 	MarkNativeAsOptional("GlobalAPI_GetJumpstats");
 	MarkNativeAsOptional("GlobalAPI_GetJumpstatTop");
+	MarkNativeAsOptional("GlobalAPI_GetJumpstatTop30");
 }
 #endif
 

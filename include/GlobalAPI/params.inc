@@ -20,8 +20,8 @@ methodmap GlobalAPIRequestParams < JSON_Object
 
 	public void SetDefault(char[] key)
 	{
+		this.SetHandle(key);
 		this.SetKeyHidden(key, true);
-		this.SetKeyType(key, Type_Null);
 	}
 
 	public void AddUrl(char[] url)
@@ -51,37 +51,49 @@ methodmap GlobalAPIRequestParams < JSON_Object
 
 	public void AddNum(char[] key, int value)
 	{
-		this.SetInt(key, value);
 		if (value == -1)
 		{
 			this.SetDefault(key);
+		}
+		else
+		{
+			this.SetInt(key, value);
 		}
 	}
 
 	public void AddFloat(char[] key, float value)
 	{
-		this.SetFloat(key, value);
 		if (value == -1.000000)
 		{
 			this.SetDefault(key);
+		}
+		else
+		{
+			this.SetFloat(key, value);
 		}
 	}
 
 	public void AddString(char[] key, char[] value)
 	{
-		this.SetString(key, value);
 		if (StrEqual(value, ""))
 		{
 			this.SetDefault(key);
+		}
+		else
+		{
+			this.SetString(key, value);
 		}
 	}
 
 	public void AddBool(char[] key, bool value)
 	{
-		this.SetBool(key, value);
 		if (value != true && value != false)
 		{
 			this.SetDefault(key);
+		}
+		else
+		{
+			this.SetBool(key, value);
 		}
 	}
 
