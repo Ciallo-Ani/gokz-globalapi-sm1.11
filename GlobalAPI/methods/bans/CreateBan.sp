@@ -6,7 +6,7 @@
 */
 public bool CreateBan(GlobalAPIRequestData hData)
 {
-	if (!gB_usingAPIKey && !gB_suppressWarnings)
+	if (!gB_usingAPIKey && !gB_Debug)
 	{
 		LogMessage("[GlobalAPI] Using the method <CreateBan> requires an API key, and you dont seem to have one setup!");
 		return false;
