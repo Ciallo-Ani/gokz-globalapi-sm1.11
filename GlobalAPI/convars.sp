@@ -1,25 +1,25 @@
 // =========================================================== //
 
+static ConVar hCV_Debug = null;
 static ConVar hCV_Staging = null;
-static ConVar hCV_SuppressWarnings = null;
 
 // =========================================================== //
 
 public void CreateConvars()
 {
+	hCV_Debug = CreateConVar("GlobalAPI_Debug", "0", "", _, true, 0.0, true, 1.0);
 	hCV_Staging = CreateConVar("GlobalAPI_Staging", "0", "Enables the plugin to use the staging endpoint for API calls", _, true, 0.0, true, 1.0);
-	hCV_SuppressWarnings = CreateConVar("GlobalAPI_SuppressWarnings", "0", "Suppresses warnings and their messages (such as methods that require API Key)", _, true, 0.0, true, 1.0);
 	
+	hCV_Debug.AddChangeHook(ConVarHook);
 	hCV_Staging.AddChangeHook(ConVarHook);
-	hCV_SuppressWarnings.AddChangeHook(ConVarHook);
 }
 
 // =========================================================== //
 
 public void GetConvars()
 {
+	gB_Debug = hCV_Debug.BoolValue;
 	gB_Staging = hCV_Staging.BoolValue;
-	gB_suppressWarnings = hCV_SuppressWarnings.BoolValue;
 
 	Format(gC_baseUrl, sizeof(gC_baseUrl), "%s", gB_Staging ? GlobalAPI_Staging_BaseUrl : GlobalAPI_BaseUrl);
 }

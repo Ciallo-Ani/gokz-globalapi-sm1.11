@@ -32,9 +32,9 @@ methodmap GlobalAPIRequest < Handle
 		return SteamWorks_SetHTTPRequestContextValue(this, data1, data2);
 	}
 	
-	public void SetCallback(SteamWorksHTTPDataReceived dataReceived)
+	public void SetCallbacks()
 	{
-		SteamWorks_SetHTTPCallbacks(this, HTTPCompleted, HTTPHeaders, dataReceived);
+		SteamWorks_SetHTTPCallbacks(this, Global_HTTP_Completed, Global_HTTP_Headers, Global_HTTP_DataReceived);
 	}
 	
 	public bool SetAuthHeader()
@@ -54,9 +54,9 @@ methodmap GlobalAPIRequest < Handle
 		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-Powered-By", "GlobalAPI Plugin " ... GlobalAPI_Plugin_Version);
 	}
 
-	public bool Send()
+	public bool Send(GlobalAPIRequestData hData)
 	{
-		return SendRequest(this);
+		return SendRequest(this, hData);
 	}
 }
 

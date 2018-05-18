@@ -30,13 +30,15 @@ char gC_baseUrl[64];
 bool gB_usingAPIKey = false;
 char gC_apiKey[MAX_APIKEY_LENGTH];
 
+
 // ConVars
+bool gB_Debug = false;
 bool gB_Staging = false;
-bool gB_suppressWarnings = false;
 
 // ======================= INCLUDES ========================== //
 
 // Core plugin
+#include "GlobalAPI/http.sp"
 #include "GlobalAPI/misc.sp"
 #include "GlobalAPI/convars.sp"
 #include "GlobalAPI/natives.sp"
@@ -91,33 +93,9 @@ public void GlobalAPI_OnInitialized()
 
 public void OnMaps(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData)
 {
-	APIMaps maps = new APIMaps(hJson);
-	PrintToServer("API returned %d maps", maps.Length);
-
-	for (int i; i < maps.Length; i++)
-	{
-		APIMap map = new APIMap(maps.GetById(i));
-
-		char name[64];
-		map.GetName(name, sizeof(name));
-		PrintToServer("Map: %s", name);
-	}
-
+	PrintToServer("Maps Callback");
 	APICommonHelper helper = new APICommonHelper(hData);
 	helper.DumpProperties();
 }
 
-// ================== GLOBAL HTTP CALLBACKS ================== //
-
-public int HTTPHeaders(Handle request, bool failure, GlobalAPIRequestData hData)
-{
-	PrintToServer("HTTP Headers received");
-}
-
-public int HTTPCompleted(Handle request, bool failure, bool requestSuccessful, EHTTPStatusCode statusCode, GlobalAPIRequestData hData)
-{
-	PrintToServer("HTTP Request completed");
-}
-
 // =========================================================== //
-

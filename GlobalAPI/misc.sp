@@ -30,16 +30,17 @@ public bool ReadAPIKey()
 
 // =========================================================== //
 
-public bool SendRequest(Handle request)
+public bool BuildAuthenticationHeader(Handle request)
 {
-	return SteamWorks_SendHTTPRequest(request);
+	return SteamWorks_SetHTTPRequestHeaderValue(request, "X-ApiKey", gC_apiKey);
 }
 
 // =========================================================== //
 
-public bool BuildAuthenticationHeader(Handle request)
+public bool SendRequest(Handle request, GlobalAPIRequestData hData)
 {
-	return SteamWorks_SetHTTPRequestHeaderValue(request, "X-ApiKey", gC_apiKey);
+	Call_Private_OnHTTPStart(request, hData);
+	return SteamWorks_SendHTTPRequest(request);
 }
 
 // =========================================================== //
