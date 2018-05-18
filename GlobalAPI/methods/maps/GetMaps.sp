@@ -1,21 +1,20 @@
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetBans(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] banTypes = DEFAULT_STRING,
-									char[] banTypesList = DEFAULT_STRING, bool isExpired = DEFAULT_BOOL, char[] ipAddress = DEFAULT_STRING,
-									int steamId64 = DEFAULT_INT, char[] steamId = DEFAULT_STRING, char[] notesContain = DEFAULT_STRING,
-									char[] statsContain = DEFAULT_STRING, int serverId = DEFAULT_INT, char[] createdSince = DEFAULT_STRING,
-									char[] updatedSince = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+	native bool GlobalAPI_GetMaps(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] name = DEFAULT_STRING,
+									int largerThanFilesize = DEFAULT_INT, int smallerThanFilesize = DEFAULT_INT, bool isValidated = DEFAULT_BOOL,
+									int difficulty = DEFAULT_INT, char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
+									int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 */
-public bool GetBans(GlobalAPIRequestData hData)
+public bool GetMaps(GlobalAPIRequestData hData)
 {
 	char requestParams[MAX_QUERYPARAM_NUM * MAX_QUERYPARAM_LENGTH];
 	hData.ToString(requestParams, sizeof(requestParams));
 	
 	char requestUrl[MAX_QUERYURL_LENGTH];
-	Format(requestUrl, sizeof(requestUrl), "%s/bans%s", gC_baseUrl, requestParams);
+	Format(requestUrl, sizeof(requestUrl), "%s/maps%s", gC_baseUrl, requestParams);
 	hData.AddUrl(requestUrl);
-
+	
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodGET);
 	
 	if (request == null)
@@ -30,13 +29,13 @@ public bool GetBans(GlobalAPIRequestData hData)
 	request.SetAuthHeader();
 	request.SetAcceptHeaders();
 	request.SetPoweredByHeader();
-	request.SetCallback(GetBans_DataReceived);
+	request.SetCallback(GetMaps_DataReceived);
 	request.Send();
 
 	return true;
 }
 
-public int GetBans_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestData hData)
+public int GetMaps_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestData hData)
 {
 	// Special case for timeout / failure
 	if (statuscode == 0 || failure || statuscode == 500)
@@ -58,13 +57,13 @@ public int GetBans_DataReceived(Handle request, bool failure, int offset, int st
 	else
 	{
 		hData.AddFailure(false);
-		SteamWorks_GetHTTPResponseBodyCallback(request, GetBans_Data, hData);
+		SteamWorks_GetHTTPResponseBodyCallback(request, GetMaps_Data, hData);
 	}
 
 	delete request;
 }
 
-public int GetBans_Data(const char[] response, GlobalAPIRequestData hData)
+public int GetMaps_Data(const char[] response, GlobalAPIRequestData hData)
 {
 	JSON_Object hJson = json_decode(response);
 	

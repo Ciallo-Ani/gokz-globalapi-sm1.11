@@ -53,14 +53,14 @@ public Handle CreateForwardHandle(Function callback, any data)
 		if (data == INVALID_HANDLE)
 		{
 			PrintToServer("Created a normal forward");
-			// bool bFailure, JSON_Object hJson, GlobalAPIRequestParams hData
+			// bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData
 			hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell);
 		}
 		
 		else
 		{
 			PrintToServer("Created a forward with data");
-			// bool bFailure, JSON_Object hJson, GlobalAPIRequestParams hData, any data
+			// bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data
 			hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
 		}
 	}
@@ -80,14 +80,14 @@ public void AddToForwardEx(Handle hFwd, Handle plugin, Function callback)
 
 // =========================================================== //
 
-public void CallForward(Handle hFwd, bool bFailure, JSON_Object hJson, GlobalAPIRequestParams hData, any data)
+public void CallForward(Handle hFwd, bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data)
 {
 	if (hFwd != INVALID_HANDLE)
 	{
 		if (data == INVALID_HANDLE)
 		{
 			PrintToServer("Called a normal forward");
-			// bool bFailure, JSON_Object hJson, GlobalAPIRequestParams hData
+			// bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData
 			Call_StartForward(hFwd);
 			Call_PushCell(bFailure);
 			Call_PushCell(hJson);
@@ -97,7 +97,7 @@ public void CallForward(Handle hFwd, bool bFailure, JSON_Object hJson, GlobalAPI
 		else
 		{
 			PrintToServer("Called a forward with data");
-			// bool bFailure, JSON_Object hJson, GlobalAPIRequestParams hData, any data
+			// bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data
 			Call_StartForward(hFwd);
 			Call_PushCell(bFailure);
 			Call_PushCell(hJson);

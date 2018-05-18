@@ -3,7 +3,7 @@
 /*
 	native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
 */
-public bool GetAuthStatus(GlobalAPIRequestParams hData)
+public bool GetAuthStatus(GlobalAPIRequestData hData)
 {
 	if (!gB_usingAPIKey && !gB_suppressWarnings)
 	{
@@ -35,7 +35,7 @@ public bool GetAuthStatus(GlobalAPIRequestParams hData)
 	return true;
 }
 
-public int GetAuthStatus_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestParams hData)
+public int GetAuthStatus_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestData hData)
 {
 	// Special case for timeout / failure
 	if (statuscode == 0 || failure || statuscode == 500)
@@ -63,7 +63,7 @@ public int GetAuthStatus_DataReceived(Handle request, bool failure, int offset, 
 	delete request;
 }
 
-public int GetAuthStatus_Data(const char[] response, GlobalAPIRequestParams hData)
+public int GetAuthStatus_Data(const char[] response, GlobalAPIRequestData hData)
 {
 	JSON_Object hJson = json_decode(response);
 	

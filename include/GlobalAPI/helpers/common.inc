@@ -7,13 +7,13 @@
 
 // =========================================================== //
 
-#include <GlobalAPI/params>
+#include <GlobalAPI/requestdata>
 
 // =========================================================== //
 
-methodmap APICommonHelper < GlobalAPIRequestParams
+methodmap APICommonHelper < GlobalAPIRequestData
 {
-	public APICommonHelper(GlobalAPIRequestParams params)
+	public APICommonHelper(GlobalAPIRequestData params)
 	{
 		return view_as<APICommonHelper>(params);
 	}

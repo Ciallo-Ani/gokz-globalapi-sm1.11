@@ -1,7 +1,7 @@
 /*
 	native bool GlobalAPI_GetJumpstatTop30(OnAPICallFinished callback = INVALID_HANDLE, any data = INVALID_HANDLE, char[] jumpType);
 */
-public bool GetJumpstatTop30(GlobalAPIRequestParams hData)
+public bool GetJumpstatTop30(GlobalAPIRequestData hData)
 {
 	char jumpType[MAX_QUERYPARAM_LENGTH];
 	hData.GetString("jumpType", jumpType, sizeof(jumpType));
@@ -30,7 +30,7 @@ public bool GetJumpstatTop30(GlobalAPIRequestParams hData)
 	return true;
 }
 
-public int GetJumpstatTop30_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestParams hData)
+public int GetJumpstatTop30_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestData hData)
 {
 	// Special case for timeout / failure
 	if (statuscode == 0 || failure || statuscode == 500)
@@ -58,7 +58,7 @@ public int GetJumpstatTop30_DataReceived(Handle request, bool failure, int offse
 	delete request;
 }
 
-public int GetJumpstatTop30_Data(const char[] response, GlobalAPIRequestParams hData)
+public int GetJumpstatTop30_Data(const char[] response, GlobalAPIRequestData hData)
 {
 	JSON_Object hJson = json_decode(response);
 

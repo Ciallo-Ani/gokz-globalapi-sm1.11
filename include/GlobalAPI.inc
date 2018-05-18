@@ -7,7 +7,7 @@
 
 // =========================================================== //
 
-#include <GlobalAPI/params>
+#include <GlobalAPI/requestdata>
 
 // ======================= DEFINITIONS ======================= //
 
@@ -33,8 +33,8 @@
 
 typeset OnAPICallFinished
 {
-	function void(bool bFailure, JSON_Object hJson, GlobalAPIRequestParams hData);
-	function void(bool bFailure, JSON_Object hJson, GlobalAPIRequestParams hData, any data);
+	function void(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData);
+	function void(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data);
 }
 
 // ======================= FORWARDS ========================== //
@@ -44,6 +44,8 @@ forward void GlobalAPI_OnInitialized();
 // ======================= NATIVES =========================== //
 
 native void GlobalAPI_GetAPIKey(char[] buffer, int maxlength);
+
+native bool GlobalAPI_GetStaging();
 
 native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
 
@@ -83,6 +85,11 @@ native bool GlobalAPI_GetJumpstatTop(OnAPICallFinished callback = INVALID_FUNCTI
 										
 native bool GlobalAPI_GetJumpstatTop30(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] jumpType);
 
+native bool GlobalAPI_GetMaps(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] name = DEFAULT_STRING,
+								int largerThanFilesize = DEFAULT_INT, int smallerThanFilesize = DEFAULT_INT, bool isValidated = DEFAULT_BOOL,
+								int difficulty = DEFAULT_INT, char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
+								int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -101,14 +108,23 @@ public SharedPlugin __pl_GlobalAPI =
 #if !defined REQUIRE_PLUGIN
 public void __pl_GlobalAPI_SetNTVOptional()
 {
+	// Plugin
 	MarkNativeAsOptional("GlobalAPI_GetAPIKey");
+
+	// Auth
 	MarkNativeAsOptional("GlobalAPI_GetAuthStatus");
 	
+	// Bans
 	MarkNativeAsOptional("GlobalAPI_GetBans");
 	MarkNativeAsOptional("GlobalAPI_CreateBan");
+
+	// Jumpstats
 	MarkNativeAsOptional("GlobalAPI_GetJumpstats");
 	MarkNativeAsOptional("GlobalAPI_GetJumpstatTop");
 	MarkNativeAsOptional("GlobalAPI_GetJumpstatTop30");
+
+	// Maps
+	MarkNativeAsOptional("GlobalAPI_GetMaps");
 }
 #endif
 

@@ -2,15 +2,25 @@
 
 public void CreateNatives()
 {
+	// Plugin
 	CreateNative("GlobalAPI_GetAPIKey", Native_GetAPIKey);
+	CreateNative("GlobalAPI_GetStaging", Native_GetStaging);
+
+	// Auth
 	CreateNative("GlobalAPI_GetAuthStatus", Native_GetAuthStatus);
 
+	// Bans
 	CreateNative("GlobalAPI_GetBans", Native_GetBans);
 	CreateNative("GlobalAPI_CreateBan", Native_CreateBan);
+
+	// Jumpstats
 	CreateNative("GlobalAPI_GetJumpstats", Native_GetJumpstats);
 	CreateNative("GlobalAPI_CreateJumpstat", Native_CreateJumpstat);
 	CreateNative("GlobalAPI_GetJumpstatTop", Native_GetJumpstatTop);
 	CreateNative("GlobalAPI_GetJumpstatTop30", Native_GetJumpstatTop30);
+
+	// Maps
+	CreateNative("GlobalAPI_GetMaps", Native_GetMaps);
 }
 
 // =========================================================== //
@@ -21,8 +31,17 @@ public void CreateNatives()
 public int Native_GetAPIKey(Handle plugin, int numParams)
 {	
 	int maxlength = GetNativeCell(2);
-
 	SetNativeString(1, gC_apiKey, maxlength);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetStaging();
+*/
+public int Native_GetStaging(Handle plugin, int numParams)
+{
+	return gB_Staging;
 }
 
 // =========================================================== //
@@ -35,7 +54,7 @@ public int Native_GetAuthStatus(Handle plugin, int numParams)
 	Function callback = GetNativeCell(1);
 	any data = GetNativeCell(2);
 	
-	GlobalAPIRequestParams hData = new GlobalAPIRequestParams();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -92,7 +111,7 @@ public int Native_GetBans(Handle plugin, int numParams)
 	int offset = GetNativeCell(14);
 	int limit = GetNativeCell(15);
 
-	GlobalAPIRequestParams hData = new GlobalAPIRequestParams();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
 	hData.AddString("ban_types", banTypes);
 	hData.AddString("ban_types_list", banTypesList);
 	hData.AddBool("is_expired", isExpired);
@@ -141,7 +160,7 @@ public int Native_CreateBan(Handle plugin, int numParams)
 	char ip[MAX_QUERYPARAM_LENGTH];
 	GetNativeString(7, ip, sizeof(ip));
 	
-	GlobalAPIRequestParams hData = new GlobalAPIRequestParams();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
 	hData.AddString("steam_id", steamId);
 	hData.AddString("ban_type", banType);
 	hData.AddString("stats", stats);
@@ -210,7 +229,7 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 	int offset = GetNativeCell(19);
 	int limit = GetNativeCell(20);
 
-	GlobalAPIRequestParams hData = new GlobalAPIRequestParams();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
 	hData.AddNum("id", id);
 	hData.AddNum("server_id", serverId);
 	hData.AddNum("steamid64", steamId64);
@@ -266,7 +285,7 @@ public int Native_CreateJumpstat(Handle plugin, int numParams)
 	bool isCrouchBoost = GetNativeCell(11);
 	int strafeCount = GetNativeCell(12);
 
-	GlobalAPIRequestParams hData = new GlobalAPIRequestParams();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
 	hData.AddString("steam_id", steamId);
 	hData.AddNum("jump_type", jumpType);
 	hData.AddFloat("distance", distance);
@@ -337,7 +356,7 @@ public int Native_GetJumpstatTop(Handle plugin, int numParams)
 	int offset = GetNativeCell(19);
 	int limit = GetNativeCell(20);
 
-	GlobalAPIRequestParams hData = new GlobalAPIRequestParams();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
 	hData.AddString("jumpType", jumpType);
 	hData.AddNum("id", id);
 	hData.AddNum("server_id", serverId);
@@ -381,7 +400,7 @@ public int Native_GetJumpstatTop30(Handle plugin, int numParams)
 	char jumpType[MAX_QUERYPARAM_LENGTH];
 	GetNativeString(3, jumpType, sizeof(jumpType));
 	
-	GlobalAPIRequestParams hData = new GlobalAPIRequestParams();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
 	hData.AddString("jumpType", jumpType);
 	
 	Handle hFwd = CreateForwardHandle(callback, data);
@@ -393,6 +412,55 @@ public int Native_GetJumpstatTop30(Handle plugin, int numParams)
 	hData.SetKeyHidden("jumpType", true);
 
 	return GetJumpstatTop30(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetMaps(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] name = DEFAULT_STRING,
+									int largerThanFilesize = DEFAULT_INT, int smallerThanFilesize = DEFAULT_INT, bool isValidated = DEFAULT_BOOL,
+									int difficulty = DEFAULT_INT, char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
+									int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+*/
+public int Native_GetMaps(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char name[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, name, sizeof(name));
+
+	int largerThanFilesize = GetNativeCell(4);
+	int smallerThanFilesize = GetNativeCell(5);
+	bool isValidated = GetNativeCell(6);
+	int difficulty = GetNativeCell(7);
+
+	char createdSince[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(8, createdSince, sizeof(createdSince));
+
+	char updatedSince[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(9, updatedSince, sizeof(updatedSince));
+
+	int offset = GetNativeCell(10);
+	int limit = GetNativeCell(11);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("name", name);
+	hData.AddNum("larger_than_filesize", largerThanFilesize);
+	hData.AddNum("smaller_than_filesize", smallerThanFilesize);
+	hData.AddBool("is_validated", isValidated);
+	hData.AddNum("difficulty", difficulty);
+	hData.AddString("created_since", createdSince);
+	hData.AddString("updated_since", updatedSince);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.AddData(data);
+	hData.AddCallback(hFwd);
+
+	return GetMaps(hData);
 }
 
 // =========================================================== //

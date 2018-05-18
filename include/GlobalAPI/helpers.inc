@@ -5,11 +5,20 @@
 // =========================================================== //
 
 #include <GlobalAPI/helpers/common>
+
+// Auth
 #include <GlobalAPI/helpers/auth/APIAuthStatus>
 
+// Bans
 #include <GlobalAPI/helpers/bans/APIBan>
 #include <GlobalAPI/helpers/bans/APIBans>
+
+// Jumpstats
 #include <GlobalAPI/helpers/jumpstats/APIJumpstat>
 #include <GlobalAPI/helpers/jumpstats/APIJumpstats>
+
+// Maps
+#include <GlobalAPI/helpers/maps/APIMap>
+#include <GlobalAPI/helpers/maps/APIMaps>
 
 // =========================================================== //

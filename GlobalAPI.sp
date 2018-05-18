@@ -14,9 +14,9 @@
 
 #include <json>
 #include <GlobalAPI>
-#include <GlobalAPI/params>
-#include <GlobalAPI/request>
 #include <GlobalAPI/helpers>
+#include <GlobalAPI/request>
+#include <GlobalAPI/requestdata>
 
 // ====================== FORMATTING ========================= //
 
@@ -25,23 +25,28 @@
 
 // ====================== VARIABLES ========================== //
 
-bool gB_usingAPIKey = false;
-
+// Plugin
 char gC_baseUrl[64];
+bool gB_usingAPIKey = false;
 char gC_apiKey[MAX_APIKEY_LENGTH];
 
+// ConVars
+bool gB_Staging = false;
 bool gB_suppressWarnings = false;
 
 // ======================= INCLUDES ========================== //
 
+// Core plugin
 #include "GlobalAPI/misc.sp"
 #include "GlobalAPI/convars.sp"
 #include "GlobalAPI/natives.sp"
 #include "GlobalAPI/forwards.sp"
 #include "GlobalAPI/commands.sp"
 
+// Datasets
 #include "GlobalAPI/methods/auth.sp"
 #include "GlobalAPI/methods/bans.sp"
+#include "GlobalAPI/methods/maps.sp"
 #include "GlobalAPI/methods/jumpstats.sp"
 
 // ====================== PLUGIN INFO ======================== //
@@ -81,23 +86,35 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetJumpstatTop30(OnJumps, _, "longjump");
+	GlobalAPI_GetMaps(OnMaps, .limit = 100);
 }
 
-public void OnJumps(bool bFailure, JSON_Object hJson, GlobalAPIRequestParams hData)
+public void OnMaps(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData)
 {
+	APIMaps maps = new APIMaps(hJson);
+	PrintToServer("API returned %d maps", maps.Length);
+
+	for (int i; i < maps.Length; i++)
+	{
+		APIMap map = new APIMap(maps.GetById(i));
+
+		char name[64];
+		map.GetName(name, sizeof(name));
+		PrintToServer("Map: %s", name);
+	}
+
 	APICommonHelper helper = new APICommonHelper(hData);
 	helper.DumpProperties();
 }
 
 // ================== GLOBAL HTTP CALLBACKS ================== //
 
-public int HTTPHeaders(Handle request, bool failure, GlobalAPIRequestParams hData)
+public int HTTPHeaders(Handle request, bool failure, GlobalAPIRequestData hData)
 {
 	PrintToServer("HTTP Headers received");
 }
 
-public int HTTPCompleted(Handle request, bool failure, bool requestSuccessful, EHTTPStatusCode statusCode, GlobalAPIRequestParams hData)
+public int HTTPCompleted(Handle request, bool failure, bool requestSuccessful, EHTTPStatusCode statusCode, GlobalAPIRequestData hData)
 {
 	PrintToServer("HTTP Request completed");
 }
