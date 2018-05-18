@@ -18,9 +18,10 @@ public void CreateConvars()
 
 public void GetConvars()
 {
+	gB_Staging = hCV_Staging.BoolValue;
 	gB_suppressWarnings = hCV_SuppressWarnings.BoolValue;
 
-	Format(gC_baseUrl, sizeof(gC_baseUrl), "%s", hCV_Staging.BoolValue ? GlobalAPI_Staging_BaseUrl : GlobalAPI_BaseUrl);
+	Format(gC_baseUrl, sizeof(gC_baseUrl), "%s", gB_Staging ? GlobalAPI_Staging_BaseUrl : GlobalAPI_BaseUrl);
 }
 
 // =========================================================== //

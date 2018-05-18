@@ -1,10 +1,10 @@
 // =========================================================== //
 
-#define MAX_CREATE_BAN_JSON_LENGTH 1856
+#include <json>
 
 // =========================================================== //
 
-#include "GlobalAPI/methods/bans/GetBans.sp"
-#include "GlobalAPI/methods/bans/CreateBan.sp"
+#include <GlobalAPI/helpers/maps/APIMap>
+#include <GlobalAPI/helpers/maps/APIMaps>
 
 // =========================================================== //

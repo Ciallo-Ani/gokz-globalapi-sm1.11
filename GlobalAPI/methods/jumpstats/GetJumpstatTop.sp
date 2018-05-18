@@ -9,7 +9,7 @@
 										char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
 										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 */
-public bool GetJumpstatTop(GlobalAPIRequestParams hData)
+public bool GetJumpstatTop(GlobalAPIRequestData hData)
 {
 	char requestParams[MAX_QUERYPARAM_NUM * MAX_QUERYPARAM_LENGTH];
 	hData.ToString(requestParams, sizeof(requestParams));
@@ -41,7 +41,7 @@ public bool GetJumpstatTop(GlobalAPIRequestParams hData)
 	return true;
 }
 
-public int GetJumpstatTop_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestParams hData)
+public int GetJumpstatTop_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestData hData)
 {
 	// Special case for timeout / failure
 	if (statuscode == 0 || failure || statuscode == 500)
@@ -69,7 +69,7 @@ public int GetJumpstatTop_DataReceived(Handle request, bool failure, int offset,
 	delete request;
 }
 
-public int GetJumpstatTop_Data(const char[] response, GlobalAPIRequestParams hData)
+public int GetJumpstatTop_Data(const char[] response, GlobalAPIRequestData hData)
 {
 	JSON_Object hJson = json_decode(response);
 

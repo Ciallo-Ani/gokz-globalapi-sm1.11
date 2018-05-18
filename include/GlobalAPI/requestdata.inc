@@ -1,9 +1,9 @@
 // ================== DOUBLE INCLUDE ========================= //
 
-#if defined _GlobalAPI_Params_included_
+#if defined _GlobalAPI_RequestData_included_
 #endinput
 #endif
-#define _GlobalAPI_Params_included_
+#define _GlobalAPI_RequestData_included_
 
 // =========================================================== //
 
@@ -11,11 +11,11 @@
 
 // =========================================================== //
 
-methodmap GlobalAPIRequestParams < JSON_Object
+methodmap GlobalAPIRequestData < JSON_Object
 {
-	public GlobalAPIRequestParams()
+	public GlobalAPIRequestData()
 	{
-		return view_as<GlobalAPIRequestParams>(new JSON_Object());
+		return view_as<GlobalAPIRequestData>(new JSON_Object());
 	}
 
 	public void SetDefault(char[] key)
@@ -101,7 +101,7 @@ methodmap GlobalAPIRequestParams < JSON_Object
 	{
 		StringMapSnapshot paramsMap = this.Snapshot();
 
-		char key[128];
+		char key[64]; // MAX_QUERYPARAM_LENGTH
 		char value[1024]; // MAX_QUERYPARAM_LENGTH * 16
 
 		int paramCount = 0;

@@ -5,7 +5,7 @@
 										int jumpType, float distance, char[] jumpJsonInfo, int tickRate, int mslCount,
 										bool isCrouchBind, bool isForwardBind, bool isCrouchBoost, int strafeCount);
 */
-public bool CreateJumpstat(GlobalAPIRequestParams hData)
+public bool CreateJumpstat(GlobalAPIRequestData hData)
 {
 	if (!gB_usingAPIKey && !gB_suppressWarnings)
 	{
@@ -18,7 +18,7 @@ public bool CreateJumpstat(GlobalAPIRequestParams hData)
 	hData.AddUrl(requestUrl);
 	
 	char json[MAX_CREATE_JUMPSTAT_JSON_LENGTH];
-	json_encode(hData, json, sizeof(json));
+	hData.Encode(json, sizeof(json));
 	
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodPOST);
 	
@@ -41,7 +41,7 @@ public bool CreateJumpstat(GlobalAPIRequestParams hData)
 	return true;
 }
 
-public int CreateJumpstat_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestParams hData)
+public int CreateJumpstat_DataReceived(Handle request, bool failure, int offset, int statuscode, GlobalAPIRequestData hData)
 {
 	// Special case for timeout / failure
 	if (statuscode == 0 || failure || statuscode == 500)
@@ -69,7 +69,7 @@ public int CreateJumpstat_DataReceived(Handle request, bool failure, int offset,
 	delete request;
 }
 
-public int CreateJumpstat_Data(const char[] response, GlobalAPIRequestParams hData)
+public int CreateJumpstat_Data(const char[] response, GlobalAPIRequestData hData)
 {
 	JSON_Object hJson = json_decode(response);
 
