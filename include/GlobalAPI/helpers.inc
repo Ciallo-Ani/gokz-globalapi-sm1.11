@@ -21,4 +21,8 @@
 #include <GlobalAPI/helpers/maps/APIMap>
 #include <GlobalAPI/helpers/maps/APIMaps>
 
+// Modes
+#include <GlobalAPI/helpers/modes/APIMode>
+#include <GlobalAPI/helpers/modes/APIModes>
+
 // =========================================================== //

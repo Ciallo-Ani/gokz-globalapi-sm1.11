@@ -21,6 +21,9 @@ public void CreateNatives()
 
 	// Maps
 	CreateNative("GlobalAPI_GetMaps", Native_GetMaps);
+
+	// Modes
+	CreateNative("GlobalAPI_GetModes", Native_GetModes);
 }
 
 // =========================================================== //
@@ -396,13 +399,13 @@ public int Native_GetJumpstatTop30(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
 	any data = GetNativeCell(2);
-	
+
 	char jumpType[MAX_QUERYPARAM_LENGTH];
 	GetNativeString(3, jumpType, sizeof(jumpType));
-	
+
 	GlobalAPIRequestData hData = new GlobalAPIRequestData();
 	hData.AddString("jumpType", jumpType);
-	
+
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.AddData(data);
@@ -461,6 +464,23 @@ public int Native_GetMaps(Handle plugin, int numParams)
 	hData.AddCallback(hFwd);
 
 	return GetMaps(hData);
+}
+
+// =========================================================== //
+
+public int Native_GetModes(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.AddData(data);
+	hData.AddCallback(hFwd);
+
+	return GetModes(hData);
 }
 
 // =========================================================== //
