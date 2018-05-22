@@ -24,6 +24,8 @@ public void CreateNatives()
 
 	// Modes
 	CreateNative("GlobalAPI_GetModes", Native_GetModes);
+	CreateNative("GlobalAPI_GetModeById", Native_GetModeById);
+	CreateNative("GlobalAPI_GetModeByName", Native_GetModeByName);
 }
 
 // =========================================================== //
@@ -468,6 +470,9 @@ public int Native_GetMaps(Handle plugin, int numParams)
 
 // =========================================================== //
 
+/*
+	native bool GlobalAPI_GetModes(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
+*/
 public int Native_GetModes(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -481,6 +486,59 @@ public int Native_GetModes(Handle plugin, int numParams)
 	hData.AddCallback(hFwd);
 
 	return GetModes(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+*/
+public int Native_GetModeById(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	int id = GetNativeCell(3);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddNum("id", id);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.AddData(data);
+	hData.AddCallback(hFwd);
+
+	// This is a URL param so set it hidden
+	hData.SetKeyHidden("id", true);
+
+	return GetModeById(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] name);
+*/
+public int Native_GetModeByName(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char name[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, name, sizeof(name));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("name", name);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.AddData(data);
+	hData.AddCallback(hFwd);
+
+	// This is a URL param so set it hidden
+	hData.SetKeyHidden("name", true);
+
+	return GetModeByName(hData);
 }
 
 // =========================================================== //

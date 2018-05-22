@@ -88,13 +88,12 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetModes(OnModes);
+	GlobalAPI_GetModeByName(OnMode, _, "kz_timer");
 }
 
-public void OnModes(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData)
+public void OnMode(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData)
 {
-	APIModes modes = new APIModes(hJson);
-	APIMode mode = new APIMode(modes.GetById(0));
+	APIMode mode = new APIMode(hJson);
 
 	char modeName[64];
 	mode.GetName(modeName, sizeof(modeName));

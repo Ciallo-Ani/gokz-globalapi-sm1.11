@@ -92,6 +92,10 @@ native bool GlobalAPI_GetMaps(OnAPICallFinished callback = INVALID_FUNCTION, any
 
 native bool GlobalAPI_GetModes(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
 
+native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+
+native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] name);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -130,6 +134,8 @@ public void __pl_GlobalAPI_SetNTVOptional()
 
 	// Modes
 	MarkNativeAsOptional("GlobalAPI_GetModes");
+	MarkNativeAsOptional("GlobalAPI_GetModeById");
+	MarkNativeAsOptional("GlobalAPI_GetModeByName");
 }
 #endif
 
