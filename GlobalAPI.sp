@@ -30,7 +30,6 @@ char gC_baseUrl[64];
 bool gB_usingAPIKey = false;
 char gC_apiKey[MAX_APIKEY_LENGTH];
 
-
 // ConVars
 bool gB_Debug = false;
 bool gB_Staging = false;
@@ -49,6 +48,7 @@ bool gB_Staging = false;
 #include "GlobalAPI/methods/auth.sp"
 #include "GlobalAPI/methods/bans.sp"
 #include "GlobalAPI/methods/maps.sp"
+#include "GlobalAPI/methods/modes.sp"
 #include "GlobalAPI/methods/jumpstats.sp"
 
 // ====================== PLUGIN INFO ======================== //
@@ -65,7 +65,7 @@ public Plugin myinfo =
 // ======================= MAIN CODE ========================= //
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
-{	
+{
 	RegPluginLibrary("GlobalAPI");
 	
 	CreateConvars();
@@ -88,14 +88,22 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetMaps(OnMaps, .limit = 100);
+	GlobalAPI_GetModeByName(OnMode, _, "kz_timer");
 }
 
-public void OnMaps(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData)
+public void OnMode(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData)
 {
-	PrintToServer("Maps Callback");
-	APICommonHelper helper = new APICommonHelper(hData);
-	helper.DumpProperties();
+	APIMode mode = new APIMode(hJson);
+
+	char modeName[64];
+	mode.GetName(modeName, sizeof(modeName));
+
+	char description[64];
+	mode.GetDescription(description, sizeof(description));
+
+	PrintToServer("Mode: %s", modeName);
+	PrintToServer("Description: %s", description);
+	PrintToServer("Latest Version: %d", mode.latestVersion);
 }
 
 // =========================================================== //
