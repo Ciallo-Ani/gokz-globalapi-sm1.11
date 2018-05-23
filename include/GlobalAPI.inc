@@ -96,6 +96,10 @@ native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION,
 
 native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] name);
 
+native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING,
+									bool isBanned = DEFAULT_BOOL, int totalRecords = DEFAULT_INT,
+									char[] ip = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -136,6 +140,9 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_GetModes");
 	MarkNativeAsOptional("GlobalAPI_GetModeById");
 	MarkNativeAsOptional("GlobalAPI_GetModeByName");
+
+	// Players
+	MarkNativeAsOptional("GlobalAPI_GetPlayers");
 }
 #endif
 

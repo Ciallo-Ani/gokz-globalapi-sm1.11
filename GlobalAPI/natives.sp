@@ -26,6 +26,9 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_GetModes", Native_GetModes);
 	CreateNative("GlobalAPI_GetModeById", Native_GetModeById);
 	CreateNative("GlobalAPI_GetModeByName", Native_GetModeByName);
+
+	// Players
+	CreateNative("GlobalAPI_GetPlayers", Native_GetPlayers);
 }
 
 // =========================================================== //
@@ -539,6 +542,46 @@ public int Native_GetModeByName(Handle plugin, int numParams)
 	hData.SetKeyHidden("name", true);
 
 	return GetModeByName(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING,
+										bool isBanned = DEFAULT_BOOL, int totalRecords = DEFAULT_INT,
+										char[] ip = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING);
+*/
+public int Native_GetPlayers(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, steamId, sizeof(steamId));
+
+	bool isBanned = GetNativeCell(4);
+	int totalRecords = GetNativeCell(5);
+
+	char ip[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(6, ip, sizeof(ip));
+
+	// TODO FIXME: 64 is certainly not enough
+	char steamId64List[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(7, steamId64List, sizeof(steamId64List));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("steam_id", steamId);
+	hData.AddBool("is_banned", isBanned);
+	hData.AddNum("total_records", totalRecords);
+	hData.AddString("ip", ip);
+	hData.AddString("steamid64_list", steamId64List);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.AddData(data);
+	hData.AddCallback(hFwd);
+
+	return GetPlayers(hData);
 }
 
 // =========================================================== //

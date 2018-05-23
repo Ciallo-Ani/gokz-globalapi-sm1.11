@@ -49,6 +49,7 @@ bool gB_Staging = false;
 #include "GlobalAPI/methods/bans.sp"
 #include "GlobalAPI/methods/maps.sp"
 #include "GlobalAPI/methods/modes.sp"
+#include "GlobalAPI/methods/players.sp"
 #include "GlobalAPI/methods/jumpstats.sp"
 
 // ====================== PLUGIN INFO ======================== //
@@ -88,22 +89,18 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetModeByName(OnMode, _, "kz_timer");
+	GlobalAPI_GetPlayers(OnPlayers);
 }
 
-public void OnMode(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData)
+public void OnPlayers(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData)
 {
-	APIMode mode = new APIMode(hJson);
+	APIPlayers players = new APIPlayers(hJson);
+	APIPlayer player = new APIPlayer(players.GetById(0));
 
-	char modeName[64];
-	mode.GetName(modeName, sizeof(modeName));
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	player.GetSteamId(steamId, sizeof(steamId));
 
-	char description[64];
-	mode.GetDescription(description, sizeof(description));
-
-	PrintToServer("Mode: %s", modeName);
-	PrintToServer("Description: %s", description);
-	PrintToServer("Latest Version: %d", mode.latestVersion);
+	PrintToServer("SteamID: %s", steamId);
 }
 
 // =========================================================== //

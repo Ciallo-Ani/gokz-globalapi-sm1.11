@@ -25,4 +25,8 @@
 #include <GlobalAPI/helpers/modes/APIMode>
 #include <GlobalAPI/helpers/modes/APIModes>
 
+// Players
+#include <GlobalAPI/helpers/players/APIPlayer>
+#include <GlobalAPI/helpers/players/APIPlayers>
+
 // =========================================================== //
