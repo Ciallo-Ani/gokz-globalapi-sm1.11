@@ -102,6 +102,8 @@ native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, 
 
 native bool GlobalAPI_GetPlayersBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId);
 
+native bool GlobalAPI_GetPlayersBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, char[] ip);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -145,6 +147,8 @@ public void __pl_GlobalAPI_SetNTVOptional()
 
 	// Players
 	MarkNativeAsOptional("GlobalAPI_GetPlayers");
+	MarkNativeAsOptional("GlobalAPI_GetPlayersBySteamId");
+	MarkNativeAsOptional("GlobalAPI_GetPlayersBySteamIdAndIp");
 }
 #endif
 

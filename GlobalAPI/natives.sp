@@ -30,6 +30,7 @@ public void CreateNatives()
 	// Players
 	CreateNative("GlobalAPI_GetPlayers", Native_GetPlayers);
 	CreateNative("GlobalAPI_GetPlayersBySteamId", Native_GetPlayersBySteamId);
+	CreateNative("GlobalAPI_GetPlayersBySteamIdAndIp", Native_GetPlayersBySteamIdAndIp);
 }
 
 // =========================================================== //
@@ -610,6 +611,38 @@ public int Native_GetPlayersBySteamId(Handle plugin, int numParams)
 	hData.SetKeyHidden("steamid", true);
 
 	return GetPlayersBySteamId(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetPlayersBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, char[] ip);
+*/
+public int Native_GetPlayersBySteamIdAndIp(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, steamId, sizeof(steamId));
+
+	char ip[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(4, ip, sizeof(ip));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("steamid", steamId);
+	hData.AddString("ip", ip);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.AddData(data);
+	hData.AddCallback(hFwd);
+
+	// This is a URL param so set it hidden
+	hData.SetKeyHidden("steamid", true);
+	hData.SetKeyHidden("ip", true);
+
+	return GetPlayersBySteamIdAndIp(hData);
 }
 
 // =========================================================== //
