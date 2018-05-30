@@ -89,7 +89,7 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetPlayers(OnPlayers);
+	GlobalAPI_GetPlayersBySteamId(OnPlayers, _, "STEAM_1:1:21505111");
 }
 
 public void OnPlayers(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData)
@@ -100,6 +100,10 @@ public void OnPlayers(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hDa
 	char steamId[MAX_QUERYPARAM_LENGTH];
 	player.GetSteamId(steamId, sizeof(steamId));
 
+	char name[MAX_QUERYPARAM_LENGTH];
+	player.GetName(name, sizeof(name));
+
+	PrintToServer("Name: %s", name);
 	PrintToServer("SteamID: %s", steamId);
 }
 

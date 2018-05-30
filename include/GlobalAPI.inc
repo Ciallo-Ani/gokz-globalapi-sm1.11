@@ -100,6 +100,8 @@ native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, 
 									bool isBanned = DEFAULT_BOOL, int totalRecords = DEFAULT_INT,
 									char[] ip = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING);
 
+native bool GlobalAPI_GetPlayersBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
