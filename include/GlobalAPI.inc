@@ -111,6 +111,9 @@ native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, 
 native bool GlobalAPI_CreateRecord(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, int mapId,
 									char[] mode, int stage, int tickRate, int teleports, float time);
 
+#pragma deprecated "This method does not return JSON at the moment!"
+native bool GlobalAPI_GetRecordPlaceById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -160,6 +163,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	// Records
 	MarkNativeAsOptional("GlobalAPI_GetRecords");
 	MarkNativeAsOptional("GlobalAPI_CreateRecord");
+	MarkNativeAsOptional("GlobalAPI_GetRecordPlaceById");
 }
 #endif
 

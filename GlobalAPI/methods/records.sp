@@ -6,5 +6,6 @@
 
 #include "GlobalAPI/methods/records/GetRecords.sp"
 #include "GlobalAPI/methods/records/CreateRecord.sp"
+#include "GlobalAPI/methods/records/GetRecordPlaceById.sp"
 
 // =========================================================== //

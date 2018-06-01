@@ -90,7 +90,7 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_CreateRecord(OnRecord, _, "STEAM_1:1:21505111", 200, "kz_timer", 0, 128, 1, 240.69);
+	GlobalAPI_GetRecordPlaceById(OnRecord, _, 200);
 }
 
 public void OnRecord(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)

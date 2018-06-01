@@ -11,8 +11,8 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 	CallForward(hFwd, bFailure, hJson, hData, data);
 
 	// Cleanup
-	hJson.Cleanup();
-	hData.Cleanup();
+	if (hJson != INVALID_HANDLE) hJson.Cleanup();
+	if (hData != INVALID_HANDLE) hData.Cleanup();
 
 	delete hFwd;
 	delete hJson;

@@ -35,6 +35,7 @@ public void CreateNatives()
 	// Records
 	CreateNative("GlobalAPI_GetRecords", Native_GetRecords);
 	CreateNative("GlobalAPI_CreateRecord", Native_CreateRecord);
+	CreateNative("GlobalAPI_GetRecordPlaceById", Native_GetRecordPlaceById);
 }
 
 // =========================================================== //
@@ -506,7 +507,6 @@ public int Native_GetModeById(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
 	any data = GetNativeCell(2);
-
 	int id = GetNativeCell(3);
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData();
@@ -730,6 +730,31 @@ public int Native_CreateRecord(Handle plugin, int numParams)
 	hData.AddCallback(hFwd);
 
 	return CreateRecord(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetRecordPlaceById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+*/
+public int Native_GetRecordPlaceById(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+	int id = GetNativeCell(3);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddNum("id", id);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.AddData(data);
+	hData.AddCallback(hFwd);
+
+	// This is a URL param so set it hidden
+	hData.SetKeyHidden("id", true);
+
+	return GetRecordPlaceById(hData);
 }
 
 // =========================================================== //
