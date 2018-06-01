@@ -120,6 +120,13 @@ native bool GlobalAPI_GetRecordsTop(OnAPICallFinished callback = INVALID_FUNCTIO
 										char[] modes = DEFAULT_STRING, bool hasTeleports = DEFAULT_BOOL, char[] playerName = DEFAULT_STRING,
 										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
+native bool GlobalAPI_GetRecordsTopRecent(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING,
+											int steamId64 = DEFAULT_INT, int mapId = DEFAULT_INT, char[] mapName = DEFAULT_STRING,
+											int tickRate = DEFAULT_INT, int stage = DEFAULT_INT, char[] modes = DEFAULT_STRING,
+											int placeTopAtLeast = DEFAULT_INT, int placeTopOverallAtLeast = DEFAULT_INT,
+											bool hasTeleports = DEFAULT_BOOL, char[] createdSince = DEFAULT_STRING,
+											char[] playerName = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -170,6 +177,8 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_GetRecords");
 	MarkNativeAsOptional("GlobalAPI_CreateRecord");
 	MarkNativeAsOptional("GlobalAPI_GetRecordPlaceById");
+	MarkNativeAsOptional("GlobalAPI_GetRecordsTop");
+	MarkNativeAsOptional("GlobalAPI_GetRecordsTopRecent");
 }
 #endif
 

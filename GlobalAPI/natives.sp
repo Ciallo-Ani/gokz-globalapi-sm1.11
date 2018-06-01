@@ -37,6 +37,7 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_CreateRecord", Native_CreateRecord);
 	CreateNative("GlobalAPI_GetRecordPlaceById", Native_GetRecordPlaceById);
 	CreateNative("GlobalAPI_GetRecordsTop", Native_GetRecordsTop);
+	CreateNative("GlobalAPI_GetRecordsTopRecent", Native_GetRecordsTopRecent);
 }
 
 // =========================================================== //
@@ -814,6 +815,73 @@ public int Native_GetRecordsTop(Handle plugin, int numParams)
 	hData.AddCallback(hFwd);
 
 	return GetRecordsTop(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetRecordsTopRecent(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING,
+												int steamId64 = DEFAULT_INT, int mapId = DEFAULT_INT, char[] mapName = DEFAULT_STRING,
+												int tickRate = DEFAULT_INT, int stage = DEFAULT_INT, char[] modes = DEFAULT_STRING,
+												int placeTopAtLeast = DEFAULT_INT, int placeTopOverallAtLeast = DEFAULT_INT,
+												bool hasTeleports = DEFAULT_BOOL, char[] createdSince = DEFAULT_STRING,
+												char[] playerName = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+*/
+public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, steamId, sizeof(steamId));
+
+	int steamId64 = GetNativeCell(4);
+	int mapId = GetNativeCell(5);
+
+	char mapName[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(6, mapName, sizeof(mapName));
+
+	int tickRate = GetNativeCell(7);
+	int stage = GetNativeCell(8);
+
+	char modes[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(9, modes, sizeof(modes));
+
+	int placeTopAtLeast = GetNativeCell(10);
+	int placeTopOverallAtLeast = GetNativeCell(11);
+	bool hasTeleports = GetNativeCell(12);
+
+	char createdSince[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(13, createdSince, sizeof(createdSince));
+
+	char playerName[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(14, playerName, sizeof(playerName));
+
+	int offset = GetNativeCell(15);
+	int limit = GetNativeCell(16);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("steam_id", steamId);
+	hData.AddNum("steamid64", steamId64);
+	hData.AddNum("map_id", mapId);
+	hData.AddString("map_name", mapName);
+	hData.AddNum("tickrate", tickRate);
+	hData.AddNum("stage", stage);
+	hData.AddString("modes_list_string", modes);
+	hData.AddNum("place_top_at_least", placeTopAtLeast);
+	hData.AddNum("place_top_overall_at_least", placeTopOverallAtLeast);
+	hData.AddBool("has_teleports", hasTeleports);
+	hData.AddString("created_since", createdSince);
+	hData.AddString("player_name", playerName);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.AddData(data);
+	hData.AddCallback(hFwd);
+
+	return GetRecordsTopRecent(hData);
 }
 
 // =========================================================== //

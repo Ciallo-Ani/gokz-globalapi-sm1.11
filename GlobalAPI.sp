@@ -90,7 +90,7 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetRecordsTop(OnRecords, _, .steamId = "STEAM_1:1:21505111");
+	GlobalAPI_GetRecordsTopRecent(OnRecords, _, .steamId = "STEAM_1:1:21505111");
 }
 
 public void OnRecords(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)

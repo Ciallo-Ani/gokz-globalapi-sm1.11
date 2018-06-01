@@ -8,5 +8,6 @@
 #include "GlobalAPI/methods/records/CreateRecord.sp"
 #include "GlobalAPI/methods/records/GetRecordPlaceById.sp"
 #include "GlobalAPI/methods/records/GetRecordsTop.sp"
+#include "GlobalAPI/methods/records/GetRecordsTopRecent.sp"
 
 // =========================================================== //
