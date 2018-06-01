@@ -50,6 +50,7 @@ bool gB_Staging = false;
 #include "GlobalAPI/methods/maps.sp"
 #include "GlobalAPI/methods/modes.sp"
 #include "GlobalAPI/methods/players.sp"
+#include "GlobalAPI/methods/records.sp"
 #include "GlobalAPI/methods/jumpstats.sp"
 
 // ====================== PLUGIN INFO ======================== //
@@ -89,22 +90,31 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetPlayersBySteamId(OnPlayers, _, "STEAM_1:1:21505111");
+	GlobalAPI_GetRecords(OnRecords, .mapName = "kz_man_everest_go_fix");
 }
 
-public void OnPlayers(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData)
+public void OnRecords(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)
 {
-	APIPlayers players = new APIPlayers(hJson);
-	APIPlayer player = new APIPlayer(players.GetById(0));
+	APIRecords records = new APIRecords(hResponse);
+	APIRecord record = new APIRecord(records.GetById(0));
 
-	char steamId[MAX_QUERYPARAM_LENGTH];
-	player.GetSteamId(steamId, sizeof(steamId));
+	char playerName[64];
+	record.GetPlayerName(playerName, sizeof(playerName));
 
-	char name[MAX_QUERYPARAM_LENGTH];
-	player.GetName(name, sizeof(name));
+	char steamId[64];
+	record.GetSteamId(steamId, sizeof(steamId));
 
-	PrintToServer("Name: %s", name);
-	PrintToServer("SteamID: %s", steamId);
+	char mode[20];
+	record.GetMode(mode, sizeof(mode));
+
+	char serverName[64];
+	record.GetServerName(serverName, sizeof(serverName));
+
+	char mapName[64];
+	record.GetMapName(mapName, sizeof(mapName));
+
+	PrintToServer("Player \"%s\" (%s) completed a %s run with time %f on map \"%s\" and server \"%s\"",
+					playerName, steamId, mode, record.time, mapName, serverName);
 }
 
 // =========================================================== //

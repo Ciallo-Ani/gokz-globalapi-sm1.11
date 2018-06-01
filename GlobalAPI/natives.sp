@@ -31,6 +31,9 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_GetPlayers", Native_GetPlayers);
 	CreateNative("GlobalAPI_GetPlayersBySteamId", Native_GetPlayersBySteamId);
 	CreateNative("GlobalAPI_GetPlayersBySteamIdAndIp", Native_GetPlayersBySteamIdAndIp);
+
+	// Records
+	CreateNative("GlobalAPI_GetRecords", Native_GetRecords);
 }
 
 // =========================================================== //
@@ -148,7 +151,7 @@ public int Native_GetBans(Handle plugin, int numParams)
 
 /* 
 	native bool GlobalAPI_CreateBan(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
-									char[] steamId, char[] banType, char[] stats, char[] notes, char[] ip);
+										char[] steamId, char[] banType, char[] stats, char[] notes, char[] ip);
 */
 public int Native_CreateBan(Handle plugin, int numParams)
 {
@@ -271,8 +274,8 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 
 /*
 	native bool GlobalAPI_CreateJumpstat(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId,
-										int jumpType, float distance, char[] jumpJsonInfo, int tickRate, int mslCount,
-										bool isCrouchBind, bool isForwardBind, bool isCrouchBoost, int strafeCount);
+											int jumpType, float distance, char[] jumpJsonInfo, int tickRate, int mslCount,
+											bool isCrouchBind, bool isForwardBind, bool isCrouchBoost, int strafeCount);
 */
 public int Native_CreateJumpstat(Handle plugin, int numParams)
 {
@@ -319,14 +322,14 @@ public int Native_CreateJumpstat(Handle plugin, int numParams)
 
 /*
 	native bool GlobalAPI_GetJumpstatTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] jumpType,
-										int id = DEFAULT_INT, int serverId = DEFAULT_INT, int steamId64 = DEFAULT_INT,
-										char[] steamId = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING,
-										char[] jumpTypeList = DEFAULT_STRING, float greaterThanDistance = DEFAULT_FLOAT,
-										float lessThanDistance = DEFAULT_FLOAT, bool isMsl = DEFAULT_BOOL,
-										bool isCrouchBind = DEFAULT_BOOL, bool isForwardBind = DEFAULT_BOOL,
-										bool isCrouchBoost = DEFAULT_BOOL, int updatedById = DEFAULT_INT,
-										char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
-										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+											int id = DEFAULT_INT, int serverId = DEFAULT_INT, int steamId64 = DEFAULT_INT,
+											char[] steamId = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING,
+											char[] jumpTypeList = DEFAULT_STRING, float greaterThanDistance = DEFAULT_FLOAT,
+											float lessThanDistance = DEFAULT_FLOAT, bool isMsl = DEFAULT_BOOL,
+											bool isCrouchBind = DEFAULT_BOOL, bool isForwardBind = DEFAULT_BOOL,
+											bool isCrouchBoost = DEFAULT_BOOL, int updatedById = DEFAULT_INT,
+											char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
+											int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 */
 public int Native_GetJumpstatTop(Handle plugin, int numParams)
 {
@@ -643,6 +646,48 @@ public int Native_GetPlayersBySteamIdAndIp(Handle plugin, int numParams)
 	hData.SetKeyHidden("ip", true);
 
 	return GetPlayersBySteamIdAndIp(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] mapName = DEFAULT_STRING,
+										char[] modes = DEFAULT_STRING, int tickRate = DEFAULT_INT, char[] steamId = DEFAULT_STRING,
+										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+*/
+public int Native_GetRecords(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char mapName[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, mapName, sizeof(mapName));
+
+	char modes[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(4, modes, sizeof(modes));
+
+	int tickRate = GetNativeCell(5);
+
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(6, steamId, sizeof(steamId));
+
+	int offset = GetNativeCell(7);
+	int limit = GetNativeCell(8);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("map_name", mapName);
+	hData.AddString("modes", modes);
+	hData.AddNum("tick_rate", tickRate);
+	hData.AddString("steam_id", steamId);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.AddData(data);
+	hData.AddCallback(hFwd);
+
+	return GetRecords(hData);
 }
 
 // =========================================================== //

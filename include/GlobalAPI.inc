@@ -33,8 +33,8 @@
 
 typeset OnAPICallFinished
 {
-	function void(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData);
-	function void(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data);
+	function void(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData);
+	function void(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData, any data);
 }
 
 // ======================= FORWARDS ========================== //
@@ -104,6 +104,10 @@ native bool GlobalAPI_GetPlayersBySteamId(OnAPICallFinished callback = INVALID_F
 
 native bool GlobalAPI_GetPlayersBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, char[] ip);
 
+native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] mapName = DEFAULT_STRING,
+									char[] modes = DEFAULT_STRING, int tickRate = DEFAULT_INT, char[] steamId = DEFAULT_STRING,
+									int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -149,6 +153,9 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_GetPlayers");
 	MarkNativeAsOptional("GlobalAPI_GetPlayersBySteamId");
 	MarkNativeAsOptional("GlobalAPI_GetPlayersBySteamIdAndIp");
+
+	// Records
+	MarkNativeAsOptional("GlobalAPI_GetRecords");
 }
 #endif
 

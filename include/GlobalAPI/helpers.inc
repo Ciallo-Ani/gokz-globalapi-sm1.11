@@ -29,4 +29,8 @@
 #include <GlobalAPI/helpers/players/APIPlayer>
 #include <GlobalAPI/helpers/players/APIPlayers>
 
+// Records
+#include <GlobalAPI/helpers/records/APIRecord>
+#include <GlobalAPI/helpers/records/APIRecords>
+
 // =========================================================== //
