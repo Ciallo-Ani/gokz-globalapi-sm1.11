@@ -75,8 +75,8 @@ public int Native_GetAuthStatus(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 	
 	return GetAuthStatus(hData);
 }
@@ -145,8 +145,8 @@ public int Native_GetBans(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 	
 	return GetBans(hData);
 }
@@ -186,8 +186,8 @@ public int Native_CreateBan(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 	
 	return CreateBan(hData);
 }
@@ -268,8 +268,8 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 	
 	return GetJumpstats(hData);
 }
@@ -316,8 +316,8 @@ public int Native_CreateJumpstat(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	return CreateJumpstat(hData);
 }
@@ -395,8 +395,8 @@ public int Native_GetJumpstatTop(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	// This is a URL param so set it hidden
 	hData.SetKeyHidden("jumpType", true);
@@ -422,8 +422,8 @@ public int Native_GetJumpstatTop30(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	// This is a URL param so set it hidden
 	hData.SetKeyHidden("jumpType", true);
@@ -474,8 +474,8 @@ public int Native_GetMaps(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	return GetMaps(hData);
 }
@@ -494,8 +494,8 @@ public int Native_GetModes(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	return GetModes(hData);
 }
@@ -516,8 +516,8 @@ public int Native_GetModeById(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	// This is a URL param so set it hidden
 	hData.SetKeyHidden("id", true);
@@ -543,8 +543,8 @@ public int Native_GetModeByName(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	// This is a URL param so set it hidden
 	hData.SetKeyHidden("name", true);
@@ -586,8 +586,8 @@ public int Native_GetPlayers(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	return GetPlayers(hData);
 }
@@ -610,8 +610,8 @@ public int Native_GetPlayersBySteamId(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	// This is a URL param so set it hidden
 	hData.SetKeyHidden("steamid", true);
@@ -641,8 +641,8 @@ public int Native_GetPlayersBySteamIdAndIp(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	// This is a URL param so set it hidden
 	hData.SetKeyHidden("steamid", true);
@@ -687,8 +687,8 @@ public int Native_GetRecords(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	return GetRecords(hData);
 }
@@ -728,8 +728,8 @@ public int Native_CreateRecord(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	return CreateRecord(hData);
 }
@@ -750,8 +750,8 @@ public int Native_GetRecordPlaceById(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	// This is a URL param so set it hidden
 	hData.SetKeyHidden("id", true);
@@ -811,8 +811,8 @@ public int Native_GetRecordsTop(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	return GetRecordsTop(hData);
 }
@@ -878,8 +878,8 @@ public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	return GetRecordsTopRecent(hData);
 }
