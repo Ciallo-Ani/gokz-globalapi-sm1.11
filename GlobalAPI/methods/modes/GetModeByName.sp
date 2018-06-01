@@ -22,7 +22,7 @@ public bool GetModeByName(GlobalAPIRequestData hData)
 	}
 
 	request.SetData(hData);
-	request.SetTimeout(5);
+	request.SetTimeout(15);
 	request.SetCallbacks();
 	request.SetAuthHeader();
 	request.SetAcceptHeaders();

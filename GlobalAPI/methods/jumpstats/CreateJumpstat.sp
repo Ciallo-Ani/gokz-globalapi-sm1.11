@@ -9,7 +9,7 @@ public bool CreateJumpstat(GlobalAPIRequestData hData)
 {
 	if (!gB_usingAPIKey && !gB_Debug)
 	{
-		LogMessage("[GlobalAPI] Using the method <CreateJumpstats> requires an API key, and you dont seem to have one setup!");
+		LogMessage("[GlobalAPI] Using the method <CreateJumpstat> requires an API key, and you dont seem to have one setup!");
 		return false;
 	}
 	
@@ -30,7 +30,7 @@ public bool CreateJumpstat(GlobalAPIRequestData hData)
 	}
 
 	request.SetData(hData);
-	request.SetTimeout(5);
+	request.SetTimeout(15);
 	request.SetCallbacks();
 	request.SetAuthHeader();
 	request.SetAcceptHeaders();

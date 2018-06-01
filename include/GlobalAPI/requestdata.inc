@@ -30,6 +30,12 @@ methodmap GlobalAPIRequestData < JSON_Object
 		this.SetKeyHidden("url", true);
 	}
 
+	public void AddStatus(int status)
+	{
+		this.SetInt("status", status);
+		this.SetKeyHidden("status", true);
+	}
+
 	public void AddFailure(bool failure)
 	{
 		this.SetBool("failure", failure);

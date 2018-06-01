@@ -34,6 +34,7 @@ public void CreateNatives()
 
 	// Records
 	CreateNative("GlobalAPI_GetRecords", Native_GetRecords);
+	CreateNative("GlobalAPI_CreateRecord", Native_CreateRecord);
 }
 
 // =========================================================== //
@@ -688,6 +689,47 @@ public int Native_GetRecords(Handle plugin, int numParams)
 	hData.AddCallback(hFwd);
 
 	return GetRecords(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_CreateRecord(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, int mapId,
+										char[] mode, int stage, int tickRate, int teleports, float time);
+*/
+public int Native_CreateRecord(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, steamId, sizeof(steamId));
+
+	int mapId = GetNativeCell(4);
+
+	char mode[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(5, mode, sizeof(mode));
+
+	int stage = GetNativeCell(6);
+	int tickRate = GetNativeCell(7);
+	int teleports = GetNativeCell(8);
+	float time = GetNativeCell(9);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("steam_id", steamId);
+	hData.AddNum("map_id", mapId);
+	hData.AddString("mode", mode);
+	hData.AddNum("stage", stage);
+	hData.AddNum("tickrate", tickRate);
+	hData.AddNum("teleports", teleports);
+	hData.AddFloat("time", time);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.AddData(data);
+	hData.AddCallback(hFwd);
+
+	return CreateRecord(hData);
 }
 
 // =========================================================== //

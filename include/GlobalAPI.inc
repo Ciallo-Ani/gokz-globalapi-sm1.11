@@ -108,6 +108,9 @@ native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, 
 									char[] modes = DEFAULT_STRING, int tickRate = DEFAULT_INT, char[] steamId = DEFAULT_STRING,
 									int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
+native bool GlobalAPI_CreateRecord(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, int mapId,
+									char[] mode, int stage, int tickRate, int teleports, float time);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -156,6 +159,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 
 	// Records
 	MarkNativeAsOptional("GlobalAPI_GetRecords");
+	MarkNativeAsOptional("GlobalAPI_CreateRecord");
 }
 #endif
 

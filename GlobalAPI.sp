@@ -90,31 +90,13 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetRecords(OnRecords, .mapName = "kz_man_everest_go_fix");
+	GlobalAPI_CreateRecord(OnRecord, _, "STEAM_1:1:21505111", 200, "kz_timer", 0, 128, 1, 240.69);
 }
 
-public void OnRecords(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)
+public void OnRecord(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)
 {
-	APIRecords records = new APIRecords(hResponse);
-	APIRecord record = new APIRecord(records.GetById(0));
-
-	char playerName[64];
-	record.GetPlayerName(playerName, sizeof(playerName));
-
-	char steamId[64];
-	record.GetSteamId(steamId, sizeof(steamId));
-
-	char mode[20];
-	record.GetMode(mode, sizeof(mode));
-
-	char serverName[64];
-	record.GetServerName(serverName, sizeof(serverName));
-
-	char mapName[64];
-	record.GetMapName(mapName, sizeof(mapName));
-
-	PrintToServer("Player \"%s\" (%s) completed a %s run with time %f on map \"%s\" and server \"%s\"",
-					playerName, steamId, mode, record.time, mapName, serverName);
+	int status = hData.GetInt("status");
+	PrintToServer("Call done! Request had statuscode: %d", status);
 }
 
 // =========================================================== //
