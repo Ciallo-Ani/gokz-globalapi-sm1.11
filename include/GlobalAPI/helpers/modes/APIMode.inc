@@ -18,7 +18,7 @@ methodmap APIMode < JSON_Object
 		return view_as<APIMode>(hMode);
 	}
 	
-	property int Id
+	property int id
 	{
 		public get() { return this.GetInt("id"); }
 	}

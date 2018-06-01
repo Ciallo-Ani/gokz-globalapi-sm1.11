@@ -18,7 +18,7 @@ methodmap APIRecord < JSON_Object
 		return view_as<APIRecord>(hRecord);
 	}
 	
-	property int Id
+	property int id
 	{
 		public get() { return this.GetInt("id"); }
 	}

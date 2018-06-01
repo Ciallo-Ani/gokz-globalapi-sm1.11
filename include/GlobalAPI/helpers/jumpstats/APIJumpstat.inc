@@ -18,7 +18,7 @@ methodmap APIJumpstat < JSON_Object
 		return view_as<APIJumpstat>(hJump);
 	}
 
-	property int Id
+	property int id
 	{
 		public get() { return this.GetInt("id"); }
 	}

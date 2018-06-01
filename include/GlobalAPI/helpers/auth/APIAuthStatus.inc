@@ -28,7 +28,7 @@ methodmap APIAuthStatus < JSON_Object
 		public get() { return this.GetBool("isValid"); }
 	}
 	
-	property int Identity
+	property int identity
 	{
 		public get() { return this.GetInt("identity"); }
 	}
