@@ -90,13 +90,28 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetRecordPlaceById(OnRecord, _, 200);
+	GlobalAPI_GetRecordsTop(OnRecords, _, .steamId = "STEAM_1:1:21505111");
 }
 
-public void OnRecord(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)
+public void OnRecords(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)
 {
-	int status = hData.GetInt("status");
-	PrintToServer("Call done! Request had statuscode: %d", status);
+	APIRecords records = new APIRecords(hResponse);
+	APIRecord record = new APIRecord(records.GetById(0));
+
+	char playerName[64];
+	record.GetPlayerName(playerName, sizeof(playerName));
+
+	char mode[20];
+	record.GetMode(mode, sizeof(mode));
+
+	char mapName[64];
+	record.GetMapName(mapName, sizeof(mapName));
+
+	PrintToServer("Record with index 0:");
+	PrintToServer("Player Name: %s", playerName);
+	PrintToServer("Time: %f", record.time);
+	PrintToServer("Mode: %s", mode);
+	PrintToServer("Map: %s", mapName);
 }
 
 // =========================================================== //

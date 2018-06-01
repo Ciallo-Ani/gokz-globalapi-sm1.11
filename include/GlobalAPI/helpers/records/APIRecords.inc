@@ -15,7 +15,11 @@ methodmap APIRecords < JSON_Object
 {
 	public APIRecords(JSON_Object hRecords)
 	{
-		return view_as<APIRecords>(hRecords.GetObject("result"));
+		if (hRecords.HasKey("result"))
+		{
+			return view_as<APIRecords>(hRecords.GetObject("result"));
+		}
+		return view_as<APIRecords>(hRecords);
 	}
 	
 	property int Count

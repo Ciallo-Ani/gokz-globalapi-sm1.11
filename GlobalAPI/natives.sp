@@ -36,6 +36,7 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_GetRecords", Native_GetRecords);
 	CreateNative("GlobalAPI_CreateRecord", Native_CreateRecord);
 	CreateNative("GlobalAPI_GetRecordPlaceById", Native_GetRecordPlaceById);
+	CreateNative("GlobalAPI_GetRecordsTop", Native_GetRecordsTop);
 }
 
 // =========================================================== //
@@ -755,6 +756,64 @@ public int Native_GetRecordPlaceById(Handle plugin, int numParams)
 	hData.SetKeyHidden("id", true);
 
 	return GetRecordPlaceById(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetRecordsTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+											char[] steamId = DEFAULT_STRING, int steamId64 = DEFAULT_INT, int mapId = DEFAULT_INT,
+											char[] mapName = DEFAULT_STRING, int tickRate = DEFAULT_INT, int stage = DEFAULT_INT,
+											char[] modes = DEFAULT_STRING, bool hasTeleports = DEFAULT_BOOL, char[] playerName = DEFAULT_STRING,
+											int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+*/
+public int Native_GetRecordsTop(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, steamId, sizeof(steamId));
+
+	int steamId64 = GetNativeCell(4);
+	int mapId = GetNativeCell(5);
+
+	char mapName[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(6, mapName, sizeof(mapName));
+
+	int tickRate = GetNativeCell(7);
+	int stage = GetNativeCell(8);
+
+	char modes[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(9, modes, sizeof(modes));
+
+	bool hasTeleports = GetNativeCell(10);
+
+	char playerName[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(11, playerName, sizeof(playerName));
+
+	int offset = GetNativeCell(12);
+	int limit = GetNativeCell(13);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("steam_id", steamId);
+	hData.AddNum("steamid64", steamId64);
+	hData.AddNum("map_id", mapId);
+	hData.AddString("map_name", mapName);
+	hData.AddNum("tickrate", tickRate);
+	hData.AddNum("stage", stage);
+	hData.AddString("modes_list_string", modes);
+	hData.AddBool("has_teleports", hasTeleports);
+	hData.AddString("player_name", playerName);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.AddData(data);
+	hData.AddCallback(hFwd);
+
+	return GetRecordsTop(hData);
 }
 
 // =========================================================== //
