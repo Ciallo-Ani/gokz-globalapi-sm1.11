@@ -127,6 +127,11 @@ native bool GlobalAPI_GetRecordsTopRecent(OnAPICallFinished callback = INVALID_F
 											bool hasTeleports = DEFAULT_BOOL, char[] createdSince = DEFAULT_STRING,
 											char[] playerName = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
+native bool GlobalAPI_GetServers(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+									int id = DEFAULT_INT, int port = DEFAULT_INT, char[] ip = DEFAULT_STRING,
+									char[] name = DEFAULT_STRING, int ownerSteamId64 = DEFAULT_INT,
+									int approvalStatus = DEFAULT_INT, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -179,6 +184,9 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_GetRecordPlaceById");
 	MarkNativeAsOptional("GlobalAPI_GetRecordsTop");
 	MarkNativeAsOptional("GlobalAPI_GetRecordsTopRecent");
+
+	// Servers
+	MarkNativeAsOptional("GlobalAPI_GetServers");
 }
 #endif
 

@@ -46,10 +46,7 @@ public Action Command_AuthCheck(int client, int args)
 	int numberOfRemainingChars = strlen(apiKey) - 5;
 	FormatEx(apiKey, sizeof(apiKey), "%.5s", apiKey);
 	
-	while (numberOfRemainingChars--)
-	{
-		StrCat(apiKey, sizeof(apiKey), "X");
-	}
+	while (numberOfRemainingChars--) StrCat(apiKey, sizeof(apiKey), "X");
 	
 	PrintToServer("[GlobalAPI Auth] Attempting to get status for %s", apiKey);
 	GlobalAPI_GetAuthStatus(OnAuth);
@@ -64,7 +61,7 @@ public void OnAuth(bool bFailure, JSON_Object hAuth, GlobalAPIRequestData hData)
 		char serverType[30];
 		status.GetType(serverType, sizeof(serverType));
 
-		PrintToServer("[GlobalAPI Auth] Server ID: %d", status.Identity);
+		PrintToServer("[GlobalAPI Auth] Server ID: %d", status.identity);
 		PrintToServer("[GlobalAPI Auth] Server Type: %s", serverType);
 		PrintToServer("[GlobalAPI Auth] Validated: %s", status.isValid ? "YES" : "NO");
 	}

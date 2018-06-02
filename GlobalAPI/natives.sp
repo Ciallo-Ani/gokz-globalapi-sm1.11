@@ -38,6 +38,9 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_GetRecordPlaceById", Native_GetRecordPlaceById);
 	CreateNative("GlobalAPI_GetRecordsTop", Native_GetRecordsTop);
 	CreateNative("GlobalAPI_GetRecordsTopRecent", Native_GetRecordsTopRecent);
+
+	// Servers
+	CreateNative("GlobalAPI_GetServers", Native_GetServers);
 }
 
 // =========================================================== //
@@ -882,6 +885,51 @@ public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
 	hData.callback = hFwd;
 
 	return GetRecordsTopRecent(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetServers(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+										int id = DEFAULT_INT, int port = DEFAULT_INT, char[] ip = DEFAULT_STRING,
+										char[] name = DEFAULT_STRING, int ownerSteamId64 = DEFAULT_INT,
+										int approvalStatus = DEFAULT_INT, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+*/
+public int Native_GetServers(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	int id = GetNativeCell(3);
+	int port = GetNativeCell(4);
+
+	char ip[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(5, ip, sizeof(ip));
+
+	char name[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(6, name, sizeof(name));
+
+	int ownerSteamId64 = GetNativeCell(7);
+	int approvalStatus = GetNativeCell(8);
+	int offset = GetNativeCell(9);
+	int limit = GetNativeCell(10);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddNum("id", id);
+	hData.AddNum("port", port);
+	hData.AddString("ip", ip);
+	hData.AddString("name", name);
+	hData.AddNum("owner_steamid64", ownerSteamId64);
+	hData.AddNum("approval_status", approvalStatus);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+
+	return GetServers(hData);
 }
 
 // =========================================================== //
