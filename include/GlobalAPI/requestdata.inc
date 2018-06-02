@@ -30,23 +30,57 @@ methodmap GlobalAPIRequestData < JSON_Object
 		this.SetKeyHidden("url", true);
 	}
 
-	public void AddFailure(bool failure)
+	property int status
 	{
-		this.SetBool("failure", failure);
-		this.SetKeyHidden("failure", true);
+		public get()
+		{
+			return this.GetInt("status");
+		}
+		public set(int status)
+		{
+			this.SetInt("status", status);
+			this.SetKeyHidden("status", true);
+		}
 	}
 
-	public void AddData(any data)
+	property bool failure
 	{
-		this.SetInt("data", data);
-		this.SetKeyHidden("data", true);
+		public get()
+		{
+			return this.GetBool("failure");
+		}
+		public set(bool failure)
+		{
+			this.SetBool("failure", failure);
+			this.SetKeyHidden("failure", true);
+		}
 	}
 
-	public void AddCallback(Handle hFwd)
+	property Handle callback
 	{
-		this.SetHandle("callback", hFwd);
-		this.SetKeyHidden("callback", true);
-		this.SetKeyType("callback", Type_Int);
+		public get()
+		{
+			return view_as<Handle>(this.GetInt("callback"));
+		}
+		public set(Handle hFwd)
+		{
+			this.SetHandle("callback", hFwd);
+			this.SetKeyType("callback", Type_Int);
+			this.SetKeyHidden("callback", true);
+		}
+	}
+	
+	property any data
+	{
+		public get()
+		{
+			return this.GetInt("data");
+		}
+		public set(any data)
+		{
+			this.SetInt("data", data);
+			this.SetKeyHidden("data", true);
+		}
 	}
 
 	public void AddNum(char[] key, int value)

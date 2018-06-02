@@ -1,9 +1,9 @@
 // ================== DOUBLE INCLUDE ========================= //
 
-#if defined _GlobalAPI_Bans_Helper_included_
+#if defined _GlobalAPI_Records_Helper_included_
 #endinput
 #endif
-#define _GlobalAPI_Bans_Helper_included_
+#define _GlobalAPI_Records_Helper_included_
 
 // =========================================================== //
 
@@ -11,11 +11,15 @@
 
 // =========================================================== //
 
-methodmap APIBans < JSON_Object
+methodmap APIRecords < JSON_Object
 {
-	public APIBans(JSON_Object hBans)
+	public APIRecords(JSON_Object hRecords)
 	{
-		return view_as<APIBans>(hBans);
+		if (hRecords.HasKey("result"))
+		{
+			return view_as<APIRecords>(hRecords.GetObject("result"));
+		}
+		return view_as<APIRecords>(hRecords);
 	}
 	
 	property int Count

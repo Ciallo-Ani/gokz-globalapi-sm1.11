@@ -49,6 +49,8 @@ bool gB_Staging = false;
 #include "GlobalAPI/methods/bans.sp"
 #include "GlobalAPI/methods/maps.sp"
 #include "GlobalAPI/methods/modes.sp"
+#include "GlobalAPI/methods/players.sp"
+#include "GlobalAPI/methods/records.sp"
 #include "GlobalAPI/methods/jumpstats.sp"
 
 // ====================== PLUGIN INFO ======================== //
@@ -88,22 +90,28 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetModeByName(OnMode, _, "kz_timer");
+	GlobalAPI_GetRecordsTopRecent(OnRecords, _, .steamId = "STEAM_1:1:21505111");
 }
 
-public void OnMode(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData)
+public void OnRecords(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)
 {
-	APIMode mode = new APIMode(hJson);
+	APIRecords records = new APIRecords(hResponse);
+	APIRecord record = new APIRecord(records.GetById(0));
 
-	char modeName[64];
-	mode.GetName(modeName, sizeof(modeName));
+	char playerName[64];
+	record.GetPlayerName(playerName, sizeof(playerName));
 
-	char description[64];
-	mode.GetDescription(description, sizeof(description));
+	char mode[20];
+	record.GetMode(mode, sizeof(mode));
 
-	PrintToServer("Mode: %s", modeName);
-	PrintToServer("Description: %s", description);
-	PrintToServer("Latest Version: %d", mode.latestVersion);
+	char mapName[64];
+	record.GetMapName(mapName, sizeof(mapName));
+
+	PrintToServer("Record with index 0:");
+	PrintToServer("Player Name: %s", playerName);
+	PrintToServer("Time: %f", record.time);
+	PrintToServer("Mode: %s", mode);
+	PrintToServer("Map: %s", mapName);
 }
 
 // =========================================================== //

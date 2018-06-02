@@ -23,7 +23,7 @@ methodmap APIBan < JSON_Object
 		public get() { return this.GetInt("updated_by_id"); }
 	}
 	
-	property int Id
+	property int id
 	{
 		public get() { return this.GetInt("id"); }
 	}

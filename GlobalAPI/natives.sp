@@ -26,6 +26,18 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_GetModes", Native_GetModes);
 	CreateNative("GlobalAPI_GetModeById", Native_GetModeById);
 	CreateNative("GlobalAPI_GetModeByName", Native_GetModeByName);
+
+	// Players
+	CreateNative("GlobalAPI_GetPlayers", Native_GetPlayers);
+	CreateNative("GlobalAPI_GetPlayersBySteamId", Native_GetPlayersBySteamId);
+	CreateNative("GlobalAPI_GetPlayersBySteamIdAndIp", Native_GetPlayersBySteamIdAndIp);
+
+	// Records
+	CreateNative("GlobalAPI_GetRecords", Native_GetRecords);
+	CreateNative("GlobalAPI_CreateRecord", Native_CreateRecord);
+	CreateNative("GlobalAPI_GetRecordPlaceById", Native_GetRecordPlaceById);
+	CreateNative("GlobalAPI_GetRecordsTop", Native_GetRecordsTop);
+	CreateNative("GlobalAPI_GetRecordsTopRecent", Native_GetRecordsTopRecent);
 }
 
 // =========================================================== //
@@ -63,8 +75,8 @@ public int Native_GetAuthStatus(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 	
 	return GetAuthStatus(hData);
 }
@@ -133,8 +145,8 @@ public int Native_GetBans(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 	
 	return GetBans(hData);
 }
@@ -143,7 +155,7 @@ public int Native_GetBans(Handle plugin, int numParams)
 
 /* 
 	native bool GlobalAPI_CreateBan(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
-									char[] steamId, char[] banType, char[] stats, char[] notes, char[] ip);
+										char[] steamId, char[] banType, char[] stats, char[] notes, char[] ip);
 */
 public int Native_CreateBan(Handle plugin, int numParams)
 {
@@ -174,8 +186,8 @@ public int Native_CreateBan(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 	
 	return CreateBan(hData);
 }
@@ -256,8 +268,8 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 	
 	return GetJumpstats(hData);
 }
@@ -266,8 +278,8 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 
 /*
 	native bool GlobalAPI_CreateJumpstat(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId,
-										int jumpType, float distance, char[] jumpJsonInfo, int tickRate, int mslCount,
-										bool isCrouchBind, bool isForwardBind, bool isCrouchBoost, int strafeCount);
+											int jumpType, float distance, char[] jumpJsonInfo, int tickRate, int mslCount,
+											bool isCrouchBind, bool isForwardBind, bool isCrouchBoost, int strafeCount);
 */
 public int Native_CreateJumpstat(Handle plugin, int numParams)
 {
@@ -304,8 +316,8 @@ public int Native_CreateJumpstat(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	return CreateJumpstat(hData);
 }
@@ -314,14 +326,14 @@ public int Native_CreateJumpstat(Handle plugin, int numParams)
 
 /*
 	native bool GlobalAPI_GetJumpstatTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] jumpType,
-										int id = DEFAULT_INT, int serverId = DEFAULT_INT, int steamId64 = DEFAULT_INT,
-										char[] steamId = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING,
-										char[] jumpTypeList = DEFAULT_STRING, float greaterThanDistance = DEFAULT_FLOAT,
-										float lessThanDistance = DEFAULT_FLOAT, bool isMsl = DEFAULT_BOOL,
-										bool isCrouchBind = DEFAULT_BOOL, bool isForwardBind = DEFAULT_BOOL,
-										bool isCrouchBoost = DEFAULT_BOOL, int updatedById = DEFAULT_INT,
-										char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
-										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+											int id = DEFAULT_INT, int serverId = DEFAULT_INT, int steamId64 = DEFAULT_INT,
+											char[] steamId = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING,
+											char[] jumpTypeList = DEFAULT_STRING, float greaterThanDistance = DEFAULT_FLOAT,
+											float lessThanDistance = DEFAULT_FLOAT, bool isMsl = DEFAULT_BOOL,
+											bool isCrouchBind = DEFAULT_BOOL, bool isForwardBind = DEFAULT_BOOL,
+											bool isCrouchBoost = DEFAULT_BOOL, int updatedById = DEFAULT_INT,
+											char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
+											int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 */
 public int Native_GetJumpstatTop(Handle plugin, int numParams)
 {
@@ -383,8 +395,8 @@ public int Native_GetJumpstatTop(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	// This is a URL param so set it hidden
 	hData.SetKeyHidden("jumpType", true);
@@ -410,8 +422,8 @@ public int Native_GetJumpstatTop30(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	// This is a URL param so set it hidden
 	hData.SetKeyHidden("jumpType", true);
@@ -462,8 +474,8 @@ public int Native_GetMaps(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	return GetMaps(hData);
 }
@@ -482,8 +494,8 @@ public int Native_GetModes(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	return GetModes(hData);
 }
@@ -497,7 +509,6 @@ public int Native_GetModeById(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
 	any data = GetNativeCell(2);
-
 	int id = GetNativeCell(3);
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData();
@@ -505,8 +516,8 @@ public int Native_GetModeById(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	// This is a URL param so set it hidden
 	hData.SetKeyHidden("id", true);
@@ -532,13 +543,345 @@ public int Native_GetModeByName(Handle plugin, int numParams)
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
-	hData.AddData(data);
-	hData.AddCallback(hFwd);
+	hData.data = data;
+	hData.callback = hFwd;
 
 	// This is a URL param so set it hidden
 	hData.SetKeyHidden("name", true);
 
 	return GetModeByName(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING,
+										bool isBanned = DEFAULT_BOOL, int totalRecords = DEFAULT_INT,
+										char[] ip = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING);
+*/
+public int Native_GetPlayers(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, steamId, sizeof(steamId));
+
+	bool isBanned = GetNativeCell(4);
+	int totalRecords = GetNativeCell(5);
+
+	char ip[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(6, ip, sizeof(ip));
+
+	// TODO FIXME: 64 is certainly not enough
+	char steamId64List[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(7, steamId64List, sizeof(steamId64List));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("steam_id", steamId);
+	hData.AddBool("is_banned", isBanned);
+	hData.AddNum("total_records", totalRecords);
+	hData.AddString("ip", ip);
+	hData.AddString("steamid64_list", steamId64List);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+
+	return GetPlayers(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetPlayersBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING);
+*/
+public int Native_GetPlayersBySteamId(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, steamId, sizeof(steamId));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("steamid", steamId);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+
+	// This is a URL param so set it hidden
+	hData.SetKeyHidden("steamid", true);
+
+	return GetPlayersBySteamId(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetPlayersBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, char[] ip);
+*/
+public int Native_GetPlayersBySteamIdAndIp(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, steamId, sizeof(steamId));
+
+	char ip[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(4, ip, sizeof(ip));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("steamid", steamId);
+	hData.AddString("ip", ip);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+
+	// This is a URL param so set it hidden
+	hData.SetKeyHidden("steamid", true);
+	hData.SetKeyHidden("ip", true);
+
+	return GetPlayersBySteamIdAndIp(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] mapName = DEFAULT_STRING,
+										char[] modes = DEFAULT_STRING, int tickRate = DEFAULT_INT, char[] steamId = DEFAULT_STRING,
+										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+*/
+public int Native_GetRecords(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char mapName[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, mapName, sizeof(mapName));
+
+	char modes[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(4, modes, sizeof(modes));
+
+	int tickRate = GetNativeCell(5);
+
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(6, steamId, sizeof(steamId));
+
+	int offset = GetNativeCell(7);
+	int limit = GetNativeCell(8);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("map_name", mapName);
+	hData.AddString("modes", modes);
+	hData.AddNum("tick_rate", tickRate);
+	hData.AddString("steam_id", steamId);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+
+	return GetRecords(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_CreateRecord(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, int mapId,
+										char[] mode, int stage, int tickRate, int teleports, float time);
+*/
+public int Native_CreateRecord(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, steamId, sizeof(steamId));
+
+	int mapId = GetNativeCell(4);
+
+	char mode[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(5, mode, sizeof(mode));
+
+	int stage = GetNativeCell(6);
+	int tickRate = GetNativeCell(7);
+	int teleports = GetNativeCell(8);
+	float time = GetNativeCell(9);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("steam_id", steamId);
+	hData.AddNum("map_id", mapId);
+	hData.AddString("mode", mode);
+	hData.AddNum("stage", stage);
+	hData.AddNum("tickrate", tickRate);
+	hData.AddNum("teleports", teleports);
+	hData.AddFloat("time", time);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+
+	return CreateRecord(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetRecordPlaceById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+*/
+public int Native_GetRecordPlaceById(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+	int id = GetNativeCell(3);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddNum("id", id);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+
+	// This is a URL param so set it hidden
+	hData.SetKeyHidden("id", true);
+
+	return GetRecordPlaceById(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetRecordsTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+											char[] steamId = DEFAULT_STRING, int steamId64 = DEFAULT_INT, int mapId = DEFAULT_INT,
+											char[] mapName = DEFAULT_STRING, int tickRate = DEFAULT_INT, int stage = DEFAULT_INT,
+											char[] modes = DEFAULT_STRING, bool hasTeleports = DEFAULT_BOOL, char[] playerName = DEFAULT_STRING,
+											int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+*/
+public int Native_GetRecordsTop(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, steamId, sizeof(steamId));
+
+	int steamId64 = GetNativeCell(4);
+	int mapId = GetNativeCell(5);
+
+	char mapName[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(6, mapName, sizeof(mapName));
+
+	int tickRate = GetNativeCell(7);
+	int stage = GetNativeCell(8);
+
+	char modes[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(9, modes, sizeof(modes));
+
+	bool hasTeleports = GetNativeCell(10);
+
+	char playerName[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(11, playerName, sizeof(playerName));
+
+	int offset = GetNativeCell(12);
+	int limit = GetNativeCell(13);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("steam_id", steamId);
+	hData.AddNum("steamid64", steamId64);
+	hData.AddNum("map_id", mapId);
+	hData.AddString("map_name", mapName);
+	hData.AddNum("tickrate", tickRate);
+	hData.AddNum("stage", stage);
+	hData.AddString("modes_list_string", modes);
+	hData.AddBool("has_teleports", hasTeleports);
+	hData.AddString("player_name", playerName);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+
+	return GetRecordsTop(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetRecordsTopRecent(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING,
+												int steamId64 = DEFAULT_INT, int mapId = DEFAULT_INT, char[] mapName = DEFAULT_STRING,
+												int tickRate = DEFAULT_INT, int stage = DEFAULT_INT, char[] modes = DEFAULT_STRING,
+												int placeTopAtLeast = DEFAULT_INT, int placeTopOverallAtLeast = DEFAULT_INT,
+												bool hasTeleports = DEFAULT_BOOL, char[] createdSince = DEFAULT_STRING,
+												char[] playerName = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+*/
+public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, steamId, sizeof(steamId));
+
+	int steamId64 = GetNativeCell(4);
+	int mapId = GetNativeCell(5);
+
+	char mapName[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(6, mapName, sizeof(mapName));
+
+	int tickRate = GetNativeCell(7);
+	int stage = GetNativeCell(8);
+
+	char modes[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(9, modes, sizeof(modes));
+
+	int placeTopAtLeast = GetNativeCell(10);
+	int placeTopOverallAtLeast = GetNativeCell(11);
+	bool hasTeleports = GetNativeCell(12);
+
+	char createdSince[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(13, createdSince, sizeof(createdSince));
+
+	char playerName[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(14, playerName, sizeof(playerName));
+
+	int offset = GetNativeCell(15);
+	int limit = GetNativeCell(16);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddString("steam_id", steamId);
+	hData.AddNum("steamid64", steamId64);
+	hData.AddNum("map_id", mapId);
+	hData.AddString("map_name", mapName);
+	hData.AddNum("tickrate", tickRate);
+	hData.AddNum("stage", stage);
+	hData.AddString("modes_list_string", modes);
+	hData.AddNum("place_top_at_least", placeTopAtLeast);
+	hData.AddNum("place_top_overall_at_least", placeTopOverallAtLeast);
+	hData.AddBool("has_teleports", hasTeleports);
+	hData.AddString("created_since", createdSince);
+	hData.AddString("player_name", playerName);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+
+	return GetRecordsTopRecent(hData);
 }
 
 // =========================================================== //

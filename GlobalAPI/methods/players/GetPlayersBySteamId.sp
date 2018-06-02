@@ -1,18 +1,19 @@
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+	native bool GlobalAPI_GetPlayersBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING);
 */
-public bool GetModeById(GlobalAPIRequestData hData)
+public bool GetPlayersBySteamId(GlobalAPIRequestData hData)
 {
-	int id = hData.GetInt("id");
-
+	char steamId[MAX_QUERYPARAM_LENGTH];
+	hData.GetString("steamid", steamId, sizeof(steamId));
+	
 	char requestUrl[MAX_QUERYURL_LENGTH];
-	Format(requestUrl, sizeof(requestUrl), "%s/modes/id/%d", gC_baseUrl, id);
+	Format(requestUrl, sizeof(requestUrl), "%s/players/steamid/%s", gC_baseUrl, steamId);
 	hData.AddUrl(requestUrl);
 	
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodGET);
-	
+
 	if (request == null)
 	{
 		delete hData;

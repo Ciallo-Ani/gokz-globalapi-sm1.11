@@ -1,18 +1,21 @@
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+	native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING,
+										bool isBanned = DEFAULT_BOOL, int totalRecords = DEFAULT_INT, 
+										char[] ip = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING);
 */
-public bool GetModeById(GlobalAPIRequestData hData)
+public bool GetPlayers(GlobalAPIRequestData hData)
 {
-	int id = hData.GetInt("id");
-
+	char requestParams[MAX_QUERYPARAM_NUM * MAX_QUERYPARAM_LENGTH];
+	hData.ToString(requestParams, sizeof(requestParams));
+	
 	char requestUrl[MAX_QUERYURL_LENGTH];
-	Format(requestUrl, sizeof(requestUrl), "%s/modes/id/%d", gC_baseUrl, id);
+	Format(requestUrl, sizeof(requestUrl), "%s/players%s", gC_baseUrl, requestParams);
 	hData.AddUrl(requestUrl);
 	
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodGET);
-	
+
 	if (request == null)
 	{
 		delete hData;

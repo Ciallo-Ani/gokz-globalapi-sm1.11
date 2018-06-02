@@ -1,9 +1,9 @@
 // ================== DOUBLE INCLUDE ========================= //
 
-#if defined _GlobalAPI_Bans_Helper_included_
+#if defined _GlobalAPI_Players_Helper_included_
 #endinput
 #endif
-#define _GlobalAPI_Bans_Helper_included_
+#define _GlobalAPI_Players_Helper_included_
 
 // =========================================================== //
 
@@ -11,11 +11,11 @@
 
 // =========================================================== //
 
-methodmap APIBans < JSON_Object
+methodmap APIPlayers < JSON_Object
 {
-	public APIBans(JSON_Object hBans)
+	public APIPlayers(JSON_Object hPlayers)
 	{
-		return view_as<APIBans>(hBans);
+		return view_as<APIPlayers>(hPlayers);
 	}
 	
 	property int Count

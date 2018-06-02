@@ -33,8 +33,8 @@
 
 typeset OnAPICallFinished
 {
-	function void(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData);
-	function void(bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data);
+	function void(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData);
+	function void(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData, any data);
 }
 
 // ======================= FORWARDS ========================== //
@@ -96,6 +96,37 @@ native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION,
 
 native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] name);
 
+native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING,
+									bool isBanned = DEFAULT_BOOL, int totalRecords = DEFAULT_INT,
+									char[] ip = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING);
+
+native bool GlobalAPI_GetPlayersBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId);
+
+native bool GlobalAPI_GetPlayersBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, char[] ip);
+
+native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] mapName = DEFAULT_STRING,
+									char[] modes = DEFAULT_STRING, int tickRate = DEFAULT_INT, char[] steamId = DEFAULT_STRING,
+									int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+
+native bool GlobalAPI_CreateRecord(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, int mapId,
+									char[] mode, int stage, int tickRate, int teleports, float time);
+
+#pragma deprecated "This method does not return JSON at the moment!"
+native bool GlobalAPI_GetRecordPlaceById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+
+native bool GlobalAPI_GetRecordsTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+										char[] steamId = DEFAULT_STRING, int steamId64 = DEFAULT_INT, int mapId = DEFAULT_INT,
+										char[] mapName = DEFAULT_STRING, int tickRate = DEFAULT_INT, int stage = DEFAULT_INT,
+										char[] modes = DEFAULT_STRING, bool hasTeleports = DEFAULT_BOOL, char[] playerName = DEFAULT_STRING,
+										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+
+native bool GlobalAPI_GetRecordsTopRecent(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING,
+											int steamId64 = DEFAULT_INT, int mapId = DEFAULT_INT, char[] mapName = DEFAULT_STRING,
+											int tickRate = DEFAULT_INT, int stage = DEFAULT_INT, char[] modes = DEFAULT_STRING,
+											int placeTopAtLeast = DEFAULT_INT, int placeTopOverallAtLeast = DEFAULT_INT,
+											bool hasTeleports = DEFAULT_BOOL, char[] createdSince = DEFAULT_STRING,
+											char[] playerName = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -136,6 +167,18 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_GetModes");
 	MarkNativeAsOptional("GlobalAPI_GetModeById");
 	MarkNativeAsOptional("GlobalAPI_GetModeByName");
+
+	// Players
+	MarkNativeAsOptional("GlobalAPI_GetPlayers");
+	MarkNativeAsOptional("GlobalAPI_GetPlayersBySteamId");
+	MarkNativeAsOptional("GlobalAPI_GetPlayersBySteamIdAndIp");
+
+	// Records
+	MarkNativeAsOptional("GlobalAPI_GetRecords");
+	MarkNativeAsOptional("GlobalAPI_CreateRecord");
+	MarkNativeAsOptional("GlobalAPI_GetRecordPlaceById");
+	MarkNativeAsOptional("GlobalAPI_GetRecordsTop");
+	MarkNativeAsOptional("GlobalAPI_GetRecordsTopRecent");
 }
 #endif
 
