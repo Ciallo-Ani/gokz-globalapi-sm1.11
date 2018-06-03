@@ -99,18 +99,17 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetServers(OnServers);
+	GlobalAPI_GetServerById(OnServer, _, 200);
 }
 
-public void OnServers(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)
+public void OnServer(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)
 {
-	APIServers servers = new APIServers(hResponse);
-	APIServer server = new APIServer(servers.GetById(0));
+	APIServer server = new APIServer(hResponse);
 
 	char name[128];
 	server.GetName(name, sizeof(name));
 
-	PrintToServer("Server with index 0: \"%s\"", name);
+	PrintToServer("Server: \"%s\"", name);
 }
 
 // =========================================================== //

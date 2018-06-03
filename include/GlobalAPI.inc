@@ -57,7 +57,7 @@ native bool GlobalAPI_GetBans(OnAPICallFinished callback = INVALID_FUNCTION, any
 								char[] updatedSince = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 								
 native bool GlobalAPI_CreateBan(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
-								char[] steamId, char[] banType, char[] stats, char[] notes, char[] ip);
+									char[] steamId, char[] banType, char[] stats, char[] notes, char[] ip);
 
 native bool GlobalAPI_GetJumpstats(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id = DEFAULT_INT,
 									int serverId = DEFAULT_INT, int steamId64 = DEFAULT_INT, char[] steamId = DEFAULT_STRING,
@@ -132,6 +132,8 @@ native bool GlobalAPI_GetServers(OnAPICallFinished callback = INVALID_FUNCTION, 
 									char[] name = DEFAULT_STRING, int ownerSteamId64 = DEFAULT_INT,
 									int approvalStatus = DEFAULT_INT, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
+native bool GlobalAPI_GetServerById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -187,6 +189,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 
 	// Servers
 	MarkNativeAsOptional("GlobalAPI_GetServers");
+	MarkNativeAsOptional("GlobalAPI_GetServerById");
 }
 #endif
 

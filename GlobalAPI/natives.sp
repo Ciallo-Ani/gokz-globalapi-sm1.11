@@ -41,6 +41,7 @@ public void CreateNatives()
 
 	// Servers
 	CreateNative("GlobalAPI_GetServers", Native_GetServers);
+	CreateNative("GlobalAPI_GetServerById", Native_GetServerById);
 }
 
 // =========================================================== //
@@ -930,6 +931,31 @@ public int Native_GetServers(Handle plugin, int numParams)
 	hData.callback = hFwd;
 
 	return GetServers(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetServerById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+*/
+public int Native_GetServerById(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+	int id = GetNativeCell(3);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	hData.AddNum("id", id);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+
+	// This is a URL param so set it hidden
+	hData.SetKeyHidden("id", true);
+
+	return GetServerById(hData);
 }
 
 // =========================================================== //
