@@ -8,7 +8,6 @@
 
 #include <GlobalAPI>
 #include <GlobalAPI/helpers/auth>
-#include <GlobalAPI/helpers/common>
 
 // ====================== FORMATTING ========================= //
 
@@ -70,9 +69,6 @@ public void OnAuth(bool bFailure, JSON_Object hAuth, GlobalAPIRequestData hData)
 	{
 		PrintToServer("[GlobalAPI Auth] Failure during HTTP Request!");
 	}
-
-	APICommonHelper helper = new APICommonHelper(hData);
-	helper.DumpProperties();
 }
 
 // =========================================================== //
