@@ -30,15 +30,21 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnClientAuthorized(int client, const char[] auth)
 {
-	GlobalAPI_GetPlayerBySteamId(OnPlayer, _, auth);
+	GlobalAPI_GetPlayerBySteamId(OnPlayer, GetClientUserId(client), auth);
 }
 
-public void OnPlayer(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)
+public void OnPlayer(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData, int userid)
 {
 	if (!bFailure)
 	{
 		APIPlayer player = new APIPlayer(hResponse);
 		PrintToServer("%s", player.isBanned ? "YES" : "NO");
+
+		if (player.isBanned)
+		{
+			int client = GetClientOfUserId(userid);
+			KickClient(client, "You're globally banned!");
+		}
 	}
 }
 
