@@ -38,7 +38,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnClientAuthorized(int client, const char[] auth)
 {
-	GlobalAPI_GetPlayersBySteamId(OnPlayer, _, auth);
+	GlobalAPI_GetPlayerBySteamId(OnPlayer, _, auth);
 }
 
 public void OnPlayer(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)

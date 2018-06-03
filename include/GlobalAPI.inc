@@ -99,7 +99,7 @@ native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, 
 									bool isBanned = DEFAULT_BOOL, int totalRecords = DEFAULT_INT, const char[] ipAddress = DEFAULT_STRING,
 									const char[] steamId64List = DEFAULT_STRING);
 
-native bool GlobalAPI_GetPlayersBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] steamId);
+native bool GlobalAPI_GetPlayerBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] steamId);
 
 native bool GlobalAPI_GetPlayersBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
 												const char[] steamId, const char[] ipAddress);
@@ -181,7 +181,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 
 	// Players
 	MarkNativeAsOptional("GlobalAPI_GetPlayers");
-	MarkNativeAsOptional("GlobalAPI_GetPlayersBySteamId");
+	MarkNativeAsOptional("GlobalAPI_GetPlayerBySteamId");
 	MarkNativeAsOptional("GlobalAPI_GetPlayersBySteamIdAndIp");
 
 	// Records

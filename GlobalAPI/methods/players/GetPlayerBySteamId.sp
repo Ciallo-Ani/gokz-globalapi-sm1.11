@@ -1,9 +1,9 @@
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetPlayersBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING);
+	native bool GlobalAPI_GetPlayerBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING);
 */
-public bool GetPlayersBySteamId(GlobalAPIRequestData hData)
+public bool GetPlayerBySteamId(GlobalAPIRequestData hData)
 {
 	char steamId[MAX_QUERYPARAM_LENGTH];
 	hData.GetString("steamid", steamId, sizeof(steamId));

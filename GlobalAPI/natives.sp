@@ -29,7 +29,7 @@ public void CreateNatives()
 
 	// Players
 	CreateNative("GlobalAPI_GetPlayers", Native_GetPlayers);
-	CreateNative("GlobalAPI_GetPlayersBySteamId", Native_GetPlayersBySteamId);
+	CreateNative("GlobalAPI_GetPlayerBySteamId", Native_GetPlayerBySteamId);
 	CreateNative("GlobalAPI_GetPlayersBySteamIdAndIp", Native_GetPlayersBySteamIdAndIp);
 
 	// Records
@@ -600,9 +600,9 @@ public int Native_GetPlayers(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetPlayersBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING);
+	native bool GlobalAPI_GetPlayerBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING);
 */
-public int Native_GetPlayersBySteamId(Handle plugin, int numParams)
+public int Native_GetPlayerBySteamId(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
 	any data = GetNativeCell(2);
@@ -621,7 +621,7 @@ public int Native_GetPlayersBySteamId(Handle plugin, int numParams)
 	// This is a URL param so set it hidden
 	hData.SetKeyHidden("steamid", true);
 
-	return GetPlayersBySteamId(hData);
+	return GetPlayerBySteamId(hData);
 }
 
 // =========================================================== //
