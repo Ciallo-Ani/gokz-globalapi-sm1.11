@@ -1,7 +1,15 @@
 // ====================== DEFINITIONS ======================== //
 
+// NOTE: Should all the GET/POST methods be made into a single one?
+// I think we can build the url in the native and pass it on requestdata
+
+// NOTE: Maybe we could also make the iterating methodmaps a single one too
+// EX: APIBans, APIPlayers, APIModes... they all serve same usage
+
+#define MAX_BASEURL_LENGTH 64
 #define MAX_APIKEY_LENGTH 128
 #define APIKEY_PATH "cfg/sourcemod/GlobalAPI-key.cfg"
+#define CONFIG_PATH "GlobalAPI-conf" // .cfg is implied
 
 #define MAX_QUERYPARAM_NUM 20
 #define MAX_QUERYURL_LENGTH 2048
@@ -26,9 +34,9 @@
 // ====================== VARIABLES ========================== //
 
 // Plugin
-char gC_baseUrl[64];
 bool gB_usingAPIKey = false;
 char gC_apiKey[MAX_APIKEY_LENGTH];
+char gC_baseUrl[MAX_BASEURL_LENGTH];
 
 // ConVars
 bool gB_Debug = false;
@@ -51,6 +59,7 @@ bool gB_Staging = false;
 #include "GlobalAPI/methods/modes.sp"
 #include "GlobalAPI/methods/players.sp"
 #include "GlobalAPI/methods/records.sp"
+#include "GlobalAPI/methods/servers.sp"
 #include "GlobalAPI/methods/jumpstats.sp"
 
 // ====================== PLUGIN INFO ======================== //
@@ -79,7 +88,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 public void OnPluginStart()
 {
 	gB_usingAPIKey = ReadAPIKey();
-	AutoExecConfig(true, "GlobalAPI-conf");
+	AutoExecConfig(true, CONFIG_PATH);
 }
 
 public void OnConfigsExecuted()
@@ -90,28 +99,18 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetRecordsTopRecent(OnRecords, _, .steamId = "STEAM_1:1:21505111");
+	GlobalAPI_GetServersByName(OnServer, _, "KZ");
 }
 
-public void OnRecords(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)
+public void OnServer(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)
 {
-	APIRecords records = new APIRecords(hResponse);
-	APIRecord record = new APIRecord(records.GetById(0));
+	APIServers servers = new APIServers(hResponse);
+	APIServer server = new APIServer(servers.GetById(0));
 
-	char playerName[64];
-	record.GetPlayerName(playerName, sizeof(playerName));
+	char name[128];
+	server.GetName(name, sizeof(name));
 
-	char mode[20];
-	record.GetMode(mode, sizeof(mode));
-
-	char mapName[64];
-	record.GetMapName(mapName, sizeof(mapName));
-
-	PrintToServer("Record with index 0:");
-	PrintToServer("Player Name: %s", playerName);
-	PrintToServer("Time: %f", record.time);
-	PrintToServer("Mode: %s", mode);
-	PrintToServer("Map: %s", mapName);
+	PrintToServer("Server: \"%s\"", name);
 }
 
 // =========================================================== //

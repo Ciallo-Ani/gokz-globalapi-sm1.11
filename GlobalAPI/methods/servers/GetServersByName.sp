@@ -1,17 +1,17 @@
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetPlayersBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING);
+	native bool GlobalAPI_GetServersByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] serverName);
 */
-public bool GetPlayersBySteamId(GlobalAPIRequestData hData)
+public bool GetServersByName(GlobalAPIRequestData hData)
 {
-	char steamId[MAX_QUERYPARAM_LENGTH];
-	hData.GetString("steamid", steamId, sizeof(steamId));
-	
+	char serverName[MAX_QUERYPARAM_LENGTH];
+	hData.GetString("serverName", serverName, sizeof(serverName));
+
 	char requestUrl[MAX_QUERYURL_LENGTH];
-	Format(requestUrl, sizeof(requestUrl), "%s/players/steamid/%s", gC_baseUrl, steamId);
+	Format(requestUrl, sizeof(requestUrl), "%s/servers/name/%s", gC_baseUrl, serverName);
 	hData.AddUrl(requestUrl);
-	
+
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodGET);
 
 	if (request == null)
