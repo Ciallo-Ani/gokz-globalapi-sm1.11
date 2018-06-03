@@ -134,6 +134,8 @@ native bool GlobalAPI_GetServers(OnAPICallFinished callback = INVALID_FUNCTION, 
 
 native bool GlobalAPI_GetServerById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
 
+native bool GlobalAPI_GetServersByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] serverName);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -190,6 +192,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	// Servers
 	MarkNativeAsOptional("GlobalAPI_GetServers");
 	MarkNativeAsOptional("GlobalAPI_GetServerById");
+	MarkNativeAsOptional("GlobalAPI_GetServersByName");
 }
 #endif
 

@@ -99,12 +99,13 @@ public void OnConfigsExecuted()
 
 public void GlobalAPI_OnInitialized()
 {
-	GlobalAPI_GetServerById(OnServer, _, 200);
+	GlobalAPI_GetServersByName(OnServer, _, "KZ");
 }
 
 public void OnServer(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)
 {
-	APIServer server = new APIServer(hResponse);
+	APIServers servers = new APIServers(hResponse);
+	APIServer server = new APIServer(servers.GetById(0));
 
 	char name[128];
 	server.GetName(name, sizeof(name));
