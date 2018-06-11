@@ -5,8 +5,7 @@ public int Global_HTTP_DataReceived(Handle request, bool failure, int offset, in
 	hData.status = statuscode;
 
 	// Special case for timeout / failure
-	// NOTE: Retrying a 404 is probably useless
-	if (statuscode == 0 || statuscode == 203 || statuscode == 404 || statuscode == 500 || statuscode == 503)
+	if (failure || statuscode != 200)
 	{
 		hData.failure = true;
 
@@ -16,7 +15,7 @@ public int Global_HTTP_DataReceived(Handle request, bool failure, int offset, in
 		CallForward(hFwd, true, null, hData, data);
 
 		// Cleanup
-		hData.Cleanup();
+		if (hData != INVALID_HANDLE) hData.Cleanup();
 
 		delete hFwd;
 		delete hData;
