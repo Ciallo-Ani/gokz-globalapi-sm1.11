@@ -45,6 +45,25 @@ public bool SendRequest(Handle request, GlobalAPIRequestData hData)
 
 // =========================================================== //
 
+// This could be failure, or just success with no response body
+// We do not care. We call the forward with data as null anyways
+public void CallForward_NoResponse(GlobalAPIRequestData hData)
+{
+	any data = hData.data;
+	Handle hFwd = hData.callback;
+	bool bFailure = hData.failure;
+
+	CallForward(hFwd, bFailure, null, hData, data);
+
+	// Cleanup
+	if (hData != INVALID_HANDLE) hData.Cleanup();
+
+	delete hFwd;
+	delete hData;
+}
+
+// =========================================================== //
+
 public Handle CreateForwardHandle(Function callback, any data)
 {
 	Handle hFwd = INVALID_HANDLE;
