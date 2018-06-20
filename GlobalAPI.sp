@@ -51,11 +51,11 @@ bool gB_Staging = false;
 
 public Plugin myinfo = 
 {
-    name = "GlobalAPI-SMPlugin",
-    author = "Sikari",
-    description = GlobalAPI_Plugin_Desc,
-    version = GlobalAPI_Plugin_Version,
-    url = GlobalAPI_Plugin_Url
+	name = "GlobalAPI-SMPlugin",
+	author = "Sikari",
+	description = GlobalAPI_Plugin_Desc,
+	version = GlobalAPI_Plugin_Version,
+	url = GlobalAPI_Plugin_Url
 };
 
 // ======================= MAIN CODE ========================= //
@@ -63,7 +63,7 @@ public Plugin myinfo =
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	RegPluginLibrary("GlobalAPI");
-	
+
 	CreateConvars();
 	CreateNatives();
 	CreateForwards();

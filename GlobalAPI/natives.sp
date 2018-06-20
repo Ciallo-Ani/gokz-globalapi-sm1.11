@@ -21,6 +21,8 @@ public void CreateNatives()
 
 	// Maps
 	CreateNative("GlobalAPI_GetMaps", Native_GetMaps);
+	CreateNative("GlobalAPI_GetMapById", Native_GetMapById);
+	CreateNative("GlobalAPI_GetMapByName", Native_GetMapByName);
 
 	// Modes
 	CreateNative("GlobalAPI_GetModes", Native_GetModes);
@@ -509,6 +511,58 @@ public int Native_GetMaps(Handle plugin, int numParams)
 
 	char requestUrl[MAX_QUERYURL_LENGTH];
 	Format(requestUrl, sizeof(requestUrl), "%s/maps", gC_baseUrl);
+	hData.AddUrl(requestUrl);
+
+	return HTTPGet(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetMapById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+*/
+public int Native_GetMapById(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+	int id = GetNativeCell(3);
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+
+	char requestUrl[MAX_QUERYURL_LENGTH];
+	Format(requestUrl, sizeof(requestUrl), "%s/maps/%d", gC_baseUrl, id);
+	hData.AddUrl(requestUrl);
+
+	return HTTPGet(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetMapByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] name);
+*/
+public int Native_GetMapByName(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	char name[MAX_QUERYPARAM_LENGTH];
+	GetNativeString(3, name, sizeof(name));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+
+	char requestUrl[MAX_QUERYURL_LENGTH];
+	Format(requestUrl, sizeof(requestUrl), "%s/maps/name/%s", gC_baseUrl, name);
 	hData.AddUrl(requestUrl);
 
 	return HTTPGet(hData);
