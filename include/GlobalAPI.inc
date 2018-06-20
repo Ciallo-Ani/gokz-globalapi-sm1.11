@@ -188,7 +188,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	// Players
 	MarkNativeAsOptional("GlobalAPI_GetPlayers");
 	MarkNativeAsOptional("GlobalAPI_GetPlayerBySteamId");
-	MarkNativeAsOptional("GlobalAPI_GetPlayersBySteamIdAndIp");
+	MarkNativeAsOptional("GlobalAPI_GetPlayerBySteamIdAndIp");
 
 	// Records
 	MarkNativeAsOptional("GlobalAPI_GetRecords");
