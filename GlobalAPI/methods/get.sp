@@ -1,16 +1,23 @@
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+	BASE HTTP GET METHOD FOR NATIVES
 */
-public bool GetModeById(GlobalAPIRequestData hData)
+public bool HTTPGet(GlobalAPIRequestData hData)
 {
-	int id = hData.GetInt("id");
+	if (hData.keyRequired && !gB_usingAPIKey && !gB_Debug)
+	{
+		LogMessage("[GlobalAPI] Using this method requires an API key, and you dont seem to have one setup!");
+		return false;
+	}
+	
+	char requestParams[MAX_QUERYPARAM_NUM * MAX_QUERYPARAM_LENGTH];
+	hData.ToString(requestParams, sizeof(requestParams));
 
 	char requestUrl[MAX_QUERYURL_LENGTH];
-	Format(requestUrl, sizeof(requestUrl), "%s/modes/id/%d", gC_baseUrl, id);
-	hData.AddUrl(requestUrl);
-	
+	hData.GetString("url", requestUrl, sizeof(requestUrl));
+	StrCat(requestUrl, sizeof(requestUrl), requestParams);
+
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodGET);
 	
 	if (request == null)

@@ -1,15 +1,10 @@
 // ====================== DEFINITIONS ======================== //
 
-// NOTE: Should all the GET/POST methods be made into a single one?
-// I think we can build the url in the native and pass it on requestdata
-
-// NOTE: Maybe we could also make the iterating methodmaps a single one too
-// EX: APIBans, APIPlayers, APIModes... they all serve same usage
-
 #define MAX_BASEURL_LENGTH 64
 #define MAX_APIKEY_LENGTH 128
+
+#define CONFIG_PATH "GlobalAPI-conf"
 #define APIKEY_PATH "cfg/sourcemod/GlobalAPI-key.cfg"
-#define CONFIG_PATH "GlobalAPI-conf" // .cfg is implied
 
 #define MAX_QUERYPARAM_NUM 20
 #define MAX_QUERYURL_LENGTH 2048
@@ -52,25 +47,15 @@ bool gB_Staging = false;
 #include "GlobalAPI/forwards.sp"
 #include "GlobalAPI/commands.sp"
 
-// Datasets
-#include "GlobalAPI/methods/auth.sp"
-#include "GlobalAPI/methods/bans.sp"
-#include "GlobalAPI/methods/maps.sp"
-#include "GlobalAPI/methods/modes.sp"
-#include "GlobalAPI/methods/players.sp"
-#include "GlobalAPI/methods/records.sp"
-#include "GlobalAPI/methods/servers.sp"
-#include "GlobalAPI/methods/jumpstats.sp"
-
 // ====================== PLUGIN INFO ======================== //
 
 public Plugin myinfo = 
 {
-    name = "GlobalAPI-SMPlugin",
-    author = "Sikari",
-    description = GlobalAPI_Plugin_Desc,
-    version = GlobalAPI_Plugin_Version,
-    url = GlobalAPI_Plugin_Url
+	name = "GlobalAPI-SMPlugin",
+	author = "Sikari",
+	description = GlobalAPI_Plugin_Desc,
+	version = GlobalAPI_Plugin_Version,
+	url = GlobalAPI_Plugin_Url
 };
 
 // ======================= MAIN CODE ========================= //
@@ -78,7 +63,7 @@ public Plugin myinfo =
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	RegPluginLibrary("GlobalAPI");
-	
+
 	CreateConvars();
 	CreateNatives();
 	CreateForwards();
