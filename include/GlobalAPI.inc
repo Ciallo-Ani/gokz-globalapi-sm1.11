@@ -177,6 +177,8 @@ public void __pl_GlobalAPI_SetNTVOptional()
 
 	// Maps
 	MarkNativeAsOptional("GlobalAPI_GetMaps");
+	MarkNativeAsOptional("GlobalAPI_GetMapById");
+	MarkNativeAsOptional("GlobalAPI_GetMapByName");
 
 	// Modes
 	MarkNativeAsOptional("GlobalAPI_GetModes");
