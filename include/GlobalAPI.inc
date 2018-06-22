@@ -162,6 +162,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 {
 	// Plugin
 	MarkNativeAsOptional("GlobalAPI_GetAPIKey");
+	MarkNativeAsOptional("GlobalAPI_GetStaging");
 
 	// Auth
 	MarkNativeAsOptional("GlobalAPI_GetAuthStatus");

@@ -15,9 +15,7 @@
 #include <sourcemod>
 #include <SteamWorks>
 
-#include <json>
 #include <GlobalAPI>
-#include <GlobalAPI/helpers>
 #include <GlobalAPI/request>
 #include <GlobalAPI/requestdata>
 
