@@ -27,7 +27,11 @@
 
 // ======================= ENUMS ============================= //
 
-//...
+enum
+{
+	GlobalAPIRequestType_GET = 0,
+	GlobalAPIRequestType_POST
+}
 
 // ======================= TYPEDEFS ========================== //
 

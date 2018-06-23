@@ -69,6 +69,19 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 
+	property int requestType
+	{
+		public get()
+		{
+			return this.GetInt("requestType");
+		}
+		public set(int type)
+		{
+			this.SetInt("requestType", type);
+			this.SetKeyHidden("requestType", true);
+		}
+	}
+
 	property bool failure
 	{
 		public get()
