@@ -30,6 +30,19 @@ public bool ReadAPIKey()
 
 // =========================================================== //
 
+public void CreateConfigDir()
+{
+	if (!DirExists(SETTING_DIR)) CreateDirectory(SETTING_DIR, 666);
+
+	if (!FileExists(APIKEY_PATH))
+	{
+		File temp = OpenFile(APIKEY_PATH, "w");
+		temp.Close();
+	}
+}
+
+// =========================================================== //
+
 public bool BuildAuthenticationHeader(Handle request)
 {
 	return SteamWorks_SetHTTPRequestHeaderValue(request, "X-ApiKey", gC_apiKey);

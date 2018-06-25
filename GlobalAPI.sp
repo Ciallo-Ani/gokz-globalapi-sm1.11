@@ -3,9 +3,9 @@
 #define MAX_BASEURL_LENGTH 64
 #define MAX_APIKEY_LENGTH 128
 
-#define CONFIG_NAME "GlobalAPI-conf"
 #define CONFIG_PATH "sourcemod/GlobalAPI"
-#define APIKEY_PATH "cfg/sourcemod/GlobalAPI-key.cfg"
+#define SETTING_DIR "cfg/sourcemod/GlobalAPI"
+#define APIKEY_PATH "cfg/sourcemod/GlobalAPI/GlobalAPI-key.cfg"
 
 #define MAX_QUERYPARAM_NUM 20
 #define MAX_QUERYURL_LENGTH 2048
@@ -67,12 +67,13 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNatives();
 	CreateForwards();
 	CreateCommands();
+	CreateConfigDir();
 }
 
 public void OnPluginStart()
 {
 	gB_usingAPIKey = ReadAPIKey();
-	AutoExecConfig(true, CONFIG_NAME);
+	AutoExecConfig(true, "GlobalAPI", CONFIG_PATH);
 }
 
 public void OnConfigsExecuted()
