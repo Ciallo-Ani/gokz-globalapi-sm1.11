@@ -3,7 +3,8 @@
 #define MAX_BASEURL_LENGTH 64
 #define MAX_APIKEY_LENGTH 128
 
-#define CONFIG_PATH "GlobalAPI-conf"
+#define CONFIG_NAME "GlobalAPI-conf"
+#define CONFIG_PATH "sourcemod/GlobalAPI"
 #define APIKEY_PATH "cfg/sourcemod/GlobalAPI-key.cfg"
 
 #define MAX_QUERYPARAM_NUM 20
@@ -49,7 +50,7 @@ bool gB_Staging = false;
 
 public Plugin myinfo = 
 {
-	name = "GlobalAPI-SMPlugin",
+	name = "GlobalAPI",
 	author = "Sikari",
 	description = GlobalAPI_Plugin_Desc,
 	version = GlobalAPI_Plugin_Version,
@@ -71,7 +72,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 public void OnPluginStart()
 {
 	gB_usingAPIKey = ReadAPIKey();
-	AutoExecConfig(true, CONFIG_PATH);
+	AutoExecConfig(true, CONFIG_NAME);
 }
 
 public void OnConfigsExecuted()
