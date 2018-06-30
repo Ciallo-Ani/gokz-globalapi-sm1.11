@@ -78,7 +78,7 @@ public void OnPluginStart()
 
 public void OnConfigsExecuted()
 {
-	GetConvars();
+	GetConVars();
 	Call_Global_OnInitialized();
 }
 
