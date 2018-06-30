@@ -29,6 +29,32 @@ methodmap GlobalAPIRequestData < JSON_Object
 		this.SetString("url", url);
 		this.SetKeyHidden("url", true);
 	}
+	
+	property bool keyRequired
+	{
+		public get()
+		{
+			return this.GetBool("keyRequired");
+		}
+		public set(bool required)
+		{
+			this.SetBool("keyRequired", required);
+			this.SetKeyHidden("keyRequired", true);
+		}
+	}
+	
+	property int bodyLength
+	{
+		public get()
+		{
+			return this.GetInt("bodylength");
+		}
+		public set(int length)
+		{
+			this.SetInt("bodylength", length);
+			this.SetKeyHidden("bodylength", true);
+		}
+	}
 
 	property int status
 	{

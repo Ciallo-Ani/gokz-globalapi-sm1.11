@@ -89,6 +89,10 @@ native bool GlobalAPI_GetMaps(OnAPICallFinished callback = INVALID_FUNCTION, any
 								int difficulty = DEFAULT_INT, const char[] createdSince = DEFAULT_STRING, const char[] updatedSince = DEFAULT_STRING,
 								int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
+native bool GlobalAPI_GetMapById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+
+native bool GlobalAPI_GetMapByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] name);
+
 native bool GlobalAPI_GetModes(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
 
 native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
@@ -101,7 +105,7 @@ native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, 
 
 native bool GlobalAPI_GetPlayerBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] steamId);
 
-native bool GlobalAPI_GetPlayersBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+native bool GlobalAPI_GetPlayerBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
 												const char[] steamId, const char[] ipAddress);
 
 native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] mapName = DEFAULT_STRING,
@@ -158,6 +162,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 {
 	// Plugin
 	MarkNativeAsOptional("GlobalAPI_GetAPIKey");
+	MarkNativeAsOptional("GlobalAPI_GetStaging");
 
 	// Auth
 	MarkNativeAsOptional("GlobalAPI_GetAuthStatus");
@@ -173,6 +178,8 @@ public void __pl_GlobalAPI_SetNTVOptional()
 
 	// Maps
 	MarkNativeAsOptional("GlobalAPI_GetMaps");
+	MarkNativeAsOptional("GlobalAPI_GetMapById");
+	MarkNativeAsOptional("GlobalAPI_GetMapByName");
 
 	// Modes
 	MarkNativeAsOptional("GlobalAPI_GetModes");
@@ -182,7 +189,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	// Players
 	MarkNativeAsOptional("GlobalAPI_GetPlayers");
 	MarkNativeAsOptional("GlobalAPI_GetPlayerBySteamId");
-	MarkNativeAsOptional("GlobalAPI_GetPlayersBySteamIdAndIp");
+	MarkNativeAsOptional("GlobalAPI_GetPlayerBySteamIdAndIp");
 
 	// Records
 	MarkNativeAsOptional("GlobalAPI_GetRecords");

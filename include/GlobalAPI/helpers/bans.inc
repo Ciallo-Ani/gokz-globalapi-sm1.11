@@ -5,6 +5,5 @@
 // =========================================================== //
 
 #include <GlobalAPI/helpers/bans/APIBan>
-#include <GlobalAPI/helpers/bans/APIBans>
 
 // =========================================================== //

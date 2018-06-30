@@ -1,9 +1,9 @@
 // ================== DOUBLE INCLUDE ========================= //
 
-#if defined _GlobalAPI_Jumpstats_Helper_included_
+#if defined _GlobalAPI_Iterable_included_
 #endinput
 #endif
-#define _GlobalAPI_Jumpstats_Helper_included_
+#define _GlobalAPI_Iterable_included_
 
 // =========================================================== //
 
@@ -11,11 +11,15 @@
 
 // =========================================================== //
 
-methodmap APIJumpstats < JSON_Object
+methodmap APIIterable < JSON_Object
 {
-	public APIJumpstats(JSON_Object hJumps)
+	public APIIterable(JSON_Object hItems)
 	{
-		return view_as<APIJumpstats>(hJumps);
+		if (hItems.HasKey("result"))
+		{
+			return view_as<APIIterable>(hItems.GetObject("result"));
+		}
+		return view_as<APIIterable>(hItems);
 	}
 	
 	property int Count

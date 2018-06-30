@@ -43,7 +43,7 @@ public void OnPlayer(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData 
 		if (player.isBanned)
 		{
 			int client = GetClientOfUserId(userid);
-			KickClient(client, "You're globally banned!");
+			KickClient(client, "[GlobalAPI] You're globally banned!");
 		}
 	}
 }

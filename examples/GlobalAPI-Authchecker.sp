@@ -25,8 +25,8 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {	
-	RegPluginLibrary("GlobalAPI-AuthChecker");
-	RegConsoleCmd("sm_globalapi_authcheck", Command_AuthCheck);
+	RegPluginLibrary("GlobalAPI-Authchecker");
+	RegAdminCmd("sm_globalapi_authcheck", Command_AuthCheck, ADMFLAG_ROOT);
 }
 
 public Action Command_AuthCheck(int client, int args)
