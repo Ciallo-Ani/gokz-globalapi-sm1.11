@@ -20,14 +20,6 @@
 #pragma dynamic 131072
 #pragma newdecls required
 
-enum ConVarType
-{
-	ConVarType_All = 0,
-	ConVarType_LogFailed,
-	ConVarType_LogStarted,
-	ConVarType_LogFinished,
-}
-
 // ====================== VARIABLES ========================== //
 
 char gC_sourceModPath[PLATFORM_MAX_PATH];
