@@ -1,7 +1,7 @@
 // ====================== DEFINITIONS ======================== //
 
-#define MAX_BASEURL_LENGTH 64
 #define MAX_APIKEY_LENGTH 128
+#define MAX_BASEURL_LENGTH 128
 
 #define CONFIG_PATH "sourcemod/GlobalAPI"
 #define SETTING_DIR "cfg/sourcemod/GlobalAPI"
