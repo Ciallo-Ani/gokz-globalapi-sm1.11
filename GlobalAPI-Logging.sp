@@ -38,6 +38,7 @@ bool gB_LogFinished = false;
 
 #include "GlobalAPI-Logging/misc.sp"
 #include "GlobalAPI-Logging/convars.sp"
+#include "GlobalAPI-Logging/forwards.sp"
 #include "GlobalAPI-Logging/logging/HTTPFailed.sp"
 #include "GlobalAPI-Logging/logging/HTTPStarted.sp"
 #include "GlobalAPI-Logging/logging/HTTPFinished.sp"

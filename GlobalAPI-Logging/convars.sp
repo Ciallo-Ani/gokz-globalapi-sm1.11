@@ -35,8 +35,8 @@ void ConVarHook(ConVar convar, const char[] oldValue, const char[] newValue)
 		convar.IntValue = StringToInt(newValue);
 		
 		if (convar == hCV_LogFailed) gB_LogFailed = convar.BoolValue;
-		if (convar == hCV_LogStarted) gB_LogStarted = convar.BoolValue;
-		if (convar == hCV_LogFinished) gB_LogFinished = convar.BoolValue;
+		else if (convar == hCV_LogStarted) gB_LogStarted = convar.BoolValue;
+		else if (convar == hCV_LogFinished) gB_LogFinished = convar.BoolValue;
 	}
 }
 

@@ -26,6 +26,9 @@ public void Log_Finished_HTTPRequest(GlobalAPIRequestData hData)
 	hLogFile.WriteLine("%s     => URL: %s", logTag, url);
 	hLogFile.WriteLine("%s      => Params: %s", logTag, params);
 	hLogFile.Close();
+
+	Call_Global_OnLogged();
+	Call_Global_OnFinishLogged();
 }
 
 // =========================================================== //
