@@ -13,9 +13,16 @@
 
 methodmap GlobalAPIRequestData < JSON_Object
 {
-	public GlobalAPIRequestData()
+	public GlobalAPIRequestData(Handle plugin)
 	{
-		return view_as<GlobalAPIRequestData>(new JSON_Object());
+		JSON_Object requestData = new JSON_Object();
+
+		char pluginName[40] = "Unknown";
+		GetPluginInfo(plugin, PlInfo_Name, pluginName, sizeof(pluginName));
+
+		requestData.SetString("pluginName", pluginName);
+		requestData.SetKeyHidden("pluginName", true);
+		return view_as<GlobalAPIRequestData>(requestData);
 	}
 
 	public void SetDefault(char[] key)
@@ -66,6 +73,19 @@ methodmap GlobalAPIRequestData < JSON_Object
 		{
 			this.SetInt("status", status);
 			this.SetKeyHidden("status", true);
+		}
+	}
+
+	property int requestType
+	{
+		public get()
+		{
+			return this.GetInt("requestType");
+		}
+		public set(int type)
+		{
+			this.SetInt("requestType", type);
+			this.SetKeyHidden("requestType", true);
 		}
 	}
 

@@ -27,7 +27,11 @@
 
 // ======================= ENUMS ============================= //
 
-//...
+enum
+{
+	GlobalAPIRequestType_GET = 0,
+	GlobalAPIRequestType_POST
+}
 
 // ======================= TYPEDEFS ========================== //
 
@@ -40,6 +44,9 @@ typeset OnAPICallFinished
 // ======================= FORWARDS ========================== //
 
 forward void GlobalAPI_OnInitialized();
+forward void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData);
+forward void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hData);
+forward void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hData);
 
 // ======================= NATIVES =========================== //
 

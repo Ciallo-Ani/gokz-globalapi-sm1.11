@@ -78,7 +78,7 @@ public int Native_GetAuthStatus(Handle plugin, int numParams)
 	Function callback = GetNativeCell(1);
 	any data = GetNativeCell(2);
 	
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -140,7 +140,7 @@ public int Native_GetBans(Handle plugin, int numParams)
 	int offset = GetNativeCell(14);
 	int limit = GetNativeCell(15);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("ban_types", banTypes);
 	hData.AddString("ban_types_list", banTypesList);
 	hData.AddBool("is_expired", isExpired);
@@ -193,7 +193,7 @@ public int Native_CreateBan(Handle plugin, int numParams)
 	char ip[MAX_QUERYPARAM_LENGTH];
 	GetNativeString(7, ip, sizeof(ip));
 	
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("steam_id", steamId);
 	hData.AddString("ban_type", banType);
 	hData.AddString("stats", stats);
@@ -268,7 +268,7 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 	int offset = GetNativeCell(19);
 	int limit = GetNativeCell(20);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddNum("id", id);
 	hData.AddNum("server_id", serverId);
 	hData.AddNum("steamid64", steamId64);
@@ -328,7 +328,7 @@ public int Native_CreateJumpstat(Handle plugin, int numParams)
 	bool isCrouchBoost = GetNativeCell(11);
 	int strafeCount = GetNativeCell(12);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("steam_id", steamId);
 	hData.AddNum("jump_type", jumpType);
 	hData.AddFloat("distance", distance);
@@ -405,7 +405,7 @@ public int Native_GetJumpstatTop(Handle plugin, int numParams)
 	int offset = GetNativeCell(19);
 	int limit = GetNativeCell(20);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddNum("id", id);
 	hData.AddNum("server_id", serverId);
 	hData.AddNum("steamid64", steamId64);
@@ -449,7 +449,7 @@ public int Native_GetJumpstatTop30(Handle plugin, int numParams)
 	char jumpType[MAX_QUERYPARAM_LENGTH];
 	GetNativeString(3, jumpType, sizeof(jumpType));
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -493,7 +493,7 @@ public int Native_GetMaps(Handle plugin, int numParams)
 	int offset = GetNativeCell(10);
 	int limit = GetNativeCell(11);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("name", name);
 	hData.AddNum("larger_than_filesize", largerThanFilesize);
 	hData.AddNum("smaller_than_filesize", smallerThanFilesize);
@@ -527,7 +527,7 @@ public int Native_GetMapById(Handle plugin, int numParams)
 	any data = GetNativeCell(2);
 	int id = GetNativeCell(3);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -554,7 +554,7 @@ public int Native_GetMapByName(Handle plugin, int numParams)
 	char name[MAX_QUERYPARAM_LENGTH];
 	GetNativeString(3, name, sizeof(name));
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -578,7 +578,7 @@ public int Native_GetModes(Handle plugin, int numParams)
 	Function callback = GetNativeCell(1);
 	any data = GetNativeCell(2);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -603,7 +603,7 @@ public int Native_GetModeById(Handle plugin, int numParams)
 	any data = GetNativeCell(2);
 	int id = GetNativeCell(3);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -630,7 +630,7 @@ public int Native_GetModeByName(Handle plugin, int numParams)
 	char name[MAX_QUERYPARAM_LENGTH];
 	GetNativeString(3, name, sizeof(name));
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -669,7 +669,7 @@ public int Native_GetPlayers(Handle plugin, int numParams)
 	char steamId64List[MAX_QUERYPARAM_LENGTH];
 	GetNativeString(7, steamId64List, sizeof(steamId64List));
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("steam_id", steamId);
 	hData.AddBool("is_banned", isBanned);
 	hData.AddNum("total_records", totalRecords);
@@ -701,7 +701,7 @@ public int Native_GetPlayerBySteamId(Handle plugin, int numParams)
 	char steamId[MAX_QUERYPARAM_LENGTH];
 	GetNativeString(3, steamId, sizeof(steamId));
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -731,7 +731,7 @@ public int Native_GetPlayerBySteamIdAndIp(Handle plugin, int numParams)
 	char ip[MAX_QUERYPARAM_LENGTH];
 	GetNativeString(4, ip, sizeof(ip));
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -772,7 +772,7 @@ public int Native_GetRecords(Handle plugin, int numParams)
 	int offset = GetNativeCell(7);
 	int limit = GetNativeCell(8);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("map_name", mapName);
 	hData.AddString("modes", modes);
 	hData.AddNum("tick_rate", tickRate);
@@ -816,7 +816,7 @@ public int Native_CreateRecord(Handle plugin, int numParams)
 	int teleports = GetNativeCell(8);
 	float time = GetNativeCell(9);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("steam_id", steamId);
 	hData.AddNum("map_id", mapId);
 	hData.AddString("mode", mode);
@@ -850,7 +850,7 @@ public int Native_GetRecordPlaceById(Handle plugin, int numParams)
 	any data = GetNativeCell(2);
 	int id = GetNativeCell(3);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -901,7 +901,7 @@ public int Native_GetRecordsTop(Handle plugin, int numParams)
 	int offset = GetNativeCell(12);
 	int limit = GetNativeCell(13);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("steam_id", steamId);
 	hData.AddNum("steamid64", steamId64);
 	hData.AddNum("map_id", mapId);
@@ -969,7 +969,7 @@ public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
 	int offset = GetNativeCell(15);
 	int limit = GetNativeCell(16);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("steam_id", steamId);
 	hData.AddNum("steamid64", steamId64);
 	hData.AddNum("map_id", mapId);
@@ -1024,7 +1024,7 @@ public int Native_GetServers(Handle plugin, int numParams)
 	int offset = GetNativeCell(9);
 	int limit = GetNativeCell(10);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddNum("id", id);
 	hData.AddNum("port", port);
 	hData.AddString("ip", ip);
@@ -1057,7 +1057,7 @@ public int Native_GetServerById(Handle plugin, int numParams)
 	any data = GetNativeCell(2);
 	int id = GetNativeCell(3);
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -1084,7 +1084,7 @@ public int Native_GetServersByName(Handle plugin, int numParams)
 	char serverName[MAX_QUERYPARAM_LENGTH];
 	GetNativeString(3, serverName, sizeof(serverName));
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData();
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);

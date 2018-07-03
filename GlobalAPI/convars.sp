@@ -16,7 +16,7 @@ public void CreateConvars()
 
 // =========================================================== //
 
-public void GetConvars()
+public void GetConVars()
 {
 	gB_Debug = hCV_Debug.BoolValue;
 	gB_Staging = hCV_Staging.BoolValue;
