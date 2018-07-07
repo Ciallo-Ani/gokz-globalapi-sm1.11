@@ -1,15 +1,8 @@
 // ====================== DEFINITIONS ======================== //
 
-#define MAX_APIKEY_LENGTH 128
-#define MAX_BASEURL_LENGTH 128
-
 #define CONFIG_PATH "sourcemod/GlobalAPI"
 #define SETTING_DIR "cfg/sourcemod/GlobalAPI"
 #define APIKEY_PATH "cfg/sourcemod/GlobalAPI/GlobalAPI-key.cfg"
-
-#define MAX_QUERYPARAM_NUM 20
-#define MAX_QUERYURL_LENGTH 2048
-#define MAX_QUERYPARAM_LENGTH 64
 
 // =========================================================== //
 
@@ -29,8 +22,8 @@
 
 // Plugin
 bool gB_usingAPIKey = false;
-char gC_apiKey[MAX_APIKEY_LENGTH];
-char gC_baseUrl[MAX_BASEURL_LENGTH];
+char gC_apiKey[GlobalAPI_Max_APIKey_Length];
+char gC_baseUrl[GlobalAPI_Max_BaseUrl_Length];
 
 // ConVars
 bool gB_Debug = false;

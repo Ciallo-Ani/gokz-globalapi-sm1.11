@@ -13,10 +13,10 @@ public bool HTTPGet(GlobalAPIRequestData hData)
 		return false;
 	}
 	
-	char requestParams[MAX_QUERYPARAM_NUM * MAX_QUERYPARAM_LENGTH];
+	char requestParams[GlobalAPI_Max_QueryParams_Length];
 	hData.ToString(requestParams, sizeof(requestParams));
 
-	char requestUrl[MAX_QUERYURL_LENGTH];
+	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	hData.GetString("url", requestUrl, sizeof(requestUrl));
 	StrCat(requestUrl, sizeof(requestUrl), requestParams);
 

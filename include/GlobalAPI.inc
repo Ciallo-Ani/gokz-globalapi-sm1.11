@@ -11,14 +11,21 @@
 
 // ======================= DEFINITIONS ======================= //
 
+#define GlobalAPI_Plugin_Version "2.0.0"
+#define GlobalAPI_Plugin_Desc "Plugin helper for GlobalAPI " ... GlobalAPI_Version
+#define GlobalAPI_Plugin_Url "https://bitbucket.org/kztimerglobalteam/GlobalAPI-SMPlugin"
+
 #define GlobalAPI_Version "v1.0"
 #define GlobalAPI_Staging_Version "v1.0"
 #define GlobalAPI_BaseUrl "https://kztimerglobal.com/api/" ... GlobalAPI_Version
 #define GlobalAPI_Staging_BaseUrl "https://staging.kztimerglobal.com/api/" ... GlobalAPI_Staging_Version
 
-#define GlobalAPI_Plugin_Version "2.0.0"
-#define GlobalAPI_Plugin_Desc "Plugin helper for GlobalAPI " ... GlobalAPI_Version
-#define GlobalAPI_Plugin_Url "https://bitbucket.org/kztimerglobalteam/GlobalAPI-SMPlugin"
+#define GlobalAPI_Max_APIKey_Length 128
+#define GlobalAPI_Max_BaseUrl_Length 128
+#define GlobalAPI_Max_QueryParam_Num 20
+#define GlobalAPI_Max_QueryParam_Length 64
+#define GlobalAPI_Max_QueryParams_Length 1280
+#define GlobalAPI_Max_QueryUrl_Length 2048
 
 #define DEFAULT_INT -1
 #define DEFAULT_STRING ""
