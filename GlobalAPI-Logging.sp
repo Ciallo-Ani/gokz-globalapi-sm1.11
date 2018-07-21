@@ -8,9 +8,6 @@
 #define HTTPStarted_LogFile "logs/GlobalAPI/start-log.txt"
 #define HTTPFinished_LogFile "logs/GlobalAPI/finished-log.txt"
 
-#define MAX_URL_LENGTH 128 // BaseURL only, no params included
-#define MAX_PARAMS_LENGTH 20 * 64 // 20 params * 64 param length
-
 // =========================================================== //
 
 #include <GlobalAPI>

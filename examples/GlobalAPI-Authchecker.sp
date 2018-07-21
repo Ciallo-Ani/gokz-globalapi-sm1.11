@@ -31,7 +31,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public Action Command_AuthCheck(int client, int args)
 {
-	char apiKey[128];
+	char apiKey[GlobalAPI_Max_APIKey_Length];
 	GlobalAPI_GetAPIKey(apiKey, sizeof(apiKey));
 
 	int numberOfRemainingChars = strlen(apiKey) - 5;
