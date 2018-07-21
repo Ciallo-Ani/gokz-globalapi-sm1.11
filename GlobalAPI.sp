@@ -31,7 +31,6 @@ bool gB_Staging = false;
 
 // ======================= INCLUDES ========================== //
 
-// Core plugin
 #include "GlobalAPI/http.sp"
 #include "GlobalAPI/misc.sp"
 #include "GlobalAPI/convars.sp"

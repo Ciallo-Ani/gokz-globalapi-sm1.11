@@ -2,10 +2,10 @@
 
 public void Log_Started_HTTPRequest(GlobalAPIRequestData hData)
 {	
-	char params[MAX_PARAMS_LENGTH] = "-";
+	char params[GlobalAPI_Max_QueryParams_Length] = "-";
 	hData.ToString(params, sizeof(params));
 	
-	char url[MAX_URL_LENGTH];
+	char url[GlobalAPI_Max_BaseUrl_Length];
 	hData.GetString("url", url, sizeof(url));
 	
 	char pluginName[40];
