@@ -6,7 +6,6 @@
 
 // =========================================================== //
 
-#include <sourcemod>
 #include <SteamWorks>
 
 #include <GlobalAPI>
