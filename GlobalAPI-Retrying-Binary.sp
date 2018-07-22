@@ -1,7 +1,7 @@
 // ====================== DEFINITIONS ======================== //
 
-#define CONFIG_NAME "GlobalAPI-Retrying"
-#define CONFIG_PATH "sourcemod/GlobalAPI"
+#define DATA_FILE "retrying.dat"
+#define DATA_PATH "data/GlobalAPI-Retrying"
 
 // =========================================================== //
 
@@ -17,16 +17,15 @@
 
 // ======================= INCLUDES ========================== //
 
-#include "GlobalAPI-Retrying/convars.sp"
-#include "GlobalAPI-Retrying/forwards.sp"
+// ...
 
 // ====================== PLUGIN INFO ======================== //
 
 public Plugin myinfo = 
 {
-	name = "GlobalAPI-Retrying",
+	name = "GlobalAPI-Retrying-Binary",
 	author = "Sikari",
-	description = "Retrying sub-module for GlobalAPI plugin",
+	description = "",
 	version = GlobalAPI_Plugin_Version,
 	url = GlobalAPI_Plugin_Url
 };
@@ -35,20 +34,12 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	RegPluginLibrary("GlobalAPI-Retrying");
-
-	//CreateConvars();
-	//CreateForwards();
+	RegPluginLibrary("GlobalAPI-Retrying-Binary");
 }
 
-public void OnPluginStart()
+public void GlobalAPI_Retrying_OnSaveRequest(GlobalAPIRequestData hData)
 {
-	AutoExecConfig(true, CONFIG_NAME, CONFIG_PATH);
-}
-
-public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
-{
-	Call_Global_OnSaveRequest(hData);
+	// Save as binary
 }
 
 // =========================================================== //

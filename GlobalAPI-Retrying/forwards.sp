@@ -1,16 +1,21 @@
 // =========================================================== //
 
-// Handles
+static Handle H_Global_OnSaveRequest = INVALID_HANDLE;
 
 // =========================================================== //
 
 public void CreateForwards()
 {
-	// CreateForward + AddToForward & CreateGlobalForward, if needed
+	H_Global_OnSaveRequest = CreateGlobalForward("GlobalAPI_Retrying_OnSaveRequest", ET_Ignore, Param_Cell);
 }
 
 // =========================================================== //
 
-// Calls to forwards
+public void Call_Global_OnSaveRequest(GlobalAPIRequestData hData)
+{
+	Call_StartForward(H_Global_OnSaveRequest);
+	Call_PushCell(hData);
+	Call_Finish();
+}
 
 // =========================================================== //
