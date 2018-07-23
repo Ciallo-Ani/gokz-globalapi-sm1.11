@@ -17,7 +17,7 @@ public bool HTTPPost(GlobalAPIRequestData hData)
 	
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	hData.GetString("url", requestUrl, sizeof(requestUrl));
-	
+
 	char[] json = new char[maxlength];
 	hData.Encode(json, maxlength);
 	

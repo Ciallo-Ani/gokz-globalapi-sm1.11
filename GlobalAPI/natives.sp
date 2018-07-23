@@ -5,6 +5,7 @@ public void CreateNatives()
 	// Plugin
 	CreateNative("GlobalAPI_GetAPIKey", Native_GetAPIKey);
 	CreateNative("GlobalAPI_GetStaging", Native_GetStaging);
+	CreateNative("GlobalAPI_SendRequest", Native_SendRequest);
 
 	// Auth
 	CreateNative("GlobalAPI_GetAuthStatus", Native_GetAuthStatus);
@@ -66,6 +67,17 @@ public int Native_GetAPIKey(Handle plugin, int numParams)
 public int Native_GetStaging(Handle plugin, int numParams)
 {
 	return gB_Staging;
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_SendRequest(GlobalAPIRequestData hData)
+*/
+public int Native_SendRequest(Handle plugin, int numParams)
+{
+	GlobalAPIRequestData hData = GetNativeCell(1);
+	return SendRequest(hData);
 }
 
 // =========================================================== //

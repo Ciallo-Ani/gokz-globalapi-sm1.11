@@ -61,7 +61,8 @@ public void OnAllPluginsLoaded()
 
 public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
 {
-	Call_Global_OnSaveRequest(hData);
+	if (hData.requestType == GlobalAPIRequestType_POST)
+		Call_Global_OnSaveRequest(hData);
 }
 
 public Action CheckForFailedRequests(Handle timer)

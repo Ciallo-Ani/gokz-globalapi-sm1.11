@@ -50,10 +50,24 @@ public bool BuildAuthenticationHeader(Handle request)
 
 // =========================================================== //
 
-public bool SendRequest(Handle request, GlobalAPIRequestData hData)
+public bool StartRequest(Handle request, GlobalAPIRequestData hData)
 {
 	Call_Private_OnHTTPStart(request, hData);
 	return SteamWorks_SendHTTPRequest(request);
+}
+
+// =========================================================== //
+
+public bool SendRequest(GlobalAPIRequestData hData)
+{
+	if (hData.requestType == GlobalAPIRequestType_GET)
+	{
+		return HTTPGet(hData);
+	}
+	else
+	{
+		return HTTPPost(hData);
+	}
 }
 
 // =========================================================== //
@@ -66,7 +80,10 @@ public void CallForward_NoResponse(GlobalAPIRequestData hData)
 	Handle hFwd = hData.callback;
 	bool bFailure = hData.failure;
 
-	CallForward(hFwd, bFailure, null, hData, data);
+	if (hFwd != INVALID_HANDLE)
+	{
+		CallForward(hFwd, bFailure, null, hData, data);
+	}
 
 	// Cleanup
 	if (hData != INVALID_HANDLE) hData.Cleanup();

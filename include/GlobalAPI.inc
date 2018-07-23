@@ -61,6 +61,8 @@ native void GlobalAPI_GetAPIKey(char[] buffer, int maxlength);
 
 native bool GlobalAPI_GetStaging();
 
+native bool GlobalAPI_SendRequest(GlobalAPIRequestData hData);
+
 native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
 
 
@@ -177,6 +179,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	// Plugin
 	MarkNativeAsOptional("GlobalAPI_GetAPIKey");
 	MarkNativeAsOptional("GlobalAPI_GetStaging");
+	MarkNativeAsOptional("GlobalAPI_SendRequest");
 
 	// Auth
 	MarkNativeAsOptional("GlobalAPI_GetAuthStatus");

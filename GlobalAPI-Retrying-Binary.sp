@@ -1,7 +1,7 @@
 // ====================== DEFINITIONS ======================== //
 
-#define DATA_FILE "retrying{fileNumber}.dat"
 #define DATA_PATH "data/GlobalAPI-Retrying"
+#define DATA_FILE "retrying_{timestamp}_{gametick}.dat"
 
 // =========================================================== //
 
@@ -14,7 +14,6 @@
 
 // ====================== VARIABLES ========================== //
 
-int gI_retryRequests = 1;
 bool gB_Retrying = false;
 
 // ======================= INCLUDES ========================== //
@@ -76,28 +75,18 @@ public void OnLibraryRemoved(const char[] name)
 
 public void GlobalAPI_Retrying_OnSaveRequest(GlobalAPIRequestData hData)
 {
-	char fileNumber[32];
-	IntToString(gI_retryRequests, fileNumber, sizeof(fileNumber));
-
+	char szTimestamp[32];
+	IntToString(GetTime(), szTimestamp, sizeof(szTimestamp));
+	
+	char szGameTime[32];
+	FloatToString(GetEngineTime(), szGameTime, sizeof(szGameTime));
+	
 	char dataFile[PLATFORM_MAX_PATH] = DATA_FILE;
-	ReplaceString(dataFile, sizeof(dataFile), "{fileNumber}", fileNumber);
+	ReplaceString(dataFile, sizeof(dataFile), "{gametick}", szGameTime);
+	ReplaceString(dataFile, sizeof(dataFile), "{timestamp}", szTimestamp);
 
 	char path[PLATFORM_MAX_PATH];
 	BuildPath(Path_SM, path, sizeof(path), "%s/%s", DATA_PATH, dataFile);
-
-	while (FileExists(path))
-	{
-		gI_retryRequests++;
-
-		PrintToServer(path);
-		IntToString(gI_retryRequests, fileNumber, sizeof(fileNumber));
-
-		FormatEx(dataFile, sizeof(dataFile), path);
-		ReplaceString(dataFile, sizeof(dataFile), "{fileNumber}", fileNumber);
-		BuildPath(Path_SM, path, sizeof(path), "%s/%s", DATA_PATH, dataFile);
-	}
-
-	gI_retryRequests++;
 
 	File binaryFile = OpenFile(path, "a+");
 
@@ -108,25 +97,32 @@ public void GlobalAPI_Retrying_OnSaveRequest(GlobalAPIRequestData hData)
 	}
 
 	// Start preparing data
+	int bodyLength = hData.bodyLength;
+	
 	char url[GlobalAPI_Max_BaseUrl_Length];
 	hData.GetString("url", url, sizeof(url));
 
-	char params[GlobalAPI_Max_QueryParams_Length];
-	hData.ToString(params, sizeof(params));
+	char[] params = new char[bodyLength];
+	hData.Encode(params, bodyLength);
 
 	any data = hData.data;
-	Handle callback = hData.callback;
 	int timestamp = GetTime();
+	Handle callback = hData.callback;
+	int requestType = hData.requestType;
+	bool keyRequired = hData.keyRequired;
 
 	binaryFile.WriteInt8(strlen(url));
 	binaryFile.WriteString(url, false);
 	binaryFile.WriteInt8(strlen(params));
 	binaryFile.WriteString(params, false);
+	binaryFile.WriteInt8(keyRequired);
+	binaryFile.WriteInt8(requestType);
+	binaryFile.WriteInt32(bodyLength);
 	binaryFile.WriteInt32(data);
 	binaryFile.WriteInt32(view_as<int>(callback));
 	binaryFile.WriteInt32(timestamp);
 
-	PrintToServer("Writing %s %s %d %d %d", url, params, data, callback, timestamp);
+	PrintToServer("Writing %s %s %d %d %d %d %d %d to %s", url, params, keyRequired, requestType, bodyLength, data, callback, timestamp, path);
 
 	binaryFile.Close();
 }
@@ -169,6 +165,15 @@ public void GlobalAPI_Retrying_OnCheckRequests()
 		char[] params = new char[length + 1];
 		binaryFile.ReadString(params, length, length);
 		params[length] = '\0';
+		
+		bool keyRequired;
+		binaryFile.ReadInt8(keyRequired);
+		
+		int requestType;
+		binaryFile.ReadInt8(requestType);
+		
+		int bodyLength;
+		binaryFile.ReadInt32(bodyLength);
 
 		any data;
 		binaryFile.ReadInt32(data);
@@ -180,11 +185,28 @@ public void GlobalAPI_Retrying_OnCheckRequests()
 		binaryFile.ReadInt32(timestamp);
 		binaryFile.Close();
 
-		PrintToServer("Reading %s %s %d %d %d", url, params, data, callback, timestamp);
+		PrintToServer("Reading %s %s %d %d %d %d %d %d from %s", url, params, keyRequired, requestType, bodyLength, data, callback, timestamp, dataFile);
+
+		RetryRequest(url, params, keyRequired, requestType, bodyLength, data, callback);
 
 		DeleteFile(dataFile);
-		gI_retryRequests--;
 	}
+}
+
+public void RetryRequest(char[] url, char[] params, bool keyRequired, int requestType, int bodyLength, any data, Handle callback)
+{
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(INVALID_HANDLE);
+	
+	PrintToServer(params);
+	
+	hData.AddUrl(url);
+	hData.data = data;
+	hData.bodyLength = bodyLength;
+	hData.callback = INVALID_HANDLE;
+	hData.keyRequired = keyRequired;
+	hData.requestType = requestType;
+	
+	GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
