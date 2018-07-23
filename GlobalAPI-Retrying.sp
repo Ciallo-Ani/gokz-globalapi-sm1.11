@@ -1,11 +1,11 @@
 // ====================== DEFINITIONS ======================== //
 
-#define CONFIG_NAME "GlobalAPI-Retrying"
-#define CONFIG_PATH "sourcemod/GlobalAPI"
+// ...
 
 // =========================================================== //
 
 #include <GlobalAPI>
+#include <GlobalAPI-Retrying>
 
 // ====================== FORMATTING ========================= //
 
@@ -13,11 +13,12 @@
 
 // ====================== VARIABLES ========================== //
 
-// ...
+ArrayList gL_moduleList = null;
 
 // ======================= INCLUDES ========================== //
 
-#include "GlobalAPI-Retrying/convars.sp"
+#include "GlobalAPI-Retrying/misc.sp"
+#include "GlobalAPI-Retrying/natives.sp"
 #include "GlobalAPI-Retrying/forwards.sp"
 
 // ====================== PLUGIN INFO ======================== //
@@ -37,18 +38,35 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 {
 	RegPluginLibrary("GlobalAPI-Retrying");
 
-	//CreateConvars();
-	//CreateForwards();
+	CreateNatives();
+	CreateForwards();
 }
 
 public void OnPluginStart()
 {
-	AutoExecConfig(true, CONFIG_NAME, CONFIG_PATH);
+	gL_moduleList = new ArrayList();
+
+	RegConsoleCmd("sm_dump_modules", DumpModules);
+
+	CreateTimer(30.0, CheckForFailedRequests, _, TIMER_REPEAT);
+}
+
+public void OnAllPluginsLoaded()
+{
+	if (GlobalAPI_Retrying_GetModulesCount() == 0)
+	{
+		SetFailState("[GlobalAPI-Retrying] One retrying module is required!");
+	}
 }
 
 public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
 {
 	Call_Global_OnSaveRequest(hData);
+}
+
+public Action CheckForFailedRequests(Handle timer)
+{
+	Call_Global_OnCheckRequests();
 }
 
 // =========================================================== //
