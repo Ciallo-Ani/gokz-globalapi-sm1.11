@@ -26,9 +26,9 @@ char gC_HTTPMethodPhrases[][] = { "GET", "POST" };
 
 public Plugin myinfo = 
 {
-	name = "GlobalAPI-Logging",
+	name = "GlobalAPI-Logging-Flatfile",
 	author = "Sikari",
-	description = "Logging sub-module for GlobalAPI plugin",
+	description = "Flatfile logging for GlobalAPI",
 	version = GlobalAPI_Plugin_Version,
 	url = GlobalAPI_Plugin_Url
 };
