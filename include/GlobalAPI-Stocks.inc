@@ -22,8 +22,6 @@ stock char GetPluginDisplayName(Handle plugin)
 	char pluginName[GlobalAPI_Max_PluginName_Length];
 	GetPluginInfo(plugin, PlInfo_Name, pluginName, sizeof(pluginName));
 	
-	PrintToServer(pluginName);
-	
 	return pluginName;
 }
 

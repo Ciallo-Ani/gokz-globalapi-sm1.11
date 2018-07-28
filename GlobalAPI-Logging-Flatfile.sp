@@ -1,7 +1,3 @@
-// ====================== DEFINITIONS ======================== //
-
-#define HTTPLogs_Folder "logs/GlobalAPI"
-
 // =========================================================== //
 
 #include <GlobalAPI>
@@ -25,10 +21,6 @@ char gC_HTTPFinished_LogFile[PLATFORM_MAX_PATH] = "finished-log.txt";
 
 // Phrases
 char gC_HTTPMethodPhrases[][] = { "GET", "POST" };
-
-// ======================= INCLUDES ========================== //
-
-// ...
 
 // ====================== PLUGIN INFO ======================== //
 
