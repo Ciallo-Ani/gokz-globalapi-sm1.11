@@ -40,25 +40,4 @@ public ArrayList Logging_GetModuleList()
 	return g_loggingModules.Clone();
 }
 
-public Action Logging_DumpModules(int client, int args)
-{
-	bool usingLogging = g_loggingModules.Length >= 1;
-	PrintToServer("[GlobalAPI-Logging] Currently GlobalAPI does %s use Logging!", usingLogging ? "" : "not");
-	
-	if (usingLogging)
-	{
-		PrintToServer("[GlobalAPI-Logging] Current Logging modules used:");
-		for (int i; i < g_loggingModules.Length; i++)
-		{
-			Handle module = g_loggingModules.Get(i);
-			
-			char pluginName[PLATFORM_MAX_PATH];
-			GetPluginFilename(module, pluginName, sizeof(pluginName));
-			
-			PrintToServer("[%d] -- %s", i, pluginName);
-			delete module;
-		}
-	}
-}
-
 // =========================================================== //

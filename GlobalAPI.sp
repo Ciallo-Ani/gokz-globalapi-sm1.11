@@ -74,8 +74,6 @@ public void OnPluginStart()
 
 	gB_usingAPIKey = ReadAPIKey();
 	AutoExecConfig(true, "GlobalAPI", CONFIG_PATH);
-
-	RegConsoleCmd("sm_globalapi_logging_modules", Logging_DumpModules);
 }
 
 public void OnConfigsExecuted()

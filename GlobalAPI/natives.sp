@@ -11,8 +11,8 @@ public void CreateNatives()
 	// Logging
 	CreateNative("GlobalAPI_Logging_LoadModule", Native_Logging_LoadModule);
 	CreateNative("GlobalAPI_Logging_UnloadModule", Native_Logging_UnloadModule);
-	CreateNative("GlobalAPI_Logging_GetModuleCount", Native_Logging_GetModuleCount);
 	CreateNative("GlobalAPI_Logging_GetModuleList", Native_Logging_GetModuleList);
+	CreateNative("GlobalAPI_Logging_GetModuleCount", Native_Logging_GetModuleCount);
 
 	// Auth
 	CreateNative("GlobalAPI_GetAuthStatus", Native_GetAuthStatus);
@@ -119,21 +119,21 @@ public int Native_Logging_UnloadModule(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native int GlobalAPI_Logging_GetModuleCount()
-*/
-public int Native_Logging_GetModuleCount(Handle plugin, int numParams)
-{
-	return Logging_GetModuleCount();
-}
-
-// =========================================================== //
-
-/*
 	native ArrayList GlobalAPI_Logging_GetModuleList()
 */
 public int Native_Logging_GetModuleList(Handle plugin, int numParams)
 {
 	return view_as<int>(Logging_GetModuleList());
+}
+
+// =========================================================== //
+
+/*
+	native int GlobalAPI_Logging_GetModuleCount()
+*/
+public int Native_Logging_GetModuleCount(Handle plugin, int numParams)
+{
+	return Logging_GetModuleCount();
 }
 
 // =========================================================== //
