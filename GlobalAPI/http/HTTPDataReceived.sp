@@ -4,7 +4,7 @@ public int Global_HTTP_DataReceived(Handle request, bool failure, int offset, in
 {
 	if (hData.failure)
 	{
-		Call_Global_OnRequestFailed(request, hData);
+		Call_Global_Logging_OnRequestFailed(request, hData);
 		CallForward_NoResponse(hData);
 	}
 
