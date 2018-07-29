@@ -19,10 +19,9 @@ public void CreateForwards()
 
 	// Globals
 	H_Global_OnInitialized = CreateGlobalForward("GlobalAPI_OnInitialized", ET_Ignore);
-
-	H_Global_RequestFailed = CreateGlobalForward("GlobalAPI_Logging_OnRequestFailed", ET_Ignore, Param_Cell, Param_Cell);
-	H_Global_RequestStarted = CreateGlobalForward("GlobalAPI_Logging_OnRequestStarted", ET_Ignore, Param_Cell, Param_Cell);
-	H_Global_RequestFinished = CreateGlobalForward("GlobalAPI_Logging_OnRequestFinished", ET_Ignore, Param_Cell, Param_Cell);
+	H_Global_RequestFailed = CreateGlobalForward("GlobalAPI_OnRequestFailed", ET_Ignore, Param_Cell, Param_Cell);
+	H_Global_RequestStarted = CreateGlobalForward("GlobalAPI_OnRequestStarted", ET_Ignore, Param_Cell, Param_Cell);
+	H_Global_RequestFinished = CreateGlobalForward("GlobalAPI_OnRequestFinished", ET_Ignore, Param_Cell, Param_Cell);
 }
 
 // =========================================================== //
@@ -33,7 +32,7 @@ public void Call_Global_OnInitialized()
 	Call_Finish();
 }
 
-public void Call_Global_Logging_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
+public void Call_Global_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
 {
 	Call_StartForward(H_Global_RequestFailed);
 	Call_PushCell(request);
@@ -41,7 +40,7 @@ public void Call_Global_Logging_OnRequestFailed(Handle request, GlobalAPIRequest
 	Call_Finish();
 }
 
-public void Call_Global_Logging_OnRequestStarted(Handle request, GlobalAPIRequestData hData)
+public void Call_Global_OnRequestStarted(Handle request, GlobalAPIRequestData hData)
 {
 	Call_StartForward(H_Global_RequestStarted);
 	Call_PushCell(request);
@@ -49,7 +48,7 @@ public void Call_Global_Logging_OnRequestStarted(Handle request, GlobalAPIReques
 	Call_Finish();
 }
 
-public void Call_Global_Logging_OnRequestFinished(Handle request, GlobalAPIRequestData hData)
+public void Call_Global_OnRequestFinished(Handle request, GlobalAPIRequestData hData)
 {
 	Call_StartForward(H_Global_RequestFinished);
 	Call_PushCell(request);

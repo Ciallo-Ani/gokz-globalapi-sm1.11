@@ -7,6 +7,10 @@
 
 // =========================================================== //
 
+#include <GlobalAPI>
+
+// =========================================================== //
+
 stock bool CreateDirectoryIfNotExist(char[] dir)
 {
 	if (!DirExists(dir))
@@ -19,7 +23,7 @@ stock bool CreateDirectoryIfNotExist(char[] dir)
 
 stock char GetPluginDisplayName(Handle plugin)
 {
-	char pluginName[GlobalAPI_Max_PluginName_Length];
+	char pluginName[GlobalAPI_Max_PluginName_Length] = "Unknown";
 	GetPluginInfo(plugin, PlInfo_Name, pluginName, sizeof(pluginName));
 	
 	return pluginName;

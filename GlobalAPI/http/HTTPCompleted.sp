@@ -5,7 +5,7 @@ public int Global_HTTP_Completed(Handle request, bool failure, bool requestSucce
 	hData.status = view_as<int>(statusCode);
 	hData.failure = (failure || !requestSuccessful || statusCode != k_EHTTPStatusCode200OK);
 
-	Call_Global_Logging_OnRequestFinished(request, hData);
+	Call_Global_OnRequestFinished(request, hData);
 }
 
 // =========================================================== //

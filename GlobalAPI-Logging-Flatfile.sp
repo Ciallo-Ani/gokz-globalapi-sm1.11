@@ -87,7 +87,7 @@ public void OnLibraryRemoved(const char[] name)
 
 // =========================================================== //
 
-public void GlobalAPI_Logging_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
+public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
 {
 	char params[GlobalAPI_Max_QueryParams_Length] = "-";
 	hData.ToString(params, sizeof(params));
@@ -116,7 +116,7 @@ public void GlobalAPI_Logging_OnRequestFailed(Handle request, GlobalAPIRequestDa
 
 // =========================================================== //
 
-public void GlobalAPI_Logging_OnRequestStarted(Handle request, GlobalAPIRequestData hData)
+public void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hData)
 {
 	char params[GlobalAPI_Max_QueryParams_Length] = "-";
 	hData.ToString(params, sizeof(params));
@@ -144,7 +144,7 @@ public void GlobalAPI_Logging_OnRequestStarted(Handle request, GlobalAPIRequestD
 
 // =========================================================== //
 
-public void GlobalAPI_Logging_OnRequestFinished(Handle request, GlobalAPIRequestData hData)
+public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hData)
 {
 	char params[GlobalAPI_Max_QueryParams_Length] = "-";
 	hData.ToString(params, sizeof(params));

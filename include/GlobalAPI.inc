@@ -52,10 +52,9 @@ typeset OnAPICallFinished
 // ======================= FORWARDS ========================== //
 
 forward void GlobalAPI_OnInitialized();
-
-forward void GlobalAPI_Logging_OnRequestFailed(Handle request, GlobalAPIRequestData hData);
-forward void GlobalAPI_Logging_OnRequestStarted(Handle request, GlobalAPIRequestData hData);
-forward void GlobalAPI_Logging_OnRequestFinished(Handle request, GlobalAPIRequestData hData);
+forward void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData);
+forward void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hData);
+forward void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hData);
 
 // ======================= NATIVES =========================== //
 
@@ -66,6 +65,7 @@ native bool GlobalAPI_IsDebugging();
 
 native bool GlobalAPI_Logging_LoadModule();
 native bool GlobalAPI_Logging_UnloadModule();
+
 native int GlobalAPI_Logging_GetModuleCount();
 native ArrayList GlobalAPI_Logging_GetModuleList();
 
