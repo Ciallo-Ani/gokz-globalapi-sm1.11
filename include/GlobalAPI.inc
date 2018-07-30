@@ -26,6 +26,7 @@
 #define GlobalAPI_Max_QueryParam_Length 64
 #define GlobalAPI_Max_QueryParams_Length 1280
 #define GlobalAPI_Max_QueryUrl_Length 2048
+#define GlobalAPI_Max_PluginName_Length 64
 
 #define DEFAULT_INT -1
 #define DEFAULT_STRING ""
@@ -58,8 +59,15 @@ forward void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hD
 // ======================= NATIVES =========================== //
 
 native void GlobalAPI_GetAPIKey(char[] buffer, int maxlength);
+native bool GlobalAPI_HasAPIKey();
+native bool GlobalAPI_IsStaging();
+native bool GlobalAPI_IsDebugging();
 
-native bool GlobalAPI_GetStaging();
+native bool GlobalAPI_Logging_LoadModule();
+native bool GlobalAPI_Logging_UnloadModule();
+
+native int GlobalAPI_Logging_GetModuleCount();
+native ArrayList GlobalAPI_Logging_GetModuleList();
 
 native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
 
@@ -176,7 +184,15 @@ public void __pl_GlobalAPI_SetNTVOptional()
 {
 	// Plugin
 	MarkNativeAsOptional("GlobalAPI_GetAPIKey");
-	MarkNativeAsOptional("GlobalAPI_GetStaging");
+	MarkNativeAsOptional("GlobalAPI_HasAPIKey");
+	MarkNativeAsOptional("GlobalAPI_IsStaging");
+	MarkNativeAsOptional("GlobalAPI_IsDebugging");
+
+	// Logging
+	MarkNativeAsOptional("GlobalAPI_Logging_LoadModule");
+	MarkNativeAsOptional("GlobalAPI_Logging_UnloadModule");
+	MarkNativeAsOptional("GlobalAPI_Logging_GetModuleList");
+	MarkNativeAsOptional("GlobalAPI_Logging_GetModuleCount");
 
 	// Auth
 	MarkNativeAsOptional("GlobalAPI_GetAuthStatus");

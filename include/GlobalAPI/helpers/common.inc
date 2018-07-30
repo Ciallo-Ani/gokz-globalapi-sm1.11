@@ -13,9 +13,9 @@
 
 methodmap APICommonHelper < GlobalAPIRequestData
 {
-	public APICommonHelper(GlobalAPIRequestData params)
+	public APICommonHelper(GlobalAPIRequestData data)
 	{
-		return view_as<APICommonHelper>(params);
+		return view_as<APICommonHelper>(data);
 	}
 
 	public void DumpProperties()

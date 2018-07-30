@@ -10,6 +10,7 @@
 #include <SteamWorks>
 
 #include <GlobalAPI>
+#include <GlobalAPI-Stocks>
 #include <GlobalAPI/request>
 #include <GlobalAPI/requestdata>
 
@@ -29,6 +30,9 @@ char gC_baseUrl[GlobalAPI_Max_BaseUrl_Length];
 bool gB_Debug = false;
 bool gB_Staging = false;
 
+// Modules
+ArrayList g_loggingModules;
+
 // ======================= INCLUDES ========================== //
 
 #include "GlobalAPI/http.sp"
@@ -37,6 +41,8 @@ bool gB_Staging = false;
 #include "GlobalAPI/natives.sp"
 #include "GlobalAPI/forwards.sp"
 #include "GlobalAPI/commands.sp"
+
+#include "GlobalAPI/logging.sp"
 
 // ====================== PLUGIN INFO ======================== //
 
@@ -64,6 +70,8 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
+	g_loggingModules = new ArrayList();
+
 	gB_usingAPIKey = ReadAPIKey();
 	AutoExecConfig(true, "GlobalAPI", CONFIG_PATH);
 }
