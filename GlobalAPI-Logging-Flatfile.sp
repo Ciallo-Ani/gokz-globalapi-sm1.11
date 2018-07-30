@@ -13,8 +13,7 @@
 bool gB_Core = false;
 
 // Paths
-char gC_sourceModPath[PLATFORM_MAX_PATH];
-char gC_HTTPLog_Directory[PLATFORM_MAX_PATH] = "logs/GlobalAPI";
+char gC_HTTPLogs_Directory[PLATFORM_MAX_PATH] = "logs/GlobalAPI";
 char gC_HTTPFailed_LogFile[PLATFORM_MAX_PATH] = "failed-log.txt";
 char gC_HTTPStarted_LogFile[PLATFORM_MAX_PATH] = "start-log.txt";
 char gC_HTTPFinished_LogFile[PLATFORM_MAX_PATH] = "finished-log.txt";
@@ -42,14 +41,19 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
-	BuildPath(Path_SM, gC_sourceModPath, sizeof(gC_sourceModPath), "");
+	BuildPath(Path_SM, gC_HTTPLogs_Directory, sizeof(gC_HTTPLogs_Directory), gC_HTTPLogs_Directory);
 
-	Format(gC_HTTPLog_Directory, sizeof(gC_HTTPLog_Directory), "%s%s", gC_sourceModPath, gC_HTTPLog_Directory);
-	CreateDirectoryIfNotExist(gC_HTTPLog_Directory);
+	if (!CreateDirectoryIfNotExist(gC_HTTPLogs_Directory))
+	{
+		SetFailState("[GlobalAPI-Logging] Failed to create directory %s", gC_HTTPLogs_Directory);
+	}
+
+	char date[64];
+	FormatTime(date, sizeof(date), "%d-%m-%Y");
 	
-	Format(gC_HTTPFailed_LogFile, sizeof(gC_HTTPFailed_LogFile), "%s/%s", gC_HTTPLog_Directory, gC_HTTPFailed_LogFile);
-	Format(gC_HTTPStarted_LogFile, sizeof(gC_HTTPStarted_LogFile), "%s/%s", gC_HTTPLog_Directory, gC_HTTPStarted_LogFile);
-	Format(gC_HTTPFinished_LogFile, sizeof(gC_HTTPFinished_LogFile), "%s/%s", gC_HTTPLog_Directory, gC_HTTPFinished_LogFile);
+	Format(gC_HTTPFailed_LogFile, sizeof(gC_HTTPFailed_LogFile), "%s/%s-%s", gC_HTTPLogs_Directory, date, gC_HTTPFailed_LogFile);
+	Format(gC_HTTPStarted_LogFile, sizeof(gC_HTTPStarted_LogFile), "%s/%s-%s", gC_HTTPLogs_Directory, date, gC_HTTPStarted_LogFile);
+	Format(gC_HTTPFinished_LogFile, sizeof(gC_HTTPFinished_LogFile), "%s/%s-%s", gC_HTTPLogs_Directory, date, gC_HTTPFinished_LogFile);
 }
 
 public void OnAllPluginsLoaded()
