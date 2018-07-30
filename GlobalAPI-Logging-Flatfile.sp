@@ -45,7 +45,7 @@ public void OnPluginStart()
 
 	if (!CreateDirectoryIfNotExist(gC_HTTPLogs_Directory))
 	{
-		SetFailState("[GlobalAPI-Logging] Failed to create directory %s", gC_HTTPLogs_Directory);
+		SetFailState("[GlobalAPI-Logging-Flatfile] Failed to create directory %s", gC_HTTPLogs_Directory);
 	}
 
 	char date[64];
