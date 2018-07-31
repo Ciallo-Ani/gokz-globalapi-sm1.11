@@ -13,12 +13,9 @@
 
 methodmap GlobalAPIRequestData < JSON_Object
 {
-	public GlobalAPIRequestData(Handle plugin)
+	public GlobalAPIRequestData(char[] pluginName = "Unknown")
 	{
 		JSON_Object requestData = new JSON_Object();
-
-		char pluginName[40] = "Unknown";
-		GetPluginInfo(plugin, PlInfo_Name, pluginName, sizeof(pluginName));
 
 		requestData.SetString("pluginName", pluginName);
 		requestData.SetKeyHidden("pluginName", true);
