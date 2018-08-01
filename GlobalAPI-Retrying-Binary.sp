@@ -6,7 +6,6 @@
 // =========================================================== //
 
 #include <GlobalAPI>
-#include <GlobalAPI-Retrying>
 
 // ====================== FORMATTING ========================= //
 
@@ -14,7 +13,7 @@
 
 // ====================== VARIABLES ========================== //
 
-bool gB_Retrying = false;
+bool gB_Core = false;
 
 // ======================= INCLUDES ========================== //
 
@@ -38,18 +37,23 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	RegPluginLibrary("GlobalAPI-Retrying-Binary");
 }
 
+public void OnPluginStart()
+{
+	
+}
+
 public void OnAllPluginsLoaded()
 {
-	if (LibraryExists("GlobalAPI-Retrying"))
+	if (LibraryExists("GlobalAPI"))
 	{
-		gB_Retrying = true;
+		gB_Core = true;
 		GlobalAPI_Retrying_LoadModule();
 	}
 }
 
 public void OnPluginEnd()
 {
-	if (gB_Retrying)
+	if (gB_Core)
 	{
 		GlobalAPI_Retrying_UnloadModule();
 	}
@@ -57,23 +61,31 @@ public void OnPluginEnd()
 
 public void OnLibraryAdded(const char[] name)
 {
-	if (StrEqual(name, "GlobalAPI-Retrying"))
+	if (StrEqual(name, "GlobalAPI"))
 	{
-		gB_Retrying = true;
+		gB_Core = true;
 	}
 }
 
 public void OnLibraryRemoved(const char[] name)
 {
-	if (StrEqual(name, "GlobalAPI-Retrying"))
+	if (StrEqual(name, "GlobalAPI"))
 	{
-		gB_Retrying = false;
+		gB_Core = false;
 	}
 }
 
 // ======================= MAIN CODE ========================= //
 
-public void GlobalAPI_Retrying_OnSaveRequest(GlobalAPIRequestData hData)
+public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
+{
+	if (hData.requestType == GlobalAPIRequestType_POST)
+	{
+		SaveRequestAsBinary(hData);
+	}
+}
+
+public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 {
 	char szTimestamp[32];
 	IntToString(GetTime(), szTimestamp, sizeof(szTimestamp));
@@ -127,7 +139,7 @@ public void GlobalAPI_Retrying_OnSaveRequest(GlobalAPIRequestData hData)
 	binaryFile.Close();
 }
 
-public void GlobalAPI_Retrying_OnCheckRequests()
+public void OnCheckRequests()
 {
 	char path[PLATFORM_MAX_PATH];
 	BuildPath(Path_SM, path, sizeof(path), DATA_PATH);
@@ -187,26 +199,10 @@ public void GlobalAPI_Retrying_OnCheckRequests()
 
 		PrintToServer("Reading %s %s %d %d %d %d %d %d from %s", url, params, keyRequired, requestType, bodyLength, data, callback, timestamp, dataFile);
 
-		RetryRequest(url, params, keyRequired, requestType, bodyLength, data, callback);
+		//RetryRequest(url, params, keyRequired, requestType, bodyLength, data, callback);
 
 		DeleteFile(dataFile);
 	}
-}
-
-public void RetryRequest(char[] url, char[] params, bool keyRequired, int requestType, int bodyLength, any data, Handle callback)
-{
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(INVALID_HANDLE);
-	
-	PrintToServer(params);
-	
-	hData.AddUrl(url);
-	hData.data = data;
-	hData.bodyLength = bodyLength;
-	hData.callback = INVALID_HANDLE;
-	hData.keyRequired = keyRequired;
-	hData.requestType = requestType;
-	
-	GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //

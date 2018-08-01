@@ -4,6 +4,7 @@ public void CreateCommands()
 {
 	// Normal cmds
 	RegConsoleCmd("sm_globalapi_logging_modules", Command_Logging_Modules);
+	RegConsoleCmd("sm_globalapi_retrying_modules", Command_Retrying_Modules);
 
 	// Admin Cmds
 	RegAdminCmd("sm_globalapi_reload_apikey", Command_ReloadAPIKey, ADMFLAG_ROOT, "Reloads the API Key");
@@ -34,6 +35,33 @@ public Action Command_Logging_Modules(int client, int args)
 		for (int i; i < g_loggingModules.Length; i++)
 		{
 			Handle module = g_loggingModules.Get(i);
+
+			char pluginName[PLATFORM_MAX_PATH];
+			strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(module));
+
+			PrintToServer(" -- %s", pluginName);
+			delete module;
+		}
+	}
+}
+
+// =========================================================== //
+
+public Action Command_Retrying_Modules(int client, int args)
+{
+	bool usingRetrying = g_retryingModules.Length >= 1;
+
+	if (!usingRetrying)
+	{
+		PrintToServer("[GlobalAPI] Currently there are no retrying modules in use!");
+	}
+	else
+	{
+		PrintToServer("[GlobalAPI-Retrying] GlobalAPI has these retrying modules loaded:");
+
+		for (int i; i < g_retryingModules.Length; i++)
+		{
+			Handle module = g_retryingModules.Get(i);
 
 			char pluginName[PLATFORM_MAX_PATH];
 			strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(module));

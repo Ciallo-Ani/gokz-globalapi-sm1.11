@@ -69,6 +69,11 @@ native bool GlobalAPI_Logging_UnloadModule();
 native int GlobalAPI_Logging_GetModuleCount();
 native ArrayList GlobalAPI_Logging_GetModuleList();
 
+native bool GlobalAPI_Retrying_LoadModule();
+native bool GlobalAPI_Retrying_UnloadModule();
+native int GlobalAPI_Retrying_GetModuleCount();
+native ArrayList GlobalAPI_Retrying_GetModuleList();
+
 
 native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
 

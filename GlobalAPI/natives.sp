@@ -14,6 +14,12 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_Logging_UnloadModule", Native_Logging_UnloadModule);
 	CreateNative("GlobalAPI_Logging_GetModuleList", Native_Logging_GetModuleList);
 	CreateNative("GlobalAPI_Logging_GetModuleCount", Native_Logging_GetModuleCount);
+	
+	// Retrying
+	CreateNative("GlobalAPI_Retrying_LoadModule", Native_Retrying_LoadModule);
+	CreateNative("GlobalAPI_Retrying_UnloadModule", Native_Retrying_UnloadModule);
+	CreateNative("GlobalAPI_Retrying_GetModuleList", Native_Retrying_GetModuleList);
+	CreateNative("GlobalAPI_Retrying_GetModuleCount", Native_Retrying_GetModuleCount);
 
 	// Auth
 	CreateNative("GlobalAPI_GetAuthStatus", Native_GetAuthStatus);
@@ -146,6 +152,46 @@ public int Native_Logging_GetModuleList(Handle plugin, int numParams)
 public int Native_Logging_GetModuleCount(Handle plugin, int numParams)
 {
 	return Logging_GetModuleCount();
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_Retrying_LoadModule()
+*/
+public int Native_Retrying_LoadModule(Handle plugin, int numParams)
+{
+	return Retrying_LoadModule(plugin);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_Retrying_UnloadModule()
+*/
+public int Native_Retrying_UnloadModule(Handle plugin, int numParams)
+{
+	return Retrying_UnloadModule(plugin);
+}
+
+// =========================================================== //
+
+/*
+	native ArrayList GlobalAPI_Retrying_GetModuleList()
+*/
+public int Native_Retrying_GetModuleList(Handle plugin, int numParams)
+{
+	return view_as<int>(Retrying_GetModuleList());
+}
+
+// =========================================================== //
+
+/*
+	native int GlobalAPI_Retrying_GetModuleCount()
+*/
+public int Native_Retrying_GetModuleCount(Handle plugin, int numParams)
+{
+	return Retrying_GetModuleCount();
 }
 
 // =========================================================== //
