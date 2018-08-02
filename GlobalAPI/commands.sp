@@ -36,7 +36,7 @@ public Action Command_Logging_Modules(int client, int args)
 		{
 			Handle module = g_loggingModules.Get(i);
 
-			char pluginName[PLATFORM_MAX_PATH];
+			char pluginName[GlobalAPI_Max_PluginName_Length];
 			strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(module));
 
 			PrintToServer(" -- %s", pluginName);
@@ -63,7 +63,7 @@ public Action Command_Retrying_Modules(int client, int args)
 		{
 			Handle module = g_retryingModules.Get(i);
 
-			char pluginName[PLATFORM_MAX_PATH];
+			char pluginName[GlobalAPI_Max_PluginName_Length];
 			strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(module));
 
 			PrintToServer(" -- %s", pluginName);

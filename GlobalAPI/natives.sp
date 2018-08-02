@@ -111,7 +111,7 @@ public int Native_IsDebugging(Handle plugin, int numParams)
 public int Native_SendRequest(Handle plugin, int numParams)
 {
 	GlobalAPIRequestData hData = GetNativeCell(1);
-	return SendRequest(hData);
+	return SendRequestEx(hData);
 }
 
 // =========================================================== //

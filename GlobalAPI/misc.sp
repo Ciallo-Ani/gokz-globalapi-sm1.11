@@ -32,7 +32,10 @@ public bool ReadAPIKey()
 
 public void CreateConfigDir()
 {
-	if (!DirExists(SETTING_DIR)) CreateDirectory(SETTING_DIR, 666);
+	if (!CreateDirectoryIfNotExist(SETTING_DIR))
+	{
+		SetFailState("[GlobalAPI] Failed to create directory %s", SETTING_DIR);
+	}
 
 	if (!FileExists(APIKEY_PATH))
 	{
@@ -50,7 +53,7 @@ public bool BuildAuthenticationHeader(Handle request)
 
 // =========================================================== //
 
-public bool StartRequest(Handle request, GlobalAPIRequestData hData)
+public bool SendRequest(Handle request, GlobalAPIRequestData hData)
 {
 	Call_Private_OnHTTPStart(request, hData);
 	return SteamWorks_SendHTTPRequest(request);
@@ -58,7 +61,7 @@ public bool StartRequest(Handle request, GlobalAPIRequestData hData)
 
 // =========================================================== //
 
-public bool SendRequest(GlobalAPIRequestData hData)
+public bool SendRequestEx(GlobalAPIRequestData hData)
 {
 	if (hData.requestType == GlobalAPIRequestType_GET)
 	{
@@ -80,15 +83,17 @@ public void CallForward_NoResponse(GlobalAPIRequestData hData)
 	Handle hFwd = hData.callback;
 	bool bFailure = hData.failure;
 
-	if (hFwd != INVALID_HANDLE)
+	if (hFwd != null) CallForward(hFwd, bFailure, null, hData, data);
+
+	if (!hData.failure && hData.requestType != GlobalAPIRequestType_POST)
 	{
-		CallForward(hFwd, bFailure, null, hData, data);
+		PrintToServer("deleted %d", hFwd);
+		delete hFwd;
 	}
 
 	// Cleanup
-	if (hData != INVALID_HANDLE) hData.Cleanup();
+	if (hData != null) hData.Cleanup();
 
-	delete hFwd;
 	delete hData;
 }
 
