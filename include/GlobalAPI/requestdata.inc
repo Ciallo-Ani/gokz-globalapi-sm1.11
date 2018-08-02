@@ -51,12 +51,12 @@ methodmap GlobalAPIRequestData < JSON_Object
 	{
 		public get()
 		{
-			return this.GetInt("bodylength");
+			return this.GetInt("bodyLength");
 		}
 		public set(int length)
 		{
-			this.SetInt("bodylength", length);
-			this.SetKeyHidden("bodylength", true);
+			this.SetInt("bodyLength", length);
+			this.SetKeyHidden("bodyLength", true);
 		}
 	}
 

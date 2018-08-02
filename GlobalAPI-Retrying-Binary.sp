@@ -6,6 +6,7 @@
 // =========================================================== //
 
 #include <GlobalAPI>
+#include <GlobalAPI-Stocks>
 
 // ====================== FORMATTING ========================= //
 
@@ -39,7 +40,16 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
+	char path[PLATFORM_MAX_PATH];
+	BuildPath(Path_SM, path, sizeof(path), DATA_PATH);
+
+	if (!CreateDirectoryIfNotExist(path))
+	{
+		SetFailState("[GlobalAPI-Retrying-Binary] Failed to create directory %s", path);
+	}
 	
+	// This is not the final solution!!!!!
+	CreateTimer(30.0, CheckForRequests, _, TIMER_REPEAT);
 }
 
 public void OnAllPluginsLoaded()
@@ -114,6 +124,9 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 	char url[GlobalAPI_Max_BaseUrl_Length];
 	hData.GetString("url", url, sizeof(url));
 
+	char plugin[GlobalAPI_Max_PluginName_Length];
+	hData.GetString("pluginName", plugin, sizeof(plugin));
+
 	char[] params = new char[bodyLength];
 	hData.Encode(params, bodyLength);
 
@@ -125,6 +138,8 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 
 	binaryFile.WriteInt8(strlen(url));
 	binaryFile.WriteString(url, false);
+	binaryFile.WriteInt8(strlen(plugin));
+	binaryFile.WriteString(plugin, false);
 	binaryFile.WriteInt8(strlen(params));
 	binaryFile.WriteString(params, false);
 	binaryFile.WriteInt8(keyRequired);
@@ -134,12 +149,12 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 	binaryFile.WriteInt32(view_as<int>(callback));
 	binaryFile.WriteInt32(timestamp);
 
-	PrintToServer("Writing %s %s %d %d %d %d %d %d to %s", url, params, keyRequired, requestType, bodyLength, data, callback, timestamp, path);
+	PrintToServer("Writing %s %s %s %d %d %d %d %d %d to %s", url, plugin, params, keyRequired, requestType, bodyLength, data, callback, timestamp, path);
 
 	binaryFile.Close();
 }
 
-public void OnCheckRequests()
+public Action CheckForRequests(Handle timer)
 {
 	char path[PLATFORM_MAX_PATH];
 	BuildPath(Path_SM, path, sizeof(path), DATA_PATH);
@@ -174,6 +189,11 @@ public void OnCheckRequests()
 		url[length] = '\0';
 
 		binaryFile.ReadInt8(length);
+		char[] plugin = new char[length + 1];
+		binaryFile.ReadString(plugin, length, length);
+		plugin[length] = '\0';
+
+		binaryFile.ReadInt8(length);
 		char[] params = new char[length + 1];
 		binaryFile.ReadString(params, length, length);
 		params[length] = '\0';
@@ -197,12 +217,29 @@ public void OnCheckRequests()
 		binaryFile.ReadInt32(timestamp);
 		binaryFile.Close();
 
-		PrintToServer("Reading %s %s %d %d %d %d %d %d from %s", url, params, keyRequired, requestType, bodyLength, data, callback, timestamp, dataFile);
+		PrintToServer("Reading %s %s %s %d %d %d %d %d %d from %s", url, plugin, params, keyRequired, requestType, bodyLength, data, callback, timestamp, dataFile);
 
-		//RetryRequest(url, params, keyRequired, requestType, bodyLength, data, callback);
+		RetryRequest(url, plugin, params, keyRequired, requestType, bodyLength, callback, data);
 
 		DeleteFile(dataFile);
 	}
+}
+
+public void RetryRequest(char[] url, char[] plugin, char[] params, bool keyRequired, int requestType, int bodyLength, Handle callback, any data)
+{
+	// Pack everything into GlobalAPI plugin friendly format
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
+
+	hData.AddUrl(url);
+	hData.Decode(params);
+
+	hData.data = data;
+	hData.callback = callback;
+	hData.bodyLength = bodyLength;
+	hData.keyRequired = keyRequired;
+	hData.requestType = requestType;
+
+	GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //

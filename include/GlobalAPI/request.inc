@@ -56,7 +56,7 @@ methodmap GlobalAPIRequest < Handle
 
 	public bool Send(GlobalAPIRequestData hData)
 	{
-		return StartRequest(this, hData);
+		return SendRequest(this, hData);
 	}
 }
 
