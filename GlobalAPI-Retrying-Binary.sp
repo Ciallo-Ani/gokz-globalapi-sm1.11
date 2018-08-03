@@ -3,6 +3,8 @@
 #define DATA_PATH "data/GlobalAPI-Retrying"
 #define DATA_FILE "retrying_{timestamp}_{gametick}.dat"
 
+#define PLUGIN_NAME "GlobalAPI-Retrying-Binary"
+
 // =========================================================== //
 
 #include <GlobalAPI>
@@ -24,11 +26,12 @@ bool gB_Core = false;
 
 public Plugin myinfo = 
 {
-	name = "GlobalAPI-Retrying-Binary",
+	name = PLUGIN_NAME,
 	author = "Sikari",
 	description = "",
 	version = GlobalAPI_Plugin_Version,
 	url = GlobalAPI_Plugin_Url
+	// FIX: I think this is a horrible way of versioning
 };
 
 // =========================================================== //
@@ -45,7 +48,7 @@ public void OnPluginStart()
 
 	if (!CreateDirectoryIfNotExist(path))
 	{
-		SetFailState("[GlobalAPI-Retrying-Binary] Failed to create directory %s", path);
+		SetFailState("[%s] Failed to create directory [%s]", PLUGIN_NAME, path);
 	}
 	
 	// This is not the final solution!!!!!
@@ -112,9 +115,10 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 
 	File binaryFile = OpenFile(path, "a+");
 
+	// TODO: Memory leak with GlobalAPIRequestData handle
 	if (binaryFile == null)
 	{
-		LogError("Could not open or create binary file for retrying... [%s]", path);
+		LogError("[%s] Could not open or create binary file [%s]", PLUGIN_NAME, path);
 		return;
 	}
 
@@ -131,25 +135,24 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 	hData.Encode(params, bodyLength);
 
 	any data = hData.data;
-	int timestamp = GetTime();
 	Handle callback = hData.callback;
 	int requestType = hData.requestType;
 	bool keyRequired = hData.keyRequired;
 
-	binaryFile.WriteInt8(strlen(url));
+	binaryFile.WriteInt16(strlen(url));
 	binaryFile.WriteString(url, false);
 	binaryFile.WriteInt8(strlen(plugin));
 	binaryFile.WriteString(plugin, false);
-	binaryFile.WriteInt8(strlen(params));
+	binaryFile.WriteInt32(strlen(params));
 	binaryFile.WriteString(params, false);
 	binaryFile.WriteInt8(keyRequired);
 	binaryFile.WriteInt8(requestType);
 	binaryFile.WriteInt32(bodyLength);
 	binaryFile.WriteInt32(data);
 	binaryFile.WriteInt32(view_as<int>(callback));
-	binaryFile.WriteInt32(timestamp);
+	binaryFile.WriteInt32(StringToInt(szTimestamp));
 
-	PrintToServer("Writing %s %s %s %d %d %d %d %d %d to %s", url, plugin, params, keyRequired, requestType, bodyLength, data, callback, timestamp, path);
+	PrintToServer("Writing %s %s %s %d %d %d %d %d %s to %s", url, plugin, params, keyRequired, requestType, bodyLength, data, callback, szTimestamp, path);
 
 	binaryFile.Close();
 }
@@ -160,6 +163,12 @@ public Action CheckForRequests(Handle timer)
 	BuildPath(Path_SM, path, sizeof(path), DATA_PATH);
 
 	DirectoryListing dataFiles = OpenDirectory(path);
+
+	if (dataFiles == null)
+	{
+		LogError("[%s] Could not open directory [%s]", PLUGIN_NAME, path);
+		return;
+	}
 
 	char dataFile[PLATFORM_MAX_PATH];
 	while (dataFiles.GetNext(dataFile, sizeof(dataFile)))
@@ -174,16 +183,16 @@ public Action CheckForRequests(Handle timer)
 	if (FileExists(dataFile))
 	{
 		File binaryFile = OpenFile(dataFile, "r");
-	
+
 		if (binaryFile == null)
 		{
-			LogError("Could not open binary file for retrying... [%s]", path);
+			LogError("[%s] Could not open binary file [%s]", PLUGIN_NAME, path);
 			return;
 		}
 
 		int length;
 
-		binaryFile.ReadInt8(length);
+		binaryFile.ReadInt16(length);
 		char[] url = new char[length + 1];
 		binaryFile.ReadString(url, length, length);
 		url[length] = '\0';
@@ -193,7 +202,7 @@ public Action CheckForRequests(Handle timer)
 		binaryFile.ReadString(plugin, length, length);
 		plugin[length] = '\0';
 
-		binaryFile.ReadInt8(length);
+		binaryFile.ReadInt32(length);
 		char[] params = new char[length + 1];
 		binaryFile.ReadString(params, length, length);
 		params[length] = '\0';
@@ -215,6 +224,7 @@ public Action CheckForRequests(Handle timer)
 
 		int timestamp;
 		binaryFile.ReadInt32(timestamp);
+
 		binaryFile.Close();
 
 		PrintToServer("Reading %s %s %s %d %d %d %d %d %d from %s", url, plugin, params, keyRequired, requestType, bodyLength, data, callback, timestamp, dataFile);
