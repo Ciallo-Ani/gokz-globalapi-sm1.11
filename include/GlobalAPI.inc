@@ -200,6 +200,12 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_Logging_UnloadModule");
 	MarkNativeAsOptional("GlobalAPI_Logging_GetModuleList");
 	MarkNativeAsOptional("GlobalAPI_Logging_GetModuleCount");
+	
+	// Retrying
+	MarkNativeAsOptional("GlobalAPI_Retrying_LoadModule");
+	MarkNativeAsOptional("GlobalAPI_Retrying_UnloadModule");
+	MarkNativeAsOptional("GlobalAPI_Retrying_GetModuleList");
+	MarkNativeAsOptional("GlobalAPI_Retrying_GetModuleCount");
 
 	// Auth
 	MarkNativeAsOptional("GlobalAPI_GetAuthStatus");
@@ -239,18 +245,6 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_GetServers");
 	MarkNativeAsOptional("GlobalAPI_GetServerById");
 	MarkNativeAsOptional("GlobalAPI_GetServersByName");
-	
-	// Logging
-	MarkNativeAsOptional("GlobalAPI_Logging_LoadModule");
-	MarkNativeAsOptional("GlobalAPI_Logging_UnloadModule");
-	MarkNativeAsOptional("GlobalAPI_Logging_GetModuleList");
-	MarkNativeAsOptional("GlobalAPI_Logging_GetModuleCount");
-
-	// Retrying
-	MarkNativeAsOptional("GlobalAPI_Retrying_LoadModule");
-	MarkNativeAsOptional("GlobalAPI_Retrying_UnloadModule");
-	MarkNativeAsOptional("GlobalAPI_Retrying_GetModuleList");
-	MarkNativeAsOptional("GlobalAPI_Retrying_GetModuleCount");
 }
 #endif
 
