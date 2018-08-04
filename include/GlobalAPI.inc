@@ -11,14 +11,22 @@
 
 // ======================= DEFINITIONS ======================= //
 
+#define GlobalAPI_Plugin_Version "2.0.0"
+#define GlobalAPI_Plugin_Desc "Plugin helper for GlobalAPI " ... GlobalAPI_Version
+#define GlobalAPI_Plugin_Url "https://bitbucket.org/kztimerglobalteam/GlobalAPI-SMPlugin"
+
 #define GlobalAPI_Version "v1.0"
 #define GlobalAPI_Staging_Version "v1.0"
 #define GlobalAPI_BaseUrl "https://kztimerglobal.com/api/" ... GlobalAPI_Version
 #define GlobalAPI_Staging_BaseUrl "https://staging.kztimerglobal.com/api/" ... GlobalAPI_Staging_Version
 
-#define GlobalAPI_Plugin_Version "2.0.0"
-#define GlobalAPI_Plugin_Desc "Plugin helper for GlobalAPI " ... GlobalAPI_Version
-#define GlobalAPI_Plugin_Url "https://bitbucket.org/kztimerglobalteam/GlobalAPI-SMPlugin"
+#define GlobalAPI_Max_APIKey_Length 128
+#define GlobalAPI_Max_BaseUrl_Length 128
+#define GlobalAPI_Max_QueryParam_Num 20
+#define GlobalAPI_Max_QueryParam_Length 64
+#define GlobalAPI_Max_QueryParams_Length 1280
+#define GlobalAPI_Max_QueryUrl_Length 2048
+#define GlobalAPI_Max_PluginName_Length 64
 
 #define DEFAULT_INT -1
 #define DEFAULT_STRING ""
@@ -27,7 +35,11 @@
 
 // ======================= ENUMS ============================= //
 
-//...
+enum
+{
+	GlobalAPIRequestType_GET = 0,
+	GlobalAPIRequestType_POST
+}
 
 // ======================= TYPEDEFS ========================== //
 
@@ -40,12 +52,22 @@ typeset OnAPICallFinished
 // ======================= FORWARDS ========================== //
 
 forward void GlobalAPI_OnInitialized();
+forward void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData);
+forward void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hData);
+forward void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hData);
 
 // ======================= NATIVES =========================== //
 
 native void GlobalAPI_GetAPIKey(char[] buffer, int maxlength);
+native bool GlobalAPI_HasAPIKey();
+native bool GlobalAPI_IsStaging();
+native bool GlobalAPI_IsDebugging();
 
-native bool GlobalAPI_GetStaging();
+native bool GlobalAPI_Logging_LoadModule();
+native bool GlobalAPI_Logging_UnloadModule();
+
+native int GlobalAPI_Logging_GetModuleCount();
+native ArrayList GlobalAPI_Logging_GetModuleList();
 
 native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
 
@@ -162,7 +184,15 @@ public void __pl_GlobalAPI_SetNTVOptional()
 {
 	// Plugin
 	MarkNativeAsOptional("GlobalAPI_GetAPIKey");
-	MarkNativeAsOptional("GlobalAPI_GetStaging");
+	MarkNativeAsOptional("GlobalAPI_HasAPIKey");
+	MarkNativeAsOptional("GlobalAPI_IsStaging");
+	MarkNativeAsOptional("GlobalAPI_IsDebugging");
+
+	// Logging
+	MarkNativeAsOptional("GlobalAPI_Logging_LoadModule");
+	MarkNativeAsOptional("GlobalAPI_Logging_UnloadModule");
+	MarkNativeAsOptional("GlobalAPI_Logging_GetModuleList");
+	MarkNativeAsOptional("GlobalAPI_Logging_GetModuleCount");
 
 	// Auth
 	MarkNativeAsOptional("GlobalAPI_GetAuthStatus");

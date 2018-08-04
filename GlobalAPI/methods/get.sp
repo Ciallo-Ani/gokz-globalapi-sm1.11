@@ -5,16 +5,18 @@
 */
 public bool HTTPGet(GlobalAPIRequestData hData)
 {
+	hData.requestType = GlobalAPIRequestType_GET;
+
 	if (hData.keyRequired && !gB_usingAPIKey && !gB_Debug)
 	{
 		LogMessage("[GlobalAPI] Using this method requires an API key, and you dont seem to have one setup!");
 		return false;
 	}
 	
-	char requestParams[MAX_QUERYPARAM_NUM * MAX_QUERYPARAM_LENGTH];
+	char requestParams[GlobalAPI_Max_QueryParams_Length];
 	hData.ToString(requestParams, sizeof(requestParams));
 
-	char requestUrl[MAX_QUERYURL_LENGTH];
+	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	hData.GetString("url", requestUrl, sizeof(requestUrl));
 	StrCat(requestUrl, sizeof(requestUrl), requestParams);
 
