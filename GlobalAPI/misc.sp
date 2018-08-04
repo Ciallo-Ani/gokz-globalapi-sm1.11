@@ -85,15 +85,10 @@ public void CallForward_NoResponse(GlobalAPIRequestData hData)
 
 	if (hFwd != null) CallForward(hFwd, bFailure, null, hData, data);
 
-	if (!hData.failure && hData.requestType != GlobalAPIRequestType_POST)
-	{
-		PrintToServer("deleted %d", hFwd);
-		delete hFwd;
-	}
-
 	// Cleanup
 	if (hData != null) hData.Cleanup();
 
+	delete hFwd;
 	delete hData;
 }
 

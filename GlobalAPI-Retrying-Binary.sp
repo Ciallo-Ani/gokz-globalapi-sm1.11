@@ -134,8 +134,8 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 	char[] params = new char[bodyLength];
 	hData.Encode(params, bodyLength);
 
-	any data = hData.data;
-	Handle callback = hData.callback;
+	//any data = hData.data;
+	//Handle callback = hData.callback;
 	int requestType = hData.requestType;
 	bool keyRequired = hData.keyRequired;
 
@@ -148,11 +148,9 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 	binaryFile.WriteInt8(keyRequired);
 	binaryFile.WriteInt8(requestType);
 	binaryFile.WriteInt32(bodyLength);
-	binaryFile.WriteInt32(data);
-	binaryFile.WriteInt32(view_as<int>(callback));
 	binaryFile.WriteInt32(StringToInt(szTimestamp));
 
-	PrintToServer("Writing %s %s %s %d %d %d %d %d %s to %s", url, plugin, params, keyRequired, requestType, bodyLength, data, callback, szTimestamp, path);
+	PrintToServer("Writing %s %s %s %d %d %d %s to %s", url, plugin, params, keyRequired, requestType, bodyLength, szTimestamp, path);
 
 	binaryFile.Close();
 }
@@ -216,26 +214,20 @@ public Action CheckForRequests(Handle timer)
 		int bodyLength;
 		binaryFile.ReadInt32(bodyLength);
 
-		any data;
-		binaryFile.ReadInt32(data);
-
-		Handle callback;
-		binaryFile.ReadInt32(view_as<int>(callback));
-
 		int timestamp;
 		binaryFile.ReadInt32(timestamp);
 
 		binaryFile.Close();
 
-		PrintToServer("Reading %s %s %s %d %d %d %d %d %d from %s", url, plugin, params, keyRequired, requestType, bodyLength, data, callback, timestamp, dataFile);
+		PrintToServer("Reading %s %s %s %d %d %d %d from %s", url, plugin, params, keyRequired, requestType, bodyLength, timestamp, dataFile);
 
-		RetryRequest(url, plugin, params, keyRequired, requestType, bodyLength, callback, data);
+		RetryRequest(url, plugin, params, keyRequired, requestType, bodyLength);
 
 		DeleteFile(dataFile);
 	}
 }
 
-public void RetryRequest(char[] url, char[] plugin, char[] params, bool keyRequired, int requestType, int bodyLength, Handle callback, any data)
+public void RetryRequest(char[] url, char[] plugin, char[] params, bool keyRequired, int requestType, int bodyLength)
 {
 	// Pack everything into GlobalAPI plugin friendly format
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
@@ -243,8 +235,12 @@ public void RetryRequest(char[] url, char[] plugin, char[] params, bool keyRequi
 	hData.AddUrl(url);
 	hData.Decode(params);
 
-	hData.data = data;
-	hData.callback = callback;
+	// These are set to null until
+	// We have a reliable way of retrieving
+	// The handles from the original plugin
+	hData.data = INVALID_HANDLE;
+	hData.callback = INVALID_HANDLE;
+
 	hData.bodyLength = bodyLength;
 	hData.keyRequired = keyRequired;
 	hData.requestType = requestType;
