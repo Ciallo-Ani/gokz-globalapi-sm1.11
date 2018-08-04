@@ -36,6 +36,7 @@ public bool HTTPPost(GlobalAPIRequestData hData)
 	request.SetAuthHeader();
 	request.SetAcceptHeaders();
 	request.SetPoweredByHeader();
+	request.SetRequestOriginHeader(hData);
 	request.SetBody(json, maxlength);
 	request.Send(hData);
 

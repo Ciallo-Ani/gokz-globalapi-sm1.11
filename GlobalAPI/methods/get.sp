@@ -35,6 +35,7 @@ public bool HTTPGet(GlobalAPIRequestData hData)
 	request.SetAuthHeader();
 	request.SetAcceptHeaders();
 	request.SetPoweredByHeader();
+	request.SetRequestOriginHeader(hData);
 	request.Send(hData);
 
 	return true;
