@@ -5,8 +5,6 @@
 */
 public bool HTTPPost(GlobalAPIRequestData hData)
 {
-	hData.requestType = GlobalAPIRequestType_POST;
-
 	if (hData.keyRequired && !gB_usingAPIKey && !gB_Debug)
 	{
 		LogMessage("[GlobalAPI] Using this method requires an API key, and you dont seem to have one setup!");
