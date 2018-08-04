@@ -115,7 +115,6 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 
 	File binaryFile = OpenFile(path, "a+");
 
-	// TODO: Memory leak with GlobalAPIRequestData handle
 	if (binaryFile == null)
 	{
 		LogError("[%s] Could not open or create binary file [%s]", PLUGIN_NAME, path);
@@ -134,8 +133,6 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 	char[] params = new char[bodyLength];
 	hData.Encode(params, bodyLength);
 
-	//any data = hData.data;
-	//Handle callback = hData.callback;
 	int requestType = hData.requestType;
 	bool keyRequired = hData.keyRequired;
 
@@ -149,9 +146,6 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 	binaryFile.WriteInt8(requestType);
 	binaryFile.WriteInt32(bodyLength);
 	binaryFile.WriteInt32(StringToInt(szTimestamp));
-
-	PrintToServer("Writing %s %s %s %d %d %d %s to %s", url, plugin, params, keyRequired, requestType, bodyLength, szTimestamp, path);
-
 	binaryFile.Close();
 }
 
@@ -216,13 +210,9 @@ public Action CheckForRequests(Handle timer)
 
 		int timestamp;
 		binaryFile.ReadInt32(timestamp);
-
 		binaryFile.Close();
 
-		PrintToServer("Reading %s %s %s %d %d %d %d from %s", url, plugin, params, keyRequired, requestType, bodyLength, timestamp, dataFile);
-
 		RetryRequest(url, plugin, params, keyRequired, requestType, bodyLength);
-
 		DeleteFile(dataFile);
 	}
 }
