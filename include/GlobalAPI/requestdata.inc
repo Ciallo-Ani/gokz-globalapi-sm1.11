@@ -11,6 +11,12 @@
 
 // =========================================================== //
 
+// TODO: Consider adding some of the properties on the constructor
+// Such as isRetried, keyRequired, these properties are only set
+// if the plugin does so, GetBool() would return false on
+// non existing properties, but if we wanted to dump the properties
+// these keys would not exist. This might be useful for debugging.
+
 methodmap GlobalAPIRequestData < JSON_Object
 {
 	public GlobalAPIRequestData(char[] pluginName = "Unknown")
@@ -44,6 +50,19 @@ methodmap GlobalAPIRequestData < JSON_Object
 		{
 			this.SetBool("keyRequired", required);
 			this.SetKeyHidden("keyRequired", true);
+		}
+	}
+	
+	property bool isRetried
+	{
+		public get()
+		{
+			return this.GetBool("isRetried");
+		}
+		public set(bool retried)
+		{
+			this.SetBool("isRetried", retried);
+			this.SetKeyHidden("isRetried", true);
 		}
 	}
 	
