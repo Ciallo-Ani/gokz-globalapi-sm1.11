@@ -4,7 +4,7 @@ public bool Retrying_LoadModule(Handle plugin)
 {
 	if (g_retryingModules.FindValue(plugin) == -1)
 	{
-		if (g_retryingModules.Length <= 1)
+		if (g_retryingModules.Length < 1)
 		{
 			g_retryingModules.Push(plugin);
 			return true;
