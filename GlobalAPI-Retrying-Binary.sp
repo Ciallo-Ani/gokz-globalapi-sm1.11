@@ -231,6 +231,7 @@ public void RetryRequest(char[] url, char[] plugin, char[] params, bool keyRequi
 	hData.data = INVALID_HANDLE;
 	hData.callback = INVALID_HANDLE;
 
+	hData.isRetried = true;
 	hData.bodyLength = bodyLength;
 	hData.keyRequired = keyRequired;
 	hData.requestType = requestType;
