@@ -1,3 +1,10 @@
+// ====================== DEFINITIONS ======================== //
+
+#define LOGS_PATH "logs/GlobalAPI"
+#define FAILEDLOG_NAME "GlobalAPI-failed"
+#define STARTEDLOG_NAME "GlobalAPI-started"
+#define FINISHEDLOG_NAME "GlobalAPI-finished"
+
 // =========================================================== //
 
 #include <GlobalAPI>
@@ -13,13 +20,22 @@
 bool gB_Core = false;
 
 // Paths
-char gC_HTTPLogs_Directory[PLATFORM_MAX_PATH] = "logs/GlobalAPI";
-char gC_HTTPFailed_LogFile[PLATFORM_MAX_PATH] = "failed-log.txt";
-char gC_HTTPStarted_LogFile[PLATFORM_MAX_PATH] = "start-log.txt";
-char gC_HTTPFinished_LogFile[PLATFORM_MAX_PATH] = "finished-log.txt";
+char gC_HTTPLogs_Directory[PLATFORM_MAX_PATH];
+char gC_HTTPFailed_LogFile[PLATFORM_MAX_PATH];
+char gC_HTTPStarted_LogFile[PLATFORM_MAX_PATH];
+char gC_HTTPFinished_LogFile[PLATFORM_MAX_PATH];
 
 // Phrases
 char gC_HTTPMethodPhrases[][] = { "GET", "POST" };
+
+// ======================= ENUMS ============================= //
+
+enum BuildLogType
+{
+	BuildLog_Failed,
+	BuildLog_Started,
+	BuildLog_Finished
+}
 
 // ====================== PLUGIN INFO ======================== //
 
@@ -41,19 +57,12 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
-	BuildPath(Path_SM, gC_HTTPLogs_Directory, sizeof(gC_HTTPLogs_Directory), gC_HTTPLogs_Directory);
+	BuildPath(Path_SM, gC_HTTPLogs_Directory, sizeof(gC_HTTPLogs_Directory), LOGS_PATH);
 
 	if (!CreateDirectoryIfNotExist(gC_HTTPLogs_Directory))
 	{
 		SetFailState("[GlobalAPI-Logging-Flatfile] Failed to create directory %s", gC_HTTPLogs_Directory);
 	}
-
-	char date[64];
-	FormatTime(date, sizeof(date), "%d-%m-%Y");
-	
-	Format(gC_HTTPFailed_LogFile, sizeof(gC_HTTPFailed_LogFile), "%s/%s-%s", gC_HTTPLogs_Directory, date, gC_HTTPFailed_LogFile);
-	Format(gC_HTTPStarted_LogFile, sizeof(gC_HTTPStarted_LogFile), "%s/%s-%s", gC_HTTPLogs_Directory, date, gC_HTTPStarted_LogFile);
-	Format(gC_HTTPFinished_LogFile, sizeof(gC_HTTPFinished_LogFile), "%s/%s-%s", gC_HTTPLogs_Directory, date, gC_HTTPFinished_LogFile);
 }
 
 public void OnAllPluginsLoaded()
@@ -93,6 +102,8 @@ public void OnLibraryRemoved(const char[] name)
 
 public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
 {
+	BuildDateToLogs(BuildLog_Failed);
+
 	char params[GlobalAPI_Max_QueryParams_Length] = "-";
 	hData.ToString(params, sizeof(params));
 
@@ -122,6 +133,8 @@ public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData
 
 public void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hData)
 {
+	BuildDateToLogs(BuildLog_Started);
+
 	char params[GlobalAPI_Max_QueryParams_Length] = "-";
 	hData.ToString(params, sizeof(params));
 
@@ -150,6 +163,8 @@ public void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hDat
 
 public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hData)
 {
+	BuildDateToLogs(BuildLog_Finished);
+
 	char params[GlobalAPI_Max_QueryParams_Length] = "-";
 	hData.ToString(params, sizeof(params));
 
@@ -174,6 +189,21 @@ public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hDa
 	hLogFile.WriteLine("%s     => URL: %s", logTag, url);
 	hLogFile.WriteLine("%s      => Params: %s", logTag, params);
 	hLogFile.Close();
+}
+
+// =========================================================== //
+
+public void BuildDateToLogs(BuildLogType type)
+{
+	char date[64];
+	FormatTime(date, sizeof(date), "%Y%m%d");
+
+	switch(type)
+	{
+		case BuildLog_Failed:Format(gC_HTTPFailed_LogFile, sizeof(gC_HTTPFailed_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, FAILEDLOG_NAME, date);
+		case BuildLog_Started:Format(gC_HTTPStarted_LogFile, sizeof(gC_HTTPStarted_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, STARTEDLOG_NAME, date);
+		case BuildLog_Finished:Format(gC_HTTPFinished_LogFile, sizeof(gC_HTTPFinished_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, FINISHEDLOG_NAME, date);
+	}
 }
 
 // =========================================================== //
