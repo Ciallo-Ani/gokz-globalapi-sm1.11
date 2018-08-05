@@ -6,7 +6,6 @@
 
 // =========================================================== //
 
-#include <sourcemod>
 #include <SteamWorks>
 
 #include <GlobalAPI>
@@ -32,6 +31,7 @@ bool gB_Staging = false;
 
 // Modules
 ArrayList g_loggingModules;
+ArrayList g_retryingModules;
 
 // ======================= INCLUDES ========================== //
 
@@ -43,6 +43,7 @@ ArrayList g_loggingModules;
 #include "GlobalAPI/commands.sp"
 
 #include "GlobalAPI/logging.sp"
+#include "GlobalAPI/retrying.sp"
 
 // ====================== PLUGIN INFO ======================== //
 
@@ -71,6 +72,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 public void OnPluginStart()
 {
 	g_loggingModules = new ArrayList();
+	g_retryingModules = new ArrayList();
 
 	gB_usingAPIKey = ReadAPIKey();
 	AutoExecConfig(true, "GlobalAPI", CONFIG_PATH);

@@ -53,6 +53,15 @@ methodmap GlobalAPIRequest < Handle
 	{
 		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-Powered-By", "GlobalAPI Plugin " ... GlobalAPI_Plugin_Version);
 	}
+	
+	public bool SetRequestOriginHeader(GlobalAPIRequestData hData)
+	{
+		char pluginName[GlobalAPI_Max_PluginName_Length + 12];
+		hData.GetString("pluginName", pluginName, sizeof(pluginName));
+		
+		if (hData.isRetried) StrCat(pluginName, sizeof(pluginName), " [Retried]");
+		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-RequestOrigin", pluginName);
+	}
 
 	public bool Send(GlobalAPIRequestData hData)
 	{

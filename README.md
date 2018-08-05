@@ -9,10 +9,10 @@ This is a complete rewrite (v2) of [GlobalAPI plugin](https://bitbucket.org/kzti
 **The goal of this rework**:
 
 * Code managebility
+* Implement retrying requests
 * All API calls with all parameters available!
 * Introduce a wider range of natives and forwards
-* Have GlobalAPI plugin do less logic inside itself **(Let third-party plugins do these things)**
-* Let user control what they want from the API call, predefined forward parameters are no longer defined. Instead you are given a json handle and a bunch of helpers to help you handle the data.
+* Let user control what they want from the API call instead of giving them predefined parameters
 
 ---
 
