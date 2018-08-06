@@ -39,7 +39,19 @@ enum
 {
 	GlobalAPIRequestType_GET = 0,
 	GlobalAPIRequestType_POST
+};
+
+enum
+{
+	GlobalAPIRequestAcceptType_JSON = 0,
+	GlobalAPIRequestAcceptType_OctetStream
 }
+
+enum
+{
+	GlobalAPIRequestContentType_JSON = 0,
+	GlobalAPIRequestContentType_OctetStream,
+};
 
 // ======================= TYPEDEFS ========================== //
 

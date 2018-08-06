@@ -1346,11 +1346,11 @@ public int Native_GetReplayByRecordId(Handle plugin, int numParams)
 	hData.data = data;
 	hData.callback = hFwd;
 	hData.requestType = GlobalAPIRequestType_GET;
+	hData.acceptType = GlobalAPIRequestAcceptType_OctetStream;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/records/%d/replay", gC_baseUrl, recordId);
 	hData.AddUrl(requestUrl);
-	hData.AddContentType("application/octet-stream");
 
 	return GlobalAPI_SendRequest(hData);
 }
@@ -1376,11 +1376,11 @@ public int Native_GetReplayByReplayId(Handle plugin, int numParams)
 	hData.data = data;
 	hData.callback = hFwd;
 	hData.requestType = GlobalAPIRequestType_GET;
+	hData.acceptType = GlobalAPIRequestAcceptType_OctetStream;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/records/replay/%d", gC_baseUrl, replayId);
 	hData.AddUrl(requestUrl);
-	hData.AddContentType("application/octet-stream");
 
 	return GlobalAPI_SendRequest(hData);
 }
@@ -1414,11 +1414,11 @@ public int Native_CreateReplayForRecordId(Handle plugin, int numParams)
 	hData.keyRequired = true;
 	hData.bodyLength = maxlength;
 	hData.requestType = GlobalAPIRequestType_POST;
+	hData.contentType = GlobalAPIRequestContentType_OctetStream;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/records/%d/replay", gC_baseUrl, recordId);
 	hData.AddUrl(requestUrl);
-	hData.AddContentType("application/octet-stream");
 
 	return GlobalAPI_SendRequest(hData);
 }

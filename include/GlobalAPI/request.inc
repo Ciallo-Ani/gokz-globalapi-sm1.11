@@ -1,6 +1,16 @@
 // =========================================================== //
 
-//...
+static char gC_acceptTypePhrases[][] =
+{
+	"application/json",
+	"application/octet-stream"
+}
+
+static char gC_contentTypePhrases[][] =
+{
+	"application/json",
+	"application/octet-stream"
+};
 
 // =========================================================== //
 
@@ -19,10 +29,7 @@ methodmap GlobalAPIRequest < Handle
 	
 	public bool SetBody(GlobalAPIRequestData hData, char[] body, int maxlength)
 	{
-		char contentType[32];
-		hData.GetString("contentType", contentType, sizeof(contentType));
-
-		return SteamWorks_SetHTTPRequestRawPostBody(this, contentType, body, maxlength);
+		return SteamWorks_SetHTTPRequestRawPostBody(this, gC_contentTypePhrases[hData.contentType], body, maxlength);
 	}
 	
 	public bool SetData(any data)
@@ -45,11 +52,9 @@ methodmap GlobalAPIRequest < Handle
 		return BuildAuthenticationHeader(this);
 	}
 	
-	public bool SetAcceptHeaders()
+	public bool SetAcceptHeaders(GlobalAPIRequestData hData)
 	{
-		return SteamWorks_SetHTTPRequestHeaderValue(this, "Accept", "application/json")
-		&& SteamWorks_SetHTTPRequestHeaderValue(this, "Accept-Charset", "utf-8")
-		&& SteamWorks_SetHTTPRequestHeaderValue(this, "Accept-Encoding", "gzip");
+		return SteamWorks_SetHTTPRequestHeaderValue(this, "Accept", gC_acceptTypePhrases[hData.acceptType]);
 	}
 	
 	public bool SetPoweredByHeader()
@@ -59,17 +64,7 @@ methodmap GlobalAPIRequest < Handle
 
 	public bool SetContentTypeHeader(GlobalAPIRequestData hData)
 	{
-		char contentType[32];
-		hData.GetString("contentType", contentType, sizeof(contentType));
-
-		if (StrEqual(contentType, ""))
-		{
-			return SteamWorks_SetHTTPRequestHeaderValue(this, "Content-Type", "application/json");
-		}
-		else
-		{
-			return SteamWorks_SetHTTPRequestHeaderValue(this, "Content-Type", contentType);
-		}
+		return SteamWorks_SetHTTPRequestHeaderValue(this, "Content-Type", gC_contentTypePhrases[hData.contentType]);
 	}
 	
 	public bool SetRequestOriginHeader(GlobalAPIRequestData hData)

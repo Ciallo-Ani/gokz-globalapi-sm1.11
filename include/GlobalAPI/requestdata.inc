@@ -25,6 +25,13 @@ methodmap GlobalAPIRequestData < JSON_Object
 
 		requestData.SetString("pluginName", pluginName);
 		requestData.SetKeyHidden("pluginName", true);
+
+		requestData.SetInt("acceptType", 0);
+		requestData.SetKeyHidden("acceptType", true);
+
+		requestData.SetInt("contentType", 0);
+		requestData.SetKeyHidden("contentType", true);
+
 		return view_as<GlobalAPIRequestData>(requestData);
 	}
 
@@ -40,10 +47,28 @@ methodmap GlobalAPIRequestData < JSON_Object
 		this.SetKeyHidden("url", true);
 	}
 
-	public void AddContentType(char[] contentType)
+	property int acceptType
 	{
-		this.SetString("contentType", contentType);
-		this.SetKeyHidden("contentType", true);
+		public get()
+		{
+			this.GetInt("acceptType");
+		}
+		public set(int type)
+		{
+			this.SetInt("acceptType", type);
+		}
+	}
+
+	property int contentType
+	{
+		public get()
+		{
+			this.GetInt("contentType");
+		}
+		public set(int type)
+		{
+			this.SetInt("contentType", type);
+		}
 	}
 	
 	property bool keyRequired

@@ -4,10 +4,7 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 {
 	JSON_Object hJson = null;
 
-	char contentType[32];
-	hData.GetString("contentType", contentType, sizeof(contentType));
-
-	if (StrEqual(contentType, "application/octet-stream", false) && hData.requestType != GlobalAPIRequestType_POST)
+	if (hData.contentType == GlobalAPIRequestContentType_OctetStream)
 	{
 		int iterator = 0;
 
@@ -23,7 +20,7 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 		hData.SetString("replayPath", path);
 		hData.SetKeyHidden("replayPath", true);
 
-		Handle request = view_as<Handle>(hData.GetInt("requestHandle"));
+		Handle request = hData.GetHandle("requestHandle");
 		SteamWorks_WriteHTTPResponseBodyToFile(request, path);
 	}
 	else
