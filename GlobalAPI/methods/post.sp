@@ -13,11 +13,22 @@ public bool HTTPPost(GlobalAPIRequestData hData)
 	
 	int maxlength = hData.bodyLength;
 	
+	char contentType[32];
+	hData.GetString("contentType", contentType, sizeof(contentType));
+
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	hData.GetString("url", requestUrl, sizeof(requestUrl));
 
-	char[] json = new char[maxlength];
-	hData.Encode(json, maxlength);
+	char[] body = new char[maxlength];
+
+	if (StrEqual(contentType, "application/octet-stream", false))
+	{
+		hData.GetString("body", body, maxlength);
+	}
+	else
+	{
+		hData.Encode(body, maxlength);
+	}
 	
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodPOST);
 	
@@ -34,8 +45,9 @@ public bool HTTPPost(GlobalAPIRequestData hData)
 	request.SetAuthHeader();
 	request.SetAcceptHeaders();
 	request.SetPoweredByHeader();
+	request.SetContentTypeHeader(hData);
 	request.SetRequestOriginHeader(hData);
-	request.SetBody(json, maxlength);
+	request.SetBody(hData, body, maxlength);
 	request.Send(hData);
 
 	return true;

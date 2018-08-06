@@ -17,9 +17,12 @@ methodmap GlobalAPIRequest < Handle
 		return SteamWorks_SetHTTPRequestAbsoluteTimeoutMS(this, seconds * 1000);
 	}
 	
-	public bool SetBody(char[] body, int maxlength)
+	public bool SetBody(GlobalAPIRequestData hData, char[] body, int maxlength)
 	{
-		return SteamWorks_SetHTTPRequestRawPostBody(this, "application/json", body, maxlength);
+		char contentType[32];
+		hData.GetString("contentType", contentType, sizeof(contentType));
+
+		return SteamWorks_SetHTTPRequestRawPostBody(this, contentType, body, maxlength);
 	}
 	
 	public bool SetData(any data)
@@ -52,6 +55,21 @@ methodmap GlobalAPIRequest < Handle
 	public bool SetPoweredByHeader()
 	{
 		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-Powered-By", "GlobalAPI Plugin " ... GlobalAPI_Plugin_Version);
+	}
+
+	public bool SetContentTypeHeader(GlobalAPIRequestData hData)
+	{
+		char contentType[32];
+		hData.GetString("contentType", contentType, sizeof(contentType));
+
+		if (StrEqual(contentType, ""))
+		{
+			return SteamWorks_SetHTTPRequestHeaderValue(this, "Content-Type", "application/json");
+		}
+		else
+		{
+			return SteamWorks_SetHTTPRequestHeaderValue(this, "Content-Type", contentType);
+		}
 	}
 	
 	public bool SetRequestOriginHeader(GlobalAPIRequestData hData)

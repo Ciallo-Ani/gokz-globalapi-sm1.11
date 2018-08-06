@@ -39,6 +39,12 @@ methodmap GlobalAPIRequestData < JSON_Object
 		this.SetString("url", url);
 		this.SetKeyHidden("url", true);
 	}
+
+	public void AddContentType(char[] contentType)
+	{
+		this.SetString("contentType", contentType);
+		this.SetKeyHidden("contentType", true);
+	}
 	
 	property bool keyRequired
 	{

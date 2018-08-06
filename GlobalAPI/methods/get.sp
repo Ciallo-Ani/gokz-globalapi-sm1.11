@@ -33,6 +33,7 @@ public bool HTTPGet(GlobalAPIRequestData hData)
 	request.SetAuthHeader();
 	request.SetAcceptHeaders();
 	request.SetPoweredByHeader();
+	request.SetContentTypeHeader(hData);
 	request.SetRequestOriginHeader(hData);
 	request.Send(hData);
 
