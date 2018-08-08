@@ -2,9 +2,9 @@
 
 public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 {
-	JSON_Object hJson = null;
+	JSON_Object hJson = new JSON_Object();
 
-	if (hData.contentType == GlobalAPIRequestContentType_OctetStream)
+	if (hData.acceptType == GlobalAPIRequestContentType_OctetStream)
 	{
 		int iterator = 0;
 
