@@ -12,13 +12,13 @@
 // ======================= DEFINITIONS ======================= //
 
 #define GlobalAPI_Plugin_Version "2.0.0"
-#define GlobalAPI_Plugin_Desc "Plugin helper for GlobalAPI " ... GlobalAPI_Version
+#define GlobalAPI_Plugin_Desc "Plugin helper for GlobalAPI Production & Staging"
 #define GlobalAPI_Plugin_Url "https://bitbucket.org/kztimerglobalteam/GlobalAPI-SMPlugin"
 
-#define GlobalAPI_Version "v1.0"
-#define GlobalAPI_Staging_Version "v1.0"
-#define GlobalAPI_BaseUrl "https://kztimerglobal.com/api/" ... GlobalAPI_Version
-#define GlobalAPI_Staging_BaseUrl "https://staging.kztimerglobal.com/api/" ... GlobalAPI_Staging_Version
+#define GlobalAPI_Backend_Version "v1.0"
+#define GlobalAPI_Backend_Staging_Version "v1.0"
+#define GlobalAPI_BaseUrl "https://kztimerglobal.com/api/" ... GlobalAPI_Backend_Version
+#define GlobalAPI_Staging_BaseUrl "https://staging.kztimerglobal.com/api/" ... GlobalAPI_Backend_Staging_Version
 
 #define GlobalAPI_Max_APIKey_Length 128
 #define GlobalAPI_Max_BaseUrl_Length 128
@@ -28,6 +28,7 @@
 #define GlobalAPI_Max_QueryUrl_Length 2048
 #define GlobalAPI_Max_PluginName_Length 64
 
+#define DEFAULT_DATA 0
 #define DEFAULT_INT -1
 #define DEFAULT_STRING ""
 #define DEFAULT_FLOAT -1.0
@@ -45,7 +46,7 @@ enum
 {
 	GlobalAPIRequestAcceptType_JSON = 0,
 	GlobalAPIRequestAcceptType_OctetStream
-}
+};
 
 enum
 {
@@ -87,20 +88,20 @@ native int GlobalAPI_Retrying_GetModuleCount();
 native ArrayList GlobalAPI_Retrying_GetModuleList();
 
 
-native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
+native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA);
 
 
-native bool GlobalAPI_GetBans(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] banTypes = DEFAULT_STRING,
+native bool GlobalAPI_GetBans(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] banTypes = DEFAULT_STRING,
 								const char[] banTypesList = DEFAULT_STRING, bool isExpired = DEFAULT_BOOL, const char[] ipAddress = DEFAULT_STRING,
 								int steamId64 = DEFAULT_INT, const char[] steamId = DEFAULT_STRING, const char[] notesContain = DEFAULT_STRING,
 								const char[] statsContain = DEFAULT_STRING, int serverId = DEFAULT_INT, const char[] createdSince = DEFAULT_STRING,
 								const char[] updatedSince = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 								
-native bool GlobalAPI_CreateBan(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+native bool GlobalAPI_CreateBan(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 									const char[] steamId, const char[] banType, const char[] stats,
 									const char[] notes, const char[] ipAddress);
 
-native bool GlobalAPI_GetJumpstats(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id = DEFAULT_INT,
+native bool GlobalAPI_GetJumpstats(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int id = DEFAULT_INT,
 									int serverId = DEFAULT_INT, int steamId64 = DEFAULT_INT, const char[] steamId = DEFAULT_STRING,
 									const char[] jumpType = DEFAULT_STRING, const char[] steamId64List = DEFAULT_STRING,
 									const char[] jumpTypeList = DEFAULT_STRING, float greaterThanDistance = DEFAULT_FLOAT,
@@ -109,11 +110,11 @@ native bool GlobalAPI_GetJumpstats(OnAPICallFinished callback = INVALID_FUNCTION
 									const char[] createdSince = DEFAULT_STRING, const char[] updatedSince = DEFAULT_STRING,
 									int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
-native bool GlobalAPI_CreateJumpstat(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] steamId,
+native bool GlobalAPI_CreateJumpstat(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] steamId,
 										int jumpType, float distance, const char[] jumpJsonInfo, int tickRate, int mslCount,
 										bool isCrouchBind, bool isForwardBind, bool isCrouchBoost, int strafeCount);
 
-native bool GlobalAPI_GetJumpstatTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] jumpType,
+native bool GlobalAPI_GetJumpstatTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] jumpType,
 										int id = DEFAULT_INT, int serverId = DEFAULT_INT, int steamId64 = DEFAULT_INT,
 										const char[] steamId = DEFAULT_STRING, const char[] steamId64List = DEFAULT_STRING,
 										const char[] jumpTypeList = DEFAULT_STRING, float greaterThanDistance = DEFAULT_FLOAT,
@@ -122,49 +123,49 @@ native bool GlobalAPI_GetJumpstatTop(OnAPICallFinished callback = INVALID_FUNCTI
 										const char[] createdSince = DEFAULT_STRING, const char[] updatedSince = DEFAULT_STRING,
 										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 										
-native bool GlobalAPI_GetJumpstatTop30(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] jumpType);
+native bool GlobalAPI_GetJumpstatTop30(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] jumpType);
 
-native bool GlobalAPI_GetMaps(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] name = DEFAULT_STRING,
+native bool GlobalAPI_GetMaps(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] name = DEFAULT_STRING,
 								int largerThanFilesize = DEFAULT_INT, int smallerThanFilesize = DEFAULT_INT, bool isValidated = DEFAULT_BOOL,
 								int difficulty = DEFAULT_INT, const char[] createdSince = DEFAULT_STRING, const char[] updatedSince = DEFAULT_STRING,
 								int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
-native bool GlobalAPI_GetMapById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+native bool GlobalAPI_GetMapById(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int id);
 
-native bool GlobalAPI_GetMapByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] name);
+native bool GlobalAPI_GetMapByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] name);
 
-native bool GlobalAPI_GetModes(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
+native bool GlobalAPI_GetModes(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA);
 
-native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int id);
 
-native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] name);
+native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = 0, const char[] name);
 
-native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] steamId = DEFAULT_STRING,
+native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] steamId = DEFAULT_STRING,
 									bool isBanned = DEFAULT_BOOL, int totalRecords = DEFAULT_INT, const char[] ipAddress = DEFAULT_STRING,
 									const char[] steamId64List = DEFAULT_STRING);
 
-native bool GlobalAPI_GetPlayerBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] steamId);
+native bool GlobalAPI_GetPlayerBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] steamId);
 
-native bool GlobalAPI_GetPlayerBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+native bool GlobalAPI_GetPlayerBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 												const char[] steamId, const char[] ipAddress);
 
-native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] mapName = DEFAULT_STRING,
+native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] mapName = DEFAULT_STRING,
 									const char[] modes = DEFAULT_STRING, int tickRate = DEFAULT_INT, const char[] steamId = DEFAULT_STRING,
 									int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
-native bool GlobalAPI_CreateRecord(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] steamId,
+native bool GlobalAPI_CreateRecord(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] steamId,
 									int mapId, const char[] mode, int stage, int tickRate, int teleports, float time);
 
 #pragma deprecated "This method does not return JSON at the moment!"
-native bool GlobalAPI_GetRecordPlaceById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+native bool GlobalAPI_GetRecordPlaceById(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int id);
 
-native bool GlobalAPI_GetRecordsTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+native bool GlobalAPI_GetRecordsTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 										const char[] steamId = DEFAULT_STRING, int steamId64 = DEFAULT_INT, int mapId = DEFAULT_INT,
 										const char[] mapName = DEFAULT_STRING, int tickRate = DEFAULT_INT, int stage = DEFAULT_INT,
 										const char[] modes = DEFAULT_STRING, bool hasTeleports = DEFAULT_BOOL,
 										const char[] playerName = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
-native bool GlobalAPI_GetRecordsTopRecent(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+native bool GlobalAPI_GetRecordsTopRecent(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 											const char[] steamId = DEFAULT_STRING, int steamId64 = DEFAULT_INT,
 											int mapId = DEFAULT_INT, const char[] mapName = DEFAULT_STRING,
 											int tickRate = DEFAULT_INT, int stage = DEFAULT_INT,
@@ -173,18 +174,18 @@ native bool GlobalAPI_GetRecordsTopRecent(OnAPICallFinished callback = INVALID_F
 											const char[] createdSince = DEFAULT_STRING, const char[] playerName = DEFAULT_STRING,
 											int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
-native bool GlobalAPI_GetServers(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+native bool GlobalAPI_GetServers(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 									int id = DEFAULT_INT, int port = DEFAULT_INT, const char[] ip = DEFAULT_STRING,
 									const char[] name = DEFAULT_STRING, int ownerSteamId64 = DEFAULT_INT,
 									int approvalStatus = DEFAULT_INT, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
-native bool GlobalAPI_GetServerById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+native bool GlobalAPI_GetServerById(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int id);
 
-native bool GlobalAPI_GetServersByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] serverName);
+native bool GlobalAPI_GetServersByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] serverName);
 
-native bool GlobalAPI_GetReplayByRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int recordId);
-native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int replayId);
-native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, 
+native bool GlobalAPI_GetReplayByRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int recordId);
+native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int replayId);
+native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 												int recordId, char[] replayData, int maxlength);
 
 // ======================= PLUGIN INFO ======================= //
