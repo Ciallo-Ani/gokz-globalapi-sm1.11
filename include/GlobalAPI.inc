@@ -138,7 +138,7 @@ native bool GlobalAPI_GetModes(OnAPICallFinished callback = INVALID_FUNCTION, an
 
 native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int id);
 
-native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = 0, const char[] name);
+native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] name);
 
 native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] steamId = DEFAULT_STRING,
 									bool isBanned = DEFAULT_BOOL, int totalRecords = DEFAULT_INT, const char[] ipAddress = DEFAULT_STRING,
