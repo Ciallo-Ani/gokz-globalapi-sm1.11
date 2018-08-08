@@ -2,7 +2,7 @@
 
 public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 {
-	JSON_Object hJson = new JSON_Object();
+	JSON_Object hJson = null;
 
 	if (hData.acceptType == GlobalAPIRequestContentType_OctetStream)
 	{
@@ -25,7 +25,7 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 	}
 	else
 	{
-		hJson.Decode(response);
+		hJson = json_decode(response);
 	}
 
 	any data = hData.data;
@@ -38,8 +38,8 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 	CallForward(hFwd, bFailure, hJson, hData, data);
 
 	// Cleanup
-	if (hJson != INVALID_HANDLE) hJson.Cleanup();
 	if (hData != INVALID_HANDLE) hData.Cleanup();
+	if (hJson != INVALID_HANDLE) hJson.Cleanup();
 
 	delete hFwd;
 	delete hJson;
