@@ -43,10 +43,7 @@ stock char GetMapFullPath(char[] buffer, int maxlength)
 	char mapPath[PLATFORM_MAX_PATH];
 	GetCurrentMap(mapPath, sizeof(mapPath));
 	
-	PrintToServer(mapPath);
-	
 	Format(buffer, maxlength, "maps/%s.bsp", mapPath);
-	PrintToServer(buffer);
 }
 
 stock char FormatISO8601Date(char[] datetime, bool useSlashes = true)
