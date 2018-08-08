@@ -51,7 +51,7 @@ methodmap GlobalAPIRequestData < JSON_Object
 	{
 		public get()
 		{
-			this.GetInt("acceptType");
+			return this.GetInt("acceptType");
 		}
 		public set(int type)
 		{
@@ -63,7 +63,7 @@ methodmap GlobalAPIRequestData < JSON_Object
 	{
 		public get()
 		{
-			this.GetInt("contentType");
+			return this.GetInt("contentType");
 		}
 		public set(int type)
 		{
