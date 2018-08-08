@@ -32,7 +32,10 @@ public bool ReadAPIKey()
 
 public void CreateConfigDir()
 {
-	if (!DirExists(SETTING_DIR)) CreateDirectory(SETTING_DIR, 666);
+	if (!CreateDirectoryIfNotExist(SETTING_DIR))
+	{
+		SetFailState("[GlobalAPI] Failed to create directory %s", SETTING_DIR);
+	}
 
 	if (!FileExists(APIKEY_PATH))
 	{
@@ -58,6 +61,20 @@ public bool SendRequest(Handle request, GlobalAPIRequestData hData)
 
 // =========================================================== //
 
+public bool SendRequestEx(GlobalAPIRequestData hData)
+{
+	if (hData.requestType == GlobalAPIRequestType_GET)
+	{
+		return HTTPGet(hData);
+	}
+	else
+	{
+		return HTTPPost(hData);
+	}
+}
+
+// =========================================================== //
+
 // This could be failure, or just success with no response body
 // We do not care. We call the forward with data as null anyways
 public void CallForward_NoResponse(GlobalAPIRequestData hData)
@@ -66,10 +83,10 @@ public void CallForward_NoResponse(GlobalAPIRequestData hData)
 	Handle hFwd = hData.callback;
 	bool bFailure = hData.failure;
 
-	CallForward(hFwd, bFailure, null, hData, data);
+	if (hFwd != null) CallForward(hFwd, bFailure, null, hData, data);
 
 	// Cleanup
-	if (hData != INVALID_HANDLE) hData.Cleanup();
+	if (hData != null) hData.Cleanup();
 
 	delete hFwd;
 	delete hData;

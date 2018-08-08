@@ -7,12 +7,19 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_HasAPIKey", Native_HasAPIKey);
 	CreateNative("GlobalAPI_IsStaging", Native_IsStaging);
 	CreateNative("GlobalAPI_IsDebugging", Native_IsDebugging);
+	CreateNative("GlobalAPI_SendRequest", Native_SendRequest);
 
 	// Logging
 	CreateNative("GlobalAPI_Logging_LoadModule", Native_Logging_LoadModule);
 	CreateNative("GlobalAPI_Logging_UnloadModule", Native_Logging_UnloadModule);
 	CreateNative("GlobalAPI_Logging_GetModuleList", Native_Logging_GetModuleList);
 	CreateNative("GlobalAPI_Logging_GetModuleCount", Native_Logging_GetModuleCount);
+	
+	// Retrying
+	CreateNative("GlobalAPI_Retrying_LoadModule", Native_Retrying_LoadModule);
+	CreateNative("GlobalAPI_Retrying_UnloadModule", Native_Retrying_UnloadModule);
+	CreateNative("GlobalAPI_Retrying_GetModuleList", Native_Retrying_GetModuleList);
+	CreateNative("GlobalAPI_Retrying_GetModuleCount", Native_Retrying_GetModuleCount);
 
 	// Auth
 	CreateNative("GlobalAPI_GetAuthStatus", Native_GetAuthStatus);
@@ -99,6 +106,17 @@ public int Native_IsDebugging(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
+	native bool GlobalAPI_SendRequest(GlobalAPIRequestData hData)
+*/
+public int Native_SendRequest(Handle plugin, int numParams)
+{
+	GlobalAPIRequestData hData = GetNativeCell(1);
+	return SendRequestEx(hData);
+}
+
+// =========================================================== //
+
+/*
 	native bool GlobalAPI_Logging_LoadModule()
 */
 public int Native_Logging_LoadModule(Handle plugin, int numParams)
@@ -139,6 +157,46 @@ public int Native_Logging_GetModuleCount(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
+	native bool GlobalAPI_Retrying_LoadModule()
+*/
+public int Native_Retrying_LoadModule(Handle plugin, int numParams)
+{
+	return Retrying_LoadModule(plugin);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_Retrying_UnloadModule()
+*/
+public int Native_Retrying_UnloadModule(Handle plugin, int numParams)
+{
+	return Retrying_UnloadModule(plugin);
+}
+
+// =========================================================== //
+
+/*
+	native ArrayList GlobalAPI_Retrying_GetModuleList()
+*/
+public int Native_Retrying_GetModuleList(Handle plugin, int numParams)
+{
+	return view_as<int>(Retrying_GetModuleList());
+}
+
+// =========================================================== //
+
+/*
+	native int GlobalAPI_Retrying_GetModuleCount()
+*/
+public int Native_Retrying_GetModuleCount(Handle plugin, int numParams)
+{
+	return Retrying_GetModuleCount();
+}
+
+// =========================================================== //
+
+/*
 	native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
 */
 public int Native_GetAuthStatus(Handle plugin, int numParams)
@@ -156,12 +214,13 @@ public int Native_GetAuthStatus(Handle plugin, int numParams)
 	hData.data = data;
 	hData.callback = hFwd;
 	hData.keyRequired = true;
+	hData.requestType = GlobalAPIRequestType_GET;
 	
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	FormatEx(requestUrl, sizeof(requestUrl), "%s/auth/status", gC_baseUrl);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -233,12 +292,13 @@ public int Native_GetBans(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	FormatEx(requestUrl, sizeof(requestUrl), "%s/bans", gC_baseUrl);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -283,12 +343,13 @@ public int Native_CreateBan(Handle plugin, int numParams)
 	hData.callback = hFwd;
 	hData.keyRequired = true;
 	hData.bodyLength = 1856;
+	hData.requestType = GlobalAPIRequestType_POST;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	FormatEx(requestUrl, sizeof(requestUrl), "%s/bans", gC_baseUrl);
 	hData.AddUrl(requestUrl);
 
-	return HTTPPost(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -372,12 +433,13 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	FormatEx(requestUrl, sizeof(requestUrl), "%s/jumpstats", gC_baseUrl);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -429,12 +491,13 @@ public int Native_CreateJumpstat(Handle plugin, int numParams)
 	hData.callback = hFwd;
 	hData.keyRequired = true;
 	hData.bodyLength = 100352;
+	hData.requestType = GlobalAPIRequestType_POST;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	FormatEx(requestUrl, sizeof(requestUrl), "%s/jumpstats", gC_baseUrl);
 	hData.AddUrl(requestUrl);
 
-	return HTTPPost(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -514,12 +577,13 @@ public int Native_GetJumpstatTop(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/jumpstats/%s/top", gC_baseUrl, jumpType);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -544,12 +608,13 @@ public int Native_GetJumpstatTop30(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/jumpstats/%s/top30", gC_baseUrl, jumpType);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -600,12 +665,13 @@ public int Native_GetMaps(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/maps", gC_baseUrl);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -628,12 +694,13 @@ public int Native_GetMapById(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/maps/%d", gC_baseUrl, id);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -658,12 +725,13 @@ public int Native_GetMapByName(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/maps/name/%s", gC_baseUrl, name);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -685,12 +753,13 @@ public int Native_GetModes(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/modes", gC_baseUrl);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -713,12 +782,13 @@ public int Native_GetModeById(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/modes/id/%d", gC_baseUrl, id);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -743,12 +813,13 @@ public int Native_GetModeByName(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/modes/name/%s", gC_baseUrl, name);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -790,12 +861,13 @@ public int Native_GetPlayers(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/players", gC_baseUrl);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -820,12 +892,13 @@ public int Native_GetPlayerBySteamId(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/players/steamid/%s", gC_baseUrl, steamId);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -854,12 +927,13 @@ public int Native_GetPlayerBySteamIdAndIp(Handle plugin, int numParams)
 	hData.data = data;
 	hData.callback = hFwd;
 	hData.keyRequired = true;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/players/steamid/%s/ip/%s", gC_baseUrl, steamId, ip);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -903,12 +977,13 @@ public int Native_GetRecords(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/records", gC_baseUrl);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -953,12 +1028,13 @@ public int Native_CreateRecord(Handle plugin, int numParams)
 	hData.callback = hFwd;
 	hData.keyRequired = true;
 	hData.bodyLength = 1024;
+	hData.requestType = GlobalAPIRequestType_POST;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/records", gC_baseUrl);
 	hData.AddUrl(requestUrl);
 
-	return HTTPPost(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -981,12 +1057,13 @@ public int Native_GetRecordPlaceById(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/records/place/%d", gC_baseUrl, id);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -1046,12 +1123,13 @@ public int Native_GetRecordsTop(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/records/top", gC_baseUrl);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -1120,12 +1198,13 @@ public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/records/top/recent", gC_baseUrl);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -1172,12 +1251,13 @@ public int Native_GetServers(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/servers", gC_baseUrl);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -1200,12 +1280,13 @@ public int Native_GetServerById(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/servers/%d", gC_baseUrl, id);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //
@@ -1230,12 +1311,13 @@ public int Native_GetServersByName(Handle plugin, int numParams)
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/servers/name/%s", gC_baseUrl, serverName);
 	hData.AddUrl(requestUrl);
 
-	return HTTPGet(hData);
+	return GlobalAPI_SendRequest(hData);
 }
 
 // =========================================================== //

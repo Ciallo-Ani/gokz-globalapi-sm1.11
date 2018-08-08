@@ -5,8 +5,6 @@
 */
 public bool HTTPPost(GlobalAPIRequestData hData)
 {
-	hData.requestType = GlobalAPIRequestType_POST;
-
 	if (hData.keyRequired && !gB_usingAPIKey && !gB_Debug)
 	{
 		LogMessage("[GlobalAPI] Using this method requires an API key, and you dont seem to have one setup!");
@@ -17,7 +15,7 @@ public bool HTTPPost(GlobalAPIRequestData hData)
 	
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	hData.GetString("url", requestUrl, sizeof(requestUrl));
-	
+
 	char[] json = new char[maxlength];
 	hData.Encode(json, maxlength);
 	
@@ -36,6 +34,7 @@ public bool HTTPPost(GlobalAPIRequestData hData)
 	request.SetAuthHeader();
 	request.SetAcceptHeaders();
 	request.SetPoweredByHeader();
+	request.SetRequestOriginHeader(hData);
 	request.SetBody(json, maxlength);
 	request.Send(hData);
 

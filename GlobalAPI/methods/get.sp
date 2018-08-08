@@ -5,8 +5,6 @@
 */
 public bool HTTPGet(GlobalAPIRequestData hData)
 {
-	hData.requestType = GlobalAPIRequestType_GET;
-
 	if (hData.keyRequired && !gB_usingAPIKey && !gB_Debug)
 	{
 		LogMessage("[GlobalAPI] Using this method requires an API key, and you dont seem to have one setup!");
@@ -35,6 +33,7 @@ public bool HTTPGet(GlobalAPIRequestData hData)
 	request.SetAuthHeader();
 	request.SetAcceptHeaders();
 	request.SetPoweredByHeader();
+	request.SetRequestOriginHeader(hData);
 	request.Send(hData);
 
 	return true;

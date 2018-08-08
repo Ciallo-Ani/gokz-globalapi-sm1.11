@@ -62,12 +62,18 @@ native void GlobalAPI_GetAPIKey(char[] buffer, int maxlength);
 native bool GlobalAPI_HasAPIKey();
 native bool GlobalAPI_IsStaging();
 native bool GlobalAPI_IsDebugging();
+native bool GlobalAPI_SendRequest(GlobalAPIRequestData hData);
 
 native bool GlobalAPI_Logging_LoadModule();
 native bool GlobalAPI_Logging_UnloadModule();
-
 native int GlobalAPI_Logging_GetModuleCount();
 native ArrayList GlobalAPI_Logging_GetModuleList();
+
+native bool GlobalAPI_Retrying_LoadModule();
+native bool GlobalAPI_Retrying_UnloadModule();
+native int GlobalAPI_Retrying_GetModuleCount();
+native ArrayList GlobalAPI_Retrying_GetModuleList();
+
 
 native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
 
@@ -187,12 +193,19 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_HasAPIKey");
 	MarkNativeAsOptional("GlobalAPI_IsStaging");
 	MarkNativeAsOptional("GlobalAPI_IsDebugging");
+	MarkNativeAsOptional("GlobalAPI_SendRequest");
 
 	// Logging
 	MarkNativeAsOptional("GlobalAPI_Logging_LoadModule");
 	MarkNativeAsOptional("GlobalAPI_Logging_UnloadModule");
 	MarkNativeAsOptional("GlobalAPI_Logging_GetModuleList");
 	MarkNativeAsOptional("GlobalAPI_Logging_GetModuleCount");
+	
+	// Retrying
+	MarkNativeAsOptional("GlobalAPI_Retrying_LoadModule");
+	MarkNativeAsOptional("GlobalAPI_Retrying_UnloadModule");
+	MarkNativeAsOptional("GlobalAPI_Retrying_GetModuleList");
+	MarkNativeAsOptional("GlobalAPI_Retrying_GetModuleCount");
 
 	// Auth
 	MarkNativeAsOptional("GlobalAPI_GetAuthStatus");
