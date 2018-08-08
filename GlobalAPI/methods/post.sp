@@ -10,18 +10,14 @@ public bool HTTPPost(GlobalAPIRequestData hData)
 		LogMessage("[GlobalAPI] Using this method requires an API key, and you dont seem to have one setup!");
 		return false;
 	}
-	
-	int maxlength = hData.bodyLength;
-	
-	char contentType[32];
-	hData.GetString("contentType", contentType, sizeof(contentType));
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	hData.GetString("url", requestUrl, sizeof(requestUrl));
 
+	int maxlength = hData.bodyLength;
 	char[] body = new char[maxlength];
 
-	if (StrEqual(contentType, "application/octet-stream", false))
+	if (hData.contentType == GlobalAPIRequestContentType_OctetStream)
 	{
 		hData.GetString("body", body, maxlength);
 	}
