@@ -28,6 +28,8 @@
 #define GlobalAPI_Max_QueryUrl_Length 2048
 #define GlobalAPI_Max_PluginName_Length 64
 
+#define GlobalAPI_Data_File_Extension "GAPI"
+
 #define DEFAULT_DATA 0
 #define DEFAULT_INT -1
 #define DEFAULT_STRING ""
