@@ -72,6 +72,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateConfigDir();
 }
 
+// TODO: Add late loading support
 public void OnPluginStart()
 {
 	g_loggingModules = new ArrayList();

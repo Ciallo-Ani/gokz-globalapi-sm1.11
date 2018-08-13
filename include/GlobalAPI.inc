@@ -53,7 +53,7 @@ enum
 enum
 {
 	GlobalAPIRequestContentType_JSON = 0,
-	GlobalAPIRequestContentType_OctetStream,
+	GlobalAPIRequestContentType_OctetStream
 };
 
 // ======================= TYPEDEFS ========================== //
@@ -186,7 +186,9 @@ native bool GlobalAPI_GetServerById(OnAPICallFinished callback = INVALID_FUNCTIO
 native bool GlobalAPI_GetServersByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] serverName);
 
 native bool GlobalAPI_GetReplayByRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int recordId);
+
 native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int replayId);
+
 native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 												int recordId, char[] replayData, int maxlength);
 

@@ -4,7 +4,7 @@ static char gC_acceptTypePhrases[][] =
 {
 	"application/json",
 	"application/octet-stream"
-}
+};
 
 static char gC_contentTypePhrases[][] =
 {
