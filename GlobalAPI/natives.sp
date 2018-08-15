@@ -60,6 +60,11 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_GetServers", Native_GetServers);
 	CreateNative("GlobalAPI_GetServerById", Native_GetServerById);
 	CreateNative("GlobalAPI_GetServersByName", Native_GetServersByName);
+
+	// Replays
+	CreateNative("GlobalAPI_GetReplayByRecordId", Native_GetReplayByRecordId);
+	CreateNative("GlobalAPI_GetReplayByReplayId", Native_GetReplayByReplayId);
+	CreateNative("GlobalAPI_CreateReplayForRecordId", Native_CreateReplayForRecordId);
 }
 
 // =========================================================== //
@@ -1315,6 +1320,104 @@ public int Native_GetServersByName(Handle plugin, int numParams)
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/servers/name/%s", gC_baseUrl, serverName);
+	hData.AddUrl(requestUrl);
+
+	return GlobalAPI_SendRequest(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetReplayByRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int recordId);
+*/
+public int Native_GetReplayByRecordId(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+	int recordId = GetNativeCell(3);
+
+	char pluginName[GlobalAPI_Max_PluginName_Length];
+	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
+	hData.acceptType = GlobalAPIRequestAcceptType_OctetStream;
+
+	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
+	Format(requestUrl, sizeof(requestUrl), "%s/records/%d/replay", gC_baseUrl, recordId);
+	hData.AddUrl(requestUrl);
+
+	return GlobalAPI_SendRequest(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int replayId);
+*/
+public int Native_GetReplayByReplayId(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+	int replayId = GetNativeCell(3);
+
+	char pluginName[GlobalAPI_Max_PluginName_Length];
+	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
+	hData.acceptType = GlobalAPIRequestAcceptType_OctetStream;
+
+	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
+	Format(requestUrl, sizeof(requestUrl), "%s/records/replay/%d", gC_baseUrl, replayId);
+	hData.AddUrl(requestUrl);
+
+	return GlobalAPI_SendRequest(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+													int recordId, char[] replayData, int maxlength);
+*/
+public int Native_CreateReplayForRecordId(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+	int recordId = GetNativeCell(3);
+	int maxlength = GetNativeCell(5);
+
+	char[] replayData = new char[maxlength];
+	GetNativeString(4, replayData, maxlength);
+
+	char pluginName[GlobalAPI_Max_PluginName_Length];
+	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	hData.AddString("body", replayData);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+	hData.keyRequired = true;
+	hData.bodyLength = maxlength;
+	hData.requestType = GlobalAPIRequestType_POST;
+	hData.contentType = GlobalAPIRequestContentType_OctetStream;
+
+	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
+	Format(requestUrl, sizeof(requestUrl), "%s/records/%d/replay", gC_baseUrl, recordId);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);

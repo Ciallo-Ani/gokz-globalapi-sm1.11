@@ -30,6 +30,14 @@ public bool ReadAPIKey()
 
 // =========================================================== //
 
+public void CreateDataDir()
+{
+	if (!CreateDirectoryIfNotExist(DATA_DIR))
+	{
+		SetFailState("[GlobalAPI] Failed to create directory %s", SETTING_DIR);
+	}
+}
+
 public void CreateConfigDir()
 {
 	if (!CreateDirectoryIfNotExist(SETTING_DIR))
@@ -100,19 +108,9 @@ public Handle CreateForwardHandle(Function callback, any data)
 	
 	if (callback != INVALID_FUNCTION)
 	{
-		if (data == INVALID_HANDLE)
-		{
-			PrintToServer("Created a normal forward");
-			// bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData
-			hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell);
-		}
-		
-		else
-		{
-			PrintToServer("Created a forward with data");
-			// bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data
-			hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
-		}
+		PrintToServer("Created a forward");
+		// bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data
+		hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
 	}
 	
 	return hFwd;
@@ -134,27 +132,14 @@ public void CallForward(Handle hFwd, bool bFailure, JSON_Object hJson, GlobalAPI
 {
 	if (hFwd != INVALID_HANDLE)
 	{
-		if (data == INVALID_HANDLE)
-		{
-			PrintToServer("Called a normal forward");
-			// bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData
-			Call_StartForward(hFwd);
-			Call_PushCell(bFailure);
-			Call_PushCell(hJson);
-			Call_PushCell(hData);
-			Call_Finish();
-		}
-		else
-		{
-			PrintToServer("Called a forward with data");
-			// bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data
-			Call_StartForward(hFwd);
-			Call_PushCell(bFailure);
-			Call_PushCell(hJson);
-			Call_PushCell(hData);
-			Call_PushCell(data);
-			Call_Finish();
-		}
+		PrintToServer("Called a forward");
+		// bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data
+		Call_StartForward(hFwd);
+		Call_PushCell(bFailure);
+		Call_PushCell(hJson);
+		Call_PushCell(hData);
+		Call_PushCell(data);
+		Call_Finish();
 	}
 }
 

@@ -19,6 +19,7 @@ public int Global_HTTP_DataReceived(Handle request, bool failure, int offset, in
 		}
 		else
 		{
+			hData.SetHandle("requestHandle", request);
 			SteamWorks_GetHTTPResponseBodyCallback(request, Global_HTTP_Data, hData);
 		}
 	}

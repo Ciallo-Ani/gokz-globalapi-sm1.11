@@ -1,6 +1,16 @@
 // =========================================================== //
 
-//...
+static char gC_acceptTypePhrases[][] =
+{
+	"application/json",
+	"application/octet-stream"
+};
+
+static char gC_contentTypePhrases[][] =
+{
+	"application/json",
+	"application/octet-stream"
+};
 
 // =========================================================== //
 
@@ -17,9 +27,9 @@ methodmap GlobalAPIRequest < Handle
 		return SteamWorks_SetHTTPRequestAbsoluteTimeoutMS(this, seconds * 1000);
 	}
 	
-	public bool SetBody(char[] body, int maxlength)
+	public bool SetBody(GlobalAPIRequestData hData, char[] body, int maxlength)
 	{
-		return SteamWorks_SetHTTPRequestRawPostBody(this, "application/json", body, maxlength);
+		return SteamWorks_SetHTTPRequestRawPostBody(this, gC_contentTypePhrases[hData.contentType], body, maxlength);
 	}
 	
 	public bool SetData(any data)
@@ -42,16 +52,19 @@ methodmap GlobalAPIRequest < Handle
 		return BuildAuthenticationHeader(this);
 	}
 	
-	public bool SetAcceptHeaders()
+	public bool SetAcceptHeaders(GlobalAPIRequestData hData)
 	{
-		return SteamWorks_SetHTTPRequestHeaderValue(this, "Accept", "application/json")
-		&& SteamWorks_SetHTTPRequestHeaderValue(this, "Accept-Charset", "utf-8")
-		&& SteamWorks_SetHTTPRequestHeaderValue(this, "Accept-Encoding", "gzip");
+		return SteamWorks_SetHTTPRequestHeaderValue(this, "Accept", gC_acceptTypePhrases[hData.acceptType]);
 	}
 	
 	public bool SetPoweredByHeader()
 	{
 		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-Powered-By", "GlobalAPI Plugin " ... GlobalAPI_Plugin_Version);
+	}
+
+	public bool SetContentTypeHeader(GlobalAPIRequestData hData)
+	{
+		return SteamWorks_SetHTTPRequestHeaderValue(this, "Content-Type", gC_contentTypePhrases[hData.contentType]);
 	}
 	
 	public bool SetRequestOriginHeader(GlobalAPIRequestData hData)

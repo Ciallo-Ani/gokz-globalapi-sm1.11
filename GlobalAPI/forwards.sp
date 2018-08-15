@@ -26,6 +26,16 @@ public void CreateForwards()
 
 // =========================================================== //
 
+public void Call_Private_OnHTTPStart(Handle request, GlobalAPIRequestData hData)
+{
+	Call_StartForward(H_Private_OnHTTPStart);
+	Call_PushCell(request);
+	Call_PushCell(hData);
+	Call_Finish();
+}
+
+// =========================================================== //
+
 public void Call_Global_OnInitialized()
 {
 	Call_StartForward(H_Global_OnInitialized);
@@ -51,16 +61,6 @@ public void Call_Global_OnRequestStarted(Handle request, GlobalAPIRequestData hD
 public void Call_Global_OnRequestFinished(Handle request, GlobalAPIRequestData hData)
 {
 	Call_StartForward(H_Global_RequestFinished);
-	Call_PushCell(request);
-	Call_PushCell(hData);
-	Call_Finish();
-}
-
-// =========================================================== //
-
-public void Call_Private_OnHTTPStart(Handle request, GlobalAPIRequestData hData)
-{
-	Call_StartForward(H_Private_OnHTTPStart);
 	Call_PushCell(request);
 	Call_PushCell(hData);
 	Call_Finish();

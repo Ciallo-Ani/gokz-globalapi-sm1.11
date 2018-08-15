@@ -1,11 +1,14 @@
 // ====================== DEFINITIONS ======================== //
 
-#define CONFIG_PATH "sourcemod/GlobalAPI"
+#define DATA_DIR "data/sourcemod/GlobalAPI"
 #define SETTING_DIR "cfg/sourcemod/GlobalAPI"
+ 
+#define CONFIG_PATH "sourcemod/GlobalAPI"
 #define APIKEY_PATH "cfg/sourcemod/GlobalAPI/GlobalAPI-key.cfg"
 
 // =========================================================== //
 
+#include <sourcemod>
 #include <SteamWorks>
 
 #include <GlobalAPI>
@@ -69,6 +72,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateConfigDir();
 }
 
+// TODO: Add late loading support
 public void OnPluginStart()
 {
 	g_loggingModules = new ArrayList();
