@@ -3,7 +3,7 @@
 #include <sourcemod>
 
 #include <GlobalAPI>
-#include <GlobalAPI/helpers/players>
+#include <GlobalAPI/helpers>
 
 // ====================== FORMATTING ========================= //
 

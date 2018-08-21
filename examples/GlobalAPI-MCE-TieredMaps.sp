@@ -1,7 +1,7 @@
 // =========================================================== //
 
 #include <GlobalAPI>
-#include <GlobalAPI/Helpers>
+#include <GlobalAPI/helpers>
 
 // ====================== FORMATTING ========================= //
 

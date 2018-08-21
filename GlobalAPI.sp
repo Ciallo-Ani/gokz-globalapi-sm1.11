@@ -12,7 +12,7 @@
 #include <SteamWorks>
 
 #include <GlobalAPI>
-#include <GlobalAPI-Stocks>
+#include <GlobalAPI-stocks>
 #include <GlobalAPI/request>
 #include <GlobalAPI/requestdata>
 
@@ -38,15 +38,22 @@ ArrayList g_retryingModules;
 
 // ======================= INCLUDES ========================== //
 
-#include "GlobalAPI/http.sp"
 #include "GlobalAPI/misc.sp"
 #include "GlobalAPI/convars.sp"
 #include "GlobalAPI/natives.sp"
 #include "GlobalAPI/forwards.sp"
 #include "GlobalAPI/commands.sp"
+#include "GlobalAPI/method/get.sp"
+#include "GlobalAPI/method/post.sp"
 
-#include "GlobalAPI/logging.sp"
-#include "GlobalAPI/retrying.sp"
+#include "GlobalAPI/module/logging.sp"
+#include "GlobalAPI/module/retrying.sp"
+
+#include "GlobalAPI/http/HTTPData.sp"
+#include "GlobalAPI/http/HTTPHeaders.sp"
+#include "GlobalAPI/http/HTTPStarted.sp"
+#include "GlobalAPI/http/HTTPCompleted.sp"
+#include "GlobalAPI/http/HTTPDataReceived.sp"
 
 // ====================== PLUGIN INFO ======================== //
 
