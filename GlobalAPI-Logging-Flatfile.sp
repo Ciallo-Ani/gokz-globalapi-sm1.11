@@ -8,7 +8,7 @@
 // =========================================================== //
 
 #include <GlobalAPI>
-#include <GlobalAPI-Stocks>
+#include <GlobalAPI-stocks>
 
 // ====================== FORMATTING ========================= //
 
