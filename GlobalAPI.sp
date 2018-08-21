@@ -37,11 +37,13 @@ ArrayList g_retryingModules;
 
 #include "GlobalAPI/misc.sp"
 #include "GlobalAPI/convars.sp"
-#include "GlobalAPI/natives.sp"
-#include "GlobalAPI/forwards.sp"
 #include "GlobalAPI/commands.sp"
+
 #include "GlobalAPI/method/get.sp"
 #include "GlobalAPI/method/post.sp"
+
+#include "GlobalAPI/api/natives.sp"
+#include "GlobalAPI/api/forwards.sp"
 
 #include "GlobalAPI/module/logging.sp"
 #include "GlobalAPI/module/retrying.sp"
