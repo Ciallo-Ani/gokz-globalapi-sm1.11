@@ -125,7 +125,18 @@ public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData
 	hLogFile.WriteLine("%s  => Method: %s", logTag, method);
 	hLogFile.WriteLine("%s   => Status: %d", logTag, hData.status);
 	hLogFile.WriteLine("%s    => URL: %s", logTag, url);
-	hLogFile.WriteLine("%s     => Params: %s", logTag, params);
+
+	if (hData.requestType == GlobalAPIRequestType_GET)
+	{
+		hLogFile.WriteLine("%s      => Params: %s", logTag, params);
+	}
+
+	else if (hData.requestType == GlobalAPIRequestType_POST)
+	{
+		hData.Encode(params, sizeof(params));
+		hLogFile.WriteLine("%s      => Body: %s", logTag, params);
+	}
+
 	hLogFile.Close();
 }
 
@@ -155,7 +166,18 @@ public void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hDat
 	hLogFile.WriteLine("%s (%s) API call started!", logTag, pluginName);
 	hLogFile.WriteLine("%s  => Method: %s", logTag, method);
 	hLogFile.WriteLine("%s   => URL: %s", logTag, url);
-	hLogFile.WriteLine("%s    => Params: %s", logTag, params);
+
+	if (hData.requestType == GlobalAPIRequestType_GET)
+	{
+		hLogFile.WriteLine("%s      => Params: %s", logTag, params);
+	}
+
+	else if (hData.requestType == GlobalAPIRequestType_POST)
+	{
+		hData.Encode(params, sizeof(params));
+		hLogFile.WriteLine("%s      => Body: %s", logTag, params);
+	}
+
 	hLogFile.Close();
 }
 
@@ -187,7 +209,18 @@ public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hDa
 	hLogFile.WriteLine("%s   => Status: %d", logTag, hData.status);
 	hLogFile.WriteLine("%s    => Failure: %s", logTag, hData.failure ? "YES" : "NO");
 	hLogFile.WriteLine("%s     => URL: %s", logTag, url);
-	hLogFile.WriteLine("%s      => Params: %s", logTag, params);
+
+	if (hData.requestType == GlobalAPIRequestType_GET)
+	{
+		hLogFile.WriteLine("%s      => Params: %s", logTag, params);
+	}
+
+	else if (hData.requestType == GlobalAPIRequestType_POST)
+	{
+		hData.Encode(params, sizeof(params));
+		hLogFile.WriteLine("%s      => Body: %s", logTag, params);
+	}
+
 	hLogFile.Close();
 }
 
