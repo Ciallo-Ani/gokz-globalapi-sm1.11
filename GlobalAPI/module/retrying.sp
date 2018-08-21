@@ -33,7 +33,7 @@ public bool Retrying_UnloadModule(Handle plugin)
 	}
 	else
 	{
-		ThrowNativeError(SP_ERROR_NATIVE, "[GlobalAPI-Logging] Module is not loaded!");
+		ThrowNativeError(SP_ERROR_NATIVE, "[GlobalAPI-Retrying] Module is not loaded!");
 		return false;
 	}
 }
