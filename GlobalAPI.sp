@@ -25,6 +25,11 @@ bool gB_usingAPIKey = false;
 char gC_apiKey[GlobalAPI_Max_APIKey_Length];
 char gC_baseUrl[GlobalAPI_Max_BaseUrl_Length];
 
+// Cached vars
+char gC_mapName[64];
+char gC_mapPath[PLATFORM_MAX_PATH];
+int gI_mapFilesize = -1;
+
 // ConVars
 bool gB_Debug = false;
 bool gB_Staging = false;
@@ -85,6 +90,15 @@ public void OnPluginStart()
 
 	gB_usingAPIKey = ReadAPIKey();
 	AutoExecConfig(true, "GlobalAPI", CONFIG_PATH);
+}
+
+public void OnMapStart()
+{
+	GetCurrentMap(gC_mapPath, sizeof(gC_mapPath));
+	GetMapDisplayName(gC_mapPath, gC_mapName, sizeof(gC_mapName));
+
+	Format(gC_mapPath, sizeof(gC_mapPath), "maps/%s.bsp", gC_mapPath);
+	gI_mapFilesize = FileSize(gC_mapPath);
 }
 
 public void OnConfigsExecuted()
