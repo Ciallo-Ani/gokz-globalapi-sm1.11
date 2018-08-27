@@ -123,6 +123,19 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 
+	property int responseTime
+	{
+		public get()
+		{
+			return this.GetInt("responseTime");
+		}
+		public set(int responseTime)
+		{
+			this.SetInt("responseTime", responseTime);
+			this.SetKeyHidden("responseTime", true);
+		}
+	}
+
 	property int requestType
 	{
 		public get()
