@@ -9,7 +9,7 @@
 #include <SteamWorks>
 
 #include <GlobalAPI>
-#include <GlobalAPI-Stocks>
+#include <GlobalAPI-stocks>
 #include <GlobalAPI/request>
 #include <GlobalAPI/requestdata>
 
@@ -25,6 +25,11 @@ bool gB_usingAPIKey = false;
 char gC_apiKey[GlobalAPI_Max_APIKey_Length];
 char gC_baseUrl[GlobalAPI_Max_BaseUrl_Length];
 
+// Cached vars
+char gC_mapName[64];
+char gC_mapPath[PLATFORM_MAX_PATH];
+int gI_mapFilesize = -1;
+
 // ConVars
 bool gB_Debug = false;
 bool gB_Staging = false;
@@ -35,15 +40,24 @@ ArrayList g_retryingModules;
 
 // ======================= INCLUDES ========================== //
 
-#include "GlobalAPI/http.sp"
 #include "GlobalAPI/misc.sp"
 #include "GlobalAPI/convars.sp"
-#include "GlobalAPI/natives.sp"
-#include "GlobalAPI/forwards.sp"
 #include "GlobalAPI/commands.sp"
 
-#include "GlobalAPI/logging.sp"
-#include "GlobalAPI/retrying.sp"
+#include "GlobalAPI/method/get.sp"
+#include "GlobalAPI/method/post.sp"
+
+#include "GlobalAPI/api/natives.sp"
+#include "GlobalAPI/api/forwards.sp"
+
+#include "GlobalAPI/module/logging.sp"
+#include "GlobalAPI/module/retrying.sp"
+
+#include "GlobalAPI/http/HTTPData.sp"
+#include "GlobalAPI/http/HTTPHeaders.sp"
+#include "GlobalAPI/http/HTTPStarted.sp"
+#include "GlobalAPI/http/HTTPCompleted.sp"
+#include "GlobalAPI/http/HTTPDataReceived.sp"
 
 // ====================== PLUGIN INFO ======================== //
 
@@ -76,6 +90,15 @@ public void OnPluginStart()
 
 	gB_usingAPIKey = ReadAPIKey();
 	AutoExecConfig(true, "GlobalAPI", CONFIG_PATH);
+}
+
+public void OnMapStart()
+{
+	GetCurrentMap(gC_mapPath, sizeof(gC_mapPath));
+	GetMapDisplayName(gC_mapPath, gC_mapName, sizeof(gC_mapName));
+
+	Format(gC_mapPath, sizeof(gC_mapPath), "maps/%s.bsp", gC_mapPath);
+	gI_mapFilesize = FileSize(gC_mapPath);
 }
 
 public void OnConfigsExecuted()
