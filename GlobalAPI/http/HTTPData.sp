@@ -2,6 +2,8 @@
 
 public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 {
+	PrintDebugMessage("HTTP Response data...");
+
 	JSON_Object hJson = null;
 
 	if (hData.acceptType == GlobalAPIRequestContentType_OctetStream)
