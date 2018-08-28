@@ -108,9 +108,9 @@ public Handle CreateForwardHandle(Function callback, any data)
 	
 	if (callback != INVALID_FUNCTION)
 	{
-			PrintDebugMessage("Created a forward");
-			// bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data
-			hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
+		PrintDebugMessage("Created a forward");
+		// bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data
+		hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
 	}
 	
 	return hFwd;
