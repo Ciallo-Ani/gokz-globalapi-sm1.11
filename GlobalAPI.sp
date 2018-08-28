@@ -98,10 +98,8 @@ public void OnPluginStart()
 
 public void OnMapStart()
 {
-	GetCurrentMap(gC_mapPath, sizeof(gC_mapPath));
-	GetMapDisplayName(gC_mapPath, gC_mapName, sizeof(gC_mapName));
-
-	Format(gC_mapPath, sizeof(gC_mapPath), "maps/%s.bsp", gC_mapPath);
+	GetMapDisplay(gC_mapName, sizeof(gC_mapName));
+	GetMapFullPath(gC_mapPath, sizeof(gC_mapPath));
 	gI_mapFilesize = FileSize(gC_mapPath);
 }
 
