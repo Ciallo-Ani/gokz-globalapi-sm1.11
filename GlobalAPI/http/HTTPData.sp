@@ -20,7 +20,7 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 		hData.SetString("dataFilePath", path);
 		hData.SetKeyHidden("dataFilePath", true);
 
-		Handle request = hData.GetHandle("requestHandle");
+		Handle request = hData.GetHandle("_requestHandle");
 		SteamWorks_WriteHTTPResponseBodyToFile(request, path);
 	}
 	else
@@ -32,8 +32,8 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 	Handle hFwd = hData.callback;
 	bool bFailure = hData.failure;
 
-	// We dont plan to have this key as long lasting because its a handle anyways.
-	hData.Remove("requestHandle");
+	// Remove temporary key
+	hData.Remove("_requestHandle");
 
 	CallForward(hFwd, bFailure, hJson, hData, data);
 
