@@ -47,6 +47,12 @@ methodmap GlobalAPIRequestData < JSON_Object
 		this.SetKeyHidden("url", true);
 	}
 
+	public void AddDataPath(char[] path)
+	{
+		this.SetString("dataFilePath", path);
+		this.SetKeyHidden("dataFilePath", true);
+	}
+
 	property int acceptType
 	{
 		public get()
