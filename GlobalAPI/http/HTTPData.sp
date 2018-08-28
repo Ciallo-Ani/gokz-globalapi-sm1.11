@@ -2,6 +2,8 @@
 
 public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 {
+	PrintDebugMessage("HTTP Response data...");
+
 	JSON_Object hJson = json_decode(response);
 
 	any data = hData.data;
