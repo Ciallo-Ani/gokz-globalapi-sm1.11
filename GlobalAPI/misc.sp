@@ -149,7 +149,7 @@ public void PrintInfoHeaderToConsole(int client)
 {
 	char infoStr[128];
 	int paddingSize = Format(infoStr, sizeof(infoStr), "[GlobalAPI Plugin v%s for backend %s]",
-														GlobalAPI_Plugin_Version, GlobalAPI_Version);
+														GlobalAPI_Plugin_Version, GlobalAPI_Backend_Version);
 
 	char[] padding = new char[paddingSize];
 	for (int i = 0; i < paddingSize; i++) padding[i] = '-';
