@@ -45,8 +45,8 @@ enum
 
 typeset OnAPICallFinished
 {
-	function void(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData);
-	function void(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData, any data);
+	function void(JSON_Object hResponse, GlobalAPIRequestData hData);
+	function void(JSON_Object hResponse, GlobalAPIRequestData hData, any data);
 }
 
 // ======================= FORWARDS ========================== //

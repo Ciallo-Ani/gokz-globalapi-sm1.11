@@ -33,9 +33,9 @@ public void OnClientAuthorized(int client, const char[] auth)
 	GlobalAPI_GetPlayerBySteamId(OnPlayer, GetClientUserId(client), auth);
 }
 
-public void OnPlayer(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData, int userid)
+public void OnPlayer(JSON_Object hResponse, GlobalAPIRequestData hData, int userid)
 {
-	if (!bFailure)
+	if (hData.failure == false)
 	{
 		APIPlayer player = new APIPlayer(hResponse);
 		PrintToServer("%s", player.isBanned ? "YES" : "NO");
