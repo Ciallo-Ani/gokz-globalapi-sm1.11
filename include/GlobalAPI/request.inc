@@ -111,7 +111,7 @@ methodmap GlobalAPIRequest < Handle
  	* @return					Whether the operation was successful
  	*/
 	public bool SetPoweredByHeader()
-	{	
+	{
 		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-Powered-By", "GlobalAPI Plugin " ... GlobalAPI_Plugin_Version);
 	}
 	

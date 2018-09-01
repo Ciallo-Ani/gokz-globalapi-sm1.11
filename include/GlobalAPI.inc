@@ -46,16 +46,16 @@ enum
 
 // ======================= TYPEDEFS ========================== //
 
-/**
- * Function types when API call finishes
+/*
+	Function types when API call finishes
 */
 typeset OnAPICallFinished
 {
    /**
  	* Called when an API call has finished
  	*
- 	* @param hResponse		JSON_Object handle to the response
- 	* @param hData			GlobalAPIRequestData handle for the request
+ 	* @param hResponse			JSON_Object handle to the response
+ 	* @param hData				GlobalAPIRequestData handle for the request
  	* @noreturn
  	*/
 	function void(JSON_Object hResponse, GlobalAPIRequestData hData);
@@ -63,9 +63,9 @@ typeset OnAPICallFinished
    /**
  	* Called when an API call has finished
  	*
- 	* @param hResponse		JSON_Object handle to the response
- 	* @param hData			GlobalAPIRequestData handle for the request
- 	* @param data			Optional data that was passed
+ 	* @param hResponse			JSON_Object handle to the response
+ 	* @param hData				GlobalAPIRequestData handle for the request
+ 	* @param data				Optional data that was passed
  	* @noreturn
  	*/
 	function void(JSON_Object hResponse, GlobalAPIRequestData hData, any data);
