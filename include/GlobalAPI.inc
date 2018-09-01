@@ -62,8 +62,8 @@ forward void GlobalAPI_OnInitialized();
 /**
  * Called when GlobalAPI plugin has failed a request
  *
- * @param request		Handle to the request started
- * @param hData			Handle to request's GlobalAPIRequestData
+ * @param request			Handle to the request started
+ * @param hData				Handle to request's GlobalAPIRequestData
  * @noreturn
  */
 forward void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData);
@@ -71,8 +71,8 @@ forward void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hDat
 /**
  * Called when GlobalAPI plugin has started a request
  *
- * @param request		Handle to the request started
- * @param hData			Handle to request's GlobalAPIRequestData
+ * @param request			Handle to the request started
+ * @param hData				Handle to request's GlobalAPIRequestData
  * @noreturn
  */
 forward void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hData);
@@ -80,8 +80,8 @@ forward void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hDa
 /**
  * Called when GlobalAPI plugin has finished a request
  *
- * @param request		Handle to the request started
- * @param hData			Handle to request's GlobalAPIRequestData
+ * @param request			Handle to the request started
+ * @param hData				Handle to request's GlobalAPIRequestData
  * @noreturn
  */
 forward void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hData);
