@@ -11,6 +11,12 @@
 
 // =========================================================== //
 
+/**
+ * Creates a directory if it does not exist
+ *
+ * @param dir					Directory to be created
+ * @return						Whether the directory exists
+ */
 stock bool CreateDirectoryIfNotExist(char[] dir)
 {
 	if (!DirExists(dir))
@@ -21,6 +27,12 @@ stock bool CreateDirectoryIfNotExist(char[] dir)
 	return DirExists(dir);
 }
 
+/**
+ * Gets plugin's display name from its handle
+ *
+ * @param plugin				Plugin handle to retrieve name from
+ * @return						String representation of the plugin name
+ */
 stock char GetPluginDisplayName(Handle plugin)
 {
 	char pluginName[GlobalAPI_Max_PluginName_Length] = "Unknown";
@@ -29,7 +41,14 @@ stock char GetPluginDisplayName(Handle plugin)
 	return pluginName;
 }
 
-stock char GetMapDisplay(char[] buffer, int maxlength)
+/**
+ * Gets current map's "display name"
+ *
+ * @param buffer				Buffer to store the result in
+ * @param maxlength				Max length of the buffer
+ * @noreturn
+ */
+stock void GetMapDisplay(char[] buffer, int maxlength)
 {
 	char map[PLATFORM_MAX_PATH];
 	GetCurrentMap(map, sizeof(map));
@@ -38,7 +57,14 @@ stock char GetMapDisplay(char[] buffer, int maxlength)
 	FormatEx(buffer, maxlength, map);
 }
 
-stock char GetMapFullPath(char[] buffer, int maxlength)
+/**
+ * Gets current map's full (game dir) path
+ *
+ * @param buffer				Buffer to store result in
+ * @param maxlength				Max length of the buffer
+ * @noreturn
+ */
+stock void GetMapFullPath(char[] buffer, int maxlength)
 {
 	char mapPath[PLATFORM_MAX_PATH];
 	GetCurrentMap(mapPath, sizeof(mapPath));
@@ -46,6 +72,13 @@ stock char GetMapFullPath(char[] buffer, int maxlength)
 	Format(buffer, maxlength, "maps/%s.bsp", mapPath);
 }
 
+/**
+ * Formats date from a ISO8601 datetime string
+ *
+ * @param datetime				Datetime string to parse from
+ * @param useSlashes			Whether to use slashes instead of "-" in dates
+ * @return						String representation of the date
+ */
 stock char FormatISO8601Date(char[] datetime, bool useSlashes = true)
 {
 	char date[2][30];
