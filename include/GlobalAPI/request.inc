@@ -1,6 +1,9 @@
-// =========================================================== //
+// ================== DOUBLE INCLUDE ========================= //
 
-//...
+#if defined _GlobalAPI_Request_included_
+#endinput
+#endif
+#define _GlobalAPI_Request_included_
 
 // =========================================================== //
 
@@ -23,7 +26,7 @@ methodmap GlobalAPIRequest < Handle
 	}
 
    /**
- 	* Sets request timeout for the handle
+ 	* Sets request timeout
  	*
  	* @param seconds			Timeout in seconds
  	* @return					Whether the operation was successful
@@ -34,7 +37,7 @@ methodmap GlobalAPIRequest < Handle
 	}
 	
    /**
- 	* Sets request body for the handle
+ 	* Sets request body
  	*
  	* @note						Body is set as application/json
  	* @param body				Request body to set
@@ -47,7 +50,7 @@ methodmap GlobalAPIRequest < Handle
 	}
 	
    /**
- 	* Sets a request context value for the handle
+ 	* Sets a request context value
  	*
  	* @param data				Any data to pass
  	* @return					Whether the operation was successful
@@ -58,7 +61,7 @@ methodmap GlobalAPIRequest < Handle
 	}
 	
    /**
- 	* Sets 2 request context values for the handle
+ 	* Sets 2 request context values
  	*
  	* @param data				Any data to pass
  	* @param data2				Any other data to pass
@@ -70,7 +73,7 @@ methodmap GlobalAPIRequest < Handle
 	}
 	
    /**
- 	* Sets predefined HTTP callbacks for the handle
+ 	* Sets predefined HTTP callbacks
  	*
  	* @note						Predefined values respectively: 
 	* @note 					Global_HTTP_Completed, Global_HTTP_Headers and Global_HTTP_DataReceived
@@ -82,7 +85,7 @@ methodmap GlobalAPIRequest < Handle
 	}
 	
    /**
- 	* Builds an authentication header for the handle
+ 	* Builds an authentication header
  	*
  	* @return					Whether the operation was successful
  	*/
@@ -92,7 +95,7 @@ methodmap GlobalAPIRequest < Handle
 	}
 	
    /**
- 	* Sets predefined HTTP Accept, Accept-Charset and Accept-Encoding headers
+ 	* Sets predefined Accept, Accept-Charset and Accept-Encoding headers
  	*
  	* @note						Predefined values respectively: 
 	* @note 					"application/json", "utf-8" and "gzip"
@@ -106,7 +109,7 @@ methodmap GlobalAPIRequest < Handle
 	}
 	
    /**
- 	* Sets powered by header for the handle
+ 	* Sets "powered by" header
  	*
  	* @return					Whether the operation was successful
  	*/
@@ -116,7 +119,7 @@ methodmap GlobalAPIRequest < Handle
 	}
 	
    /**
- 	* Sets request origin header for the handle
+ 	* Sets request origin header
  	*
  	* @param hData				GlobalAPIRequestData handle containing "pluginName" key
  	* @return					Whether the operation was successful
