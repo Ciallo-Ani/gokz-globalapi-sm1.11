@@ -130,6 +130,7 @@ enum EHTTPMethod
 	k_EHTTPMethodPUT,
 	k_EHTTPMethodDELETE,
 	k_EHTTPMethodOPTIONS,
+	k_EHTTPMethodPATCH,
 
 	// The remaining HTTP methods are not yet supported, per rfc2616 section 5.1.1 only GET and HEAD are required for 
 	// a compliant general purpose server.  We'll likely add more as we find uses for them.
@@ -215,6 +216,7 @@ native bool:SteamWorks_IsVACEnabled();
 native bool:SteamWorks_GetPublicIP(ipaddr[4]);
 native SteamWorks_GetPublicIPCell();
 native bool:SteamWorks_IsLoaded();
+native bool:SteamWorks_SetGameData(const String:sData[]);
 native bool:SteamWorks_SetGameDescription(const String:sDesc[]);
 native bool:SteamWorks_SetMapName(const String:sMapName[]);
 native bool:SteamWorks_IsConnected();
@@ -279,6 +281,7 @@ native bool:SteamWorks_GetHTTPStreamingResponseBodyData(Handle:hRequest, cOffset
 native bool:SteamWorks_GetHTTPDownloadProgressPct(Handle:hRequest, &Float:percent);
 native bool:SteamWorks_GetHTTPRequestWasTimedOut(Handle:hRequest, &bool:bWasTimedOut);
 native bool:SteamWorks_SetHTTPRequestRawPostBody(Handle:hRequest, const String:sContentType[], const String:sBody[], bodylen);
+native bool:SteamWorks_SetHTTPRequestRawPostBodyFromFile(Handle:hRequest, const String:sContentType[], const String:sFileName[]);
 
 funcenum SteamWorksHTTPBodyCallback
 {
@@ -330,6 +333,7 @@ public __ext_SteamWorks_SetNTVOptional()
 	MarkNativeAsOptional("SteamWorks_GetPublicIP");
 	MarkNativeAsOptional("SteamWorks_GetPublicIPCell");
 	MarkNativeAsOptional("SteamWorks_IsLoaded");
+	MarkNativeAsOptional("SteamWorks_SetGameData");
 	MarkNativeAsOptional("SteamWorks_SetGameDescription");
 	MarkNativeAsOptional("SteamWorks_IsConnected");
 	MarkNativeAsOptional("SteamWorks_SetRule");
@@ -369,6 +373,7 @@ public __ext_SteamWorks_SetNTVOptional()
 	MarkNativeAsOptional("SteamWorks_GetHTTPStreamingResponseBodyData");
 	MarkNativeAsOptional("SteamWorks_GetHTTPDownloadProgressPct");
 	MarkNativeAsOptional("SteamWorks_SetHTTPRequestRawPostBody");
+	MarkNativeAsOptional("SteamWorks_SetHTTPRequestRawPostBodyFromFile");
 
 	MarkNativeAsOptional("SteamWorks_GetHTTPResponseBodyCallback");
 	MarkNativeAsOptional("SteamWorks_WriteHTTPResponseBodyToFile");
