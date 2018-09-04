@@ -1,24 +1,24 @@
 # GlobalAPI-SMPlugin
-
 This is a complete rewrite (v2) of [GlobalAPI plugin](https://bitbucket.org/kztimerglobalteam/globalrecordssmplugin/src/master/)
-#### **Currently NOT in a stable state, not recommended to use.**
+
+**Not in a stable state, not recommend to use yet!**
+
+# **[Documentation](https://docs.global-api.com)**
 
 ---
 
-## **Version 2.0** of earlier introduced [GlobalAPI plugin](https://bitbucket.org/kztimerglobalteam/globalrecordssmplugin/src/master/)
-**The goal of this rework**:
+## **Features**
 
-* Code managebility
-* Implement retrying requests
-* All API calls with all parameters available!
-* Introduce a wider range of natives and forwards
-* Let user control what they want from the API call instead of giving them predefined parameters
+* Extensive & customisable logging
+* Full support for retrying requests! Never lose your data again
+* Modular setup, you can develop your own modules for retrying & logging
+* Full documentation available to ensure you can implement your own solutions
 
 ---
 
 ## **Dependencies**
-**(These might or might not change)**
 
 * **[SteamWorks](https://forums.alliedmods.net/showthread.php?t=229556)**
+* **Sourcemod 1.9+**
 
 ---
