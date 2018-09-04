@@ -159,6 +159,7 @@ public Action CheckForRequests(Handle timer)
 	if (dataFiles == null)
 	{
 		LogError("[%s] Could not open directory [%s]", PLUGIN_NAME, path);
+		delete dataFiles;
 		return;
 	}
 
@@ -215,6 +216,8 @@ public Action CheckForRequests(Handle timer)
 		RetryRequest(url, plugin, params, keyRequired, requestType, bodyLength);
 		DeleteFile(dataFile);
 	}
+	
+	delete dataFiles;
 }
 
 public void RetryRequest(char[] url, char[] plugin, char[] params, bool keyRequired, int requestType, int bodyLength)
