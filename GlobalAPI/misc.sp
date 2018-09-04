@@ -30,6 +30,14 @@ public bool ReadAPIKey()
 
 // =========================================================== //
 
+public void CreateDataDir()
+{
+	if (!CreateDirectoryIfNotExist(DATA_DIR))
+	{
+		SetFailState("[GlobalAPI] Failed to create directory %s", SETTING_DIR);
+	}
+}
+
 public void CreateConfigDir()
 {
 	if (!CreateDirectoryIfNotExist(SETTING_DIR))
@@ -99,20 +107,10 @@ public Handle CreateForwardHandle(Function callback, any data)
 	
 	if (callback != INVALID_FUNCTION)
 	{
-		if (data == INVALID_HANDLE)
-		{
-			PrintDebugMessage("Created a normal forward");
-			// JSON_Object hJson, GlobalAPIRequestData hData
-			hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell);
-		}
-		
-		else
-		{
-			PrintDebugMessage("Created a forward with data");
-			// JSON_Object hJson, GlobalAPIRequestData hData, any data
-			hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell);
-		}
-	}
+        PrintDebugMessage("Created a forward");
+        // JSON_Object hJson, GlobalAPIRequestData hData, any data
+        hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell);
+    }
 	
 	return hFwd;
 }
@@ -133,25 +131,13 @@ public void CallForward(Handle hFwd, JSON_Object hJson, GlobalAPIRequestData hDa
 {
 	if (hFwd != INVALID_HANDLE)
 	{
-		if (data == INVALID_HANDLE)
-		{
-			PrintDebugMessage("Called a normal forward");
-			// JSON_Object hJson, GlobalAPIRequestData hData
-			Call_StartForward(hFwd);
-			Call_PushCell(hJson);
-			Call_PushCell(hData);
-			Call_Finish();
-		}
-		else
-		{
-			PrintDebugMessage("Called a forward with data");
+			PrintDebugMessage("Called a forward");
 			// JSON_Object hJson, GlobalAPIRequestData hData, any data
 			Call_StartForward(hFwd);
 			Call_PushCell(hJson);
 			Call_PushCell(hData);
 			Call_PushCell(data);
 			Call_Finish();
-		}
 	}
 }
 
