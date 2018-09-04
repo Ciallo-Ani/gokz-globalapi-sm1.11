@@ -30,14 +30,6 @@ public bool ReadAPIKey()
 
 // =========================================================== //
 
-public void CreateDataDir()
-{
-	if (!CreateDirectoryIfNotExist(DATA_DIR))
-	{
-		SetFailState("[GlobalAPI] Failed to create directory %s", SETTING_DIR);
-	}
-}
-
 public void CreateConfigDir()
 {
 	if (!CreateDirectoryIfNotExist(SETTING_DIR))
