@@ -17,8 +17,19 @@
 // non existing properties, but if we wanted to dump the properties
 // these keys would not exist. This might be useful for debugging.
 
+
+
+/*
+	Helper methodmap for wrapping data related to requests
+*/
 methodmap GlobalAPIRequestData < JSON_Object
 {
+   /**
+ 	* Creates a new GlobalAPIRequestData
+ 	*
+ 	* @param pluginName			Name of the plugin
+ 	* @return					A new GlobalAPIRequestData handle
+ 	*/
 	public GlobalAPIRequestData(char[] pluginName = "Unknown")
 	{
 		JSON_Object requestData = new JSON_Object();
@@ -35,12 +46,26 @@ methodmap GlobalAPIRequestData < JSON_Object
 		return view_as<GlobalAPIRequestData>(requestData);
 	}
 
+   /**
+ 	* Sets a key as default
+ 	*
+ 	* @note						This sets them as "Handle" type
+ 	* @note						- See GlobalAPI.inc for default values
+ 	* @param key				Key to set as default
+ 	* @noreturn
+ 	*/
 	public void SetDefault(char[] key)
 	{
 		this.SetHandle(key);
 		this.SetKeyHidden(key, true);
 	}
-
+	
+   /**
+ 	* Sets url to the request data
+ 	*
+ 	* @param url				Url to set
+ 	* @noreturn
+ 	*/
 	public void AddUrl(char[] url)
 	{
 		this.SetString("url", url);
@@ -77,6 +102,9 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 	
+    /*
+ 		Get or set the request's "keyRequired"
+ 	*/
 	property bool keyRequired
 	{
 		public get()
@@ -90,6 +118,9 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 	
+	/*
+		Get or set the request's "isRetried"
+ 	*/
 	property bool isRetried
 	{
 		public get()
@@ -103,6 +134,9 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 	
+	/*
+		Get or set the request's "bodyLength"
+ 	*/
 	property int bodyLength
 	{
 		public get()
@@ -116,6 +150,9 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 
+    /*
+ 		Get or set the request's "status"
+ 	*/
 	property int status
 	{
 		public get()
@@ -129,6 +166,9 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 
+    /*
+ 		Get or set the request's "responseTime"
+ 	*/
 	property int responseTime
 	{
 		public get()
@@ -142,6 +182,9 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 
+    /*
+ 		Get or set the request's "requestType"
+ 	*/
 	property int requestType
 	{
 		public get()
@@ -155,6 +198,9 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 
+    /*
+ 		Get or set the request's "failure"
+ 	*/
 	property bool failure
 	{
 		public get()
@@ -168,6 +214,9 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 
+    /*
+ 		Get or set the request's "callback"
+ 	*/
 	property Handle callback
 	{
 		public get()
@@ -182,6 +231,9 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 	
+	/*
+		Get or set the request's "data"
+ 	*/
 	property any data
 	{
 		public get()
@@ -195,6 +247,15 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 
+   /**
+ 	* Adds a number to the request data
+ 	*
+ 	* @note						Default values are added as "defaults"
+ 	* @note						See GlobalAPI.inc for the default values
+ 	* @param key				Key name to set
+ 	* @param value				Value of the key
+ 	* @noreturn
+ 	*/
 	public void AddNum(char[] key, int value)
 	{
 		if (value == -1)
@@ -207,6 +268,15 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 
+   /**
+ 	* Adds a float to the request data
+ 	*
+ 	* @note						Default values are added as "defaults"
+ 	* @note						See GlobalAPI.inc for the default values
+ 	* @param key				Key name to set
+ 	* @param value				Value of the key
+ 	* @noreturn
+ 	*/
 	public void AddFloat(char[] key, float value)
 	{
 		if (value == -1.000000)
@@ -219,6 +289,15 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 
+   /**
+ 	* Adds a string to the request data
+ 	*
+ 	* @note						Default values are added as "defaults"
+ 	* @note						See GlobalAPI.inc for the default values
+ 	* @param key				Key name to set
+ 	* @param value				Value of the key
+ 	* @noreturn
+ 	*/
 	public void AddString(char[] key, char[] value)
 	{
 		if (StrEqual(value, ""))
@@ -231,6 +310,15 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 
+   /**
+ 	* Adds a boolean to the request data
+ 	*
+ 	* @note						Default values are added as "defaults"
+ 	* @note						See GlobalAPI.inc for the default values
+ 	* @param key				Key name to set
+ 	* @param value				Value of the key
+ 	* @noreturn
+ 	*/
 	public void AddBool(char[] key, bool value)
 	{
 		if (value != true && value != false)
@@ -243,12 +331,20 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 
+   /**
+ 	* Converts all of the request data into a query string representation
+ 	*
+ 	* @note						This ignores "hidden" keys
+ 	* @param queryString		Buffer to store the result in
+ 	* @param maxlength			Max length of the buffer
+ 	* @noreturn
+ 	*/
 	public void ToString(char[] queryString, int maxlength)
 	{
 		StringMapSnapshot paramsMap = this.Snapshot();
 
-		char key[64]; // MAX_QUERYPARAM_LENGTH
-		char value[1024]; // MAX_QUERYPARAM_LENGTH * 16
+		char key[64];
+		char value[1024];
 
 		int paramCount = 0;
 
@@ -290,11 +386,30 @@ methodmap GlobalAPIRequestData < JSON_Object
 
 // ======================== HELPERS ========================== //
 
+/**
+ * Converts a boolean into a string representation
+ *
+ * @param value					Boolean value to convert
+ * @param buffer				Buffer to store the result in
+ * @param maxlength				Max length of the buffer
+ * @noreturn
+ */
 stock void BoolToString(bool value, char[] buffer, int maxlength)
 {
 	FormatEx(buffer, maxlength, "%s", value ? "true" : "false");
 }
 
+/**
+ * Appends key and value into a query string representation
+ *
+ * @note						Index 0 "constructs" the query string, other numbers will "append"
+ * @param index					Index of the key & value
+ * @param buffer				Buffer to store result in
+ * @param maxlength				Max length of the buffer
+ * @param key					Key to append
+ * @param value					Value of the key
+ * @noreturn
+ */
 stock void AppendToQueryString(int index, char[] buffer, int maxlength, char[] key, char[] value)
 {
 	if (index == 0)
