@@ -53,7 +53,7 @@ methodmap GlobalAPIRequest < Handle
    /**
  	* Sets request body
  	*
- 	* @note						Body is set as application/json
+ 	* @param hData				GlobalAPIRequestData containing contentType
  	* @param body				Request body to set
  	* @param maxlength			Maxlength of the body
  	* @return					Whether the operation was successful
@@ -109,10 +109,9 @@ methodmap GlobalAPIRequest < Handle
 	}
 	
    /**
- 	* Sets predefined Accept, Accept-Charset and Accept-Encoding headers
+ 	* Sets "Accept" header
  	*
- 	* @note						Predefined values respectively: 
-	* @note 					"application/json", "utf-8" and "gzip"
+ 	* @param hData				GlobalAPIRequestData containing acceptType
  	* @return					Whether the operation was successful
  	*/
 	public bool SetAcceptHeaders(GlobalAPIRequestData hData)
@@ -130,6 +129,12 @@ methodmap GlobalAPIRequest < Handle
 		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-Powered-By", "GlobalAPI Plugin " ... GlobalAPI_Plugin_Version);
 	}
 
+   /**
+ 	* Sets content type header
+ 	*
+ 	* @param hData				GlobalAPIRequestData containing contentType
+ 	* @return					Whether the operation was successful
+ 	*/
 	public bool SetContentTypeHeader(GlobalAPIRequestData hData)
 	{
 		return SteamWorks_SetHTTPRequestHeaderValue(this, "Content-Type", gC_contentTypePhrases[hData.contentType]);
@@ -138,7 +143,7 @@ methodmap GlobalAPIRequest < Handle
    /**
  	* Sets request origin header
  	*
- 	* @param hData				GlobalAPIRequestData handle containing "pluginName" key
+ 	* @param hData				GlobalAPIRequestData containing pluginName
  	* @return					Whether the operation was successful
  	*/
 	public bool SetRequestOriginHeader(GlobalAPIRequestData hData)
