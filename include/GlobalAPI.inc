@@ -428,7 +428,7 @@ native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION,
  * @param name					Mode name to query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = 0, const char[] name);
+native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] name);
 
 /**
  * Starts a GET HTTP Request to /api/{version}/players
