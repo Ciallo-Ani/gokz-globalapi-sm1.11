@@ -12,13 +12,14 @@
 // ======================= DEFINITIONS ======================= //
 
 #define GlobalAPI_Plugin_Version "2.0.0"
-#define GlobalAPI_Plugin_Desc "Plugin helper for GlobalAPI " ... GlobalAPI_Version
+#define GlobalAPI_Plugin_Desc "Plugin helper for GlobalAPI Production & Staging"
 #define GlobalAPI_Plugin_Url "https://bitbucket.org/kztimerglobalteam/GlobalAPI-SMPlugin"
+#define GlobalAPI_Plugin_NameVersion "GlobalAPI Plugin " ... GlobalAPI_Plugin_Version
 
-#define GlobalAPI_Version "v1.0"
-#define GlobalAPI_Staging_Version "v1.0"
-#define GlobalAPI_BaseUrl "https://kztimerglobal.com/api/" ... GlobalAPI_Version
-#define GlobalAPI_Staging_BaseUrl "https://staging.kztimerglobal.com/api/" ... GlobalAPI_Staging_Version
+#define GlobalAPI_Backend_Version "v1.0"
+#define GlobalAPI_Backend_Staging_Version "v1.0"
+#define GlobalAPI_BaseUrl "https://kztimerglobal.com/api/" ... GlobalAPI_Backend_Version
+#define GlobalAPI_Staging_BaseUrl "https://staging.kztimerglobal.com/api/" ... GlobalAPI_Backend_Staging_Version
 
 #define GlobalAPI_Max_APIKey_Length 128
 #define GlobalAPI_Max_BaseUrl_Length 128
@@ -28,6 +29,7 @@
 #define GlobalAPI_Max_QueryUrl_Length 2048
 #define GlobalAPI_Max_PluginName_Length 64
 
+#define DEFAULT_DATA 0
 #define DEFAULT_INT -1
 #define DEFAULT_STRING ""
 #define DEFAULT_FLOAT -1.0
@@ -216,7 +218,7 @@ native ArrayList GlobalAPI_Retrying_GetModuleList();
  * @param data					Optional data to pass
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
+native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA);
 
 /**
  * Starts a GET HTTP Request to /api/{version}/bans
@@ -238,7 +240,7 @@ native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTIO
  * @param limit					Amount of items returned for the query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetBans(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] banTypes = DEFAULT_STRING,
+native bool GlobalAPI_GetBans(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] banTypes = DEFAULT_STRING,
 								const char[] banTypesList = DEFAULT_STRING, bool isExpired = DEFAULT_BOOL, const char[] ipAddress = DEFAULT_STRING,
 								int steamId64 = DEFAULT_INT, const char[] steamId = DEFAULT_STRING, const char[] notesContain = DEFAULT_STRING,
 								const char[] statsContain = DEFAULT_STRING, int serverId = DEFAULT_INT, const char[] createdSince = DEFAULT_STRING,
@@ -256,7 +258,7 @@ native bool GlobalAPI_GetBans(OnAPICallFinished callback = INVALID_FUNCTION, any
  * @param ipAddress				IP address of the user
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_CreateBan(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+native bool GlobalAPI_CreateBan(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 									const char[] steamId, const char[] banType, const char[] stats,
 									const char[] notes, const char[] ipAddress);
 
@@ -285,7 +287,7 @@ native bool GlobalAPI_CreateBan(OnAPICallFinished callback = INVALID_FUNCTION, a
  * @param limit					Amount of items returned for the query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetJumpstats(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id = DEFAULT_INT,
+native bool GlobalAPI_GetJumpstats(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int id = DEFAULT_INT,
 									int serverId = DEFAULT_INT, int steamId64 = DEFAULT_INT, const char[] steamId = DEFAULT_STRING,
 									const char[] jumpType = DEFAULT_STRING, const char[] steamId64List = DEFAULT_STRING,
 									const char[] jumpTypeList = DEFAULT_STRING, float greaterThanDistance = DEFAULT_FLOAT,
@@ -311,7 +313,7 @@ native bool GlobalAPI_GetJumpstats(OnAPICallFinished callback = INVALID_FUNCTION
  * @param strafeCount			Strafe count of the jump
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_CreateJumpstat(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] steamId,
+native bool GlobalAPI_CreateJumpstat(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] steamId,
 										int jumpType, float distance, const char[] jumpJsonInfo, int tickRate, int mslCount,
 										bool isCrouchBind, bool isForwardBind, bool isCrouchBoost, int strafeCount);
 
@@ -340,7 +342,7 @@ native bool GlobalAPI_CreateJumpstat(OnAPICallFinished callback = INVALID_FUNCTI
  * @param limit					Amount of items returned for the query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetJumpstatTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] jumpType,
+native bool GlobalAPI_GetJumpstatTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] jumpType,
 										int id = DEFAULT_INT, int serverId = DEFAULT_INT, int steamId64 = DEFAULT_INT,
 										const char[] steamId = DEFAULT_STRING, const char[] steamId64List = DEFAULT_STRING,
 										const char[] jumpTypeList = DEFAULT_STRING, float greaterThanDistance = DEFAULT_FLOAT,
@@ -357,7 +359,7 @@ native bool GlobalAPI_GetJumpstatTop(OnAPICallFinished callback = INVALID_FUNCTI
  * @param jumpType				Jump type to query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetJumpstatTop30(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] jumpType);
+native bool GlobalAPI_GetJumpstatTop30(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] jumpType);
 
 /**
  * Starts a GET HTTP Request to /api/{version}/maps
@@ -375,7 +377,7 @@ native bool GlobalAPI_GetJumpstatTop30(OnAPICallFinished callback = INVALID_FUNC
  * @param limit					Amount of items returned for the query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetMaps(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] name = DEFAULT_STRING,
+native bool GlobalAPI_GetMaps(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] name = DEFAULT_STRING,
 								int largerThanFilesize = DEFAULT_INT, int smallerThanFilesize = DEFAULT_INT, bool isValidated = DEFAULT_BOOL,
 								int difficulty = DEFAULT_INT, const char[] createdSince = DEFAULT_STRING, const char[] updatedSince = DEFAULT_STRING,
 								int offset = DEFAULT_INT, int limit = DEFAULT_INT);
@@ -388,7 +390,7 @@ native bool GlobalAPI_GetMaps(OnAPICallFinished callback = INVALID_FUNCTION, any
  * @param id					Map id to query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetMapById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+native bool GlobalAPI_GetMapById(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int id);
 
 /**
  * Starts a GET HTTP Request to /api/{version}/maps/name/{map_name}
@@ -398,7 +400,7 @@ native bool GlobalAPI_GetMapById(OnAPICallFinished callback = INVALID_FUNCTION, 
  * @param name					Map name to query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetMapByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] name);
+native bool GlobalAPI_GetMapByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] name);
 
 /**
  * Starts a GET HTTP Request to /api/{version}/modes
@@ -407,7 +409,7 @@ native bool GlobalAPI_GetMapByName(OnAPICallFinished callback = INVALID_FUNCTION
  * @param data					Optional data to pass
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetModes(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
+native bool GlobalAPI_GetModes(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA);
 
 /**
  * Starts a GET HTTP Request to /api/{version}/modes/id/{id}
@@ -417,7 +419,7 @@ native bool GlobalAPI_GetModes(OnAPICallFinished callback = INVALID_FUNCTION, an
  * @param id					Mode id to query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int id);
 
 /**
  * Starts a GET HTTP Request to /api/{version}/modes/name/{mode_name}
@@ -427,7 +429,7 @@ native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION,
  * @param name					Mode name to query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] name);
+native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] name);
 
 /**
  * Starts a GET HTTP Request to /api/{version}/players
@@ -441,7 +443,7 @@ native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTIO
  * @param steamId64List			-Unsupported at the moment-
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] steamId = DEFAULT_STRING,
+native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] steamId = DEFAULT_STRING,
 									bool isBanned = DEFAULT_BOOL, int totalRecords = DEFAULT_INT, const char[] ipAddress = DEFAULT_STRING,
 									const char[] steamId64List = DEFAULT_STRING);
 
@@ -453,7 +455,7 @@ native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, 
  * @param steamId				SteamID2 to query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetPlayerBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] steamId);
+native bool GlobalAPI_GetPlayerBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] steamId);
 
 /**
  * Starts a GET HTTP Request to /api/{version}/players/steamid/{steamid}/ip/{ip}
@@ -464,7 +466,7 @@ native bool GlobalAPI_GetPlayerBySteamId(OnAPICallFinished callback = INVALID_FU
  * @param ipAddress				IP address to query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetPlayerBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+native bool GlobalAPI_GetPlayerBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 												const char[] steamId, const char[] ipAddress);
 
 /**
@@ -480,7 +482,7 @@ native bool GlobalAPI_GetPlayerBySteamIdAndIp(OnAPICallFinished callback = INVAL
  * @param limit					Amount of items returned for the query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] mapName = DEFAULT_STRING,
+native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] mapName = DEFAULT_STRING,
 									const char[] modes = DEFAULT_STRING, int tickRate = DEFAULT_INT, const char[] steamId = DEFAULT_STRING,
 									int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
@@ -498,7 +500,7 @@ native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, 
  * @param time					Elapsed time of the record
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_CreateRecord(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] steamId,
+native bool GlobalAPI_CreateRecord(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] steamId,
 									int mapId, const char[] mode, int stage, int tickRate, int teleports, float time);
 
 /**
@@ -510,7 +512,7 @@ native bool GlobalAPI_CreateRecord(OnAPICallFinished callback = INVALID_FUNCTION
  * @param id					Id to query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetRecordPlaceById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+native bool GlobalAPI_GetRecordPlaceById(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int id);
 
 /**
  * Starts a GET HTTP Request to /api/{version}/records/top
@@ -530,7 +532,7 @@ native bool GlobalAPI_GetRecordPlaceById(OnAPICallFinished callback = INVALID_FU
  * @param limit					Amount of items returned for the query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetRecordsTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+native bool GlobalAPI_GetRecordsTop(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 										const char[] steamId = DEFAULT_STRING, int steamId64 = DEFAULT_INT, int mapId = DEFAULT_INT,
 										const char[] mapName = DEFAULT_STRING, int tickRate = DEFAULT_INT, int stage = DEFAULT_INT,
 										const char[] modes = DEFAULT_STRING, bool hasTeleports = DEFAULT_BOOL,
@@ -557,7 +559,7 @@ native bool GlobalAPI_GetRecordsTop(OnAPICallFinished callback = INVALID_FUNCTIO
  * @param limit					Amount of items returned for the query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetRecordsTopRecent(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+native bool GlobalAPI_GetRecordsTopRecent(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 											const char[] steamId = DEFAULT_STRING, int steamId64 = DEFAULT_INT,
 											int mapId = DEFAULT_INT, const char[] mapName = DEFAULT_STRING,
 											int tickRate = DEFAULT_INT, int stage = DEFAULT_INT,
@@ -581,7 +583,7 @@ native bool GlobalAPI_GetRecordsTopRecent(OnAPICallFinished callback = INVALID_F
  * @param limit					Amount of items returned for the query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetServers(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
+native bool GlobalAPI_GetServers(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 									int id = DEFAULT_INT, int port = DEFAULT_INT, const char[] ip = DEFAULT_STRING,
 									const char[] name = DEFAULT_STRING, int ownerSteamId64 = DEFAULT_INT,
 									int approvalStatus = DEFAULT_INT, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
@@ -594,7 +596,7 @@ native bool GlobalAPI_GetServers(OnAPICallFinished callback = INVALID_FUNCTION, 
  * @param id					Id to query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetServerById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+native bool GlobalAPI_GetServerById(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int id);
 
 /**
  * Starts a GET HTTP Request to /api/{version}/servers/name/{server_name}
@@ -604,7 +606,7 @@ native bool GlobalAPI_GetServerById(OnAPICallFinished callback = INVALID_FUNCTIO
  * @param serverName			Server name to query
  * @return						Whether request was successfully sent
  */
-native bool GlobalAPI_GetServersByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] serverName);
+native bool GlobalAPI_GetServersByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] serverName);
 
 // ======================= PLUGIN INFO ======================= //
 

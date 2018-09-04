@@ -115,7 +115,7 @@ methodmap GlobalAPIRequest < Handle
  	*/
 	public bool SetPoweredByHeader()
 	{
-		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-Powered-By", "GlobalAPI Plugin " ... GlobalAPI_Plugin_Version);
+		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-Powered-By", GlobalAPI_Plugin_NameVersion);
 	}
 	
    /**
