@@ -43,9 +43,9 @@ public Action Command_AuthCheck(int client, int args)
 	GlobalAPI_GetAuthStatus(OnAuth);
 }
 
-public void OnAuth(bool bFailure, JSON_Object hAuth, GlobalAPIRequestData hData)
+public void OnAuth(JSON_Object hAuth, GlobalAPIRequestData hData)
 {
-	if (!bFailure)
+	if (hData.failure == false)
 	{
 		APIAuthStatus status = new APIAuthStatus(hAuth);
 	

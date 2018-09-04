@@ -35,9 +35,9 @@ public void GlobalAPI_OnInitialized()
 	GlobalAPI_GetMaps(OnMaps, .isValidated = true);
 }
 
-public void OnMaps(bool bFailure, JSON_Object hResponse, GlobalAPIRequestData hData)
+public void OnMaps(JSON_Object hResponse, GlobalAPIRequestData hData)
 {
-	if (!bFailure)
+	if (hData.failure == false)
 	{
 		APIIterable iterable = new APIIterable(hResponse);
 		

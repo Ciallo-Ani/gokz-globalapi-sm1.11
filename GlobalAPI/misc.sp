@@ -89,9 +89,8 @@ public void CallForward_NoResponse(GlobalAPIRequestData hData)
 {
 	any data = hData.data;
 	Handle hFwd = hData.callback;
-	bool bFailure = hData.failure;
 
-	if (hFwd != null) CallForward(hFwd, bFailure, null, hData, data);
+	if (hFwd != null) CallForward(hFwd, null, hData, data);
 
 	// Cleanup
 	if (hData != null) hData.Cleanup();
@@ -109,8 +108,8 @@ public Handle CreateForwardHandle(Function callback, any data)
 	if (callback != INVALID_FUNCTION)
 	{
 		PrintDebugMessage("Created a forward");
-		// bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data
-		hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
+		// JSON_Object hJson, GlobalAPIRequestData hData, any data
+		hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell);
 	}
 	
 	return hFwd;
@@ -128,14 +127,13 @@ public void AddToForwardEx(Handle hFwd, Handle plugin, Function callback)
 
 // =========================================================== //
 
-public void CallForward(Handle hFwd, bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data)
+public void CallForward(Handle hFwd, JSON_Object hJson, GlobalAPIRequestData hData, any data)
 {
 	if (hFwd != INVALID_HANDLE)
 	{
 		PrintDebugMessage("Called a forward");
-		// bool bFailure, JSON_Object hJson, GlobalAPIRequestData hData, any data
+		// JSON_Object hJson, GlobalAPIRequestData hData, any data
 		Call_StartForward(hFwd);
-		Call_PushCell(bFailure);
 		Call_PushCell(hJson);
 		Call_PushCell(hData);
 		Call_PushCell(data);

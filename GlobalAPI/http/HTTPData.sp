@@ -27,12 +27,11 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 
 	any data = hData.data;
 	Handle hFwd = hData.callback;
-	bool bFailure = hData.failure;
 
 	// Remove temporary key
 	hData.Remove("_requestHandle");
 
-	CallForward(hFwd, bFailure, hJson, hData, data);
+	CallForward(hFwd, hJson, hData, data);
 
 	// Cleanup
 	if (hData != INVALID_HANDLE) hData.Cleanup();
