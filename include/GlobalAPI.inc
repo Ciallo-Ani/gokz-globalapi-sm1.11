@@ -47,16 +47,22 @@ enum
 	GlobalAPIRequestType_POST		/**< Request uses POST HTTP method */
 };
 
+/**
+ * Defines what accept type is used on requests
+ */
 enum
 {
-	GlobalAPIRequestAcceptType_JSON = 0,
-	GlobalAPIRequestAcceptType_OctetStream
+	GlobalAPIRequestAcceptType_JSON = 0,	/**< Request uses application/json HTTP accept type */
+	GlobalAPIRequestAcceptType_OctetStream	/**< Request uses application/octet-stream HTTP accept type */
 };
 
+/**
+ * Defines what content type is used on requests
+ */
 enum
 {
-	GlobalAPIRequestContentType_JSON = 0,
-	GlobalAPIRequestContentType_OctetStream
+	GlobalAPIRequestContentType_JSON = 0,	/**< Request uses application/json HTTP content type */
+	GlobalAPIRequestContentType_OctetStream	/**< Request uses application/octet-stream HTTP content type */
 };
 
 // ======================= TYPEDEFS ========================== //
@@ -621,10 +627,36 @@ native bool GlobalAPI_GetServerById(OnAPICallFinished callback = INVALID_FUNCTIO
  */
 native bool GlobalAPI_GetServersByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] serverName);
 
+/**
+ * Starts a GET HTTP Request to /api/{version}/records/{recordId}/replay
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param recordId				Record id to query
+ * @return						Whether request was successfully sent
+ */
 native bool GlobalAPI_GetReplayByRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int recordId);
 
+/**
+ * Starts a GET HTTP Request to /api/{version}/records/replay/{replayId}
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param replayId				Replay id to query
+ * @return						Whether request was successfully sent
+ */
 native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int replayId);
 
+/**
+ * Starts a POST HTTP Request to /api/{version}/records/{recordId}/replay
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param recordId				Id of the record
+ * @param replayData			Replay data of the record
+ * @param maxlength				Max length of replay data
+ * @return						Whether request was successfully sent
+ */
 native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 												int recordId, char[] replayData, int maxlength);
 
