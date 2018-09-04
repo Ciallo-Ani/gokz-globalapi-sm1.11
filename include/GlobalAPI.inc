@@ -14,6 +14,7 @@
 #define GlobalAPI_Plugin_Version "2.0.0"
 #define GlobalAPI_Plugin_Desc "Plugin helper for GlobalAPI Production & Staging"
 #define GlobalAPI_Plugin_Url "https://bitbucket.org/kztimerglobalteam/GlobalAPI-SMPlugin"
+#define GlobalAPI_Plugin_NameVersion "GlobalAPI Plugin " ... GlobalAPI_Plugin_Version
 
 #define GlobalAPI_Backend_Version "v1.0"
 #define GlobalAPI_Backend_Staging_Version "v1.0"
