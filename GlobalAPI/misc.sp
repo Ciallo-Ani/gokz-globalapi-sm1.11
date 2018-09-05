@@ -207,8 +207,8 @@ public void PrintRetryingModulesToConsole(int client)
 public void PrintMapInfoToConsole(int client)
 {
 	PrintToConsole(client, "-- Map Name: \t\t %s", gC_mapName);
-	PrintToConsole(client, "-- Map Path: \t\t %s", gC_mapPath);
-	PrintToConsole(client, "-- Map Size: \t\t %d", gI_mapFilesize);
+	PrintToConsole(client, "-- Map Path: \t\t {gamedir}/%s", gC_mapPath);
+	PrintToConsole(client, "-- Map Size: \t\t %d bytes", gI_mapFilesize);
 }
 
 // =========================================================== //
