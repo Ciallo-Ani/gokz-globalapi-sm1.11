@@ -30,20 +30,21 @@ public Action Command_Info(int client, int args)
 {
 	PrintInfoHeaderToConsole(client);
 	
-	char errorString[64];
-	ArrayList errorMessages = new ArrayList(sizeof(errorString));
+	char argument[32];
 	ArrayList usedArguments = new ArrayList();
+	
+	char errorString[64];
+	ArrayList errorMessages = new ArrayList(ByteCountToCells(sizeof(errorString)));
 
 	for (int arg = 1; arg <= args; arg++)
 	{
 		if (arg > ARGUMENT_COUNT)
 		{
-			Format(errorString, sizeof(errorString), "Too many arguments supplied!");
+			Format(errorString, sizeof(errorString), "Too many arguments supplied! (Limit %d)", ARGUMENT_COUNT);
 			errorMessages.PushString(errorString);
 			break;
 		}
 
-		char argument[32];
 		GetCmdArg(arg, argument, sizeof(argument));
 		
 		// --help
@@ -61,7 +62,7 @@ public Action Command_Info(int client, int args)
 			}
 			else
 			{
-				Format(errorString, sizeof(errorString), "\"%s\" must be supplied alone", validArgs[Argument_Help]);
+				Format(errorString, sizeof(errorString), "\"%s\" must be supplied alone", argument);
 				errorMessages.PushString(errorString);
 			}
 		}
@@ -98,7 +99,7 @@ public Action Command_Info(int client, int args)
 		}
 
 		// All valid ones checked, has to be invalid
-		else if (String_StartsWith(argument, "--"))
+		else if (String_StartsWith(argument, "--") && argument[2] != '-')
 		{
 			Format(errorString, sizeof(errorString), "Invalid command option \"%s\"", argument);
 			errorMessages.PushString(errorString);
