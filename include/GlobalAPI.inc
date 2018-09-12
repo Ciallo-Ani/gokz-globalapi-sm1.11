@@ -46,6 +46,16 @@ enum
 	GlobalAPIRequestType_POST		/**< Request uses POST HTTP method */
 };
 
+/**
+ * Type of the plugin module
+ */
+enum ModuleType
+{
+	ModuleType_Stats = 0, 	/**< Is a stats module */
+	ModuleType_Logging,		/**< Is a logging module */
+	ModuleType_Retrying		/**< Is a retrying module */
+};
+
 // ======================= TYPEDEFS ========================== //
 
 /*
@@ -154,62 +164,46 @@ native bool GlobalAPI_IsDebugging();
 native bool GlobalAPI_SendRequest(GlobalAPIRequestData hData);
 
 /**
- * Loads calling plugin as a logging module
+ * Loads calling plugin as ModuleType module
  *
+ * @param type					Type as ModuleType
  * @return						Whether the module was successfully loaded
  */
-native bool GlobalAPI_Logging_LoadModule();
+native bool GlobalAPI_LoadModule(ModuleType type);
 
 /**
- * Unloads calling plugin from logging modules
+ * Unloads calling plugin from ModuleType modules
  *
+ * @param type					Type as ModuleType
  * @return						Whether the module was successfully unloaded
  */
-native bool GlobalAPI_Logging_UnloadModule();
+native bool GlobalAPI_UnloadModule(ModuleType type);
 
 /**
- * Gets number of logging modules loaded
+ * Gets number of ModuleType modules loaded
  *
- * @return						Number of logging modules loaded
+ * @param type					Type as ModuleType
+ * @return						Number of stats modules loaded
  */
-native int GlobalAPI_Logging_GetModuleCount();
+native int GlobalAPI_GetModuleCount(ModuleType type);
 
 /**
- * Gets a copy of logging modules as an ArrayList
- *
- * @note						Plugins in the arraylist are simply plugin handles
- * @return						ArrayList handle of logging modules
- */
-native ArrayList GlobalAPI_Logging_GetModuleList();
-
-/**
- * Loads calling plugin as a retrying module
- *
- * @return						Whether the module was successfully loaded
- */
-native bool GlobalAPI_Retrying_LoadModule();
-
-/**
- * Unloads calling plugin from retrying modules
- *
- * @return						Whether the module was successfully unloaded
- */
-native bool GlobalAPI_Retrying_UnloadModule();
-
-/**
- * Gets number of retrying modules loaded
- *
- * @return						Number of retrying modules loaded
- */
-native int GlobalAPI_Retrying_GetModuleCount();
-
-/**
- * Gets a copy of retrying modules as an ArrayList
+ * Gets a copy of ModuleType modules as an ArrayList
  *
  * @note						Plugins in the arraylist are simply plugin handles
- * @return						ArrayList handle of retrying modules
+ * @param type					Type as ModuleType
+ * @return						ArrayList handle of ModuleType modules
  */
-native ArrayList GlobalAPI_Retrying_GetModuleList();
+native ArrayList GlobalAPI_GetModuleList(ModuleType type);
+
+/**
+ * Prints all modules of ModuleType to client's console
+ *
+ * @param client				Client index who print to
+ * @param type					Type as ModuleType
+ * @noreturn
+ */
+native void GlobalAPI_PrintModulesToConsole(int client, ModuleType type);
 
 /**
  * Starts a GET HTTP Request to /api/{version}/auth/status

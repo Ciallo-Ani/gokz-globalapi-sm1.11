@@ -29,8 +29,9 @@ public Action Command_Info(int client, int args)
 		// --show-modules
 		if (StrEqual(argument, validArgs[0]))
 		{
-			PrintLoggingModulesToConsole(client);
-			PrintRetryingModulesToConsole(client);
+			GlobalAPI_PrintModulesToConsole(client, ModuleType_Stats);
+			GlobalAPI_PrintModulesToConsole(client, ModuleType_Logging);
+			GlobalAPI_PrintModulesToConsole(client, ModuleType_Retrying);
 		}
 
 		// --show-map-info

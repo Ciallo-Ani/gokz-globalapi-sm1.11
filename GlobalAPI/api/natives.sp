@@ -8,18 +8,13 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_IsStaging", Native_IsStaging);
 	CreateNative("GlobalAPI_IsDebugging", Native_IsDebugging);
 	CreateNative("GlobalAPI_SendRequest", Native_SendRequest);
-
-	// Logging
-	CreateNative("GlobalAPI_Logging_LoadModule", Native_Logging_LoadModule);
-	CreateNative("GlobalAPI_Logging_UnloadModule", Native_Logging_UnloadModule);
-	CreateNative("GlobalAPI_Logging_GetModuleList", Native_Logging_GetModuleList);
-	CreateNative("GlobalAPI_Logging_GetModuleCount", Native_Logging_GetModuleCount);
 	
-	// Retrying
-	CreateNative("GlobalAPI_Retrying_LoadModule", Native_Retrying_LoadModule);
-	CreateNative("GlobalAPI_Retrying_UnloadModule", Native_Retrying_UnloadModule);
-	CreateNative("GlobalAPI_Retrying_GetModuleList", Native_Retrying_GetModuleList);
-	CreateNative("GlobalAPI_Retrying_GetModuleCount", Native_Retrying_GetModuleCount);
+	// Modules
+	CreateNative("GlobalAPI_LoadModule", Native_LoadModule);
+	CreateNative("GlobalAPI_UnloadModule", Native_UnloadModule);
+	CreateNative("GlobalAPI_GetModuleList", Native_GetModuleList);
+	CreateNative("GlobalAPI_GetModuleCount", Native_GetModuleCount);
+	CreateNative("GlobalAPI_PrintModulesToConsole", Native_PrintModulesToConsole);
 
 	// Auth
 	CreateNative("GlobalAPI_GetAuthStatus", Native_GetAuthStatus);
@@ -117,81 +112,66 @@ public int Native_SendRequest(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_Logging_LoadModule()
+	native bool GlobalAPI_LoadModule(ModuleType type)
 */
-public int Native_Logging_LoadModule(Handle plugin, int numParams)
+public int Native_LoadModule(Handle plugin, int numParams)
 {
-	return Logging_LoadModule(plugin);
+	ModuleType type = GetNativeCell(1);
+	
+	if (type != ModuleType_Retrying)
+	{
+		return LoadModule(plugin, type);
+	}
+	else
+	{
+		return LoadModule(plugin, type, 1);
+	}
 }
 
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_Logging_UnloadModule()
+	native bool GlobalAPI_UnloadModule(ModuleType type)
 */
-public int Native_Logging_UnloadModule(Handle plugin, int numParams)
+public int Native_UnloadModule(Handle plugin, int numParams)
 {
-	return Logging_UnloadModule(plugin);
+	ModuleType type = GetNativeCell(1);
+	return UnloadModule(plugin, type);
 }
 
 // =========================================================== //
 
 /*
-	native ArrayList GlobalAPI_Logging_GetModuleList()
+	native ArrayList GlobalAPI_GetModuleList(ModuleType type)
 */
-public int Native_Logging_GetModuleList(Handle plugin, int numParams)
+public int Native_GetModuleList(Handle plugin, int numParams)
 {
-	return view_as<int>(Logging_GetModuleList());
+	ModuleType type = GetNativeCell(1);
+	return view_as<int>(GetModuleList(type));
 }
 
 // =========================================================== //
 
 /*
-	native int GlobalAPI_Logging_GetModuleCount()
+	native int GlobalAPI_GetModuleCount(ModuleType type)
 */
-public int Native_Logging_GetModuleCount(Handle plugin, int numParams)
+public int Native_GetModuleCount(Handle plugin, int numParams)
 {
-	return Logging_GetModuleCount();
+	ModuleType type = GetNativeCell(1);
+	return GetModuleCount(type);
 }
 
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_Retrying_LoadModule()
+	native void GlobalAPI_PrintModulesToConsole(int client, ModuleType type)
 */
-public int Native_Retrying_LoadModule(Handle plugin, int numParams)
+public int Native_PrintModulesToConsole(Handle plugin, int numParams)
 {
-	return Retrying_LoadModule(plugin);
-}
-
-// =========================================================== //
-
-/*
-	native bool GlobalAPI_Retrying_UnloadModule()
-*/
-public int Native_Retrying_UnloadModule(Handle plugin, int numParams)
-{
-	return Retrying_UnloadModule(plugin);
-}
-
-// =========================================================== //
-
-/*
-	native ArrayList GlobalAPI_Retrying_GetModuleList()
-*/
-public int Native_Retrying_GetModuleList(Handle plugin, int numParams)
-{
-	return view_as<int>(Retrying_GetModuleList());
-}
-
-// =========================================================== //
-
-/*
-	native int GlobalAPI_Retrying_GetModuleCount()
-*/
-public int Native_Retrying_GetModuleCount(Handle plugin, int numParams)
-{
-	return Retrying_GetModuleCount();
+	int client = GetNativeCell(1);
+	ModuleType type = GetNativeCell(2);
+	
+	PrintModulesToConsole(client, type);
 }
 
 // =========================================================== //
