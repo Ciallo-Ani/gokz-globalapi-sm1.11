@@ -106,3 +106,29 @@ public void OnConfigsExecuted()
 }
 
 // =========================================================== //
+
+public void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hData)
+{
+	char requestUrl[GlobalAPI_Max_BaseUrl_Length];
+	hData.GetString("url", requestUrl, sizeof(requestUrl));
+
+	GlobalAPI_DebugMessage("HTTP Request to \"%s\" started!", requestUrl);
+}
+
+public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
+{
+	char requestUrl[GlobalAPI_Max_BaseUrl_Length];
+	hData.GetString("url", requestUrl, sizeof(requestUrl));
+	
+	GlobalAPI_DebugMessage("HTTP Request to \"%s\" failed! - Status: %d", requestUrl, hData.status);
+}
+
+public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hData)
+{
+	char requestUrl[GlobalAPI_Max_BaseUrl_Length];
+	hData.GetString("url", requestUrl, sizeof(requestUrl));
+	
+	GlobalAPI_DebugMessage("HTTP Request to \"%s\" completed! - Status: %d", requestUrl, hData.status);
+}
+
+// =========================================================== //
