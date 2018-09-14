@@ -627,17 +627,12 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_IsDebugging");
 	MarkNativeAsOptional("GlobalAPI_SendRequest");
 
-	// Logging
-	MarkNativeAsOptional("GlobalAPI_Logging_LoadModule");
-	MarkNativeAsOptional("GlobalAPI_Logging_UnloadModule");
-	MarkNativeAsOptional("GlobalAPI_Logging_GetModuleList");
-	MarkNativeAsOptional("GlobalAPI_Logging_GetModuleCount");
-	
-	// Retrying
-	MarkNativeAsOptional("GlobalAPI_Retrying_LoadModule");
-	MarkNativeAsOptional("GlobalAPI_Retrying_UnloadModule");
-	MarkNativeAsOptional("GlobalAPI_Retrying_GetModuleList");
-	MarkNativeAsOptional("GlobalAPI_Retrying_GetModuleCount");
+	// Modules
+	MarkNativeAsOptional("GlobalAPI_LoadModule");
+	MarkNativeAsOptional("GlobalAPI_UnloadModule");
+	MarkNativeAsOptional("GlobalAPI_GetModuleList");
+	MarkNativeAsOptional("GlobalAPI_GetModuleCount");
+	MarkNativeAsOptional("GlobalAPI_PrintModulesToConsole");
 
 	// Auth
 	MarkNativeAsOptional("GlobalAPI_GetAuthStatus");
