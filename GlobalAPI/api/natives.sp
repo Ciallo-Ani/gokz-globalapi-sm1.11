@@ -8,6 +8,7 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_IsStaging", Native_IsStaging);
 	CreateNative("GlobalAPI_IsDebugging", Native_IsDebugging);
 	CreateNative("GlobalAPI_SendRequest", Native_SendRequest);
+	CreateNative("GlobalAPI_DebugMessage", Native_DebugMessage);
 
 	// Logging
 	CreateNative("GlobalAPI_Logging_LoadModule", Native_Logging_LoadModule);
@@ -65,7 +66,7 @@ public void CreateNatives()
 // =========================================================== //
 
 /*
-	native void GlobalAPI_GetAPIKey(char[] buffer, int maxlength);
+	native void GlobalAPI_GetAPIKey(char[] buffer, int maxlength)
 */
 public int Native_GetAPIKey(Handle plugin, int numParams)
 {
@@ -76,7 +77,7 @@ public int Native_GetAPIKey(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_HasAPIKey();
+	native bool GlobalAPI_HasAPIKey()
 */
 public int Native_HasAPIKey(Handle plugin, int numParams)
 {
@@ -86,7 +87,7 @@ public int Native_HasAPIKey(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_IsStaging();
+	native bool GlobalAPI_IsStaging()
 */
 public int Native_IsStaging(Handle plugin, int numParams)
 {
@@ -96,7 +97,7 @@ public int Native_IsStaging(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_IsDebugging();
+	native bool GlobalAPI_IsDebugging()
 */
 public int Native_IsDebugging(Handle plugin, int numParams)
 {
@@ -112,6 +113,19 @@ public int Native_SendRequest(Handle plugin, int numParams)
 {
 	GlobalAPIRequestData hData = GetNativeCell(1);
 	return SendRequestEx(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_DebugMessage(const char[] message, any ...)
+*/
+public int Native_DebugMessage(Handle plugin, int numParams)
+{
+	char message[512];
+	FormatNativeString(0, 1, 2, sizeof(message), _, message);
+	
+	return DebugMessage(message);
 }
 
 // =========================================================== //
@@ -197,7 +211,7 @@ public int Native_Retrying_GetModuleCount(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
+	native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE)
 */
 public int Native_GetAuthStatus(Handle plugin, int numParams)
 {
@@ -230,7 +244,7 @@ public int Native_GetAuthStatus(Handle plugin, int numParams)
 									char[] banTypesList = DEFAULT_STRING, bool isExpired = DEFAULT_BOOL, char[] ipAddress = DEFAULT_STRING,
 									int steamId64 = DEFAULT_INT, char[] steamId = DEFAULT_STRING, char[] notesContain = DEFAULT_STRING,
 									char[] statsContain = DEFAULT_STRING, int serverId = DEFAULT_INT, char[] createdSince = DEFAULT_STRING,
-									char[] updatedSince = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+									char[] updatedSince = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
 public int Native_GetBans(Handle plugin, int numParams)
 {
@@ -305,7 +319,7 @@ public int Native_GetBans(Handle plugin, int numParams)
 
 /* 
 	native bool GlobalAPI_CreateBan(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
-										char[] steamId, char[] banType, char[] stats, char[] notes, char[] ip);
+										char[] steamId, char[] banType, char[] stats, char[] notes, char[] ip)
 */
 public int Native_CreateBan(Handle plugin, int numParams)
 {
@@ -363,7 +377,7 @@ public int Native_CreateBan(Handle plugin, int numParams)
 										bool isCrouchBind = DEFAULT_BOOL, bool isForwardBind = DEFAULT_BOOL,
 										bool isCrouchBoost = DEFAULT_BOOL, int updatedById = DEFAULT_INT,
 										char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
-										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+										int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
 public int Native_GetJumpstats(Handle plugin, int numParams)
 {
@@ -447,7 +461,7 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_CreateJumpstat(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId,
 											int jumpType, float distance, char[] jumpJsonInfo, int tickRate, int mslCount,
-											bool isCrouchBind, bool isForwardBind, bool isCrouchBoost, int strafeCount);
+											bool isCrouchBind, bool isForwardBind, bool isCrouchBoost, int strafeCount)
 */
 public int Native_CreateJumpstat(Handle plugin, int numParams)
 {
@@ -511,7 +525,7 @@ public int Native_CreateJumpstat(Handle plugin, int numParams)
 											bool isCrouchBind = DEFAULT_BOOL, bool isForwardBind = DEFAULT_BOOL,
 											bool isCrouchBoost = DEFAULT_BOOL, int updatedById = DEFAULT_INT,
 											char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
-											int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+											int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
 public int Native_GetJumpstatTop(Handle plugin, int numParams)
 {
@@ -589,7 +603,7 @@ public int Native_GetJumpstatTop(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetJumpstatTop30(OnAPICallFinished callback = INVALID_HANDLE, any data = INVALID_HANDLE, char[] jumpType);
+	native bool GlobalAPI_GetJumpstatTop30(OnAPICallFinished callback = INVALID_HANDLE, any data = INVALID_HANDLE, char[] jumpType)
 */
 public int Native_GetJumpstatTop30(Handle plugin, int numParams)
 {
@@ -623,7 +637,7 @@ public int Native_GetJumpstatTop30(Handle plugin, int numParams)
 	native bool GlobalAPI_GetMaps(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] name = DEFAULT_STRING,
 									int largerThanFilesize = DEFAULT_INT, int smallerThanFilesize = DEFAULT_INT, bool isValidated = DEFAULT_BOOL,
 									int difficulty = DEFAULT_INT, char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
-									int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+									int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
 public int Native_GetMaps(Handle plugin, int numParams)
 {
@@ -677,7 +691,7 @@ public int Native_GetMaps(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetMapById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+	native bool GlobalAPI_GetMapById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id)
 */
 public int Native_GetMapById(Handle plugin, int numParams)
 {
@@ -706,7 +720,7 @@ public int Native_GetMapById(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetMapByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] name);
+	native bool GlobalAPI_GetMapByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] name)
 */
 public int Native_GetMapByName(Handle plugin, int numParams)
 {
@@ -737,7 +751,7 @@ public int Native_GetMapByName(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetModes(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
+	native bool GlobalAPI_GetModes(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE)
 */
 public int Native_GetModes(Handle plugin, int numParams)
 {
@@ -765,7 +779,7 @@ public int Native_GetModes(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+	native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id)
 */
 public int Native_GetModeById(Handle plugin, int numParams)
 {
@@ -794,7 +808,7 @@ public int Native_GetModeById(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] name);
+	native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] name)
 */
 public int Native_GetModeByName(Handle plugin, int numParams)
 {
@@ -827,7 +841,7 @@ public int Native_GetModeByName(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetPlayers(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING,
 										bool isBanned = DEFAULT_BOOL, int totalRecords = DEFAULT_INT,
-										char[] ip = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING);
+										char[] ip = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING)
 */
 public int Native_GetPlayers(Handle plugin, int numParams)
 {
@@ -873,7 +887,7 @@ public int Native_GetPlayers(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetPlayerBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING);
+	native bool GlobalAPI_GetPlayerBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING)
 */
 public int Native_GetPlayerBySteamId(Handle plugin, int numParams)
 {
@@ -904,7 +918,7 @@ public int Native_GetPlayerBySteamId(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetPlayerBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, char[] ip);
+	native bool GlobalAPI_GetPlayerBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, char[] ip)
 */
 public int Native_GetPlayerBySteamIdAndIp(Handle plugin, int numParams)
 {
@@ -941,7 +955,7 @@ public int Native_GetPlayerBySteamIdAndIp(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] mapName = DEFAULT_STRING,
 										char[] modes = DEFAULT_STRING, int tickRate = DEFAULT_INT, char[] steamId = DEFAULT_STRING,
-										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+										int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
 public int Native_GetRecords(Handle plugin, int numParams)
 {
@@ -990,7 +1004,7 @@ public int Native_GetRecords(Handle plugin, int numParams)
 
 /*
 	native bool GlobalAPI_CreateRecord(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, int mapId,
-										char[] mode, int stage, int tickRate, int teleports, float time);
+										char[] mode, int stage, int tickRate, int teleports, float time)
 */
 public int Native_CreateRecord(Handle plugin, int numParams)
 {
@@ -1040,7 +1054,7 @@ public int Native_CreateRecord(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetRecordPlaceById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+	native bool GlobalAPI_GetRecordPlaceById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id)
 */
 public int Native_GetRecordPlaceById(Handle plugin, int numParams)
 {
@@ -1073,7 +1087,7 @@ public int Native_GetRecordPlaceById(Handle plugin, int numParams)
 											char[] steamId = DEFAULT_STRING, int steamId64 = DEFAULT_INT, int mapId = DEFAULT_INT,
 											char[] mapName = DEFAULT_STRING, int tickRate = DEFAULT_INT, int stage = DEFAULT_INT,
 											char[] modes = DEFAULT_STRING, bool hasTeleports = DEFAULT_BOOL, char[] playerName = DEFAULT_STRING,
-											int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+											int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
 public int Native_GetRecordsTop(Handle plugin, int numParams)
 {
@@ -1140,7 +1154,7 @@ public int Native_GetRecordsTop(Handle plugin, int numParams)
 												int tickRate = DEFAULT_INT, int stage = DEFAULT_INT, char[] modes = DEFAULT_STRING,
 												int placeTopAtLeast = DEFAULT_INT, int placeTopOverallAtLeast = DEFAULT_INT,
 												bool hasTeleports = DEFAULT_BOOL, char[] createdSince = DEFAULT_STRING,
-												char[] playerName = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+												char[] playerName = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
 public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
 {
@@ -1213,7 +1227,7 @@ public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
 	native bool GlobalAPI_GetServers(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
 										int id = DEFAULT_INT, int port = DEFAULT_INT, char[] ip = DEFAULT_STRING,
 										char[] name = DEFAULT_STRING, int ownerSteamId64 = DEFAULT_INT,
-										int approvalStatus = DEFAULT_INT, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+										int approvalStatus = DEFAULT_INT, int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
 public int Native_GetServers(Handle plugin, int numParams)
 {
@@ -1263,7 +1277,7 @@ public int Native_GetServers(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetServerById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id);
+	native bool GlobalAPI_GetServerById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id)
 */
 public int Native_GetServerById(Handle plugin, int numParams)
 {
@@ -1292,7 +1306,7 @@ public int Native_GetServerById(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetServersByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] serverName);
+	native bool GlobalAPI_GetServersByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] serverName)
 */
 public int Native_GetServersByName(Handle plugin, int numParams)
 {

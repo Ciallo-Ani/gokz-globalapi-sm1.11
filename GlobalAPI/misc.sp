@@ -99,7 +99,7 @@ public Handle CreateForwardHandle(Function callback, any data)
 	
 	if (callback != INVALID_FUNCTION)
 	{
-        PrintDebugMessage("Created a forward");
+        GlobalAPI_DebugMessage("Created a forward");
         // JSON_Object hJson, GlobalAPIRequestData hData, any data
         hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell);
     }
@@ -123,7 +123,7 @@ public void CallForward(Handle hFwd, JSON_Object hJson, GlobalAPIRequestData hDa
 {
 	if (hFwd != INVALID_HANDLE)
 	{
-			PrintDebugMessage("Called a forward");
+			GlobalAPI_DebugMessage("Called a forward");
 			// JSON_Object hJson, GlobalAPIRequestData hData, any data
 			Call_StartForward(hFwd);
 			Call_PushCell(hJson);
@@ -226,12 +226,15 @@ public int CalculateResponseTime(GlobalAPIRequestData hData)
 
 // =========================================================== //
 
-public void PrintDebugMessage(char[] message)
+public bool DebugMessage(char[] message)
 {
 	if (gB_Debug)
 	{
 		LogMessage(message);
+		return true;
 	}
+
+	return false;
 }
 
 // =========================================================== //
