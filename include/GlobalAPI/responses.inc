@@ -1,0 +1,470 @@
+// ================== DOUBLE INCLUDE ========================= //
+
+#if defined _GlobalAPI_Responses_included_
+#endinput
+#endif
+#define _GlobalAPI_Responses_included_
+
+// =========================================================== //
+
+#include <json>
+#include <GlobalAPI/iterable>
+
+// =========================================================== //
+
+methodmap APIAuth < JSON_Object
+{
+	public APIAuth(JSON_Object hAuth)
+	{
+		return view_as<APIAuth>(hAuth);
+	}
+	
+	public bool GetType(char[] buffer, int maxlength)
+	{
+		return this.GetString("type", buffer, maxlength);
+	}
+	
+	property bool isValid
+	{
+		public get() { return this.GetBool("isValid"); }
+	}
+	
+	property int identity
+	{
+		public get() { return this.GetInt("identity"); }
+	}
+}
+
+// =========================================================== //
+
+methodmap APIBan < JSON_Object
+{
+	public APIBan(JSON_Object hBan)
+	{
+		return view_as<APIBan>(hBan);
+	}
+	
+	property int updatedById
+	{
+		public get() { return this.GetInt("updated_by_id"); }
+	}
+	
+	property int id
+	{
+		public get() { return this.GetInt("id"); }
+	}
+	
+	public void GetStats(char[] buffer, int maxlength)
+	{
+		this.GetString("stats", buffer, maxlength);
+	}
+	
+	public void GetBanType(char[] buffer, int maxlength)
+	{
+		this.GetString("ban_type", buffer, maxlength);
+	}
+	
+	public void GetExpiresOn(char[] buffer, int maxlength)
+	{
+		this.GetString("expires_on", buffer, maxlength);
+	}
+
+	property int steamId64
+	{
+		public get() { return this.GetInt("steamid64"); }
+	}
+	
+	public void GetPlayerName(char[] buffer, int maxlength)
+	{
+		this.GetString("player_name", buffer, maxlength);
+	}
+	
+	public void GetNotes(char[] buffer, int maxlength)
+	{
+		this.GetString("notes", buffer, maxlength);
+	}
+	
+	public void GetSteamId(char[] buffer, int maxlength)
+	{
+		this.GetString("steam_id", buffer, maxlength);
+	}
+	
+	public void GetUpdatedOn(char[] buffer, int maxlength)
+	{
+		this.GetString("updated_on", buffer, maxlength);
+	}
+	
+	property int serverId
+	{
+		public get() { return this.GetInt("server_id"); }
+	}
+	
+	public void GetCreatedOn(char[] buffer, int maxlength)
+	{
+		this.GetString("created_on", buffer, maxlength);
+	}
+}
+
+// =========================================================== //
+
+methodmap APIJumpstat < JSON_Object
+{
+	public APIJumpstat(JSON_Object hJump)
+	{
+		return view_as<APIJumpstat>(hJump);
+	}
+
+	property int id
+	{
+		public get() { return this.GetInt("id"); }
+	}
+
+	property int serverId
+	{
+		public get() { return this.GetInt("server_id"); }
+	}
+
+	property int steamId64
+	{
+		public get() { return this.GetInt("steamid64"); }
+	}
+
+	public void GetName(char[] buffer, int maxlength)
+	{
+		this.GetString("player_name", buffer, maxlength);
+	}
+
+	public void GetSteamId(char[] buffer, int maxlength)
+	{
+		this.GetString("steam_id", buffer, maxlength);
+	}
+
+	property int jumpType
+	{
+		public get() { return this.GetInt("jump_type"); }
+	}
+
+	property float Distance
+	{
+		public get() { return this.GetFloat("distance"); }
+	}
+
+	property int tickRate
+	{
+		public get() { return this.GetInt("tickrate"); }
+	}
+
+	property int mslCount
+	{
+		public get() { return this.GetInt("msl_count"); }
+	}
+
+	property int strafeCount
+	{
+		public get() { return this.GetInt("strafe_count"); }
+	}
+
+	property bool isCrouchBind
+	{
+		public get() { return this.GetBool("is_crouch_bind"); }
+	}
+
+	property bool isForwardBind
+	{
+		public get() { return this.GetBool("is_forward_bind"); }
+	}
+
+	property bool isCrouchBoost
+	{
+		public get() { return this.GetBool("is_crouch_boost"); }
+	}
+
+	property int updatedById
+	{
+		public get() { return this.GetInt("updated_by_id"); }
+	}
+
+	public void GetCreatedOn(char[] buffer, int maxlength)
+	{
+		this.GetString("created_on", buffer, maxlength);
+	}
+
+	public void GetUpdatedOn(char[] buffer, int maxlength)
+	{
+		this.GetString("updated_on", buffer, maxlength);
+	}
+}
+
+// =========================================================== //
+
+methodmap APIMap < JSON_Object
+{
+	public APIMap(JSON_Object hMap)
+	{
+		return view_as<APIMap>(hMap);
+	}
+	
+	property int id
+	{
+		public get() { return this.GetInt("id"); }
+	}
+	
+	public void GetName(char[] buffer, int maxlength)
+	{
+		this.GetString("name", buffer, maxlength);
+	}
+	
+	property int fileSize
+	{
+		public get() { return this.GetInt("filesize"); }
+	}
+	
+	property bool isValidated
+	{
+		public get() { return this.GetBool("validated"); }
+	}
+	
+	property int difficulty
+	{
+		public get() { return this.GetInt("difficulty"); }
+	}
+	
+	public void GetCreatedOn(char[] buffer, int maxlength)
+	{
+		this.GetString("created_on", buffer, maxlength);
+	}
+	
+	public void GetUpdatedOn(char[] buffer, int maxlength)
+	{
+		this.GetString("updated_on", buffer, maxlength);
+	}
+	
+	property int approvedBySteamId64
+	{
+		public get() { return this.GetInt("approved_by_steamid64"); }
+	}
+}
+
+// =========================================================== //
+
+methodmap APIMode < JSON_Object
+{
+	public APIMode(JSON_Object hMode)
+	{
+		return view_as<APIMode>(hMode);
+	}
+	
+	property int id
+	{
+		public get() { return this.GetInt("id"); }
+	}
+	
+	public void GetName(char[] buffer, int maxlength)
+	{
+		this.GetString("name", buffer, maxlength);
+	}
+
+	public void GetDescription(char[] buffer, int maxlength)
+	{
+		this.GetString("description", buffer, maxlength);
+	}
+	
+	property int latestVersion
+	{
+		public get() { return this.GetInt("latest_version"); }
+	}
+
+	public void GetLatestVersionDesc(char[] buffer, int maxlength)
+	{
+		this.GetString("latest_version_description", buffer, maxlength);
+	}
+	
+	public void GetWebsite(char[] buffer, int maxlength)
+	{
+		this.GetString("website", buffer, maxlength);
+	}
+	
+	public void GetRepository(char[] buffer, int maxlength)
+	{
+		this.GetString("repo", buffer, maxlength);
+	}
+	
+	property int contactSteamId64
+	{
+		public get() { return this.GetInt("contact_steamid64"); }
+	}
+	
+	// TODO Add supported_tickrates
+	
+	public void GetCreatedOn(char[] buffer, int maxlength)
+	{
+		this.GetString("created_on", buffer, maxlength);
+	}
+	
+	public void GetUpdatedOn(char[] buffer, int maxlength)
+	{
+		this.GetString("updated_on", buffer, maxlength);
+	}
+	
+	property int updatedById
+	{
+		public get() { return this.GetInt("updated_by_id"); }
+	}
+}
+
+// =========================================================== //
+
+methodmap APIPlayer < JSON_Object
+{
+	public APIPlayer(JSON_Object hPlayer)
+	{
+		return view_as<APIPlayer>(hPlayer);
+	}
+	
+	property int steamId64
+	{
+		public get() { return this.GetInt("steamid64"); }
+	}
+	
+	public void GetSteamId(char[] buffer, int maxlength)
+	{
+		this.GetString("steam_id", buffer, maxlength);
+	}
+	
+	property bool isBanned
+	{
+		public get() { return this.GetBool("is_banned"); }
+	}
+	
+	property int totalRecords
+	{
+		public get() { return this.GetInt("total_records"); }
+	}
+	
+	public void GetName(char[] buffer, int maxlength)
+	{
+		this.GetString("name", buffer, maxlength);
+	}
+}
+
+// =========================================================== //
+
+methodmap APIRecord < JSON_Object
+{
+	public APIRecord(JSON_Object hRecord)
+	{
+		return view_as<APIRecord>(hRecord);
+	}
+	
+	property int id
+	{
+		public get() { return this.GetInt("id"); }
+	}
+	
+	property int steamId64
+	{
+		public get() { return this.GetInt("steamid64"); }
+	}
+	
+	public void GetPlayerName(char[] buffer, int maxlength)
+	{
+		this.GetString("player_name", buffer, maxlength);
+	}
+	
+	public void GetSteamId(char[] buffer, int maxlength)
+	{
+		this.GetString("steam_id", buffer, maxlength);
+	}
+	
+	property int serverId
+	{
+		public get() { return this.GetInt("server_id"); }
+	}
+	
+	property int mapId
+	{
+		public get() { return this.GetInt("map_id"); }
+	}
+	
+	property int stage
+	{
+		public get() { return this.GetInt("stage"); }
+	}
+	
+	public void GetMode(char[] buffer, int maxlength)
+	{
+		this.GetString("mode", buffer, maxlength);
+	}
+	
+	property int tickRate
+	{
+		public get() { return this.GetInt("tickrate"); }
+	}
+	
+	property float time
+	{
+		public get() { return this.GetFloat("time"); }
+	}
+	
+	property int teleports
+	{
+		public get() { return this.GetInt("teleports"); }
+	}
+	
+	public void GetCreatedOn(char[] buffer, int maxlength)
+	{
+		this.GetString("created_on", buffer, maxlength);
+	}
+	
+	public void GetUpdatedOn(char[] buffer, int maxlength)
+	{
+		this.GetString("updated_on", buffer, maxlength);
+	}
+	
+	property int updatedBySteamId64
+	{
+		public get() { return this.GetInt("updated_by"); }
+	}
+	
+	public void GetServerName(char[] buffer, int maxlength)
+	{
+		this.GetString("server_name", buffer, maxlength);
+	}
+	
+	public void GetMapName(char[] buffer, int maxlength)
+	{
+		this.GetString("map_name", buffer, maxlength);
+	}
+}
+
+// =========================================================== //
+
+methodmap APIServer < JSON_Object
+{
+	public APIServer(JSON_Object hServer)
+	{
+		return view_as<APIServer>(hServer);
+	}
+	
+	property int port
+	{
+		public get() { return this.GetInt("port"); }
+	}
+	
+	public void GetIPAddress(char[] buffer, int maxlength)
+	{
+		this.GetString("ip", buffer, maxlength);
+	}
+	
+	public void GetName(char[] buffer, int maxlength)
+	{
+		this.GetString("name", buffer, maxlength);
+	}
+	
+	property int ownerSteamId64
+	{
+		public get() { return this.GetInt("owner_steamid64"); }
+	}
+}
+
+// =========================================================== //
