@@ -3,7 +3,7 @@
 #include <sourcemod>
 
 #include <GlobalAPI>
-#include <GlobalAPI/helpers>
+#include <GlobalAPI/responses>
 
 // ====================== FORMATTING ========================= //
 
@@ -37,12 +37,16 @@ public void OnPlayer(JSON_Object hResponse, GlobalAPIRequestData hData, int user
 {
 	if (hData.failure == false)
 	{
+		int client = GetClientOfUserId(userid);
 		APIPlayer player = new APIPlayer(hResponse);
-		PrintToServer("%s", player.isBanned ? "YES" : "NO");
+		
+		char steamId[32];
+		GetClientAuthId(client, AuthId_Steam2, steamId, sizeof(steamId));
+		
+		LogMessage("%s is %s", steamId, player.isBanned ? "banned" : "not banned");
 
 		if (player.isBanned)
 		{
-			int client = GetClientOfUserId(userid);
 			KickClient(client, "[GlobalAPI] You're globally banned!");
 		}
 	}
