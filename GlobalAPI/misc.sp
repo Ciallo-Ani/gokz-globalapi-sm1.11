@@ -17,14 +17,14 @@ public bool ReadAPIKey()
 		
 		else
 		{
-			LogError("[GlobalAPI] Cannot read API key!");
+			LogError("[%s] Cannot read API key!", PLUGIN_NAME);
 			APIKey.Close();
 
 			return false;
 		}
 	}
 	
-	LogError("[GlobalAPI] %s does not exist!", APIKEY_PATH);
+	LogError("[%s] %s does not exist!", PLUGIN_NAME, APIKEY_PATH);
 	return false;
 }
 
@@ -34,7 +34,7 @@ public void CreateConfigDir()
 {
 	if (!CreateDirectoryIfNotExist(SETTING_DIR))
 	{
-		SetFailState("[GlobalAPI] Failed to create directory %s", SETTING_DIR);
+		SetFailState("[%s] Failed to create directory %s", PLUGIN_NAME, SETTING_DIR);
 	}
 
 	if (!FileExists(APIKEY_PATH))

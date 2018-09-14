@@ -1,5 +1,6 @@
 // ====================== DEFINITIONS ======================== //
 
+#define PLUGIN_NAME "GlobalAPI"
 #define CONFIG_PATH "sourcemod/GlobalAPI"
 #define SETTING_DIR "cfg/sourcemod/GlobalAPI"
 #define APIKEY_PATH "cfg/sourcemod/GlobalAPI/GlobalAPI-key.cfg"
@@ -73,7 +74,7 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	RegPluginLibrary("GlobalAPI");
+	RegPluginLibrary(PLUGIN_NAME);
 
 	CreateConvars();
 	CreateNatives();
@@ -89,7 +90,7 @@ public void OnPluginStart()
 	g_retryingModules = new ArrayList();
 
 	gB_usingAPIKey = ReadAPIKey();
-	AutoExecConfig(true, "GlobalAPI", CONFIG_PATH);
+	AutoExecConfig(true, PLUGIN_NAME, CONFIG_PATH);
 }
 
 public void OnMapStart()
