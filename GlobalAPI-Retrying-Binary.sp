@@ -38,7 +38,7 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	RegPluginLibrary("GlobalAPI-Retrying-Binary");
+	RegPluginLibrary(PLUGIN_NAME);
 }
 
 public void OnPluginStart()

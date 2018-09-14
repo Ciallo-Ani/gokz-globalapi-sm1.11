@@ -5,6 +5,8 @@
 #define STARTEDLOG_NAME "GlobalAPI-started"
 #define FINISHEDLOG_NAME "GlobalAPI-finished"
 
+#define PLUGIN_NAME "GlobalAPI-Logging-Flatfile"
+
 // =========================================================== //
 
 #include <GlobalAPI>
@@ -41,7 +43,7 @@ enum BuildLogType
 
 public Plugin myinfo = 
 {
-	name = "GlobalAPI-Logging-Flatfile",
+	name = PLUGIN_NAME,
 	author = "Sikari",
 	description = "Flatfile logging for GlobalAPI",
 	version = GlobalAPI_Plugin_Version,
@@ -52,7 +54,7 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	RegPluginLibrary("GlobalAPI-Logging-Flatfile");
+	RegPluginLibrary(PLUGIN_NAME);
 }
 
 public void OnPluginStart()
