@@ -39,7 +39,7 @@ public Action Command_AuthCheck(int client, int args)
 	
 	while (numberOfRemainingChars--) StrCat(apiKey, sizeof(apiKey), "X");
 	
-	LogMessage("[GlobalAPI Auth] Attempting to get status for %s", apiKey);
+	LogMessage("Attempting to get status for %s", apiKey);
 	GlobalAPI_GetAuthStatus(OnAuth);
 }
 
@@ -52,14 +52,14 @@ public void OnAuth(JSON_Object hAuth, GlobalAPIRequestData hData)
 		char serverType[30];
 		status.GetType(serverType, sizeof(serverType));
 
-		LogMessage("[GlobalAPI Auth] Server ID: %d", status.identity);
-		LogMessage("[GlobalAPI Auth] Server Type: %s", serverType);
-		LogMessage("[GlobalAPI Auth] Validated: %s", status.isValid ? "YES" : "NO");
+		LogMessage("Server ID: %d", status.identity);
+		LogMessage("Server Type: %s", serverType);
+		LogMessage("Validated: %s", status.isValid ? "YES" : "NO");
 	}
 	
 	else
 	{
-		LogMessage("[GlobalAPI Auth] Failure during HTTP Request!");
+		LogMessage("Failure during HTTP Request!");
 	}
 }
 
