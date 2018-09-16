@@ -1,6 +1,7 @@
 // ====================== DEFINITIONS ======================== //
 
 #define PLUGIN_NAME "GlobalAPI"
+#define PLUGIN_AUTHOR "Sikari"
 
 #define CONFIG_PATH "sourcemod/GlobalAPI"
 #define SETTING_DIR "cfg/sourcemod/GlobalAPI"
@@ -66,7 +67,7 @@ ArrayList g_retryingModules;
 public Plugin myinfo = 
 {
 	name = PLUGIN_NAME,
-	author = "Sikari",
+	author = PLUGIN_AUTHOR,
 	description = GlobalAPI_Plugin_Desc,
 	version = GlobalAPI_Plugin_Version,
 	url = GlobalAPI_Plugin_Url

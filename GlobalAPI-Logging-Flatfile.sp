@@ -1,6 +1,7 @@
 // ====================== DEFINITIONS ======================== //
 
 #define PLUGIN_NAME "GlobalAPI-Logging-Flatfile"
+#define PLUGIN_AUTHOR "Sikari"
 
 #define LOGS_PATH "logs/GlobalAPI"
 #define FAILEDLOG_NAME "GlobalAPI-failed"
@@ -44,8 +45,8 @@ enum BuildLogType
 public Plugin myinfo = 
 {
 	name = PLUGIN_NAME,
-	author = "Sikari",
-	description = "Flatfile logging for GlobalAPI",
+	author = PLUGIN_AUTHOR,
+	description = "Logging for GlobalAPI in Flatfile format",
 	version = GlobalAPI_Plugin_Version,
 	url = GlobalAPI_Plugin_Url
 };
