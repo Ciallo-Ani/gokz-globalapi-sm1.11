@@ -52,15 +52,16 @@ public void OnAuth(JSON_Object hAuth, GlobalAPIRequestData hData)
 		char serverType[30];
 		status.GetType(serverType, sizeof(serverType));
 
-		LogMessage("Server ID: %d", status.identity);
-		LogMessage("Server Type: %s", serverType);
+		LogMessage("ID: %d", status.identity);
+		LogMessage("Type: %s", serverType);
 		LogMessage("Validated: %s", status.isValid ? "YES" : "NO");
 	}
-	
 	else
 	{
 		LogMessage("Failure during HTTP Request!");
 	}
+
+	GlobalAPI_DebugMessage("<Get Auth Status> executed in %d ms - status: %d", hData.responseTime, hData.status);
 }
 
 // =========================================================== //

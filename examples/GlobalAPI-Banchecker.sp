@@ -50,6 +50,12 @@ public void OnPlayer(JSON_Object hResponse, GlobalAPIRequestData hData, int user
 			KickClient(client, "[GlobalAPI] You're globally banned!");
 		}
 	}
+	else
+	{
+		LogMessage("Failure during HTTP Request!");
+	}
+
+	GlobalAPI_DebugMessage("<Get Player> executed in %d ms - status: %d", hData.responseTime, hData.status);
 }
 
 // =========================================================== //
