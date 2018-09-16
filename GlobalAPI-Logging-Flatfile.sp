@@ -1,5 +1,7 @@
 // ====================== DEFINITIONS ======================== //
 
+#define PLUGIN_NAME "GlobalAPI-Logging-Flatfile"
+
 #define LOGS_PATH "logs/GlobalAPI"
 #define FAILEDLOG_NAME "GlobalAPI-failed"
 #define STARTEDLOG_NAME "GlobalAPI-started"
@@ -41,7 +43,7 @@ enum BuildLogType
 
 public Plugin myinfo = 
 {
-	name = "GlobalAPI-Logging-Flatfile",
+	name = PLUGIN_NAME,
 	author = "Sikari",
 	description = "Flatfile logging for GlobalAPI",
 	version = GlobalAPI_Plugin_Version,
@@ -52,7 +54,7 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	RegPluginLibrary("GlobalAPI-Logging-Flatfile");
+	RegPluginLibrary(PLUGIN_NAME);
 }
 
 public void OnPluginStart()
@@ -61,7 +63,7 @@ public void OnPluginStart()
 
 	if (!CreateDirectoryIfNotExist(gC_HTTPLogs_Directory))
 	{
-		SetFailState("[GlobalAPI-Logging-Flatfile] Failed to create directory %s", gC_HTTPLogs_Directory);
+		SetFailState("[%s] Failed to create directory %s", PLUGIN_NAME, gC_HTTPLogs_Directory);
 	}
 }
 

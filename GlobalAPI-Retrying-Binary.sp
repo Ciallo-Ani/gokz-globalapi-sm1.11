@@ -1,9 +1,9 @@
 // ====================== DEFINITIONS ======================== //
 
+#define PLUGIN_NAME "GlobalAPI-Retrying-Binary"
+
 #define DATA_PATH "data/GlobalAPI-Retrying"
 #define DATA_FILE "retrying_{timestamp}_{gametick}.dat"
-
-#define PLUGIN_NAME "GlobalAPI-Retrying-Binary"
 
 // =========================================================== //
 
