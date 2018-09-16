@@ -21,13 +21,13 @@ public Plugin myinfo =
 
 // ======================= MAIN CODE ========================= //
 
-public void GlobalAPI_OnInitialized()
+public void OnPluginStart()
 {
 	RegConsoleCmd("sm_globalapi_mapstats", Command_GetStatsForMap);
 }
 
 public Action Command_GetStatsForMap(int client, int args)
-{	
+{
 	char temp[12];
 	char mapName[128];
 	GetCmdArg(1, mapName, sizeof(mapName));
@@ -64,8 +64,11 @@ public Action Command_GetStatsForMap(int client, int args)
 		}
 	}
 	
+	int userid = client > 0 ? GetClientUserId(client) : 0;
+	
 	// Combined
 	GlobalAPI_GetRecordsTop(OnRecordsGet,
+							.data = userid,
 							.stage = stage,
 							.tickRate = 128,
 							.modes = temp,
@@ -74,6 +77,7 @@ public Action Command_GetStatsForMap(int client, int args)
 	
 	// TP
 	GlobalAPI_GetRecordsTop(OnRecordsGet,
+							.data = userid,
 							.hasTeleports = true,
 							.stage = stage,
 							.tickRate = 128,
@@ -83,6 +87,7 @@ public Action Command_GetStatsForMap(int client, int args)
 	
 	// Pro
 	GlobalAPI_GetRecordsTop(OnRecordsGet, 
+							.data = userid,
 							.hasTeleports = false,
 							.stage = stage,
 							.tickRate = 128,
@@ -91,7 +96,7 @@ public Action Command_GetStatsForMap(int client, int args)
 							.limit = topNum);
 }
 
-public void OnRecordsGet(JSON_Object hResponse, GlobalAPIRequestData hData)
+public void OnRecordsGet(JSON_Object hResponse, GlobalAPIRequestData hData, int userid)
 {
 	if (hData.failure == false)
 	{
@@ -101,7 +106,7 @@ public void OnRecordsGet(JSON_Object hResponse, GlobalAPIRequestData hData)
 
 			if (iterable != null)
 			{
-				FormatRecords(iterable, hData);
+				FormatRecords(userid, iterable, hData);
 				delete iterable;
 			}
 		}
@@ -114,7 +119,7 @@ public void OnRecordsGet(JSON_Object hResponse, GlobalAPIRequestData hData)
 	GlobalAPI_DebugMessage("<Get Records Top> executed in %d ms - status: %d", hData.responseTime, hData.status);
 }
 
-static void FormatRecords(APIIterable records, GlobalAPIRequestData hData)
+static void FormatRecords(int userid, APIIterable records, GlobalAPIRequestData hData)
 {
 	float bestTime = 0.0;
 	float worstTime = 0.0;
@@ -137,21 +142,22 @@ static void FormatRecords(APIIterable records, GlobalAPIRequestData hData)
 		totalTime += record.time;
 		delete record;
 	}
-	
-	char mapName[128];
-	hData.GetString("map_name", mapName, sizeof(mapName));
-	
-	char mode[12];
-	hData.GetString("modes_list_string", mode, sizeof(mode));
-	
-	char timeType[12];
-	timeType = hData.GetKeyHidden("has_teleports") ? "Combined" : hData.GetBool("has_teleports") ? "TP" : "PRO";
 
 	int limit = hData.GetInt("limit");
 	int stage = hData.GetInt("stage");
-	
-	PrintToServer("[%s %s] Stats for Top %d - %s (Stage %d):", mode, timeType, limit, mapName, stage);
-	PrintToServer("Best time: %s", FormatRecordTime(bestTime));
-	PrintToServer("Top %d time: %s", limit, FormatRecordTime(worstTime));
-	PrintToServer("Average Time: %s", FormatRecordTime((totalTime / totalRecords)));
+	int client = GetClientOfUserId(userid);
+
+	char mapName[128];
+	hData.GetString("map_name", mapName, sizeof(mapName));
+
+	char mode[12];
+	hData.GetString("modes_list_string", mode, sizeof(mode));
+
+	char timeType[12];
+	timeType = hData.GetKeyHidden("has_teleports") ? "Combined" : hData.GetBool("has_teleports") ? "TP" : "PRO";
+
+	PrintToConsole(client, "[%s %s] Stats for Top %d - %s (Stage %d):", mode, timeType, limit, mapName, stage);
+	PrintToConsole(client, "#1 time: %s", FormatRecordTime(bestTime));
+	PrintToConsole(client, "#%d time: %s", limit, FormatRecordTime(worstTime));
+	PrintToConsole(client, "Avg time: %s", FormatRecordTime((totalTime / totalRecords)));
 }
