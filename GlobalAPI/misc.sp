@@ -17,14 +17,14 @@ public bool ReadAPIKey()
 		
 		else
 		{
-			LogError("[GlobalAPI] Cannot read API key!");
+			LogError("[%s] Cannot read API key!", PLUGIN_NAME);
 			APIKey.Close();
 
 			return false;
 		}
 	}
 	
-	LogError("[GlobalAPI] %s does not exist!", APIKEY_PATH);
+	LogError("[%s] %s does not exist!", PLUGIN_NAME, APIKEY_PATH);
 	return false;
 }
 
@@ -34,7 +34,7 @@ public void CreateConfigDir()
 {
 	if (!CreateDirectoryIfNotExist(SETTING_DIR))
 	{
-		SetFailState("[GlobalAPI] Failed to create directory %s", SETTING_DIR);
+		SetFailState("[%s] Failed to create directory %s", PLUGIN_NAME, SETTING_DIR);
 	}
 
 	if (!FileExists(APIKEY_PATH))
@@ -63,14 +63,13 @@ public bool SendRequest(Handle request, GlobalAPIRequestData hData)
 
 public bool SendRequestEx(GlobalAPIRequestData hData)
 {
-	if (hData.requestType == GlobalAPIRequestType_GET)
+	switch (hData.requestType)
 	{
-		return HTTPGet(hData);
+		case GlobalAPIRequestType_GET: return HTTPGet(hData);
+		case GlobalAPIRequestType_POST: return HTTPPost(hData);
 	}
-	else
-	{
-		return HTTPPost(hData);
-	}
+
+	return false;
 }
 
 // =========================================================== //
@@ -82,7 +81,7 @@ public void CallForward_NoResponse(GlobalAPIRequestData hData)
 	any data = hData.data;
 	Handle hFwd = hData.callback;
 
-	if (hFwd != null) CallForward(hFwd, null, hData, data);
+	CallForward(hFwd, null, hData, data);
 
 	// Cleanup
 	if (hData != null) hData.Cleanup();
@@ -95,7 +94,7 @@ public void CallForward_NoResponse(GlobalAPIRequestData hData)
 
 public Handle CreateForwardHandle(Function callback, any data)
 {
-	Handle hFwd = INVALID_HANDLE;
+	Handle hFwd = null;
 	
 	if (callback != INVALID_FUNCTION)
 	{
@@ -112,7 +111,7 @@ public Handle CreateForwardHandle(Function callback, any data)
 
 public void AddToForwardEx(Handle hFwd, Handle plugin, Function callback)
 {
-	if (hFwd != INVALID_HANDLE && plugin != INVALID_HANDLE && callback != INVALID_FUNCTION)
+	if (hFwd != null && plugin != null && callback != INVALID_FUNCTION)
 	{
 		AddToForward(hFwd, plugin, callback);
 	}
@@ -122,7 +121,7 @@ public void AddToForwardEx(Handle hFwd, Handle plugin, Function callback)
 
 public void CallForward(Handle hFwd, JSON_Object hJson, GlobalAPIRequestData hData, any data)
 {
-	if (hFwd != INVALID_HANDLE)
+	if (hFwd != null)
 	{
 		GlobalAPI_DebugMessage("Called a forward!");
 
