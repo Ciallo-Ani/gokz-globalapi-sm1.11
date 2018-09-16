@@ -1,6 +1,7 @@
 // ====================== DEFINITIONS ======================== //
 
 #define PLUGIN_NAME "GlobalAPI"
+
 #define CONFIG_PATH "sourcemod/GlobalAPI"
 #define SETTING_DIR "cfg/sourcemod/GlobalAPI"
 #define APIKEY_PATH "cfg/sourcemod/GlobalAPI/GlobalAPI-key.cfg"
