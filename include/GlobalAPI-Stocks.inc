@@ -90,5 +90,43 @@ stock char FormatISO8601Date(char[] datetime, bool useSlashes = true)
 	return date[0];
 }
 
+/**
+ * Formats a time float to a human readable format
+ *
+ * @param time					Time as a float
+ * @return						Human readable string representation of the time
+ */
+stock char FormatRecordTime(float time, bool leadingZeroes = false)
+{
+	char formattedTime[12];
+	int roundedTime = RoundFloat(time * 100);
+	
+	int milliseconds = roundedTime % 100;
+	roundedTime = (roundedTime - milliseconds) / 100;
+	int seconds = roundedTime % 60;
+	roundedTime = (roundedTime - seconds) / 60;
+	int minutes = roundedTime % 60;
+	roundedTime = (roundedTime - minutes) / 60;
+	int hours = roundedTime;
+	
+	if (hours == 0)
+	{
+		if (!leadingZeroes)
+		{
+			FormatEx(formattedTime, sizeof(formattedTime), "%02d:%02d.%02d", minutes, seconds, milliseconds);
+		}
+		else
+		{
+			FormatEx(formattedTime, sizeof(formattedTime), "00:%02d:%02d.%02d", minutes, seconds, milliseconds);
+		}
+	}
+	else
+	{
+		FormatEx(formattedTime, sizeof(formattedTime), "%d:%02d:%02d.%02d", hours, minutes, seconds, milliseconds);
+	}
+
+	return formattedTime;
+}
+
 // =========================================================== //
 
