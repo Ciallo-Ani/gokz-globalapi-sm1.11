@@ -21,7 +21,7 @@ public Plugin myinfo =
 
 // ======================= MAIN CODE ========================= //
 
-public void OnPluginStart()
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	RegConsoleCmd("sm_globalapi_mapstats", Command_GetStatsForMap);
 }
