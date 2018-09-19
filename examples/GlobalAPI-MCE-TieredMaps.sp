@@ -1,7 +1,7 @@
 // =========================================================== //
 
 #include <GlobalAPI>
-#include <GlobalAPI/helpers>
+#include <GlobalAPI/responses>
 
 // ====================== FORMATTING ========================= //
 
@@ -61,6 +61,12 @@ public void OnMaps(JSON_Object hResponse, GlobalAPIRequestData hData)
 			BuildTheThingie();
 		}
 	}
+	else
+	{
+		LogMessage("Failure during HTTP Request!");
+	}
+
+	GlobalAPI_DebugMessage("<Get Maps> executed in %d ms - status: %d", hData.responseTime, hData.status);
 }
 
 public void BuildTheThingie()
