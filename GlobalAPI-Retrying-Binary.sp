@@ -1,9 +1,10 @@
 // ====================== DEFINITIONS ======================== //
 
+#define PLUGIN_NAME "GlobalAPI-Retrying-Binary"
+#define PLUGIN_AUTHOR "Sikari"
+
 #define DATA_PATH "data/GlobalAPI-Retrying"
 #define DATA_FILE "retrying_{timestamp}_{gametick}.dat"
-
-#define PLUGIN_NAME "GlobalAPI-Retrying-Binary"
 
 // =========================================================== //
 
@@ -27,18 +28,17 @@ bool gB_Core = false;
 public Plugin myinfo = 
 {
 	name = PLUGIN_NAME,
-	author = "Sikari",
-	description = "",
+	author = PLUGIN_AUTHOR,
+	description = "Retrying for GlobalAPI in binary format",
 	version = GlobalAPI_Plugin_Version,
 	url = GlobalAPI_Plugin_Url
-	// FIX: I think this is a horrible way of versioning
 };
 
 // =========================================================== //
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	RegPluginLibrary("GlobalAPI-Retrying-Binary");
+	RegPluginLibrary(PLUGIN_NAME);
 }
 
 public void OnPluginStart()

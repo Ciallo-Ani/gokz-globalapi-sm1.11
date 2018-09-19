@@ -1,5 +1,8 @@
 // ====================== DEFINITIONS ======================== //
 
+#define PLUGIN_NAME "GlobalAPI"
+#define PLUGIN_AUTHOR "Sikari"
+
 #define DATA_DIR "data/sourcemod/GlobalAPI"
 #define SETTING_DIR "cfg/sourcemod/GlobalAPI"
  
@@ -66,8 +69,8 @@ ArrayList g_retryingModules;
 
 public Plugin myinfo = 
 {
-	name = "GlobalAPI",
-	author = "Sikari",
+	name = PLUGIN_NAME,
+	author = PLUGIN_AUTHOR,
 	description = GlobalAPI_Plugin_Desc,
 	version = GlobalAPI_Plugin_Version,
 	url = GlobalAPI_Plugin_Url
@@ -77,7 +80,7 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	RegPluginLibrary("GlobalAPI");
+	RegPluginLibrary(PLUGIN_NAME);
 
 	CreateConvars();
 	CreateNatives();
@@ -93,7 +96,7 @@ public void OnPluginStart()
 	g_retryingModules = new ArrayList();
 
 	gB_usingAPIKey = ReadAPIKey();
-	AutoExecConfig(true, "GlobalAPI", CONFIG_PATH);
+	AutoExecConfig(true, PLUGIN_NAME, CONFIG_PATH);
 }
 
 public void OnMapStart()
@@ -107,6 +110,32 @@ public void OnConfigsExecuted()
 {
 	GetConVars();
 	Call_Global_OnInitialized();
+}
+
+// =========================================================== //
+
+public void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hData)
+{
+	char requestUrl[GlobalAPI_Max_BaseUrl_Length];
+	hData.GetString("url", requestUrl, sizeof(requestUrl));
+
+	GlobalAPI_DebugMessage("HTTP Request to \"%s\" started!", requestUrl);
+}
+
+public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
+{
+	char requestUrl[GlobalAPI_Max_BaseUrl_Length];
+	hData.GetString("url", requestUrl, sizeof(requestUrl));
+	
+	GlobalAPI_DebugMessage("HTTP Request to \"%s\" failed! - Status: %d", requestUrl, hData.status);
+}
+
+public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hData)
+{
+	char requestUrl[GlobalAPI_Max_BaseUrl_Length];
+	hData.GetString("url", requestUrl, sizeof(requestUrl));
+	
+	GlobalAPI_DebugMessage("HTTP Request to \"%s\" completed! - Status: %d", requestUrl, hData.status);
 }
 
 // =========================================================== //

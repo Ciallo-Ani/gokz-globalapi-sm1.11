@@ -3,7 +3,7 @@
 #include <sourcemod>
 
 #include <GlobalAPI>
-#include <GlobalAPI/helpers>
+#include <GlobalAPI/responses>
 
 // ====================== FORMATTING ========================= //
 
@@ -39,7 +39,7 @@ public Action Command_AuthCheck(int client, int args)
 	
 	while (numberOfRemainingChars--) StrCat(apiKey, sizeof(apiKey), "X");
 	
-	PrintToServer("[GlobalAPI Auth] Attempting to get status for %s", apiKey);
+	LogMessage("Attempting to get status for %s", apiKey);
 	GlobalAPI_GetAuthStatus(OnAuth);
 }
 
@@ -47,20 +47,21 @@ public void OnAuth(JSON_Object hAuth, GlobalAPIRequestData hData)
 {
 	if (hData.failure == false)
 	{
-		APIAuthStatus status = new APIAuthStatus(hAuth);
+		APIAuth status = new APIAuth(hAuth);
 	
 		char serverType[30];
 		status.GetType(serverType, sizeof(serverType));
 
-		PrintToServer("[GlobalAPI Auth] Server ID: %d", status.identity);
-		PrintToServer("[GlobalAPI Auth] Server Type: %s", serverType);
-		PrintToServer("[GlobalAPI Auth] Validated: %s", status.isValid ? "YES" : "NO");
+		LogMessage("ID: %d", status.identity);
+		LogMessage("Type: %s", serverType);
+		LogMessage("Validated: %s", status.isValid ? "YES" : "NO");
 	}
-	
 	else
 	{
-		PrintToServer("[GlobalAPI Auth] Failure during HTTP Request!");
+		LogMessage("Failure during HTTP Request!");
 	}
+
+	GlobalAPI_DebugMessage("<Get Auth Status> executed in %d ms - status: %d", hData.responseTime, hData.status);
 }
 
 // =========================================================== //

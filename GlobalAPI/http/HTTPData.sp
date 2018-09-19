@@ -2,7 +2,7 @@
 
 public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 {
-	PrintDebugMessage("HTTP Response data...");
+	GlobalAPI_DebugMessage("HTTP Response data...");
 
 	JSON_Object hJson = null;
 
@@ -34,8 +34,8 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 	CallForward(hFwd, hJson, hData, data);
 
 	// Cleanup
-	if (hData != INVALID_HANDLE) hData.Cleanup();
-	if (hJson != INVALID_HANDLE) hJson.Cleanup();
+	if (hJson != null) hJson.Cleanup();
+	if (hData != null) hData.Cleanup();
 
 	delete hFwd;
 	delete hJson;

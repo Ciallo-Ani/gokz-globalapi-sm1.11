@@ -1,13 +1,13 @@
 // =========================================================== //
 
 // Privates
-static Handle H_Private_OnHTTPStart = INVALID_HANDLE;
+static Handle H_Private_OnHTTPStart = null;
 
 // Globals
-static Handle H_Global_OnInitialized = INVALID_HANDLE;
-static Handle H_Global_RequestFailed = INVALID_HANDLE;
-static Handle H_Global_RequestStarted = INVALID_HANDLE;
-static Handle H_Global_RequestFinished = INVALID_HANDLE;
+static Handle H_Global_OnInitialized = null;
+static Handle H_Global_RequestFailed = null;
+static Handle H_Global_RequestStarted = null;
+static Handle H_Global_RequestFinished = null;
 
 // =========================================================== //
 
@@ -15,7 +15,7 @@ public void CreateForwards()
 {
 	// Privates
 	H_Private_OnHTTPStart = CreateForward(ET_Ignore, Param_Cell, Param_Cell);
-	AddToForward(H_Private_OnHTTPStart, INVALID_HANDLE, Global_HTTP_Started);
+	AddToForward(H_Private_OnHTTPStart, null, Global_HTTP_Started);
 
 	// Globals
 	H_Global_OnInitialized = CreateGlobalForward("GlobalAPI_OnInitialized", ET_Ignore);

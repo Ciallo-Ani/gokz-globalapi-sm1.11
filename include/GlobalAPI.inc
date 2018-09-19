@@ -96,8 +96,8 @@ typeset OnAPICallFinished
 // ======================= FORWARDS ========================== //
 
 /**
- * Called when GlobalAPI plugin is initialized
- * This means API Key is loaded and all the cvars are loaded
+ * Called when GlobalAPI plugin is initialized,
+ * this means API Key is loaded and all the cvars are loaded
  *
  * @noreturn
  */
@@ -172,6 +172,16 @@ native bool GlobalAPI_IsDebugging();
  * @return						Whether the request was sent successfully
  */
 native bool GlobalAPI_SendRequest(GlobalAPIRequestData hData);
+
+/**
+ * Sends a debug message to GlobalAPI plugin logs if debugging is enabled
+ *
+ * @param message				Formatting rules
+ * @param ...					Variable number of format parameters
+ * @note						This is not safe to use before convars have loaded
+ * @return						Whether the message was logged
+ */
+native bool GlobalAPI_DebugMessage(const char[] message, any ...);
 
 /**
  * Loads calling plugin as a logging module
@@ -685,6 +695,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_IsStaging");
 	MarkNativeAsOptional("GlobalAPI_IsDebugging");
 	MarkNativeAsOptional("GlobalAPI_SendRequest");
+	MarkNativeAsOptional("GlobalAPI_DebugMessage");
 
 	// Logging
 	MarkNativeAsOptional("GlobalAPI_Logging_LoadModule");

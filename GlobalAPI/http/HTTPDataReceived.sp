@@ -2,7 +2,7 @@
 
 public int Global_HTTP_DataReceived(Handle request, bool failure, int offset, int bytesReceived, GlobalAPIRequestData hData)
 {
-	PrintDebugMessage("HTTP Response data received...");
+	GlobalAPI_DebugMessage("HTTP Response data received...");
 
 	if (hData.failure)
 	{
