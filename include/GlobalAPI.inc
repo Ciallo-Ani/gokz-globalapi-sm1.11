@@ -669,7 +669,7 @@ native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_F
  * @return						Whether request was successfully sent
  */
 native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
-												int recordId, char[] replayData, int maxlength);
+												int recordId, char[] replayPath);
 
 // ======================= PLUGIN INFO ======================= //
 

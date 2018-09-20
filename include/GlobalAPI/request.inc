@@ -63,6 +63,17 @@ methodmap GlobalAPIRequest < Handle
 		return SteamWorks_SetHTTPRequestRawPostBody(this, gC_contentTypePhrases[hData.contentType], body, maxlength);
 	}
 	
+  /**
+	* Sets request body from a file
+	*
+	* @param hData				GlobalAPIRequestData containing contentType
+	* @return					Whether the operation was successful
+	*/
+	public bool SetBodyFromFile(GlobalAPIRequestData hData, char[] file)
+	{
+		return SteamWorks_SetHTTPRequestRawPostBodyFromFile(this, gC_contentTypePhrases[hData.contentType], file);
+	}
+
    /**
  	* Sets a request context value
  	*

@@ -1410,23 +1410,22 @@ public int Native_CreateReplayForRecordId(Handle plugin, int numParams)
 	Function callback = GetNativeCell(1);
 	any data = GetNativeCell(2);
 	int recordId = GetNativeCell(3);
-	int maxlength = GetNativeCell(5);
 
-	char[] replayData = new char[maxlength];
-	GetNativeString(4, replayData, maxlength);
+	char replayPath[PLATFORM_MAX_PATH];
+	GetNativeString(4, replayPath, sizeof(replayPath));
 
 	char pluginName[GlobalAPI_Max_PluginName_Length];
 	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
-	hData.AddString("body", replayData);
+	hData.AddString("file", replayPath);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
 	hData.keyRequired = true;
-	hData.bodyLength = maxlength;
+	hData.bodyLength = FileSize(replayPath);
 	hData.requestType = GlobalAPIRequestType_POST;
 	hData.contentType = GlobalAPIRequestContentType_OctetStream;
 
