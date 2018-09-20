@@ -23,9 +23,6 @@ public bool HTTPPost(GlobalAPIRequestData hData)
 		return false;
 	}
 
-	int maxlength = hData.bodyLength;
-	char[] body = new char[maxlength];
-
 	if (hData.contentType == GlobalAPIRequestContentType_OctetStream)
 	{
 		char file[PLATFORM_MAX_PATH];
@@ -34,6 +31,10 @@ public bool HTTPPost(GlobalAPIRequestData hData)
 	}
 	else
 	{
+		
+		int maxlength = hData.bodyLength;
+		char[] body = new char[maxlength];
+
 		hData.Encode(body, maxlength);
 		request.SetBody(hData, body, maxlength);
 	}
@@ -46,7 +47,6 @@ public bool HTTPPost(GlobalAPIRequestData hData)
 	request.SetAcceptHeaders(hData);
 	request.SetContentTypeHeader(hData);
 	request.SetRequestOriginHeader(hData);
-	request.SetBody(hData, body, maxlength);
 	request.Send(hData);
 
 	return true;
