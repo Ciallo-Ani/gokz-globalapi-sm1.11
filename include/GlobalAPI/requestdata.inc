@@ -71,13 +71,27 @@ methodmap GlobalAPIRequestData < JSON_Object
 		this.SetString("url", url);
 		this.SetKeyHidden("url", true);
 	}
+	
+   /**
+	* Sets body file path to the request data
+	*
+	* @note						Path to file with data to be posted
+	* @param path				Body file (path) to set
+	* @noreturn
+	*/
+	public void AddBodyFile(char[] path)
+	{
+		this.SetString("bodyFile", path);
+		this.SetKeyHidden("bodyFile", true);
+	}
 
    /**
- 	* Sets data file path to the request data
- 	*
- 	* @param url				Data path to set
- 	* @noreturn
- 	*/
+	* Sets data file path to the request data
+	*
+	* @note						Path for downloaded files
+	* @param path				Data path to set
+	* @noreturn
+	*/
 	public void AddDataPath(char[] path)
 	{
 		this.SetString("dataFilePath", path);

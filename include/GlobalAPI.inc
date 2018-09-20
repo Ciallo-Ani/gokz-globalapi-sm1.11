@@ -664,12 +664,11 @@ native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_F
  * @param callback				Callback when request has finished
  * @param data					Optional data to pass
  * @param recordId				Id of the record
- * @param replayData			Replay data of the record
- * @param maxlength				Max length of replay data
+ * @param replayFile			Path to the replay file
  * @return						Whether request was successfully sent
  */
 native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
-												int recordId, char[] replayPath);
+												int recordId, char[] replayFile);
 
 // ======================= PLUGIN INFO ======================= //
 

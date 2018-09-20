@@ -26,12 +26,11 @@ public bool HTTPPost(GlobalAPIRequestData hData)
 	if (hData.contentType == GlobalAPIRequestContentType_OctetStream)
 	{
 		char file[PLATFORM_MAX_PATH];
-		hData.GetString("file", file, sizeof(file));
+		hData.GetString("bodyFile", file, sizeof(file));
 		request.SetBodyFromFile(hData, file);
 	}
 	else
 	{
-		
 		int maxlength = hData.bodyLength;
 		char[] body = new char[maxlength];
 

@@ -1418,7 +1418,7 @@ public int Native_CreateReplayForRecordId(Handle plugin, int numParams)
 	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
-	hData.AddString("file", replayPath);
+	hData.AddBodyFile(replayPath);
 
 	Handle hFwd = CreateForwardHandle(callback, data);
 	AddToForwardEx(hFwd, plugin, callback);
