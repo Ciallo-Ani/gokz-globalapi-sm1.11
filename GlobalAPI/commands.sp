@@ -99,7 +99,7 @@ public Action Command_Info(int client, int args)
 		}
 
 		// All valid ones checked, has to be invalid
-		else if (String_StartsWith(argument, "--") && argument[2] != '-')
+		else if (json_string_startswith(argument, "--") && argument[2] != '-')
 		{
 			Format(errorString, sizeof(errorString), "Invalid command option \"%s\"", argument);
 			errorMessages.PushString(errorString);

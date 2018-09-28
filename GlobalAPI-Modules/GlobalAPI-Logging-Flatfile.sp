@@ -11,7 +11,7 @@
 // =========================================================== //
 
 #include <GlobalAPI>
-#include <GlobalAPI-stocks>
+#include <GlobalAPI/stocks>
 
 // ====================== FORMATTING ========================= //
 
