@@ -8,6 +8,7 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_IsStaging", Native_IsStaging);
 	CreateNative("GlobalAPI_IsDebugging", Native_IsDebugging);
 	CreateNative("GlobalAPI_SendRequest", Native_SendRequest);
+	CreateNative("GlobalAPI_DebugMessage", Native_DebugMessage);
 	
 	// Modules
 	CreateNative("GlobalAPI_LoadModule", Native_LoadModule);
@@ -107,6 +108,19 @@ public int Native_SendRequest(Handle plugin, int numParams)
 {
 	GlobalAPIRequestData hData = GetNativeCell(1);
 	return SendRequestEx(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_DebugMessage(const char[] message, any ...)
+*/
+public int Native_DebugMessage(Handle plugin, int numParams)
+{
+	char message[512];
+	FormatNativeString(0, 1, 2, sizeof(message), _, message);
+ 
+	return DebugMessage(message);
 }
 
 // =========================================================== //
