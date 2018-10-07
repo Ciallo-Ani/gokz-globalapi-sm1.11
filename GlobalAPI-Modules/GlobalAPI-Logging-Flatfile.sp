@@ -11,7 +11,7 @@
 // =========================================================== //
 
 #include <GlobalAPI>
-#include <GlobalAPI-stocks>
+#include <GlobalAPI/stocks>
 
 // ====================== FORMATTING ========================= //
 
@@ -73,7 +73,7 @@ public void OnAllPluginsLoaded()
 	if (LibraryExists("GlobalAPI"))
 	{
 		gB_Core = true;
-		GlobalAPI_Logging_LoadModule();
+		GlobalAPI_LoadModule(ModuleType_Logging);
 	}
 }
 
@@ -81,7 +81,7 @@ public void OnPluginEnd()
 {
 	if (gB_Core)
 	{
-		GlobalAPI_Logging_UnloadModule();
+		GlobalAPI_LoadModule(ModuleType_Logging);
 	}
 }
 

@@ -72,8 +72,9 @@ public Action Command_Info(int client, int args)
 		{
 			if (usedArguments.FindValue(Argument_ShowModules) == -1)
 			{
-				PrintLoggingModulesToConsole(client);
-				PrintRetryingModulesToConsole(client);
+				GlobalAPI_PrintModulesToConsole(client, ModuleType_Stats);
+				GlobalAPI_PrintModulesToConsole(client, ModuleType_Logging);
+				GlobalAPI_PrintModulesToConsole(client, ModuleType_Retrying);
 				usedArguments.Push(Argument_ShowModules);
 			}
 			else
@@ -99,7 +100,7 @@ public Action Command_Info(int client, int args)
 		}
 
 		// All valid ones checked, has to be invalid
-		else if (String_StartsWith(argument, "--") && argument[2] != '-')
+		else if (json_string_startswith(argument, "--") && argument[2] != '-')
 		{
 			Format(errorString, sizeof(errorString), "Invalid command option \"%s\"", argument);
 			errorMessages.PushString(errorString);

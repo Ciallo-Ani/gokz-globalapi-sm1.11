@@ -12,7 +12,7 @@
 #include <SteamWorks>
 
 #include <GlobalAPI>
-#include <GlobalAPI-stocks>
+#include <GlobalAPI/stocks>
 #include <GlobalAPI/request>
 #include <GlobalAPI/requestdata>
 
@@ -38,6 +38,7 @@ bool gB_Debug = false;
 bool gB_Staging = false;
 
 // Modules
+ArrayList g_statsModules;
 ArrayList g_loggingModules;
 ArrayList g_retryingModules;
 
@@ -50,11 +51,9 @@ ArrayList g_retryingModules;
 #include "GlobalAPI/method/get.sp"
 #include "GlobalAPI/method/post.sp"
 
+#include "GlobalAPI/api/modules.sp"
 #include "GlobalAPI/api/natives.sp"
 #include "GlobalAPI/api/forwards.sp"
-
-#include "GlobalAPI/module/logging.sp"
-#include "GlobalAPI/module/retrying.sp"
 
 #include "GlobalAPI/http/HTTPData.sp"
 #include "GlobalAPI/http/HTTPHeaders.sp"
@@ -88,6 +87,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
+	g_statsModules = new ArrayList();
 	g_loggingModules = new ArrayList();
 	g_retryingModules = new ArrayList();
 

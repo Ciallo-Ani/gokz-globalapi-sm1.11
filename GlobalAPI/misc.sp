@@ -151,56 +151,9 @@ public void PrintInfoHeaderToConsole(int client)
 	PrintToConsole(client, "-- Tickrate:  \t\t %d", RoundFloat(1.0 / GetTickInterval()));
 	PrintToConsole(client, "-- Staging:   \t\t %s", GlobalAPI_IsStaging() ? "Y" : "N");
 	PrintToConsole(client, "-- Debugging: \t\t %s", GlobalAPI_IsDebugging() ? "Y" : "N");
-	PrintToConsole(client, "-- Logging:   \t\t %s", GlobalAPI_Logging_GetModuleCount() > 0 ? "Y" : "N");
-	PrintToConsole(client, "-- Retrying:  \t\t %s", GlobalAPI_Retrying_GetModuleCount() > 0 ? "Y" : "N");
-}
-
-// =========================================================== //
-
-public void PrintLoggingModulesToConsole(int client)
-{
-	int moduleCount = GlobalAPI_Logging_GetModuleCount();
-
-	if (moduleCount <= 0)
-	{
-		PrintToConsole(client, "-- Logging Module: \t None");
-		return;
-	}
-
-	for (int i = 0; i < moduleCount; i++)
-	{
-		Handle module = g_loggingModules.Get(i);
-
-		char pluginName[GlobalAPI_Max_PluginName_Length];
-		strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(module));
-
-		PrintToConsole(client, "-- Logging Module: \t %s", pluginName);
-		delete module;
-	}
-}
-
-// =========================================================== //
-
-public void PrintRetryingModulesToConsole(int client)
-{
-	int moduleCount = GlobalAPI_Retrying_GetModuleCount();
-
-	if (moduleCount <= 0)
-	{
-		PrintToConsole(client, "-- Retrying Module: \t None");
-		return;
-	}
-
-	for (int i = 0; i < moduleCount; i++)
-	{
-		Handle module = g_retryingModules.Get(i);
-
-		char pluginName[GlobalAPI_Max_PluginName_Length];
-		strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(module));
-
-		PrintToConsole(client, "-- Retrying Module: \t %s", pluginName);
-		delete module;
-	}
+	PrintToConsole(client, "-- Stats:	  \t %s",   GlobalAPI_GetModuleCount(ModuleType_Stats) > 0 ? "Y" : "N");
+	PrintToConsole(client, "-- Logging:   \t\t %s", GlobalAPI_GetModuleCount(ModuleType_Logging) > 0 ? "Y" : "N");
+	PrintToConsole(client, "-- Retrying:  \t\t %s", GlobalAPI_GetModuleCount(ModuleType_Retrying) > 0 ? "Y" : "N");
 }
 
 // =========================================================== //
