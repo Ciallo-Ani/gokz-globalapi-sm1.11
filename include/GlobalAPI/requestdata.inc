@@ -65,6 +65,12 @@ methodmap GlobalAPIRequestData < JSON_Object
 		this.SetKeyHidden("url", true);
 	}
 	
+	public void AddEndpoint(char[] endpoint)
+	{
+		this.SetString("endpoint", endpoint);
+		this.SetKeyHidden("endpoint", true);
+	}
+	
     /*
  		Get or set the request's "keyRequired"
  	*/
