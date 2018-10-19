@@ -90,6 +90,7 @@ stock char FormatISO8601Date(char[] datetime, bool useSlashes = true)
  * Formats a time float to a human readable format
  *
  * @param time					Time as a float
+ * @param leadingZeroes			Whether to use leading zeroes
  * @return						Human readable string representation of the time
  */
 stock char FormatRecordTime(float time, bool leadingZeroes = false)
