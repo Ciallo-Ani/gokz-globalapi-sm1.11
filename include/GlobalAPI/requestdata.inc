@@ -65,6 +65,12 @@ methodmap GlobalAPIRequestData < JSON_Object
 		this.SetKeyHidden("url", true);
 	}
 	
+   /**
+ 	* Sets endpoint to the request data
+ 	*
+ 	* @param endpoint			Endpoint to set
+ 	* @noreturn
+ 	*/
 	public void AddEndpoint(char[] endpoint)
 	{
 		this.SetString("endpoint", endpoint);
