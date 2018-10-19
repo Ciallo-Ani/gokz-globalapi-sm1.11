@@ -10,10 +10,7 @@
 // =========================================================== //
 
 #include <SteamWorks>
-
 #include <GlobalAPI>
-#include <GlobalAPI/stocks>
-#include <GlobalAPI/request>
 
 // ====================== FORMATTING ========================= //
 
