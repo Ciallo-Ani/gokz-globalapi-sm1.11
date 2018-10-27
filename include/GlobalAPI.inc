@@ -34,7 +34,6 @@
 // ======================= INCLUDES ========================== //
 
 #include <GlobalAPI/requestdata>
-#include <GlobalAPI/request>
 #include <GlobalAPI/stocks>
 
 // ======================= ENUMS ============================= //
