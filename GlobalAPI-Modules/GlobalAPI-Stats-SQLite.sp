@@ -120,12 +120,12 @@ public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hDa
 	int responseTime = hData.responseTime;
 	bool responseSuccess = !hData.failure;
 		
-	char requestUrl[GlobalAPI_Max_BaseUrl_Length];
-	hData.GetString("url", requestUrl, sizeof(requestUrl));
-	GetEndpointFromRequestUrl(requestUrl, requestUrl, sizeof(requestUrl));
+	char endpoint[GlobalAPI_Max_BaseUrl_Length];
+	hData.GetString("endpoint", endpoint, sizeof(endpoint));
+	GetEndpointFromRequestUrl(endpoint, endpoint, sizeof(endpoint));
 
 	char query[MAX_QUERY_LENGTH];
-	Format(query, sizeof(query), INSERT_ROW_TO_REQUESTS, requestUrl, responseSuccess, responseTime);
+	Format(query, sizeof(query), INSERT_ROW_TO_REQUESTS, endpoint, responseSuccess, responseTime);
 		
 	Transaction txn = new Transaction();
 	ArrayList queries = new ArrayList(ByteCountToCells(sizeof(query)));
@@ -157,10 +157,10 @@ static void AddQueryToTransactionEx(Transaction txn, ArrayList queries, char[] q
 	queries.PushString(query);
 }
 
-static void GetEndpointFromRequestUrl(char[] requestUrl, char[] buffer, int maxlength)
+static void GetEndpointFromRequestUrl(char[] endpoint, char[] buffer, int maxlength)
 {
 	char temp[GlobalAPI_Max_BaseUrl_Length];
-	strcopy(temp, sizeof(temp), requestUrl);
+	strcopy(temp, sizeof(temp), endpoint);
 	
 	if (!GlobalAPI_IsStaging())
 	{

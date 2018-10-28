@@ -198,6 +198,7 @@ public int Native_PrintModulesToConsole(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetAuthStatus(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE);
 */
+#define GlobalAPI_GetAuthStatus_Endpoint "auth/status"
 public int Native_GetAuthStatus(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -216,7 +217,9 @@ public int Native_GetAuthStatus(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 	
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	FormatEx(requestUrl, sizeof(requestUrl), "%s/auth/status", gC_baseUrl);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetAuthStatus_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -231,6 +234,7 @@ public int Native_GetAuthStatus(Handle plugin, int numParams)
 									char[] statsContain = DEFAULT_STRING, int serverId = DEFAULT_INT, char[] createdSince = DEFAULT_STRING,
 									char[] updatedSince = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
+#define GlobalAPI_GetBans_Endpoint "bans"
 public int Native_GetBans(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -294,7 +298,9 @@ public int Native_GetBans(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	FormatEx(requestUrl, sizeof(requestUrl), "%s/bans", gC_baseUrl);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetBans_Endpoint);
+	
+	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -306,6 +312,7 @@ public int Native_GetBans(Handle plugin, int numParams)
 	native bool GlobalAPI_CreateBan(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
 										char[] steamId, char[] banType, char[] stats, char[] notes, char[] ip)
 */
+#define GlobalAPI_CreateBan_Endpoint "bans"
 public int Native_CreateBan(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -345,7 +352,9 @@ public int Native_CreateBan(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_POST;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	FormatEx(requestUrl, sizeof(requestUrl), "%s/bans", gC_baseUrl);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_CreateBan_Endpoint);
+	
+	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -364,6 +373,7 @@ public int Native_CreateBan(Handle plugin, int numParams)
 										char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
 										int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
+#define GlobalAPI_GetJumpstats_Endpoint "jumpstats"
 public int Native_GetJumpstats(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -435,7 +445,9 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	FormatEx(requestUrl, sizeof(requestUrl), "%s/jumpstats", gC_baseUrl);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetJumpstats_Endpoint);
+	
+	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -448,6 +460,7 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 											int jumpType, float distance, char[] jumpJsonInfo, int tickRate, int mslCount,
 											bool isCrouchBind, bool isForwardBind, bool isCrouchBoost, int strafeCount)
 */
+#define GlobalAPI_CreateJumpstat_Endpoint "jumpstats"
 public int Native_CreateJumpstat(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -493,7 +506,9 @@ public int Native_CreateJumpstat(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_POST;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	FormatEx(requestUrl, sizeof(requestUrl), "%s/jumpstats", gC_baseUrl);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_CreateJumpstat_Endpoint);
+	
+	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -512,6 +527,7 @@ public int Native_CreateJumpstat(Handle plugin, int numParams)
 											char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
 											int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
+#define GlobalAPI_GetJumpstatTop_Endpoint "jumpstats/{jump_type}/top"
 public int Native_GetJumpstatTop(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -579,7 +595,10 @@ public int Native_GetJumpstatTop(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/jumpstats/%s/top", gC_baseUrl, jumpType);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetJumpstatTop_Endpoint);
+	hData.AddEndpoint(requestUrl);
+	
+	FormatPathParam(requestUrl, sizeof(requestUrl), "jump_type", jumpType);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -590,6 +609,7 @@ public int Native_GetJumpstatTop(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetJumpstatTop30(OnAPICallFinished callback = INVALID_HANDLE, any data = INVALID_HANDLE, char[] jumpType)
 */
+#define GlobalAPI_GetJumpstatTop30_Endpoint "jumpstats/{jump_type}/top30"
 public int Native_GetJumpstatTop30(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -610,7 +630,10 @@ public int Native_GetJumpstatTop30(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/jumpstats/%s/top30", gC_baseUrl, jumpType);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetJumpstatTop30_Endpoint);
+	hData.AddEndpoint(requestUrl);
+
+	FormatPathParam(requestUrl, sizeof(requestUrl), "jump_type", jumpType);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -624,6 +647,7 @@ public int Native_GetJumpstatTop30(Handle plugin, int numParams)
 									int difficulty = DEFAULT_INT, char[] createdSince = DEFAULT_STRING, char[] updatedSince = DEFAULT_STRING,
 									int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
+#define GlobalAPI_GetMaps_Endpoint "maps"
 public int Native_GetMaps(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -667,7 +691,9 @@ public int Native_GetMaps(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/maps", gC_baseUrl);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetMaps_Endpoint);
+	
+	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -678,6 +704,7 @@ public int Native_GetMaps(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetMapById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id)
 */
+#define GlobalAPI_GetMapById_Endpoint "maps/{id}"
 public int Native_GetMapById(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -696,7 +723,10 @@ public int Native_GetMapById(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/maps/%d", gC_baseUrl, id);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetMapById_Endpoint);
+	hData.AddEndpoint(requestUrl);
+	
+	FormatPathParam(requestUrl, sizeof(requestUrl), "id", .intValue = id);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -707,6 +737,7 @@ public int Native_GetMapById(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetMapByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, const char[] name)
 */
+#define GlobalAPI_GetMapByName_Endpoint "maps/name/{map_name}"
 public int Native_GetMapByName(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -727,7 +758,10 @@ public int Native_GetMapByName(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/maps/name/%s", gC_baseUrl, name);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetMapByName_Endpoint);
+	hData.AddEndpoint(requestUrl);
+
+	FormatPathParam(requestUrl, sizeof(requestUrl), "map_name", name);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -738,6 +772,7 @@ public int Native_GetMapByName(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetModes(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE)
 */
+#define GlobalAPI_GetModes_Endpoint "modes"
 public int Native_GetModes(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -755,7 +790,9 @@ public int Native_GetModes(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/modes", gC_baseUrl);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetModes_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -766,6 +803,7 @@ public int Native_GetModes(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetModeById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id)
 */
+#define GlobalAPI_GetModeById_Endpoint "modes/id/{id}"
 public int Native_GetModeById(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -784,7 +822,10 @@ public int Native_GetModeById(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/modes/id/%d", gC_baseUrl, id);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetModeById_Endpoint);
+	hData.AddEndpoint(requestUrl);
+
+	FormatPathParam(requestUrl, sizeof(requestUrl), "id", .intValue = id);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -795,6 +836,7 @@ public int Native_GetModeById(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetModeByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] name)
 */
+#define GlobalAPI_GetModeByName_Endpoint "modes/name/{mode_name}"
 public int Native_GetModeByName(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -815,7 +857,10 @@ public int Native_GetModeByName(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/modes/name/%s", gC_baseUrl, name);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetModeByName_Endpoint);
+	hData.AddEndpoint(requestUrl);
+	
+	FormatPathParam(requestUrl, sizeof(requestUrl), "mode_name", name);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -828,6 +873,7 @@ public int Native_GetModeByName(Handle plugin, int numParams)
 										bool isBanned = DEFAULT_BOOL, int totalRecords = DEFAULT_INT,
 										char[] ip = DEFAULT_STRING, char[] steamId64List = DEFAULT_STRING)
 */
+#define GlobalAPI_GetPlayers_Endpoint "players"
 public int Native_GetPlayers(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -863,7 +909,9 @@ public int Native_GetPlayers(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/players", gC_baseUrl);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetPlayers_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -874,6 +922,7 @@ public int Native_GetPlayers(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetPlayerBySteamId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId = DEFAULT_STRING)
 */
+#define GlobalAPI_GetPlayerBySteamId_Endpoint "players/steamid/{steamid}"
 public int Native_GetPlayerBySteamId(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -894,7 +943,10 @@ public int Native_GetPlayerBySteamId(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/players/steamid/%s", gC_baseUrl, steamId);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetPlayerBySteamId_Endpoint);
+	hData.AddEndpoint(requestUrl);
+	
+	FormatPathParam(requestUrl, sizeof(requestUrl), "steamid", steamId);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -905,6 +957,7 @@ public int Native_GetPlayerBySteamId(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetPlayerBySteamIdAndIp(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, char[] ip)
 */
+#define GlobalAPI_GetPlayerBySteamIdAndIp_Endpoint "players/steamid/{steamid}/ip/{ip}"
 public int Native_GetPlayerBySteamIdAndIp(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -929,7 +982,11 @@ public int Native_GetPlayerBySteamIdAndIp(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/players/steamid/%s/ip/%s", gC_baseUrl, steamId, ip);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetPlayerBySteamIdAndIp_Endpoint);
+	hData.AddEndpoint(requestUrl);
+	
+	FormatPathParam(requestUrl, sizeof(requestUrl), "steamid", steamId);
+	FormatPathParam(requestUrl, sizeof(requestUrl), "ip", ip);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -942,6 +999,7 @@ public int Native_GetPlayerBySteamIdAndIp(Handle plugin, int numParams)
 										char[] modes = DEFAULT_STRING, int tickRate = DEFAULT_INT, char[] steamId = DEFAULT_STRING,
 										int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
+#define GlobalAPI_GetRecords_Endpoint "records"
 public int Native_GetRecords(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -979,7 +1037,9 @@ public int Native_GetRecords(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/records", gC_baseUrl);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetRecords_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -991,6 +1051,7 @@ public int Native_GetRecords(Handle plugin, int numParams)
 	native bool GlobalAPI_CreateRecord(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, int mapId,
 										char[] mode, int stage, int tickRate, int teleports, float time)
 */
+#define GlobalAPI_CreateRecord_Endpoint "records"
 public int Native_CreateRecord(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -1030,7 +1091,9 @@ public int Native_CreateRecord(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_POST;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/records", gC_baseUrl);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_CreateRecord_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -1041,6 +1104,7 @@ public int Native_CreateRecord(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetRecordPlaceById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id)
 */
+#define GlobalAPI_GetRecordPlaceById_Endpoint "records/place/{id}"
 public int Native_GetRecordPlaceById(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -1059,7 +1123,10 @@ public int Native_GetRecordPlaceById(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/records/place/%d", gC_baseUrl, id);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetRecordPlaceById_Endpoint);
+	hData.AddEndpoint(requestUrl);
+	
+	FormatPathParam(requestUrl, sizeof(requestUrl), "id", .intValue = id);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -1074,6 +1141,7 @@ public int Native_GetRecordPlaceById(Handle plugin, int numParams)
 											char[] modes = DEFAULT_STRING, bool hasTeleports = DEFAULT_BOOL, char[] playerName = DEFAULT_STRING,
 											int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
+#define GlobalAPI_GetRecordsTop_Endpoint "records/top"
 public int Native_GetRecordsTop(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -1125,7 +1193,9 @@ public int Native_GetRecordsTop(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/records/top", gC_baseUrl);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetRecordsTop_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -1141,6 +1211,7 @@ public int Native_GetRecordsTop(Handle plugin, int numParams)
 												bool hasTeleports = DEFAULT_BOOL, char[] createdSince = DEFAULT_STRING,
 												char[] playerName = DEFAULT_STRING, int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
+#define GlobalAPI_GetRecordsTopRecent_Endpoint "records/top/recent"
 public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -1200,7 +1271,9 @@ public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/records/top/recent", gC_baseUrl);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetRecordsTopRecent_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -1214,6 +1287,7 @@ public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
 										char[] name = DEFAULT_STRING, int ownerSteamId64 = DEFAULT_INT,
 										int approvalStatus = DEFAULT_INT, int offset = DEFAULT_INT, int limit = DEFAULT_INT)
 */
+#define GlobalAPI_GetServers_Endpoint "servers"
 public int Native_GetServers(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -1253,7 +1327,9 @@ public int Native_GetServers(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/servers", gC_baseUrl);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetServers_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -1264,6 +1340,7 @@ public int Native_GetServers(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetServerById(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int id)
 */
+#define GlobalAPI_GetServerById_Endpoint "servers/{id}"
 public int Native_GetServerById(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -1282,7 +1359,10 @@ public int Native_GetServerById(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/servers/%d", gC_baseUrl, id);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetServerById_Endpoint);
+	hData.AddEndpoint(requestUrl);
+	
+	FormatPathParam(requestUrl, sizeof(requestUrl), "id", .intValue = id);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -1293,6 +1373,7 @@ public int Native_GetServerById(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetServersByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] serverName)
 */
+#define GlobalAPI_GetServersByName_Endpoint "servers/name/{server_name}"
 public int Native_GetServersByName(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -1313,7 +1394,10 @@ public int Native_GetServersByName(Handle plugin, int numParams)
 	hData.requestType = GlobalAPIRequestType_GET;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/servers/name/%s", gC_baseUrl, serverName);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetServersByName_Endpoint);
+	hData.AddEndpoint(requestUrl);
+	
+	FormatPathParam(requestUrl, sizeof(requestUrl), "server_name", serverName);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);

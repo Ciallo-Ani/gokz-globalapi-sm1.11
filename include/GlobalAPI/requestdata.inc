@@ -73,6 +73,18 @@ methodmap GlobalAPIRequestData < JSON_Object
 	}
 	
    /**
+ 	* Sets endpoint to the request data
+ 	*
+ 	* @param endpoint			Endpoint to set
+ 	* @noreturn
+ 	*/
+	public void AddEndpoint(char[] endpoint)
+	{
+		this.SetString("endpoint", endpoint);
+		this.SetKeyHidden("endpoint", true);
+	}
+	
+   /**
 	* Sets body file path to the request data
 	*
 	* @note						Path to file with data to be posted

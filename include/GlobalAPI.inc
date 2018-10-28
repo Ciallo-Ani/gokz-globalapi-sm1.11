@@ -5,11 +5,13 @@
 #endif
 #define _GlobalAPI_included_
 
-// =========================================================== //
-
-#include <GlobalAPI/requestdata>
-
 // ======================= DEFINITIONS ======================= //
+
+#define DEFAULT_DATA 0
+#define DEFAULT_INT -1
+#define DEFAULT_STRING ""
+#define DEFAULT_FLOAT -1.0
+#define DEFAULT_BOOL view_as<bool>(-1)
 
 #define GlobalAPI_Plugin_Version "2.0.0"
 #define GlobalAPI_Plugin_Desc "Plugin helper for GlobalAPI Production & Staging"
@@ -31,11 +33,10 @@
 
 #define GlobalAPI_Data_File_Extension "GAPI"
 
-#define DEFAULT_DATA 0
-#define DEFAULT_INT -1
-#define DEFAULT_STRING ""
-#define DEFAULT_FLOAT -1.0
-#define DEFAULT_BOOL view_as<bool>(-1)
+// ======================= INCLUDES ========================== //
+
+#include <GlobalAPI/requestdata>
+#include <GlobalAPI/stocks>
 
 // ======================= ENUMS ============================= //
 

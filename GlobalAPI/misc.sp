@@ -61,6 +61,32 @@ public bool BuildAuthenticationHeader(Handle request)
 
 // =========================================================== //
 
+public bool FormatRequestUrl(char[] buffer, int maxlength, char[] endpoint)
+{
+	return Format(buffer, maxlength, "%s/%s", gC_baseUrl, endpoint) > 0;
+}
+
+// =========================================================== //
+
+void FormatPathParam(char[] buffer, int maxlength, char[] param, char[] value = "", int intValue = -1)
+{
+	char paramKey[128];
+	Format(paramKey, sizeof(paramKey), "{%s}", param);
+	
+	if (intValue != -1)
+	{
+		char tempBuffer[64];
+		IntToString(intValue, tempBuffer, sizeof(tempBuffer));
+		ReplaceString(buffer, maxlength, paramKey, tempBuffer);
+	}
+	else
+	{
+		ReplaceString(buffer, maxlength, paramKey, value);
+	}
+}
+
+// =========================================================== //
+
 public bool SendRequest(Handle request, GlobalAPIRequestData hData)
 {
 	Call_Private_OnHTTPStart(request, hData);
