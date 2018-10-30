@@ -23,14 +23,15 @@
 #define GlobalAPI_BaseUrl "https://kztimerglobal.com/api/" ... GlobalAPI_Backend_Version
 #define GlobalAPI_Staging_BaseUrl "https://staging.kztimerglobal.com/api/" ... GlobalAPI_Backend_Staging_Version
 
-#define GlobalAPI_Max_APIKey_Length 128
 #define GlobalAPI_Max_BaseUrl_Length 128
 #define GlobalAPI_Max_QueryParam_Num 20
 #define GlobalAPI_Max_QueryParam_Length 64
-#define GlobalAPI_Max_QueryParams_Length 1280
-#define GlobalAPI_Max_QueryUrl_Length 2048
-#define GlobalAPI_Max_PluginName_Length 64
+#define GlobalAPI_Max_QueryParams_Length (GlobalAPI_Max_QueryParam_Num * GlobalAPI_Max_QueryParam_Length)
+#define GlobalAPI_Max_QueryUrl_Length (GlobalAPI_Max_QueryParams_Length + GlobalAPI_Max_BaseUrl_Length)
+#define GlobalAPI_Max_QueryParam_Array_Length 128
 
+#define GlobalAPI_Max_APIKey_Length 128
+#define GlobalAPI_Max_PluginName_Length 64
 #define GlobalAPI_Data_File_Extension "GAPI"
 
 // ======================= INCLUDES ========================== //
@@ -664,6 +665,14 @@ native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_F
  */
 native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 												int recordId, char[] replayFile);
+												
+native bool GlobalAPI_GetPlayerRanks(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
+										int pointsGreaterThan = DEFAULT_INT, float averageGreaterThan = DEFAULT_FLOAT,
+										float ratingGreaterThan = DEFAULT_FLOAT, int finishesGreaterThan = DEFAULT_INT,
+										int[] steamId64s = DEFAULT_INT, int[] recordFilterIds = DEFAULT_INT,
+										int[] mapIds = DEFAULT_INT, int[] stages = DEFAULT_INT, 
+										int[] modeIds = DEFAULT_INT, int[] tickRates = DEFAULT_INT, 
+										bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
 // ======================= PLUGIN INFO ======================= //
 
@@ -741,6 +750,9 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_GetReplayByRecordId");
 	MarkNativeAsOptional("GlobalAPI_GetReplayByReplayId");
 	MarkNativeAsOptional("GlobalAPI_CreateReplayForRecordId");
+	
+	// Ranks
+	MarkNativeAsOptional("GlobalAPI_GetPlayerRanks");
 }
 #endif
 

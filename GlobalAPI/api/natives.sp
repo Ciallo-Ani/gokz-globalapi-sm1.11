@@ -61,6 +61,9 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_GetReplayByRecordId", Native_GetReplayByRecordId);
 	CreateNative("GlobalAPI_GetReplayByReplayId", Native_GetReplayByReplayId);
 	CreateNative("GlobalAPI_CreateReplayForRecordId", Native_CreateReplayForRecordId);
+	
+	// Ranks
+	CreateNative("GlobalAPI_GetPlayerRanks", Native_GetPlayerRanks);
 }
 
 // =========================================================== //
@@ -1495,6 +1498,54 @@ public int Native_CreateReplayForRecordId(Handle plugin, int numParams)
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/records/%d/replay", gC_baseUrl, recordId);
+	hData.AddUrl(requestUrl);
+
+	return GlobalAPI_SendRequest(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetPlayerRanks(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
+										int pointsGreaterThan = DEFAULT_INT, float averageGreaterThan = DEFAULT_FLOAT,
+										float ratingGreaterThan = DEFAULT_FLOAT, int finishesGreaterThan = DEFAULT_INT,
+										int[] steamId64s = DEFAULT_INT, int[] recordFilterIds = DEFAULT_INT,
+										int[] mapIds = DEFAULT_INT, int[] stages = DEFAULT_INT, 
+										int[] modeIds = DEFAULT_INT, int[] tickRates = DEFAULT_INT, 
+										bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+*/
+#define GlobalAPI_GetPlayerRanks_Endpoint "player_ranks"
+public int Native_GetPlayerRanks(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	int pointsGreaterThan = GetNativeCell(3);
+	float averageGreaterThan = GetNativeCell(4);
+	float ratingGreaterThan = GetNativeCell(5);
+	int finishesGreaterThan = GetNativeCell(6);
+	
+	int steamId64s[GlobalAPI_Max_QueryParam_Num];
+	GetNativeArray(7, steamId64s, sizeof(steamId64s));
+	
+	int recordFilterIds[GlobalAPI_Max_QueryParam_Num];
+	GetNativeArray(8, recordFilterIds, sizeof(recordFilterIds));
+
+	char pluginName[GlobalAPI_Max_PluginName_Length];
+	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
+
+	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetPlayerRanks_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
