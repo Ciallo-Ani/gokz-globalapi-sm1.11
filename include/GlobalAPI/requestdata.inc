@@ -378,11 +378,10 @@ methodmap GlobalAPIRequestData < JSON_Object
 		else
 		{
 			JSON_Object hArray = new JSON_Object(true);
-			for (int i = 0; i < maxlength; i++)
-			{
-				if (value[i] != -1)
-					hArray.PushInt(value[i]);
-			}
+
+			for (int i = 0; i < maxlength; i++) 
+				hArray.PushInt(value[i]);
+
 			this.SetObject(key, hArray);
 		}
 	}
