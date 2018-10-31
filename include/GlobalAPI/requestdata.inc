@@ -369,6 +369,15 @@ methodmap GlobalAPIRequestData < JSON_Object
 		}
 	}
 	
+   /**
+ 	* Adds integer array to the request data
+ 	*
+ 	* @note						Max length <= 0 are added as defaults
+ 	* @param key				Key name to set
+ 	* @param value				Values (array) of the key
+ 	* @param maxlength			Max length of the values array
+ 	* @noreturn
+ 	*/
 	public void AddIntArray(char[] key, int[] value, int maxlength)
 	{
 		if (maxlength <= 0)
