@@ -665,7 +665,33 @@ native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_F
  */
 native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 												int recordId, char[] replayFile);
-												
+
+/**
+ * Starts a GET HTTP Request to /api/{version}/player_ranks
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param pointsGreaterThan		Points greater than to query
+ * @param averageGreaterThan	Average greater than to query
+ * @param ratingGreaterThan		Rating greater than to query
+ * @param finishesGreaterThan	Finishes greater than to query
+ * @param steamId64s			Array of steamid64s to query
+ * @param steamId64sLength		Length of the steamid64s array
+ * @param recordFilterIds		Array of record filter ids to query
+ * @param recordFilterIdsLength	Length of the record filter ids array
+ * @param mapIds				Array of map ids to query
+ * @param mapIdsLength			Length of the map ids array
+ * @param stages				Array of stages to query
+ * @param stagesLength			Length of the stages array
+ * @param modeIds				Array of mode ids to query
+ * @param modeIdsLength			Length of the mode ids array
+ * @param tickRates				Array of tickrates to query
+ * @param tickRatesLength		Length of the tickrates array
+ * @param hasTeleports			Whether to query for hasTeleports or not
+ * @param offset				Offset of the dataset to query
+ * @param limit					Amount of items returned for the query
+ * @return						Whether request was successfully sent
+ */
 native bool GlobalAPI_GetPlayerRanks(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 										int pointsGreaterThan = DEFAULT_INT, float averageGreaterThan = DEFAULT_FLOAT,
 										float ratingGreaterThan = DEFAULT_FLOAT, int finishesGreaterThan = DEFAULT_INT,
