@@ -669,9 +669,12 @@ native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVAL
 native bool GlobalAPI_GetPlayerRanks(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 										int pointsGreaterThan = DEFAULT_INT, float averageGreaterThan = DEFAULT_FLOAT,
 										float ratingGreaterThan = DEFAULT_FLOAT, int finishesGreaterThan = DEFAULT_INT,
-										int[] steamId64s = DEFAULT_INT, int[] recordFilterIds = DEFAULT_INT,
-										int[] mapIds = DEFAULT_INT, int[] stages = DEFAULT_INT, 
-										int[] modeIds = DEFAULT_INT, int[] tickRates = DEFAULT_INT, 
+										int[] steamId64s = DEFAULT_INT, int steamId64sLength = DEFAULT_INT, 
+										int[] recordFilterIds = DEFAULT_INT, int recordFilterIdsLength = DEFAULT_INT,
+										int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
+										int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
+										int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
+										int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
 										bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
 // ======================= PLUGIN INFO ======================= //
