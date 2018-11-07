@@ -305,6 +305,32 @@ methodmap GlobalAPIRequestData < JSON_Object
 			this.SetBool(key, value);
 		}
 	}
+	
+   /**
+ 	* Adds integer array to the request data
+ 	*
+ 	* @note						Max length <= 0 are added as defaults
+ 	* @param key				Key name to set
+ 	* @param value				Values (array) of the key
+ 	* @param maxlength			Max length of the values array
+ 	* @noreturn
+ 	*/
+	public void AddIntArray(char[] key, int[] value, int maxlength)
+	{
+		if (maxlength <= 0)
+		{
+			this.SetDefault(key);
+		}
+		else
+		{
+			JSON_Object hArray = new JSON_Object(true);
+
+			for (int i = 0; i < maxlength; i++) 
+				hArray.PushInt(value[i]);
+
+			this.SetObject(key, hArray);
+		}
+	}
 
    /**
  	* Converts all of the request data into a query string representation
@@ -334,25 +360,46 @@ methodmap GlobalAPIRequestData < JSON_Object
 					case Type_String:
 					{
 						this.GetString(key, value, sizeof(value));
+						AppendToQueryString(paramCount, queryString, maxlength, key, value);
 					}
 					case Type_Float:
 					{
 						float temp = this.GetFloat(key);
 						FloatToString(temp, value, sizeof(value));
+						AppendToQueryString(paramCount, queryString, maxlength, key, value);
 					}
 					case Type_Int:
 					{
 						int temp = this.GetInt(key);
 						IntToString(temp, value, sizeof(value));
+						AppendToQueryString(paramCount, queryString, maxlength, key, value);
 					}
 					case Type_Bool:
 					{
 						bool temp = this.GetBool(key);
 						BoolToString(temp, value, sizeof(value));
+						AppendToQueryString(paramCount, queryString, maxlength, key, value);
+					}
+					case Type_Object:
+					{
+						JSON_Object hObject = this.GetObject(key);
+						
+						if (!hObject.IsArray) continue;
+
+						for (int x = 0; x < hObject.Length; x++)
+						{
+							switch (hObject.GetKeyTypeIndexed(x))
+							{
+								case Type_Int:
+								{
+									int temp = hObject.GetIntIndexed(x);
+									IntToString(temp, value, sizeof(value));
+									AppendToQueryString(paramCount, queryString, maxlength, key, value);
+								}
+							}
+						}
 					}
 				}
-				AppendToQueryString(paramCount, queryString, maxlength, key, value);
-				paramCount++;
 			}
 		}
 		delete paramsMap;
@@ -385,14 +432,16 @@ stock void BoolToString(bool value, char[] buffer, int maxlength)
  * @param value					Value of the key
  * @noreturn
  */
-stock void AppendToQueryString(int index, char[] buffer, int maxlength, char[] key, char[] value)
+stock void AppendToQueryString(int &index, char[] buffer, int maxlength, char[] key, char[] value)
 {
 	if (index == 0)
 	{
+		index++;
 		Format(buffer, maxlength, "?%s=%s", key, value);
 	}
 	else
 	{
+		index++;
 		Format(buffer, maxlength, "%s&%s=%s", buffer, key, value);
 	}
 }
