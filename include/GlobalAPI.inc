@@ -23,14 +23,15 @@
 #define GlobalAPI_BaseUrl "https://kztimerglobal.com/api/" ... GlobalAPI_Backend_Version
 #define GlobalAPI_Staging_BaseUrl "https://staging.kztimerglobal.com/api/" ... GlobalAPI_Backend_Staging_Version
 
-#define GlobalAPI_Max_APIKey_Length 128
 #define GlobalAPI_Max_BaseUrl_Length 128
 #define GlobalAPI_Max_QueryParam_Num 20
 #define GlobalAPI_Max_QueryParam_Length 64
-#define GlobalAPI_Max_QueryParams_Length 1280
-#define GlobalAPI_Max_QueryUrl_Length 2048
-#define GlobalAPI_Max_PluginName_Length 64
+#define GlobalAPI_Max_QueryParams_Length (GlobalAPI_Max_QueryParam_Num * GlobalAPI_Max_QueryParam_Length)
+#define GlobalAPI_Max_QueryUrl_Length (GlobalAPI_Max_QueryParams_Length + GlobalAPI_Max_BaseUrl_Length)
+#define GlobalAPI_Max_QueryParam_Array_Length 128
 
+#define GlobalAPI_Max_APIKey_Length 128
+#define GlobalAPI_Max_PluginName_Length 64
 #define GlobalAPI_Data_File_Extension "GAPI"
 
 // ======================= INCLUDES ========================== //
@@ -665,6 +666,43 @@ native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_F
 native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 												int recordId, char[] replayFile);
 
+/**
+ * Starts a GET HTTP Request to /api/{version}/player_ranks
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param pointsGreaterThan		Points greater than to query
+ * @param averageGreaterThan	Average greater than to query
+ * @param ratingGreaterThan		Rating greater than to query
+ * @param finishesGreaterThan	Finishes greater than to query
+ * @param steamId64s			Array of steamid64s to query
+ * @param steamId64sLength		Length of the steamid64s array
+ * @param recordFilterIds		Array of record filter ids to query
+ * @param recordFilterIdsLength	Length of the record filter ids array
+ * @param mapIds				Array of map ids to query
+ * @param mapIdsLength			Length of the map ids array
+ * @param stages				Array of stages to query
+ * @param stagesLength			Length of the stages array
+ * @param modeIds				Array of mode ids to query
+ * @param modeIdsLength			Length of the mode ids array
+ * @param tickRates				Array of tickrates to query
+ * @param tickRatesLength		Length of the tickrates array
+ * @param hasTeleports			Whether to query for hasTeleports or not
+ * @param offset				Offset of the dataset to query
+ * @param limit					Amount of items returned for the query
+ * @return						Whether request was successfully sent
+ */
+native bool GlobalAPI_GetPlayerRanks(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
+										int pointsGreaterThan = DEFAULT_INT, float averageGreaterThan = DEFAULT_FLOAT,
+										float ratingGreaterThan = DEFAULT_FLOAT, int finishesGreaterThan = DEFAULT_INT,
+										int[] steamId64s = DEFAULT_INT, int steamId64sLength = DEFAULT_INT, 
+										int[] recordFilterIds = DEFAULT_INT, int recordFilterIdsLength = DEFAULT_INT,
+										int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
+										int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
+										int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
+										int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
+										bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -741,6 +779,9 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_GetReplayByRecordId");
 	MarkNativeAsOptional("GlobalAPI_GetReplayByReplayId");
 	MarkNativeAsOptional("GlobalAPI_CreateReplayForRecordId");
+	
+	// Ranks
+	MarkNativeAsOptional("GlobalAPI_GetPlayerRanks");
 }
 #endif
 
