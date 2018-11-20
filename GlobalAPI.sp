@@ -12,9 +12,7 @@
 #include <SteamWorks>
 
 #include <GlobalAPI>
-#include <GlobalAPI/stocks>
 #include <GlobalAPI/request>
-#include <GlobalAPI/requestdata>
 
 // ====================== FORMATTING ========================= //
 
