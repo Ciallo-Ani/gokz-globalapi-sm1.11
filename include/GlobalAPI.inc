@@ -652,6 +652,26 @@ native bool GlobalAPI_GetPlayerRanks(OnAPICallFinished callback = INVALID_FUNCTI
 										int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
 										bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
+/**
+ * Starts a GET HTTP Request to /api/{version}/record_filters
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param ids					Array of ids to query
+ * @param idsLength 			Length of the ids array
+ * @param mapIds				Array of map ids to query
+ * @param mapIdsLength			Length of the map ids array
+ * @param stages				Array of stages to query
+ * @param stagesLength			Length of the stages array
+ * @param modeIds				Array of mode ids to query
+ * @param modeIdsLength			Length of the mode ids array
+ * @param tickRates				Array of tickrates to query
+ * @param tickRatesLength		Length of the tickrates array
+ * @param hasTeleports			Whether to query for hasTeleports or not
+ * @param offset				Offset of the dataset to query
+ * @param limit					Amount of items returned for the query
+ * @return						Whether request was successfully sent
+ */
 native bool GlobalAPI_GetRecordFilters(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 										int[] ids = DEFAULT_INT, int idsLength = DEFAULT_INT,
 										int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
@@ -659,7 +679,27 @@ native bool GlobalAPI_GetRecordFilters(OnAPICallFinished callback = INVALID_FUNC
 										int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
 										int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
 										bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
-									
+
+/**
+ * Starts a GET HTTP Request to /api/{version}/record_filters/distributions
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param ids					Array of ids to query
+ * @param idsLength 			Length of the ids array
+ * @param mapIds				Array of map ids to query
+ * @param mapIdsLength			Length of the map ids array
+ * @param stages				Array of stages to query
+ * @param stagesLength			Length of the stages array
+ * @param modeIds				Array of mode ids to query
+ * @param modeIdsLength			Length of the mode ids array
+ * @param tickRates				Array of tickrates to query
+ * @param tickRatesLength		Length of the tickrates array
+ * @param hasTeleports			Whether to query for hasTeleports or not
+ * @param offset				Offset of the dataset to query
+ * @param limit					Amount of items returned for the query
+ * @return						Whether request was successfully sent
+ */
 native bool GlobalAPI_GetRecordFilterDistributions(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 													int[] ids = DEFAULT_INT, int idsLength = DEFAULT_INT,
 													int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
