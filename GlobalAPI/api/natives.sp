@@ -59,6 +59,10 @@ public void CreateNatives()
 	
 	// Ranks
 	CreateNative("GlobalAPI_GetPlayerRanks", Native_GetPlayerRanks);
+	
+	// Record Filters
+	CreateNative("GlobalAPI_GetRecordFilters", Native_GetRecordFilters);
+	CreateNative("GlobalAPI_GetRecordFilterDistributions", Native_GetRecordFilterDistributions);
 }
 
 // =========================================================== //
@@ -1480,6 +1484,126 @@ public int Native_GetPlayerRanks(Handle plugin, int numParams)
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetPlayerRanks_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
+	hData.AddUrl(requestUrl);
+
+	return GlobalAPI_SendRequest(hData);
+}
+
+// =========================================================== //
+
+#define GlobalAPI_GetRecordFilters_Endpoint "record_filters"
+public int Native_GetRecordFilters(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+	
+	int ids[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(1, ids, sizeof(ids));
+	int idsLength = GetNativeCell(2);
+	
+	int mapIds[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(3, mapIds, sizeof(mapIds));
+	int mapIdsLength = GetNativeCell(4);
+	
+	int stages[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(5, stages, sizeof(stages));
+	int stagesLength = GetNativeCell(6);
+	
+	int modeIds[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(7, modeIds, sizeof(modeIds));
+	int modeIdsLength = GetNativeCell(8);
+	
+	int tickRates[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(9, tickRates, sizeof(tickRates));
+	int tickRatesLength = GetNativeCell(10);
+	
+	bool hasTeleports = GetNativeCell(11);
+	int offset = GetNativeCell(12);
+	int limit = GetNativeCell(13);
+	
+	char pluginName[GlobalAPI_Max_PluginName_Length];
+	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	hData.AddIntArray("ids", ids, idsLength);
+	hData.AddIntArray("map_ids", mapIds, mapIdsLength);
+	hData.AddIntArray("stages", stages, stagesLength);
+	hData.AddIntArray("mode_ids", modeIds, modeIdsLength);
+	hData.AddIntArray("tickrates", tickRates, tickRatesLength);
+	hData.AddBool("has_teleports", hasTeleports);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
+
+	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetRecordFilters_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
+	hData.AddUrl(requestUrl);
+
+	return GlobalAPI_SendRequest(hData);
+}
+
+// =========================================================== //
+
+#define GlobalAPI_GetRecordFilterDistributions_Endpoint "record_filters/distributions"
+public int Native_GetRecordFilterDistributions(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+	
+	int ids[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(1, ids, sizeof(ids));
+	int idsLength = GetNativeCell(2);
+	
+	int mapIds[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(3, mapIds, sizeof(mapIds));
+	int mapIdsLength = GetNativeCell(4);
+	
+	int stages[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(5, stages, sizeof(stages));
+	int stagesLength = GetNativeCell(6);
+	
+	int modeIds[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(7, modeIds, sizeof(modeIds));
+	int modeIdsLength = GetNativeCell(8);
+	
+	int tickRates[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(9, tickRates, sizeof(tickRates));
+	int tickRatesLength = GetNativeCell(10);
+	
+	bool hasTeleports = GetNativeCell(11);
+	int offset = GetNativeCell(12);
+	int limit = GetNativeCell(13);
+	
+	char pluginName[GlobalAPI_Max_PluginName_Length];
+	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	hData.AddIntArray("ids", ids, idsLength);
+	hData.AddIntArray("map_ids", mapIds, mapIdsLength);
+	hData.AddIntArray("stages", stages, stagesLength);
+	hData.AddIntArray("mode_ids", modeIds, modeIdsLength);
+	hData.AddIntArray("tickrates", tickRates, tickRatesLength);
+	hData.AddBool("has_teleports", hasTeleports);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
+
+	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetRecordFilterDistributions_Endpoint);
 
 	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);

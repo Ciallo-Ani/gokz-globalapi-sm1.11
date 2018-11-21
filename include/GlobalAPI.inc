@@ -652,6 +652,22 @@ native bool GlobalAPI_GetPlayerRanks(OnAPICallFinished callback = INVALID_FUNCTI
 										int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
 										bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
+native bool GlobalAPI_GetRecordFilters(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
+										int[] ids = DEFAULT_INT, int idsLength = DEFAULT_INT,
+										int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
+										int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
+										int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
+										int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
+										bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+									
+native bool GlobalAPI_GetRecordFilterDistributions(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
+													int[] ids = DEFAULT_INT, int idsLength = DEFAULT_INT,
+													int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
+													int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
+													int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
+													int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
+													bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -726,7 +742,11 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	
 	// Ranks
 	MarkNativeAsOptional("GlobalAPI_GetPlayerRanks");
-}
+	
+	// Record Filters
+	MarkNativeAsOptional("GlobalAPI_GetRecordFilters");
+	MarkNativeAsOptional("GlobalAPI_GetRecordFilterDistributions");
+};
 #endif
 
 // =========================================================== //
