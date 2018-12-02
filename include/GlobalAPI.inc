@@ -477,23 +477,6 @@ native bool GlobalAPI_GetPlayerBySteamIdAndIp(OnAPICallFinished callback = INVAL
 												const char[] steamId, const char[] ipAddress);
 
 /**
- * Starts a GET HTTP Request to /api/{version}/records
- *
- * @param callback				Callback when request has finished
- * @param data					Optional data to pass
- * @param mapName				Map name to query
- * @param modes					Mode(s) to query
- * @param tickRate				Tickrate to query
- * @param steamId				SteamID2 to query
- * @param offset				Offset of the dataset to query
- * @param limit					Amount of items returned for the query
- * @return						Whether request was successfully sent
- */
-native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] mapName = DEFAULT_STRING,
-									const char[] modes = DEFAULT_STRING, int tickRate = DEFAULT_INT, const char[] steamId = DEFAULT_STRING,
-									int offset = DEFAULT_INT, int limit = DEFAULT_INT);
-
-/**
  * Starts a POST HTTP Request to /api/{version}/records
  *
  * @param callback				Callback when request has finished
@@ -769,7 +752,6 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_GetPlayerBySteamIdAndIp");
 
 	// Records
-	MarkNativeAsOptional("GlobalAPI_GetRecords");
 	MarkNativeAsOptional("GlobalAPI_CreateRecord");
 	MarkNativeAsOptional("GlobalAPI_GetRecordPlaceById");
 	MarkNativeAsOptional("GlobalAPI_GetRecordsTop");

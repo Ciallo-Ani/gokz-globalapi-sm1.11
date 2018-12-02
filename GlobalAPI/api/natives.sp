@@ -46,7 +46,6 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_GetPlayerBySteamIdAndIp", Native_GetPlayerBySteamIdAndIp);
 
 	// Records
-	CreateNative("GlobalAPI_GetRecords", Native_GetRecords);
 	CreateNative("GlobalAPI_CreateRecord", Native_CreateRecord);
 	CreateNative("GlobalAPI_GetRecordPlaceById", Native_GetRecordPlaceById);
 	CreateNative("GlobalAPI_GetRecordsTop", Native_GetRecordsTop);
@@ -989,59 +988,6 @@ public int Native_GetPlayerBySteamIdAndIp(Handle plugin, int numParams)
 	
 	FormatPathParam(requestUrl, sizeof(requestUrl), "steamid", steamId);
 	FormatPathParam(requestUrl, sizeof(requestUrl), "ip", ip);
-	hData.AddUrl(requestUrl);
-
-	return GlobalAPI_SendRequest(hData);
-}
-
-// =========================================================== //
-
-/*
-	native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] mapName = DEFAULT_STRING,
-										char[] modes = DEFAULT_STRING, int tickRate = DEFAULT_INT, char[] steamId = DEFAULT_STRING,
-										int offset = DEFAULT_INT, int limit = DEFAULT_INT)
-*/
-#define GlobalAPI_GetRecords_Endpoint "records"
-public int Native_GetRecords(Handle plugin, int numParams)
-{
-	Function callback = GetNativeCell(1);
-	any data = GetNativeCell(2);
-
-	char mapName[GlobalAPI_Max_QueryParam_Length];
-	GetNativeString(3, mapName, sizeof(mapName));
-
-	char modes[GlobalAPI_Max_QueryParam_Length];
-	GetNativeString(4, modes, sizeof(modes));
-
-	int tickRate = GetNativeCell(5);
-
-	char steamId[GlobalAPI_Max_QueryParam_Length];
-	GetNativeString(6, steamId, sizeof(steamId));
-
-	int offset = GetNativeCell(7);
-	int limit = GetNativeCell(8);
-
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
-	hData.AddString("map_name", mapName);
-	hData.AddString("modes", modes);
-	hData.AddNum("tick_rate", tickRate);
-	hData.AddString("steam_id", steamId);
-	hData.AddNum("offset", offset);
-	hData.AddNum("limit", limit);
-
-	Handle hFwd = CreateForwardHandle(callback, data);
-	AddToForwardEx(hFwd, plugin, callback);
-	hData.data = data;
-	hData.callback = hFwd;
-	hData.requestType = GlobalAPIRequestType_GET;
-
-	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetRecords_Endpoint);
-
-	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
