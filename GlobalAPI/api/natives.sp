@@ -46,24 +46,28 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_GetPlayerBySteamIdAndIp", Native_GetPlayerBySteamIdAndIp);
 
 	// Records
-	CreateNative("GlobalAPI_GetRecords", Native_GetRecords);
 	CreateNative("GlobalAPI_CreateRecord", Native_CreateRecord);
 	CreateNative("GlobalAPI_GetRecordPlaceById", Native_GetRecordPlaceById);
 	CreateNative("GlobalAPI_GetRecordsTop", Native_GetRecordsTop);
 	CreateNative("GlobalAPI_GetRecordsTopRecent", Native_GetRecordsTopRecent);
+	CreateNative("GlobalAPI_GetRecordsTopWorldRecords", Native_GetRecordsTopWorldRecords);
 
 	// Servers
 	CreateNative("GlobalAPI_GetServers", Native_GetServers);
 	CreateNative("GlobalAPI_GetServerById", Native_GetServerById);
 	CreateNative("GlobalAPI_GetServersByName", Native_GetServersByName);
+	
+	// Ranks
+	CreateNative("GlobalAPI_GetPlayerRanks", Native_GetPlayerRanks);
+	
+	// Record Filters
+	CreateNative("GlobalAPI_GetRecordFilters", Native_GetRecordFilters);
+	CreateNative("GlobalAPI_GetRecordFilterDistributions", Native_GetRecordFilterDistributions);
 
 	// Replays
 	CreateNative("GlobalAPI_GetReplayByRecordId", Native_GetReplayByRecordId);
 	CreateNative("GlobalAPI_GetReplayByReplayId", Native_GetReplayByReplayId);
 	CreateNative("GlobalAPI_CreateReplayForRecordId", Native_CreateReplayForRecordId);
-	
-	// Ranks
-	CreateNative("GlobalAPI_GetPlayerRanks", Native_GetPlayerRanks);
 }
 
 // =========================================================== //
@@ -998,59 +1002,6 @@ public int Native_GetPlayerBySteamIdAndIp(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
-	native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] mapName = DEFAULT_STRING,
-										char[] modes = DEFAULT_STRING, int tickRate = DEFAULT_INT, char[] steamId = DEFAULT_STRING,
-										int offset = DEFAULT_INT, int limit = DEFAULT_INT)
-*/
-#define GlobalAPI_GetRecords_Endpoint "records"
-public int Native_GetRecords(Handle plugin, int numParams)
-{
-	Function callback = GetNativeCell(1);
-	any data = GetNativeCell(2);
-
-	char mapName[GlobalAPI_Max_QueryParam_Length];
-	GetNativeString(3, mapName, sizeof(mapName));
-
-	char modes[GlobalAPI_Max_QueryParam_Length];
-	GetNativeString(4, modes, sizeof(modes));
-
-	int tickRate = GetNativeCell(5);
-
-	char steamId[GlobalAPI_Max_QueryParam_Length];
-	GetNativeString(6, steamId, sizeof(steamId));
-
-	int offset = GetNativeCell(7);
-	int limit = GetNativeCell(8);
-
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
-	hData.AddString("map_name", mapName);
-	hData.AddString("modes", modes);
-	hData.AddNum("tick_rate", tickRate);
-	hData.AddString("steam_id", steamId);
-	hData.AddNum("offset", offset);
-	hData.AddNum("limit", limit);
-
-	Handle hFwd = CreateForwardHandle(callback, data);
-	AddToForwardEx(hFwd, plugin, callback);
-	hData.data = data;
-	hData.callback = hFwd;
-	hData.requestType = GlobalAPIRequestType_GET;
-
-	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetRecords_Endpoint);
-
-	hData.AddEndpoint(requestUrl);
-	hData.AddUrl(requestUrl);
-
-	return GlobalAPI_SendRequest(hData);
-}
-
-// =========================================================== //
-
-/*
 	native bool GlobalAPI_CreateRecord(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, char[] steamId, int mapId,
 										char[] mode, int stage, int tickRate, int teleports, float time)
 */
@@ -1285,6 +1236,81 @@ public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
+	native bool GlobalAPI_GetRecordsTopWorldRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
+													int[] ids = DEFAULT_INT, int idsLength = DEFAULT_INT,
+													int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
+													int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
+													int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
+													int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
+													bool hasTeleports = DEFAULT_BOOL, char[] mapTag = DEFAULT_STRING,
+													int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+*/
+#define GlobalAPI_GetRecordsTopWorldRecords_Endpoint "records/top/world_records"
+public int Native_GetRecordsTopWorldRecords(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+	
+	int ids[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(3, ids, sizeof(ids));
+	int idsLength = GetNativeCell(4);
+	
+	int mapIds[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(5, mapIds, sizeof(mapIds));
+	int mapIdsLength = GetNativeCell(6);
+	
+	int stages[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(7, stages, sizeof(stages));
+	int stagesLength = GetNativeCell(8);
+	
+	int modeIds[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(9, modeIds, sizeof(modeIds));
+	int modeIdsLength = GetNativeCell(10);
+	
+	int tickRates[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(11, tickRates, sizeof(tickRates));
+	int tickRatesLength = GetNativeCell(12);
+	
+	bool hasTeleports = GetNativeCell(13);
+	
+	char mapTag[GlobalAPI_Max_QueryParam_Length];
+	GetNativeString(14, mapTag, sizeof(mapTag));
+	
+	int offset = GetNativeCell(15);
+	int limit = GetNativeCell(16);
+	
+	char pluginName[GlobalAPI_Max_PluginName_Length];
+	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	hData.AddIntArray("ids", ids, idsLength);
+	hData.AddIntArray("map_ids", mapIds, mapIdsLength);
+	hData.AddIntArray("stages", stages, stagesLength);
+	hData.AddIntArray("mode_ids", modeIds, modeIdsLength);
+	hData.AddIntArray("tickrates", tickRates, tickRatesLength);
+	hData.AddBool("has_teleports", hasTeleports);
+	hData.AddString("mapTag", mapTag);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
+
+	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetRecordsTopWorldRecords_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
+	hData.AddUrl(requestUrl);
+
+	return GlobalAPI_SendRequest(hData);
+}
+
+// =========================================================== //
+
+/*
 	native bool GlobalAPI_GetServers(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
 										int id = DEFAULT_INT, int port = DEFAULT_INT, char[] ip = DEFAULT_STRING,
 										char[] name = DEFAULT_STRING, int ownerSteamId64 = DEFAULT_INT,
@@ -1409,6 +1435,212 @@ public int Native_GetServersByName(Handle plugin, int numParams)
 // =========================================================== //
 
 /*
+	native bool GlobalAPI_GetPlayerRanks(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
+										int pointsGreaterThan = DEFAULT_INT, float averageGreaterThan = DEFAULT_FLOAT,
+										float ratingGreaterThan = DEFAULT_FLOAT, int finishesGreaterThan = DEFAULT_INT,
+										int[] steamId64s = DEFAULT_INT, int steamId64sLength = DEFAULT_INT, 
+										int[] recordFilterIds = DEFAULT_INT, int recordFilterIdsLength = DEFAULT_INT,
+										int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
+										int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
+										int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
+										int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
+										bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+*/
+#define GlobalAPI_GetPlayerRanks_Endpoint "player_ranks"
+public int Native_GetPlayerRanks(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+
+	int pointsGreaterThan = GetNativeCell(3);
+	float averageGreaterThan = GetNativeCell(4);
+	float ratingGreaterThan = GetNativeCell(5);
+	int finishesGreaterThan = GetNativeCell(6);
+
+	int steamId64s[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(7, steamId64s, sizeof(steamId64s));
+	int steamId64sLength = GetNativeCell(8);
+
+	int recordFilterIds[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(9, recordFilterIds, sizeof(recordFilterIds));
+	int recordFilterIdsLength = GetNativeCell(10);
+
+	int mapIds[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(11, mapIds, sizeof(mapIds));
+	int mapIdsLength = GetNativeCell(12);
+
+	int stages[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(13, stages, sizeof(stages));
+	int stagesLength = GetNativeCell(14);
+
+	int modeIds[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(15, modeIds, sizeof(modeIds));
+	int modeIdsLength = GetNativeCell(16);
+
+	int tickRates[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(17, tickRates, sizeof(tickRates));
+	int tickRatesLength = GetNativeCell(18);
+	
+	bool hasTeleports = GetNativeCell(19);
+	int offset = GetNativeCell(20);
+	int limit = GetNativeCell(21);
+
+	char pluginName[GlobalAPI_Max_PluginName_Length];
+	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	hData.AddNum("points_greater_than", pointsGreaterThan);
+	hData.AddFloat("average_greater_than", averageGreaterThan);
+	hData.AddFloat("rating_greater_than", ratingGreaterThan);
+	hData.AddNum("finishes_greater_than", finishesGreaterThan);
+	hData.AddIntArray("steamid64s", steamId64s, steamId64sLength);
+	hData.AddIntArray("record_filter_ids", recordFilterIds, recordFilterIdsLength);
+	hData.AddIntArray("map_ids", mapIds, mapIdsLength);
+	hData.AddIntArray("stages", stages, stagesLength);
+	hData.AddIntArray("mode_ids", modeIds, modeIdsLength);
+	hData.AddIntArray("tickrates", tickRates, tickRatesLength);
+	hData.AddBool("has_teleports", hasTeleports);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
+
+	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetPlayerRanks_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
+	hData.AddUrl(requestUrl);
+
+	return GlobalAPI_SendRequest(hData);
+}
+
+// =========================================================== //
+
+#define GlobalAPI_GetRecordFilters_Endpoint "record_filters"
+public int Native_GetRecordFilters(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+	
+	int ids[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(3, ids, sizeof(ids));
+	int idsLength = GetNativeCell(4);
+	
+	int mapIds[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(5, mapIds, sizeof(mapIds));
+	int mapIdsLength = GetNativeCell(6);
+	
+	int stages[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(7, stages, sizeof(stages));
+	int stagesLength = GetNativeCell(8);
+	
+	int modeIds[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(9, modeIds, sizeof(modeIds));
+	int modeIdsLength = GetNativeCell(10);
+	
+	int tickRates[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(11, tickRates, sizeof(tickRates));
+	int tickRatesLength = GetNativeCell(12);
+	
+	bool hasTeleports = GetNativeCell(13);
+	int offset = GetNativeCell(14);
+	int limit = GetNativeCell(15);
+	
+	char pluginName[GlobalAPI_Max_PluginName_Length];
+	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	hData.AddIntArray("ids", ids, idsLength);
+	hData.AddIntArray("map_ids", mapIds, mapIdsLength);
+	hData.AddIntArray("stages", stages, stagesLength);
+	hData.AddIntArray("mode_ids", modeIds, modeIdsLength);
+	hData.AddIntArray("tickrates", tickRates, tickRatesLength);
+	hData.AddBool("has_teleports", hasTeleports);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
+
+	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetRecordFilters_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
+	hData.AddUrl(requestUrl);
+
+	return GlobalAPI_SendRequest(hData);
+}
+
+// =========================================================== //
+
+#define GlobalAPI_GetRecordFilterDistributions_Endpoint "record_filters/distributions"
+public int Native_GetRecordFilterDistributions(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+	
+	int ids[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(3, ids, sizeof(ids));
+	int idsLength = GetNativeCell(4);
+	
+	int mapIds[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(5, mapIds, sizeof(mapIds));
+	int mapIdsLength = GetNativeCell(6);
+	
+	int stages[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(7, stages, sizeof(stages));
+	int stagesLength = GetNativeCell(8);
+	
+	int modeIds[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(9, modeIds, sizeof(modeIds));
+	int modeIdsLength = GetNativeCell(10);
+	
+	int tickRates[GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeArray(11, tickRates, sizeof(tickRates));
+	int tickRatesLength = GetNativeCell(12);
+	
+	bool hasTeleports = GetNativeCell(13);
+	int offset = GetNativeCell(14);
+	int limit = GetNativeCell(15);
+	
+	char pluginName[GlobalAPI_Max_PluginName_Length];
+	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
+
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	hData.AddIntArray("ids", ids, idsLength);
+	hData.AddIntArray("map_ids", mapIds, mapIdsLength);
+	hData.AddIntArray("stages", stages, stagesLength);
+	hData.AddIntArray("mode_ids", modeIds, modeIdsLength);
+	hData.AddIntArray("tickrates", tickRates, tickRatesLength);
+	hData.AddBool("has_teleports", hasTeleports);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
+
+	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetRecordFilterDistributions_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
+	hData.AddUrl(requestUrl);
+
+	return GlobalAPI_SendRequest(hData);
+}
+
+// =========================================================== //
+
+/*
 	native bool GlobalAPI_GetReplayByRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int recordId);
 */
 public int Native_GetReplayByRecordId(Handle plugin, int numParams)
@@ -1498,92 +1730,6 @@ public int Native_CreateReplayForRecordId(Handle plugin, int numParams)
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	Format(requestUrl, sizeof(requestUrl), "%s/records/%d/replay", gC_baseUrl, recordId);
-	hData.AddUrl(requestUrl);
-
-	return GlobalAPI_SendRequest(hData);
-}
-
-// =========================================================== //
-
-/*
-	native bool GlobalAPI_GetPlayerRanks(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
-										int pointsGreaterThan = DEFAULT_INT, float averageGreaterThan = DEFAULT_FLOAT,
-										float ratingGreaterThan = DEFAULT_FLOAT, int finishesGreaterThan = DEFAULT_INT,
-										int[] steamId64s = DEFAULT_INT, int steamId64sLength = DEFAULT_INT, 
-										int[] recordFilterIds = DEFAULT_INT, int recordFilterIdsLength = DEFAULT_INT,
-										int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
-										int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
-										int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
-										int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
-										bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
-*/
-#define GlobalAPI_GetPlayerRanks_Endpoint "player_ranks"
-public int Native_GetPlayerRanks(Handle plugin, int numParams)
-{
-	Function callback = GetNativeCell(1);
-	any data = GetNativeCell(2);
-
-	int pointsGreaterThan = GetNativeCell(3);
-	float averageGreaterThan = GetNativeCell(4);
-	float ratingGreaterThan = GetNativeCell(5);
-	int finishesGreaterThan = GetNativeCell(6);
-
-	int steamId64s[GlobalAPI_Max_QueryParam_Array_Length];
-	GetNativeArray(7, steamId64s, sizeof(steamId64s));
-	int steamId64sLength = GetNativeCell(8);
-
-	int recordFilterIds[GlobalAPI_Max_QueryParam_Array_Length];
-	GetNativeArray(9, recordFilterIds, sizeof(recordFilterIds));
-	int recordFilterIdsLength = GetNativeCell(10);
-
-	int mapIds[GlobalAPI_Max_QueryParam_Array_Length];
-	GetNativeArray(11, mapIds, sizeof(mapIds));
-	int mapIdsLength = GetNativeCell(12);
-
-	int stages[GlobalAPI_Max_QueryParam_Array_Length];
-	GetNativeArray(13, stages, sizeof(stages));
-	int stagesLength = GetNativeCell(14);
-
-	int modeIds[GlobalAPI_Max_QueryParam_Array_Length];
-	GetNativeArray(15, modeIds, sizeof(modeIds));
-	int modeIdsLength = GetNativeCell(16);
-
-	int tickRates[GlobalAPI_Max_QueryParam_Array_Length];
-	GetNativeArray(17, tickRates, sizeof(tickRates));
-	int tickRatesLength = GetNativeCell(18);
-	
-	bool hasTeleports = GetNativeCell(19);
-	int offset = GetNativeCell(20);
-	int limit = GetNativeCell(21);
-
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
-	hData.AddNum("points_greater_than", pointsGreaterThan);
-	hData.AddFloat("average_greater_than", averageGreaterThan);
-	hData.AddFloat("rating_greater_than", ratingGreaterThan);
-	hData.AddNum("finishes_greater_than", finishesGreaterThan);
-	hData.AddIntArray("steamid64s", steamId64s, steamId64sLength);
-	hData.AddIntArray("record_filter_ids", recordFilterIds, recordFilterIdsLength);
-	hData.AddIntArray("map_ids", mapIds, mapIdsLength);
-	hData.AddIntArray("stages", stages, stagesLength);
-	hData.AddIntArray("mode_ids", modeIds, modeIdsLength);
-	hData.AddIntArray("tickrates", tickRates, tickRatesLength);
-	hData.AddBool("has_teleports", hasTeleports);
-	hData.AddNum("offset", offset);
-	hData.AddNum("limit", limit);
-
-	Handle hFwd = CreateForwardHandle(callback, data);
-	AddToForwardEx(hFwd, plugin, callback);
-	hData.data = data;
-	hData.callback = hFwd;
-	hData.requestType = GlobalAPIRequestType_GET;
-
-	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetPlayerRanks_Endpoint);
-
-	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);

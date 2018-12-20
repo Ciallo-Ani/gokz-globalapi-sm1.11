@@ -496,23 +496,6 @@ native bool GlobalAPI_GetPlayerBySteamIdAndIp(OnAPICallFinished callback = INVAL
 												const char[] steamId, const char[] ipAddress);
 
 /**
- * Starts a GET HTTP Request to /api/{version}/records
- *
- * @param callback				Callback when request has finished
- * @param data					Optional data to pass
- * @param mapName				Map name to query
- * @param modes					Mode(s) to query
- * @param tickRate				Tickrate to query
- * @param steamId				SteamID2 to query
- * @param offset				Offset of the dataset to query
- * @param limit					Amount of items returned for the query
- * @return						Whether request was successfully sent
- */
-native bool GlobalAPI_GetRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] mapName = DEFAULT_STRING,
-									const char[] modes = DEFAULT_STRING, int tickRate = DEFAULT_INT, const char[] steamId = DEFAULT_STRING,
-									int offset = DEFAULT_INT, int limit = DEFAULT_INT);
-
-/**
  * Starts a POST HTTP Request to /api/{version}/records
  *
  * @param callback				Callback when request has finished
@@ -595,6 +578,36 @@ native bool GlobalAPI_GetRecordsTopRecent(OnAPICallFinished callback = INVALID_F
 											int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
 /**
+ * Starts a GET HTTP Request to /api/{version}/records/top/world_records
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param ids					Array of ids to query
+ * @param idsLength 			Length of the ids array
+ * @param mapIds				Array of map ids to query
+ * @param mapIdsLength			Length of the map ids array
+ * @param stages				Array of stages to query
+ * @param stagesLength			Length of the stages array
+ * @param modeIds				Array of mode ids to query
+ * @param modeIdsLength			Length of the mode ids array
+ * @param tickRates				Array of tickrates to query
+ * @param tickRatesLength		Length of the tickrates array
+ * @param hasTeleports			Whether to query for hasTeleports or not
+ * @param mapTag				Map tags to query
+ * @param offset				Offset of the dataset to query
+ * @param limit					Amount of items returned for the query
+ * @return						Whether request was successfully sent
+ */
+native bool GlobalAPI_GetRecordsTopWorldRecords(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
+												int[] ids = DEFAULT_INT, int idsLength = DEFAULT_INT,
+												int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
+												int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
+												int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
+												int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
+												bool hasTeleports = DEFAULT_BOOL, char[] mapTag = DEFAULT_STRING,
+												int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+
+/**
  * Starts a GET HTTP Request to /api/{version}/servers
  *
  * @param callback				Callback when request has finished
@@ -635,38 +648,6 @@ native bool GlobalAPI_GetServerById(OnAPICallFinished callback = INVALID_FUNCTIO
 native bool GlobalAPI_GetServersByName(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, const char[] serverName);
 
 /**
- * Starts a GET HTTP Request to /api/{version}/records/{recordId}/replay
- *
- * @param callback				Callback when request has finished
- * @param data					Optional data to pass
- * @param recordId				Record id to query
- * @return						Whether request was successfully sent
- */
-native bool GlobalAPI_GetReplayByRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int recordId);
-
-/**
- * Starts a GET HTTP Request to /api/{version}/records/replay/{replayId}
- *
- * @param callback				Callback when request has finished
- * @param data					Optional data to pass
- * @param replayId				Replay id to query
- * @return						Whether request was successfully sent
- */
-native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int replayId);
-
-/**
- * Starts a POST HTTP Request to /api/{version}/records/{recordId}/replay
- *
- * @param callback				Callback when request has finished
- * @param data					Optional data to pass
- * @param recordId				Id of the record
- * @param replayFile			Path to the replay file
- * @return						Whether request was successfully sent
- */
-native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
-												int recordId, char[] replayFile);
-
-/**
  * Starts a GET HTTP Request to /api/{version}/player_ranks
  *
  * @param callback				Callback when request has finished
@@ -703,6 +684,92 @@ native bool GlobalAPI_GetPlayerRanks(OnAPICallFinished callback = INVALID_FUNCTI
 										int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
 										bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
+/**
+ * Starts a GET HTTP Request to /api/{version}/record_filters
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param ids					Array of ids to query
+ * @param idsLength 			Length of the ids array
+ * @param mapIds				Array of map ids to query
+ * @param mapIdsLength			Length of the map ids array
+ * @param stages				Array of stages to query
+ * @param stagesLength			Length of the stages array
+ * @param modeIds				Array of mode ids to query
+ * @param modeIdsLength			Length of the mode ids array
+ * @param tickRates				Array of tickrates to query
+ * @param tickRatesLength		Length of the tickrates array
+ * @param hasTeleports			Whether to query for hasTeleports or not
+ * @param offset				Offset of the dataset to query
+ * @param limit					Amount of items returned for the query
+ * @return						Whether request was successfully sent
+ */
+native bool GlobalAPI_GetRecordFilters(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
+										int[] ids = DEFAULT_INT, int idsLength = DEFAULT_INT,
+										int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
+										int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
+										int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
+										int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
+										bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+
+/**
+ * Starts a GET HTTP Request to /api/{version}/record_filters/distributions
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param ids					Array of ids to query
+ * @param idsLength 			Length of the ids array
+ * @param mapIds				Array of map ids to query
+ * @param mapIdsLength			Length of the map ids array
+ * @param stages				Array of stages to query
+ * @param stagesLength			Length of the stages array
+ * @param modeIds				Array of mode ids to query
+ * @param modeIdsLength			Length of the mode ids array
+ * @param tickRates				Array of tickrates to query
+ * @param tickRatesLength		Length of the tickrates array
+ * @param hasTeleports			Whether to query for hasTeleports or not
+ * @param offset				Offset of the dataset to query
+ * @param limit					Amount of items returned for the query
+ * @return						Whether request was successfully sent
+ */
+native bool GlobalAPI_GetRecordFilterDistributions(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
+													int[] ids = DEFAULT_INT, int idsLength = DEFAULT_INT,
+													int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
+													int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
+													int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
+													int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
+													bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+
+/**
+ * Starts a GET HTTP Request to /api/{version}/records/{recordId}/replay
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param recordId				Record id to query
+ * @return						Whether request was successfully sent
+ */
+native bool GlobalAPI_GetReplayByRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int recordId);
+/**
+ * Starts a GET HTTP Request to /api/{version}/records/replay/{replayId}
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param replayId				Replay id to query
+ * @return						Whether request was successfully sent
+ */
+native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int replayId);
+
+/**
+ * Starts a POST HTTP Request to /api/{version}/records/{recordId}/replay
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param recordId				Id of the record
+ * @param replayFile			Path to the replay file
+ * @return						Whether request was successfully sent
+ */
+native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
+												int recordId, char[] replayFile);
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -764,25 +831,29 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_GetPlayerBySteamIdAndIp");
 
 	// Records
-	MarkNativeAsOptional("GlobalAPI_GetRecords");
 	MarkNativeAsOptional("GlobalAPI_CreateRecord");
 	MarkNativeAsOptional("GlobalAPI_GetRecordPlaceById");
 	MarkNativeAsOptional("GlobalAPI_GetRecordsTop");
 	MarkNativeAsOptional("GlobalAPI_GetRecordsTopRecent");
+	MarkNativeAsOptional("GlobalAPI_GetRecordsTopWorldRecords");
 
 	// Servers
 	MarkNativeAsOptional("GlobalAPI_GetServers");
 	MarkNativeAsOptional("GlobalAPI_GetServerById");
 	MarkNativeAsOptional("GlobalAPI_GetServersByName");
+	
+	// Ranks
+	MarkNativeAsOptional("GlobalAPI_GetPlayerRanks");
+	
+	// Record Filters
+	MarkNativeAsOptional("GlobalAPI_GetRecordFilters");
+	MarkNativeAsOptional("GlobalAPI_GetRecordFilterDistributions");
 
 	// Replays
 	MarkNativeAsOptional("GlobalAPI_GetReplayByRecordId");
 	MarkNativeAsOptional("GlobalAPI_GetReplayByReplayId");
 	MarkNativeAsOptional("GlobalAPI_CreateReplayForRecordId");
-	
-	// Ranks
-	MarkNativeAsOptional("GlobalAPI_GetPlayerRanks");
-}
+};
 #endif
 
 // =========================================================== //
