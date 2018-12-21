@@ -32,6 +32,7 @@
 
 #define GlobalAPI_Max_APIKey_Length 128
 #define GlobalAPI_Max_PluginName_Length 64
+#define GlobalAPI_Data_File_Extension "GAPI"
 
 // ======================= INCLUDES ========================== //
 
@@ -57,6 +58,24 @@ enum ModuleType
 	ModuleType_Stats = 0, 	/**< Is a stats module */
 	ModuleType_Logging,		/**< Is a logging module */
 	ModuleType_Retrying		/**< Is a retrying module */
+};
+
+/**
+ * Defines what accept type is used on requests
+ */
+enum
+{
+	GlobalAPIRequestAcceptType_JSON = 0,	/**< Request uses application/json HTTP accept type */
+	GlobalAPIRequestAcceptType_OctetStream	/**< Request uses application/octet-stream HTTP accept type */
+};
+
+/**
+ * Defines what content type is used on requests
+ */
+enum
+{
+	GlobalAPIRequestContentType_JSON = 0,	/**< Request uses application/json HTTP content type */
+	GlobalAPIRequestContentType_OctetStream	/**< Request uses application/octet-stream HTTP content type */
 };
 
 // ======================= TYPEDEFS ========================== //
@@ -721,6 +740,36 @@ native bool GlobalAPI_GetRecordFilterDistributions(OnAPICallFinished callback = 
 													int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
 													bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
+/**
+ * Starts a GET HTTP Request to /api/{version}/records/{recordId}/replay
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param recordId				Record id to query
+ * @return						Whether request was successfully sent
+ */
+native bool GlobalAPI_GetReplayByRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int recordId);
+/**
+ * Starts a GET HTTP Request to /api/{version}/records/replay/{replayId}
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param replayId				Replay id to query
+ * @return						Whether request was successfully sent
+ */
+native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA, int replayId);
+
+/**
+ * Starts a POST HTTP Request to /api/{version}/records/{recordId}/replay
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param recordId				Id of the record
+ * @param replayFile			Path to the replay file
+ * @return						Whether request was successfully sent
+ */
+native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
+												int recordId, char[] replayFile);
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -799,6 +848,11 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	// Record Filters
 	MarkNativeAsOptional("GlobalAPI_GetRecordFilters");
 	MarkNativeAsOptional("GlobalAPI_GetRecordFilterDistributions");
+
+	// Replays
+	MarkNativeAsOptional("GlobalAPI_GetReplayByRecordId");
+	MarkNativeAsOptional("GlobalAPI_GetReplayByReplayId");
+	MarkNativeAsOptional("GlobalAPI_CreateReplayForRecordId");
 };
 #endif
 

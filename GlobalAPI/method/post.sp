@@ -10,17 +10,12 @@ public bool HTTPPost(GlobalAPIRequestData hData)
 		LogMessage("[GlobalAPI] Using this method requires an API key, and you dont seem to have one setup!");
 		return false;
 	}
-	
-	int maxlength = hData.bodyLength;
-	
+
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	hData.GetString("url", requestUrl, sizeof(requestUrl));
 
-	char[] json = new char[maxlength];
-	hData.Encode(json, maxlength);
-	
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodPOST);
-	
+
 	if (request == null)
 	{
 		delete hData;
@@ -28,14 +23,29 @@ public bool HTTPPost(GlobalAPIRequestData hData)
 		return false;
 	}
 
+	if (hData.contentType == GlobalAPIRequestContentType_OctetStream)
+	{
+		char file[PLATFORM_MAX_PATH];
+		hData.GetString("bodyFile", file, sizeof(file));
+		request.SetBodyFromFile(hData, file);
+	}
+	else
+	{
+		int maxlength = hData.bodyLength;
+		char[] body = new char[maxlength];
+
+		hData.Encode(body, maxlength);
+		request.SetBody(hData, body, maxlength);
+	}
+
 	request.SetData(hData);
 	request.SetTimeout(15);
 	request.SetCallbacks();
 	request.SetAuthHeader();
-	request.SetAcceptHeaders();
 	request.SetPoweredByHeader();
+	request.SetAcceptHeaders(hData);
+	request.SetContentTypeHeader(hData);
 	request.SetRequestOriginHeader(hData);
-	request.SetBody(json, maxlength);
 	request.Send(hData);
 
 	return true;

@@ -36,6 +36,13 @@ methodmap GlobalAPIRequestData < JSON_Object
 
 		requestData.SetString("pluginName", pluginName);
 		requestData.SetKeyHidden("pluginName", true);
+
+		requestData.SetInt("acceptType", 0);
+		requestData.SetKeyHidden("acceptType", true);
+
+		requestData.SetInt("contentType", 0);
+		requestData.SetKeyHidden("contentType", true);
+
 		return view_as<GlobalAPIRequestData>(requestData);
 	}
 
@@ -75,6 +82,62 @@ methodmap GlobalAPIRequestData < JSON_Object
 	{
 		this.SetString("endpoint", endpoint);
 		this.SetKeyHidden("endpoint", true);
+	}
+	
+   /**
+	* Sets body file path to the request data
+	*
+	* @note						Path to file with data to be posted
+	* @param path				Body file (path) to set
+	* @noreturn
+	*/
+	public void AddBodyFile(char[] path)
+	{
+		this.SetString("bodyFile", path);
+		this.SetKeyHidden("bodyFile", true);
+	}
+
+   /**
+	* Sets data file path to the request data
+	*
+	* @note						Path for downloaded files
+	* @param path				Data path to set
+	* @noreturn
+	*/
+	public void AddDataPath(char[] path)
+	{
+		this.SetString("dataFilePath", path);
+		this.SetKeyHidden("dataFilePath", true);
+	}
+
+    /*
+ 		Get or set the request's "acceptType"
+ 	*/
+	property int acceptType
+	{
+		public get()
+		{
+			return this.GetInt("acceptType");
+		}
+		public set(int type)
+		{
+			this.SetInt("acceptType", type);
+		}
+	}
+
+    /*
+ 		Get or set the request's "contentType"
+ 	*/
+	property int contentType
+	{
+		public get()
+		{
+			return this.GetInt("contentType");
+		}
+		public set(int type)
+		{
+			this.SetInt("contentType", type);
+		}
 	}
 	
     /*
