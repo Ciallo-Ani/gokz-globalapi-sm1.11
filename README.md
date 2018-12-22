@@ -18,7 +18,7 @@ This is a complete rewrite (v2) of [GlobalAPI plugin](https://bitbucket.org/kzti
 
 ## **Dependencies**
 
-* **[SteamWorks](https://forums.alliedmods.net/showthread.php?t=229556)**
 * **Sourcemod 1.9+**
+* **[SteamWorks 1.2.3+](https://forums.alliedmods.net/showthread.php?t=229556)**
 
 ---

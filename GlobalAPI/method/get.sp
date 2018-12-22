@@ -31,8 +31,9 @@ public bool HTTPGet(GlobalAPIRequestData hData)
 	request.SetTimeout(15);
 	request.SetCallbacks();
 	request.SetAuthHeader();
-	request.SetAcceptHeaders();
 	request.SetPoweredByHeader();
+	request.SetAcceptHeaders(hData);
+	request.SetContentTypeHeader(hData);
 	request.SetRequestOriginHeader(hData);
 	request.Send(hData);
 

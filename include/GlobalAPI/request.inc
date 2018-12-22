@@ -7,6 +7,20 @@
 
 // =========================================================== //
 
+static char gC_acceptTypePhrases[][] =
+{
+	"application/json",
+	"application/octet-stream"
+};
+
+static char gC_contentTypePhrases[][] =
+{
+	"application/json",
+	"application/octet-stream"
+};
+
+// =========================================================== //
+
 /*
 	Helper methodmap for wrapping SteamWorks requests
 */
@@ -39,16 +53,27 @@ methodmap GlobalAPIRequest < Handle
    /**
  	* Sets request body
  	*
- 	* @note						Body is set as application/json
+ 	* @param hData				GlobalAPIRequestData containing contentType
  	* @param body				Request body to set
  	* @param maxlength			Maxlength of the body
  	* @return					Whether the operation was successful
  	*/
-	public bool SetBody(char[] body, int maxlength)
+	public bool SetBody(GlobalAPIRequestData hData, char[] body, int maxlength)
 	{
-		return SteamWorks_SetHTTPRequestRawPostBody(this, "application/json", body, maxlength);
+		return SteamWorks_SetHTTPRequestRawPostBody(this, gC_contentTypePhrases[hData.contentType], body, maxlength);
 	}
 	
+  /**
+	* Sets request body from a file
+	*
+	* @param hData				GlobalAPIRequestData containing contentType
+	* @return					Whether the operation was successful
+	*/
+	public bool SetBodyFromFile(GlobalAPIRequestData hData, char[] file)
+	{
+		return SteamWorks_SetHTTPRequestRawPostBodyFromFile(this, gC_contentTypePhrases[hData.contentType], file);
+	}
+
    /**
  	* Sets a request context value
  	*
@@ -95,17 +120,14 @@ methodmap GlobalAPIRequest < Handle
 	}
 	
    /**
- 	* Sets predefined Accept, Accept-Charset and Accept-Encoding headers
+ 	* Sets "Accept" header
  	*
- 	* @note						Predefined values respectively: 
-	* @note 					"application/json", "utf-8" and "gzip"
+ 	* @param hData				GlobalAPIRequestData containing acceptType
  	* @return					Whether the operation was successful
  	*/
-	public bool SetAcceptHeaders()
+	public bool SetAcceptHeaders(GlobalAPIRequestData hData)
 	{
-		return SteamWorks_SetHTTPRequestHeaderValue(this, "Accept", "application/json")
-		&& SteamWorks_SetHTTPRequestHeaderValue(this, "Accept-Charset", "utf-8")
-		&& SteamWorks_SetHTTPRequestHeaderValue(this, "Accept-Encoding", "gzip");
+		return SteamWorks_SetHTTPRequestHeaderValue(this, "Accept", gC_acceptTypePhrases[hData.acceptType]);
 	}
 	
    /**
@@ -117,11 +139,22 @@ methodmap GlobalAPIRequest < Handle
 	{
 		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-Powered-By", GlobalAPI_Plugin_NameVersion);
 	}
+
+   /**
+ 	* Sets content type header
+ 	*
+ 	* @param hData				GlobalAPIRequestData containing contentType
+ 	* @return					Whether the operation was successful
+ 	*/
+	public bool SetContentTypeHeader(GlobalAPIRequestData hData)
+	{
+		return SteamWorks_SetHTTPRequestHeaderValue(this, "Content-Type", gC_contentTypePhrases[hData.contentType]);
+	}
 	
    /**
  	* Sets request origin header
  	*
- 	* @param hData				GlobalAPIRequestData handle containing "pluginName" key
+ 	* @param hData				GlobalAPIRequestData containing pluginName
  	* @return					Whether the operation was successful
  	*/
 	public bool SetRequestOriginHeader(GlobalAPIRequestData hData)
