@@ -98,7 +98,7 @@ public int Native_HasAPIKey(Handle plugin, int numParams)
 */
 public int Native_IsStaging(Handle plugin, int numParams)
 {
-	return gB_Staging;
+	return gCV_Staging.BoolValue;
 }
 
 // =========================================================== //
@@ -108,7 +108,7 @@ public int Native_IsStaging(Handle plugin, int numParams)
 */
 public int Native_IsDebugging(Handle plugin, int numParams)
 {
-	return gB_Debug;
+	return gCV_Debug.BoolValue;
 }
 
 // =========================================================== //

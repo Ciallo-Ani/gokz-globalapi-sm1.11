@@ -1,27 +1,23 @@
 // =========================================================== //
 
-static ConVar hCV_Debug = null;
-static ConVar hCV_Staging = null;
+ConVar gCV_Debug = null;
+ConVar gCV_Staging = null;
 
 // =========================================================== //
 
 public void CreateConvars()
 {
-	hCV_Debug = CreateConVar("GlobalAPI_Debug", "0", "", _, true, 0.0, true, 1.0);
-	hCV_Staging = CreateConVar("GlobalAPI_Staging", "0", "Enables the plugin to use the staging endpoint for API calls", _, true, 0.0, true, 1.0);
-	
-	hCV_Debug.AddChangeHook(ConVarHook);
-	hCV_Staging.AddChangeHook(ConVarHook);
+	gCV_Debug = CreateConVar("GlobalAPI_Debug", "0", "", _, true, 0.0, true, 1.0);
+	gCV_Staging = CreateConVar("GlobalAPI_Staging", "0", "Enables the plugin to use the staging endpoint for API calls", _, true, 0.0, true, 1.0);
+
+	gCV_Staging.AddChangeHook(ConVarHook);
 }
 
 // =========================================================== //
 
 public void GetConVars()
 {
-	gB_Debug = hCV_Debug.BoolValue;
-	gB_Staging = hCV_Staging.BoolValue;
-
-	Format(gC_baseUrl, sizeof(gC_baseUrl), "%s", gB_Staging ? GlobalAPI_Staging_BaseUrl : GlobalAPI_BaseUrl);
+	Format(gC_baseUrl, sizeof(gC_baseUrl), gCV_Staging.BoolValue ? GlobalAPI_Staging_BaseUrl : GlobalAPI_BaseUrl);
 }
 
 // =========================================================== //
@@ -30,11 +26,9 @@ public void GetConVars()
 {
 	if (!StrEqual(newValue, oldValue))
 	{
-		convar.IntValue = StringToInt(newValue);
-
-		if (convar == hCV_Staging)
+		if (convar == gCV_Staging)
 		{
-			Format(gC_baseUrl, sizeof(gC_baseUrl), "%s", hCV_Staging.BoolValue ? GlobalAPI_Staging_BaseUrl : GlobalAPI_BaseUrl);
+			Format(gC_baseUrl, sizeof(gC_baseUrl), convar.BoolValue ? GlobalAPI_Staging_BaseUrl : GlobalAPI_BaseUrl);
 		}
 	}
 }

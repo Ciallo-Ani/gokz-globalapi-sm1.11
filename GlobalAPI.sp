@@ -34,10 +34,6 @@ char gC_mapName[64];
 char gC_mapPath[PLATFORM_MAX_PATH];
 int gI_mapFilesize = -1;
 
-// ConVars
-bool gB_Debug = false;
-bool gB_Staging = false;
-
 // Modules
 ArrayList g_statsModules;
 ArrayList g_loggingModules;
@@ -45,9 +41,9 @@ ArrayList g_retryingModules;
 
 // ======================= INCLUDES ========================== //
 
-#include "GlobalAPI/misc.sp"
 #include "GlobalAPI/convars.sp"
 #include "GlobalAPI/commands.sp"
+#include "GlobalAPI/misc.sp"
 
 #include "GlobalAPI/method/get.sp"
 #include "GlobalAPI/method/post.sp"
