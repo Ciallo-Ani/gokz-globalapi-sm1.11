@@ -41,16 +41,16 @@ ArrayList g_retryingModules;
 
 // ======================= INCLUDES ========================== //
 
-#include "GlobalAPI/convars.sp"
-#include "GlobalAPI/commands.sp"
-#include "GlobalAPI/misc.sp"
-
-#include "GlobalAPI/method/get.sp"
-#include "GlobalAPI/method/post.sp"
-
+#include "GlobalAPI/api/convars.sp"
 #include "GlobalAPI/api/modules.sp"
 #include "GlobalAPI/api/natives.sp"
 #include "GlobalAPI/api/forwards.sp"
+
+#include "GlobalAPI/misc.sp"
+#include "GlobalAPI/commands.sp"
+
+#include "GlobalAPI/method/get.sp"
+#include "GlobalAPI/method/post.sp"
 
 #include "GlobalAPI/http/HTTPData.sp"
 #include "GlobalAPI/http/HTTPHeaders.sp"
