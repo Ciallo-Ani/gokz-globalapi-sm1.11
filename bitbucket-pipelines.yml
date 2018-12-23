@@ -41,8 +41,8 @@ pipelines:
     compile:
       - step: *compile
 
-  branches:
-    '{master,dev}':
+  pull-requests:
+    '*':
       - step: *compile
 
   tags:
