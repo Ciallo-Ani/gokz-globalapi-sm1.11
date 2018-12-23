@@ -1,0 +1,47 @@
+image: i386/alpine:3.8
+
+definitions:
+  step: &compile
+    name: Compile Plugin
+    artifacts:
+      - smdir/addons/sourcemod/plugins/GlobalAPI*.smx
+    script:
+      - apk update
+      - apk add wget libc6-compat libstdc++
+      - mkdir smdir
+      - wget -q -O - "http://sourcemod.net/latest.php?os=linux&version=1.9" | tar x -C ./smdir -vzf -
+      - for file in ./*.sp; do ./smdir/addons/sourcemod/scripting/spcomp $file -i ./include; done;
+      - for file in ./GlobalAPI-Modules/*.sp; do ./smdir/addons/sourcemod/scripting/spcomp $file -i ./include; done;
+      - mv ./*.smx ./smdir/addons/sourcemod/plugins/
+
+pipelines:
+  custom:
+    compile:
+      - step: *compile
+
+  branches:
+    '{master,dev}':
+      - step: *compile
+
+  tags:
+    '*':
+      - step: *compile
+      - step:
+          name: Build Release
+          trigger: manual
+          artifacts:
+            - builds/*
+          script:
+            - apk update
+            - apk add zip
+            - mkdir builds
+            - cd smdir
+            - zip -r ../builds/GlobalAPI-latest.zip .
+            - zip -r ../builds/GlobalAPI-v${BITBUCKET_TAG}.zip .
+      - step:
+          name: Deploy Release
+          script:
+            - apk update
+            - apk add curl
+            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"builds/GlobalAPI-v${BITBUCKET_TAG}.zip"
+            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"builds/GlobalAPI-latest.zip"
