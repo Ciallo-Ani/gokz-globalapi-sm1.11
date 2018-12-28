@@ -1680,6 +1680,7 @@ public int Native_GetReplayList(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetReplayByRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int recordId);
 */
+#define GlobalAPI_GetReplayByRecordId_Endpoint "records/{record_id}/replay"
 public int Native_GetReplayByRecordId(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -1699,7 +1700,10 @@ public int Native_GetReplayByRecordId(Handle plugin, int numParams)
 	hData.acceptType = GlobalAPIRequestAcceptType_OctetStream;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/records/%d/replay", gC_baseUrl, recordId);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetReplayByRecordId_Endpoint);
+	hData.AddEndpoint(requestUrl);
+
+	FormatPathParam(requestUrl, sizeof(requestUrl), "record_id", .intValue = recordId);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -1710,6 +1714,7 @@ public int Native_GetReplayByRecordId(Handle plugin, int numParams)
 /*
 	native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE, int replayId);
 */
+#define GlobalAPI_GetReplayByReplayId_Endpoint "records/replay/{replay_id}"
 public int Native_GetReplayByReplayId(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -1729,7 +1734,10 @@ public int Native_GetReplayByReplayId(Handle plugin, int numParams)
 	hData.acceptType = GlobalAPIRequestAcceptType_OctetStream;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/records/replay/%d", gC_baseUrl, replayId);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetReplayByReplayId_Endpoint);
+	hData.AddEndpoint(requestUrl);
+
+	FormatPathParam(requestUrl, sizeof(requestUrl), "replay_id", .intValue = replayId);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
@@ -1741,6 +1749,7 @@ public int Native_GetReplayByReplayId(Handle plugin, int numParams)
 	native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = INVALID_HANDLE,
 													int recordId, char[] replayData, int maxlength);
 */
+#define GlobalAPI_CreateReplayForRecordId_Endpoint "records/{record_id}/replay"
 public int Native_CreateReplayForRecordId(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
@@ -1766,7 +1775,10 @@ public int Native_CreateReplayForRecordId(Handle plugin, int numParams)
 	hData.contentType = GlobalAPIRequestContentType_OctetStream;
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
-	Format(requestUrl, sizeof(requestUrl), "%s/records/%d/replay", gC_baseUrl, recordId);
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_CreateReplayForRecordId_Endpoint);
+	hData.AddEndpoint(requestUrl);
+
+	FormatPathParam(requestUrl, sizeof(requestUrl), "record_id", .intValue = recordId);
 	hData.AddUrl(requestUrl);
 
 	return GlobalAPI_SendRequest(hData);
