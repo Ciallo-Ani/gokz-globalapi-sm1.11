@@ -216,7 +216,7 @@ public int CalculateResponseTime(GlobalAPIRequestData hData)
 
 public bool DebugMessage(char[] message)
 {
-	if (gB_Debug)
+	if (gCV_Debug.BoolValue)
 	{
 		LogMessage(message);
 		return true;

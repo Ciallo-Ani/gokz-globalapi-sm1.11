@@ -5,7 +5,7 @@
 */
 public bool HTTPPost(GlobalAPIRequestData hData)
 {
-	if (hData.keyRequired && !gB_usingAPIKey && !gB_Debug)
+	if (hData.keyRequired && !gB_usingAPIKey && !gCV_Debug.BoolValue)
 	{
 		LogMessage("[GlobalAPI] Using this method requires an API key, and you dont seem to have one setup!");
 		return false;
