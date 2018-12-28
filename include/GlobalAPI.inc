@@ -741,6 +741,18 @@ native bool GlobalAPI_GetRecordFilterDistributions(OnAPICallFinished callback = 
 													bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
 /**
+ * Starts a GET HTTP Request to /api/{version}/records/replay/list
+ *
+ * @param callback				Callback when request has finished
+ * @param data					Optional data to pass
+ * @param offset				Offset of the dataset to query
+ * @param limit					Amount of items returned for the query
+ * @return						Whether request was successfully sent
+ */
+native bool GlobalAPI_GetReplayList(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
+									int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+
+/**
  * Starts a GET HTTP Request to /api/{version}/records/{recordId}/replay
  *
  * @param callback				Callback when request has finished
@@ -850,6 +862,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_GetRecordFilterDistributions");
 
 	// Replays
+	MarkNativeAsOptional("GlobalAPI_GetReplayList");
 	MarkNativeAsOptional("GlobalAPI_GetReplayByRecordId");
 	MarkNativeAsOptional("GlobalAPI_GetReplayByReplayId");
 	MarkNativeAsOptional("GlobalAPI_CreateReplayForRecordId");

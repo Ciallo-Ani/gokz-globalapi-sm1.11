@@ -65,6 +65,7 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_GetRecordFilterDistributions", Native_GetRecordFilterDistributions);
 
 	// Replays
+	CreateNative("GlobalAPI_GetReplayList", Native_GetReplayList);
 	CreateNative("GlobalAPI_GetReplayByRecordId", Native_GetReplayByRecordId);
 	CreateNative("GlobalAPI_GetReplayByReplayId", Native_GetReplayByReplayId);
 	CreateNative("GlobalAPI_CreateReplayForRecordId", Native_CreateReplayForRecordId);
@@ -1631,6 +1632,42 @@ public int Native_GetRecordFilterDistributions(Handle plugin, int numParams)
 
 	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
 	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetRecordFilterDistributions_Endpoint);
+
+	hData.AddEndpoint(requestUrl);
+	hData.AddUrl(requestUrl);
+
+	return GlobalAPI_SendRequest(hData);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_GetReplayList(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
+										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+*/
+#define GlobalAPI_GetReplayList_Endpoint "records/replay/list"
+public int Native_GetReplayList(Handle plugin, int numParams)
+{
+	Function callback = GetNativeCell(1);
+	any data = GetNativeCell(2);
+	int offset = GetNativeCell(3);
+	int limit = GetNativeCell(4);
+	
+	char pluginName[GlobalAPI_Max_PluginName_Length];
+	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
+	
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	hData.AddNum("offset", offset);
+	hData.AddNum("limit", limit);
+
+	Handle hFwd = CreateForwardHandle(callback, data);
+	AddToForwardEx(hFwd, plugin, callback);
+	hData.data = data;
+	hData.callback = hFwd;
+	hData.requestType = GlobalAPIRequestType_GET;
+
+	char requestUrl[GlobalAPI_Max_QueryUrl_Length];
+	FormatRequestUrl(requestUrl, sizeof(requestUrl), GlobalAPI_GetReplayList_Endpoint);
 
 	hData.AddEndpoint(requestUrl);
 	hData.AddUrl(requestUrl);
