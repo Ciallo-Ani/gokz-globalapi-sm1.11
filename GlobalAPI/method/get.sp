@@ -3,7 +3,7 @@
 /*
 	BASE HTTP GET METHOD FOR NATIVES
 */
-public bool HTTPGet(GlobalAPIRequestData hData)
+bool HTTPGet(GlobalAPIRequestData hData)
 {
 	if (hData.keyRequired && !gB_usingAPIKey && !gCV_Debug.BoolValue)
 	{

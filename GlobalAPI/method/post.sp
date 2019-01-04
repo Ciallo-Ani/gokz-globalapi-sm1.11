@@ -3,7 +3,7 @@
 /*
 	BASE HTTP POST METHOD FOR NATIVES
 */
-public bool HTTPPost(GlobalAPIRequestData hData)
+bool HTTPPost(GlobalAPIRequestData hData)
 {
 	if (hData.keyRequired && !gB_usingAPIKey && !gCV_Debug.BoolValue)
 	{
