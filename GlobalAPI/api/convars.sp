@@ -28,7 +28,7 @@ public void GetConVars()
 	{
 		if (convar == gCV_Staging)
 		{
-			Format(gC_baseUrl, sizeof(gC_baseUrl), convar.BoolValue ? GlobalAPI_Staging_BaseUrl : GlobalAPI_BaseUrl);
+			Format(gC_baseUrl, sizeof(gC_baseUrl), "%s", convar.BoolValue ? GlobalAPI_Staging_BaseUrl : GlobalAPI_BaseUrl);
 		}
 	}
 }
