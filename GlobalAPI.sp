@@ -3,10 +3,9 @@
 #define PLUGIN_NAME "GlobalAPI"
 #define PLUGIN_AUTHOR "Sikari"
 
-#define DATA_DIR "data/sourcemod/GlobalAPI"
-#define SETTING_DIR "cfg/sourcemod/GlobalAPI"
+#define DATA_DIR "data/GlobalAPI"
+#define CONFIG_DIR "sourcemod/GlobalAPI"
  
-#define CONFIG_PATH "sourcemod/GlobalAPI"
 #define APIKEY_PATH "cfg/sourcemod/GlobalAPI/GlobalAPI-key.cfg"
 
 // =========================================================== //
@@ -82,7 +81,6 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateConfigDir();
 }
 
-// TODO: Add late loading support
 public void OnPluginStart()
 {
 	g_statsModules = new ArrayList();
@@ -90,7 +88,7 @@ public void OnPluginStart()
 	g_retryingModules = new ArrayList();
 
 	gB_usingAPIKey = ReadAPIKey();
-	AutoExecConfig(true, PLUGIN_NAME, CONFIG_PATH);
+	AutoExecConfig(true, PLUGIN_NAME, CONFIG_DIR);
 }
 
 public void OnMapStart()
