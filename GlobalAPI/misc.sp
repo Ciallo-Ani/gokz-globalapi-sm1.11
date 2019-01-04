@@ -1,6 +1,6 @@
 // =========================================================== //
 
-public bool ReadAPIKey()
+bool ReadAPIKey()
 {
 	if (FileExists(APIKEY_PATH))
 	{
@@ -61,7 +61,7 @@ public bool BuildAuthenticationHeader(Handle request)
 
 // =========================================================== //
 
-public bool FormatRequestUrl(char[] buffer, int maxlength, char[] endpoint)
+bool FormatRequestUrl(char[] buffer, int maxlength, char[] endpoint)
 {
 	return Format(buffer, maxlength, "%s/%s", gC_baseUrl, endpoint) > 0;
 }
@@ -87,7 +87,7 @@ void FormatPathParam(char[] buffer, int maxlength, char[] param, char[] value = 
 
 // =========================================================== //
 
-public bool SendRequest(Handle request, GlobalAPIRequestData hData)
+bool SendRequest(Handle request, GlobalAPIRequestData hData)
 {
 	Call_Private_OnHTTPStart(request, hData);
 	return SteamWorks_SendHTTPRequest(request);
@@ -95,7 +95,7 @@ public bool SendRequest(Handle request, GlobalAPIRequestData hData)
 
 // =========================================================== //
 
-public bool SendRequestEx(GlobalAPIRequestData hData)
+bool SendRequestEx(GlobalAPIRequestData hData)
 {
 	switch (hData.requestType)
 	{
@@ -110,7 +110,7 @@ public bool SendRequestEx(GlobalAPIRequestData hData)
 
 // This could be failure, or just success with no response body
 // We do not care. We call the forward with data as null anyways
-public void CallForward_NoResponse(GlobalAPIRequestData hData)
+void CallForward_NoResponse(GlobalAPIRequestData hData)
 {
 	any data = hData.data;
 	Handle hFwd = hData.callback;
@@ -126,15 +126,13 @@ public void CallForward_NoResponse(GlobalAPIRequestData hData)
 
 // =========================================================== //
 
-public Handle CreateForwardHandle(Function callback, any data)
+Handle CreateForwardHandle(Function callback)
 {
 	Handle hFwd = null;
 	
 	if (callback != INVALID_FUNCTION)
 	{
         GlobalAPI_DebugMessage("Created a forward!");
-
-        // JSON_Object hJson, GlobalAPIRequestData hData, any data
         hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell);
     }
 	
@@ -143,7 +141,7 @@ public Handle CreateForwardHandle(Function callback, any data)
 
 // =========================================================== //
 
-public void AddToForwardEx(Handle hFwd, Handle plugin, Function callback)
+void AddToForwardEx(Handle hFwd, Handle plugin, Function callback)
 {
 	if (hFwd != null && plugin != null && callback != INVALID_FUNCTION)
 	{
@@ -153,13 +151,11 @@ public void AddToForwardEx(Handle hFwd, Handle plugin, Function callback)
 
 // =========================================================== //
 
-public void CallForward(Handle hFwd, JSON_Object hJson, GlobalAPIRequestData hData, any data)
+void CallForward(Handle hFwd, JSON_Object hJson, GlobalAPIRequestData hData, any data)
 {
 	if (hFwd != null)
 	{
 		GlobalAPI_DebugMessage("Called a forward!");
-
-		// JSON_Object hJson, GlobalAPIRequestData hData, any data
 		Call_StartForward(hFwd);
 		Call_PushCell(hJson);
 		Call_PushCell(hData);
@@ -170,7 +166,7 @@ public void CallForward(Handle hFwd, JSON_Object hJson, GlobalAPIRequestData hDa
 
 // =========================================================== //
 
-public void PrintInfoHeaderToConsole(int client)
+void PrintInfoHeaderToConsole(int client)
 {
 	char infoStr[128];
 	int paddingSize = Format(infoStr, sizeof(infoStr), "[GlobalAPI Plugin v%s for backend %s]",
@@ -192,7 +188,7 @@ public void PrintInfoHeaderToConsole(int client)
 
 // =========================================================== //
 
-public void PrintMapInfoToConsole(int client)
+void PrintMapInfoToConsole(int client)
 {
 	PrintToConsole(client, "-- Map Name: \t\t %s", gC_mapName);
 	PrintToConsole(client, "-- Map Path: \t\t {gamedir}/%s", gC_mapPath);
@@ -201,7 +197,7 @@ public void PrintMapInfoToConsole(int client)
 
 // =========================================================== //
 
-public int CalculateResponseTime(GlobalAPIRequestData hData)
+int CalculateResponseTime(GlobalAPIRequestData hData)
 {
 	float timeNow = GetEngineTime();
 	float startTime = hData.GetFloat("_requestStartTime");
@@ -214,7 +210,7 @@ public int CalculateResponseTime(GlobalAPIRequestData hData)
 
 // =========================================================== //
 
-public bool DebugMessage(char[] message)
+bool DebugMessage(char[] message)
 {
 	if (gCV_Debug.BoolValue)
 	{
