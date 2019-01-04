@@ -217,7 +217,7 @@ public int Native_GetAuthStatus(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -299,7 +299,7 @@ public int Native_GetBans(Handle plugin, int numParams)
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -351,7 +351,7 @@ public int Native_CreateBan(Handle plugin, int numParams)
 	hData.AddString("notes", notes);
 	hData.AddString("ip", ip);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -446,7 +446,7 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -505,7 +505,7 @@ public int Native_CreateJumpstat(Handle plugin, int numParams)
 	hData.AddBool("is_crouch_boost", isCrouchBoost);
 	hData.AddNum("strafe_count", strafeCount);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -596,7 +596,7 @@ public int Native_GetJumpstatTop(Handle plugin, int numParams)
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -631,7 +631,7 @@ public int Native_GetJumpstatTop30(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -692,7 +692,7 @@ public int Native_GetMaps(Handle plugin, int numParams)
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -724,7 +724,7 @@ public int Native_GetMapById(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -759,7 +759,7 @@ public int Native_GetMapByName(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -791,7 +791,7 @@ public int Native_GetModes(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -823,7 +823,7 @@ public int Native_GetModeById(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -858,7 +858,7 @@ public int Native_GetModeByName(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -910,7 +910,7 @@ public int Native_GetPlayers(Handle plugin, int numParams)
 	hData.AddString("ip", ip);
 	hData.AddString("steamid64_list", steamId64List);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -944,7 +944,7 @@ public int Native_GetPlayerBySteamId(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -982,7 +982,7 @@ public int Native_GetPlayerBySteamIdAndIp(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1037,7 +1037,7 @@ public int Native_CreateRecord(Handle plugin, int numParams)
 	hData.AddNum("teleports", teleports);
 	hData.AddFloat("time", time);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1071,7 +1071,7 @@ public int Native_GetRecordPlaceById(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1141,7 +1141,7 @@ public int Native_GetRecordsTop(Handle plugin, int numParams)
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1219,7 +1219,7 @@ public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1294,7 +1294,7 @@ public int Native_GetRecordsTopWorldRecords(Handle plugin, int numParams)
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1350,7 +1350,7 @@ public int Native_GetServers(Handle plugin, int numParams)
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1382,7 +1382,7 @@ public int Native_GetServerById(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1417,7 +1417,7 @@ public int Native_GetServersByName(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1504,7 +1504,7 @@ public int Native_GetPlayerRanks(Handle plugin, int numParams)
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1564,7 +1564,7 @@ public int Native_GetRecordFilters(Handle plugin, int numParams)
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1624,7 +1624,7 @@ public int Native_GetRecordFilterDistributions(Handle plugin, int numParams)
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1660,7 +1660,7 @@ public int Native_GetReplayList(Handle plugin, int numParams)
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1692,7 +1692,7 @@ public int Native_GetReplayByRecordId(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1726,7 +1726,7 @@ public int Native_GetReplayByReplayId(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
@@ -1765,7 +1765,7 @@ public int Native_CreateReplayForRecordId(Handle plugin, int numParams)
 	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
 	hData.AddBodyFile(replayPath);
 
-	Handle hFwd = CreateForwardHandle(callback, data);
+	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
 	hData.data = data;
 	hData.callback = hFwd;
