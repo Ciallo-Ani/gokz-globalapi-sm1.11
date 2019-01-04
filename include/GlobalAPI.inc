@@ -866,7 +866,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_GetReplayByRecordId");
 	MarkNativeAsOptional("GlobalAPI_GetReplayByReplayId");
 	MarkNativeAsOptional("GlobalAPI_CreateReplayForRecordId");
-};
+}
 #endif
 
 // =========================================================== //
