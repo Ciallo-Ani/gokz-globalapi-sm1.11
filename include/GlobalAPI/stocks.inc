@@ -1,9 +1,9 @@
 // ================== DOUBLE INCLUDE ========================= //
 
-#if defined _GlobalAPI_Function_Helpers_included_
+#if defined _GlobalAPI_Stocks_included_
 #endinput
 #endif
-#define _GlobalAPI_Function_Helpers_included_
+#define _GlobalAPI_Stocks_included_
 
 // =========================================================== //
 
@@ -20,7 +20,7 @@ stock bool CreateDirectoryIfNotExist(char[] dir)
 		return CreateDirectory(dir, 666);
 	}
 	
-	return DirExists(dir);
+	return true;
 }
 
 /**
