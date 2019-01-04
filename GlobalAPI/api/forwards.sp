@@ -11,7 +11,7 @@ static Handle H_Global_RequestFinished = null;
 
 // =========================================================== //
 
-public void CreateForwards()
+void CreateForwards()
 {
 	// Privates
 	H_Private_OnHTTPStart = CreateForward(ET_Ignore, Param_Cell, Param_Cell);
@@ -26,7 +26,7 @@ public void CreateForwards()
 
 // =========================================================== //
 
-public void Call_Private_OnHTTPStart(Handle request, GlobalAPIRequestData hData)
+void Call_Private_OnHTTPStart(Handle request, GlobalAPIRequestData hData)
 {
 	Call_StartForward(H_Private_OnHTTPStart);
 	Call_PushCell(request);
@@ -36,13 +36,13 @@ public void Call_Private_OnHTTPStart(Handle request, GlobalAPIRequestData hData)
 
 // =========================================================== //
 
-public void Call_Global_OnInitialized()
+void Call_Global_OnInitialized()
 {
 	Call_StartForward(H_Global_OnInitialized);
 	Call_Finish();
 }
 
-public void Call_Global_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
+void Call_Global_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
 {
 	Call_StartForward(H_Global_RequestFailed);
 	Call_PushCell(request);
@@ -50,7 +50,7 @@ public void Call_Global_OnRequestFailed(Handle request, GlobalAPIRequestData hDa
 	Call_Finish();
 }
 
-public void Call_Global_OnRequestStarted(Handle request, GlobalAPIRequestData hData)
+void Call_Global_OnRequestStarted(Handle request, GlobalAPIRequestData hData)
 {
 	Call_StartForward(H_Global_RequestStarted);
 	Call_PushCell(request);
@@ -58,7 +58,7 @@ public void Call_Global_OnRequestStarted(Handle request, GlobalAPIRequestData hD
 	Call_Finish();
 }
 
-public void Call_Global_OnRequestFinished(Handle request, GlobalAPIRequestData hData)
+void Call_Global_OnRequestFinished(Handle request, GlobalAPIRequestData hData)
 {
 	Call_StartForward(H_Global_RequestFinished);
 	Call_PushCell(request);
