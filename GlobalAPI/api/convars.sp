@@ -5,7 +5,7 @@ ConVar gCV_Staging = null;
 
 // =========================================================== //
 
-public void CreateConvars()
+void CreateConvars()
 {
 	gCV_Debug = CreateConVar("GlobalAPI_Debug", "0", "", _, true, 0.0, true, 1.0);
 	gCV_Staging = CreateConVar("GlobalAPI_Staging", "0", "Enables the plugin to use the staging endpoint for API calls", _, true, 0.0, true, 1.0);
@@ -22,7 +22,7 @@ public void GetConVars()
 
 // =========================================================== //
 
- void ConVarHook(ConVar convar, const char[] oldValue, const char[] newValue)
+void ConVarHook(ConVar convar, const char[] oldValue, const char[] newValue)
 {
 	if (!StrEqual(newValue, oldValue))
 	{
