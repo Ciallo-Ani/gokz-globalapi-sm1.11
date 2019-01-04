@@ -78,6 +78,8 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNatives();
 	CreateForwards();
 	CreateCommands();
+
+	CreateDataDir();
 	CreateConfigDir();
 }
 
@@ -100,7 +102,7 @@ public void OnMapStart()
 
 public void OnConfigsExecuted()
 {
-	GetConVars();
+	Initialize();
 	Call_Global_OnInitialized();
 }
 

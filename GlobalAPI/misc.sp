@@ -30,19 +30,25 @@ bool ReadAPIKey()
 
 // =========================================================== //
 
-public void CreateDataDir()
+void CreateDataDir()
 {
-	if (!CreateDirectoryIfNotExist(DATA_DIR))
+	char dataPath[PLATFORM_MAX_PATH];
+	BuildPath(Path_SM, dataPath, sizeof(dataPath), DATA_DIR);
+	
+	if (!CreateDirectoryIfNotExist(dataPath))
 	{
-		SetFailState("[GlobalAPI] Failed to create directory %s", SETTING_DIR);
+		SetFailState("Failed to create directory %s", dataPath);
 	}
 }
 
-public void CreateConfigDir()
+void CreateConfigDir()
 {
-	if (!CreateDirectoryIfNotExist(SETTING_DIR))
+	char configPath[PLATFORM_MAX_PATH];
+	Format(configPath, sizeof(configPath), "cfg/%s", CONFIG_DIR);
+	
+	if (!CreateDirectoryIfNotExist(configPath))
 	{
-		SetFailState("[%s] Failed to create directory %s", PLUGIN_NAME, SETTING_DIR);
+		SetFailState("Failed to create directory %s", configPath);
 	}
 
 	if (!FileExists(APIKEY_PATH))
@@ -54,7 +60,14 @@ public void CreateConfigDir()
 
 // =========================================================== //
 
-public bool BuildAuthenticationHeader(Handle request)
+void Initialize()
+{
+	Format(gC_baseUrl, sizeof(gC_baseUrl), "%s", gCV_Staging.BoolValue ? GlobalAPI_Staging_BaseUrl : GlobalAPI_BaseUrl);
+}
+
+// =========================================================== //
+
+bool BuildAuthenticationHeader(Handle request)
 {
 	return SteamWorks_SetHTTPRequestHeaderValue(request, "X-ApiKey", gC_apiKey);
 }

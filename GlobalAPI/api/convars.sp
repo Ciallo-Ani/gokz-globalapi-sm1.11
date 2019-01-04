@@ -15,13 +15,6 @@ void CreateConvars()
 
 // =========================================================== //
 
-public void GetConVars()
-{
-	Format(gC_baseUrl, sizeof(gC_baseUrl), gCV_Staging.BoolValue ? GlobalAPI_Staging_BaseUrl : GlobalAPI_BaseUrl);
-}
-
-// =========================================================== //
-
 void ConVarHook(ConVar convar, const char[] oldValue, const char[] newValue)
 {
 	if (!StrEqual(newValue, oldValue))
