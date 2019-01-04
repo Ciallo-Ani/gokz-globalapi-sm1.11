@@ -17,10 +17,9 @@ static char validArgs[ARGUMENT_COUNT][] =
 
 // =========================================================== //
 
-public void CreateCommands()
+void CreateCommands()
 {
 	RegConsoleCmd("sm_globalapi_info", Command_Info);
-
 	RegAdminCmd("sm_globalapi_reload_apikey", Command_ReloadAPIKey, ADMFLAG_ROOT, "Reloads the API Key");
 }
 
