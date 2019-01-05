@@ -829,3 +829,93 @@ methodmap APIServer < JSON_Object
 }
 
 // =========================================================== //
+
+methodmap APIRecordFilter < JSON_Object
+{
+	public APIRecordFilter(JSON_Object hRecordFilter)
+	{
+		return view_as<APIRecordFilter>(hRecordFilter);
+	}
+	
+	/*
+		Gets record filter "id" key from the response
+	*/ 
+	property int id
+	{
+		public get() { return this.GetInt("id"); }
+	}
+	
+	/*
+		Gets record filter "map_id" key from the response
+	*/ 
+	property int mapId
+	{
+		public get() { return this.GetInt("map_id"); }
+	}
+
+	/*
+		Gets record filter "stage" key from the response
+	*/ 
+	property int stage
+	{
+		public get() { return this.GetInt("stage"); }
+	}
+
+	/*
+		Gets record filter "mode_id" key from the response
+	*/
+	property int modeId
+	{
+		public get() { return this.GetInt("mode_id"); }
+	}
+	
+	/*
+		Gets record filter "tickrate" key from the response
+	*/
+	property int tickRate
+	{
+		public get() { return this.GetInt("tickrate"); }
+	}
+
+	/*
+		Gets record filter "has_teleports" key from the response
+	*/
+	property bool hasTeleports
+	{
+		public get() { return this.GetBool("has_teleports"); }
+	}
+
+   /**
+ 	* Gets record filter "created_on" key from the response
+	*
+ 	* @param buffer				Buffer to store result in
+ 	* @param maxlength			Max length of the buffer
+ 	* @noreturn
+ 	*/
+	public void GetCreatedOn(char[] buffer, int maxlength)
+	{
+		this.GetString("created_on", buffer, maxlength);
+	}
+
+   /**
+ 	* Gets record filter "update_on" key from the response
+	*
+ 	* @param buffer				Buffer to store result in
+ 	* @param maxlength			Max length of the buffer
+ 	* @noreturn
+ 	*/
+	public void GetUpdateOn(char[] buffer, int maxlength)
+	{
+		this.GetString("update_on", buffer, maxlength);
+	}
+
+	/*
+		Gets record filter "updated_by_id" key from the response
+	*/
+	property int updatedById
+	{
+		public get() { return this.GetInt("updated_by_id"); }
+	}
+}
+
+// =========================================================== //
