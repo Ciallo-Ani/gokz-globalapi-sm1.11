@@ -28,7 +28,7 @@
 #define GlobalAPI_Max_QueryParam_Length 64
 #define GlobalAPI_Max_QueryParams_Length (GlobalAPI_Max_QueryParam_Num * GlobalAPI_Max_QueryParam_Length)
 #define GlobalAPI_Max_QueryUrl_Length (GlobalAPI_Max_QueryParams_Length + GlobalAPI_Max_BaseUrl_Length)
-#define GlobalAPI_Max_QueryParam_Array_Length 128
+#define GlobalAPI_Max_QueryParam_Array_Length 64
 
 #define GlobalAPI_Max_APIKey_Length 128
 #define GlobalAPI_Max_PluginName_Length 64
