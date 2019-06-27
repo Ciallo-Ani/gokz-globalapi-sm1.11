@@ -17,7 +17,7 @@ stock bool CreateDirectoryIfNotExist(char[] dir)
 {
 	if (!DirExists(dir))
 	{
-		return CreateDirectory(dir, 666);
+		return CreateDirectory(dir, 511);
 	}
 	
 	return true;
