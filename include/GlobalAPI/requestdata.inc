@@ -30,12 +30,23 @@ methodmap GlobalAPIRequestData < JSON_Object
  	* @param pluginName			Name of the plugin
  	* @return					A new GlobalAPIRequestData handle
  	*/
-	public GlobalAPIRequestData(char[] pluginName = "Unknown")
+	public GlobalAPIRequestData(Handle plugin = null, char[] pluginName = "Unknown", char[] pluginVersion = "Unknown")
 	{
 		JSON_Object requestData = new JSON_Object();
+		
+		if (plugin == null)
+		{
+			requestData.SetString("pluginName", pluginName);
+			requestData.SetString("pluginVersion", pluginVersion);
+		}
+		else
+		{
+			requestData.SetString("pluginName", GetPluginDisplayName(plugin));
+			requestData.SetString("pluginVersion", GetPluginVersion(plugin));
+		}
 
-		requestData.SetString("pluginName", pluginName);
 		requestData.SetKeyHidden("pluginName", true);
+		requestData.SetKeyHidden("pluginVersion", true);
 
 		requestData.SetInt("acceptType", 0);
 		requestData.SetKeyHidden("acceptType", true);

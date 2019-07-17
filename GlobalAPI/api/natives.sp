@@ -211,11 +211,8 @@ public int Native_GetAuthStatus(Handle plugin, int numParams)
 {
 	Function callback = GetNativeCell(1);
 	any data = GetNativeCell(2);
-	
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -281,10 +278,7 @@ public int Native_GetBans(Handle plugin, int numParams)
 	int offset = GetNativeCell(14);
 	int limit = GetNativeCell(15);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("ban_types", banTypes);
 	hData.AddString("ban_types_list", banTypesList);
 	hData.AddBool("is_expired", isExpired);
@@ -340,11 +334,8 @@ public int Native_CreateBan(Handle plugin, int numParams)
 	
 	char ip[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(7, ip, sizeof(ip));
-	
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("steam_id", steamId);
 	hData.AddString("ban_type", banType);
 	hData.AddString("stats", stats);
@@ -423,10 +414,7 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 	int offset = GetNativeCell(19);
 	int limit = GetNativeCell(20);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddNum("id", id);
 	hData.AddNum("server_id", serverId);
 	hData.AddNum("steamid64", steamId64);
@@ -490,10 +478,7 @@ public int Native_CreateJumpstat(Handle plugin, int numParams)
 	bool isCrouchBoost = GetNativeCell(11);
 	int strafeCount = GetNativeCell(12);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("steam_id", steamId);
 	hData.AddNum("jump_type", jumpType);
 	hData.AddFloat("distance", distance);
@@ -574,10 +559,7 @@ public int Native_GetJumpstatTop(Handle plugin, int numParams)
 	int offset = GetNativeCell(19);
 	int limit = GetNativeCell(20);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddNum("id", id);
 	hData.AddNum("server_id", serverId);
 	hData.AddNum("steamid64", steamId64);
@@ -626,10 +608,7 @@ public int Native_GetJumpstatTop30(Handle plugin, int numParams)
 	char jumpType[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(3, jumpType, sizeof(jumpType));
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -678,10 +657,7 @@ public int Native_GetMaps(Handle plugin, int numParams)
 	int offset = GetNativeCell(10);
 	int limit = GetNativeCell(11);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("name", name);
 	hData.AddNum("larger_than_filesize", largerThanFilesize);
 	hData.AddNum("smaller_than_filesize", smallerThanFilesize);
@@ -719,10 +695,7 @@ public int Native_GetMapById(Handle plugin, int numParams)
 	any data = GetNativeCell(2);
 	int id = GetNativeCell(3);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -754,10 +727,7 @@ public int Native_GetMapByName(Handle plugin, int numParams)
 	char name[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(3, name, sizeof(name));
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -786,10 +756,7 @@ public int Native_GetModes(Handle plugin, int numParams)
 	Function callback = GetNativeCell(1);
 	any data = GetNativeCell(2);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -818,10 +785,7 @@ public int Native_GetModeById(Handle plugin, int numParams)
 	any data = GetNativeCell(2);
 	int id = GetNativeCell(3);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -853,10 +817,7 @@ public int Native_GetModeByName(Handle plugin, int numParams)
 	char name[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(3, name, sizeof(name));
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -900,10 +861,7 @@ public int Native_GetPlayers(Handle plugin, int numParams)
 	char steamId64List[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(7, steamId64List, sizeof(steamId64List));
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("steam_id", steamId);
 	hData.AddBool("is_banned", isBanned);
 	hData.AddNum("total_records", totalRecords);
@@ -939,10 +897,7 @@ public int Native_GetPlayerBySteamId(Handle plugin, int numParams)
 	char steamId[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(3, steamId, sizeof(steamId));
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -977,10 +932,7 @@ public int Native_GetPlayerBySteamIdAndIp(Handle plugin, int numParams)
 	char ip[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(4, ip, sizeof(ip));
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -1025,10 +977,7 @@ public int Native_CreateRecord(Handle plugin, int numParams)
 	int teleports = GetNativeCell(8);
 	float time = GetNativeCell(9);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("steam_id", steamId);
 	hData.AddNum("map_id", mapId);
 	hData.AddString("mode", mode);
@@ -1066,10 +1015,7 @@ public int Native_GetRecordPlaceById(Handle plugin, int numParams)
 	any data = GetNativeCell(2);
 	int id = GetNativeCell(3);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -1125,10 +1071,7 @@ public int Native_GetRecordsTop(Handle plugin, int numParams)
 	int offset = GetNativeCell(12);
 	int limit = GetNativeCell(13);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("steam_id", steamId);
 	hData.AddNum("steamid64", steamId64);
 	hData.AddNum("map_id", mapId);
@@ -1200,10 +1143,7 @@ public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
 	int offset = GetNativeCell(15);
 	int limit = GetNativeCell(16);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddString("steam_id", steamId);
 	hData.AddNum("steamid64", steamId64);
 	hData.AddNum("map_id", mapId);
@@ -1279,11 +1219,8 @@ public int Native_GetRecordsTopWorldRecords(Handle plugin, int numParams)
 	
 	int offset = GetNativeCell(15);
 	int limit = GetNativeCell(16);
-	
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddIntArray("ids", ids, idsLength);
 	hData.AddIntArray("map_ids", mapIds, mapIdsLength);
 	hData.AddIntArray("stages", stages, stagesLength);
@@ -1337,10 +1274,7 @@ public int Native_GetServers(Handle plugin, int numParams)
 	int offset = GetNativeCell(9);
 	int limit = GetNativeCell(10);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddNum("id", id);
 	hData.AddNum("port", port);
 	hData.AddString("ip", ip);
@@ -1377,10 +1311,7 @@ public int Native_GetServerById(Handle plugin, int numParams)
 	any data = GetNativeCell(2);
 	int id = GetNativeCell(3);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -1412,10 +1343,7 @@ public int Native_GetServersByName(Handle plugin, int numParams)
 	char serverName[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(3, serverName, sizeof(serverName));
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -1486,10 +1414,7 @@ public int Native_GetPlayerRanks(Handle plugin, int numParams)
 	int offset = GetNativeCell(20);
 	int limit = GetNativeCell(21);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddNum("points_greater_than", pointsGreaterThan);
 	hData.AddFloat("average_greater_than", averageGreaterThan);
 	hData.AddFloat("rating_greater_than", ratingGreaterThan);
@@ -1550,11 +1475,8 @@ public int Native_GetRecordFilters(Handle plugin, int numParams)
 	bool hasTeleports = GetNativeCell(13);
 	int offset = GetNativeCell(14);
 	int limit = GetNativeCell(15);
-	
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddIntArray("ids", ids, idsLength);
 	hData.AddIntArray("map_ids", mapIds, mapIdsLength);
 	hData.AddIntArray("stages", stages, stagesLength);
@@ -1610,11 +1532,8 @@ public int Native_GetRecordFilterDistributions(Handle plugin, int numParams)
 	bool hasTeleports = GetNativeCell(13);
 	int offset = GetNativeCell(14);
 	int limit = GetNativeCell(15);
-	
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
 
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddIntArray("ids", ids, idsLength);
 	hData.AddIntArray("map_ids", mapIds, mapIdsLength);
 	hData.AddIntArray("stages", stages, stagesLength);
@@ -1653,10 +1572,7 @@ public int Native_GetReplayList(Handle plugin, int numParams)
 	int offset = GetNativeCell(3);
 	int limit = GetNativeCell(4);
 	
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-	
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
@@ -1687,10 +1603,7 @@ public int Native_GetReplayByRecordId(Handle plugin, int numParams)
 	any data = GetNativeCell(2);
 	int recordId = GetNativeCell(3);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -1721,10 +1634,7 @@ public int Native_GetReplayByReplayId(Handle plugin, int numParams)
 	any data = GetNativeCell(2);
 	int replayId = GetNativeCell(3);
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
 	Handle hFwd = CreateForwardHandle(callback);
 	AddToForwardEx(hFwd, plugin, callback);
@@ -1759,10 +1669,7 @@ public int Native_CreateReplayForRecordId(Handle plugin, int numParams)
 	char replayPath[PLATFORM_MAX_PATH];
 	GetNativeString(4, replayPath, sizeof(replayPath));
 
-	char pluginName[GlobalAPI_Max_PluginName_Length];
-	strcopy(pluginName, sizeof(pluginName), GetPluginDisplayName(plugin));
-
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(pluginName);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 	hData.AddBodyFile(replayPath);
 
 	Handle hFwd = CreateForwardHandle(callback);

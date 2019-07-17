@@ -159,9 +159,16 @@ methodmap GlobalAPIRequest < Handle
  	*/
 	public bool SetRequestOriginHeader(GlobalAPIRequestData hData)
 	{
-		char pluginName[GlobalAPI_Max_PluginName_Length + 12];
+		char pluginName[GlobalAPI_Max_PluginName_Length];
 		hData.GetString("pluginName", pluginName, sizeof(pluginName));
-		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-RequestOrigin", pluginName);
+		
+		char pluginVersion[GlobalAPI_Max_PluginVersion_Length + 2];
+		hData.GetString("pluginVersion", pluginVersion, sizeof(pluginVersion));
+		
+		char fullPluginDisplay[sizeof(pluginName) + sizeof(pluginVersion) + 6];
+		Format(fullPluginDisplay, sizeof(fullPluginDisplay), "%s (V.%s)", pluginName, pluginVersion); 
+		
+		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-RequestOrigin", fullPluginDisplay);
 	}
 
    /**

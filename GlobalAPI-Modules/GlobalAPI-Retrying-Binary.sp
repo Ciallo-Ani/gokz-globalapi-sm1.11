@@ -223,7 +223,7 @@ public Action CheckForRequests(Handle timer)
 public void RetryRequest(char[] url, char[] plugin, char[] params, bool keyRequired, int requestType, int bodyLength)
 {
 	// Pack everything into GlobalAPI plugin friendly format
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(null, plugin);
 
 	hData.AddUrl(url);
 	hData.Decode(params);

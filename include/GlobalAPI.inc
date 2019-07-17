@@ -32,6 +32,7 @@
 
 #define GlobalAPI_Max_APIKey_Length 128
 #define GlobalAPI_Max_PluginName_Length 64
+#define GlobalAPI_Max_PluginVersion_Length 32
 #define GlobalAPI_Data_File_Extension "GAPI"
 
 // ======================= INCLUDES ========================== //
