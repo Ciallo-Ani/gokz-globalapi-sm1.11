@@ -27,7 +27,11 @@ methodmap GlobalAPIRequestData < JSON_Object
    /**
  	* Creates a new GlobalAPIRequestData
  	*
- 	* @param pluginName			Name of the plugin
+ 	* @note 					You can pass a plugin handle or name and/or version
+ 	* @note						Plugin handle is always preferred
+ 	* @param plugin				Handle to calling plugin
+ 	* @param pluginName			Name of the calling plugin
+ 	* @param pluginVersion		Version of the calling plugin
  	* @return					A new GlobalAPIRequestData handle
  	*/
 	public GlobalAPIRequestData(Handle plugin = null, char[] pluginName = "Unknown", char[] pluginVersion = "Unknown")

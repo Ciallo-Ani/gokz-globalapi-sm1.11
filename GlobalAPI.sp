@@ -28,6 +28,9 @@ bool gB_usingAPIKey = false;
 char gC_apiKey[GlobalAPI_Max_APIKey_Length];
 char gC_baseUrl[GlobalAPI_Max_BaseUrl_Length];
 
+ConVar gCV_MetaModVersion = null;
+ConVar gCV_SourceModVersion = null;
+
 // Cached vars
 char gC_mapName[64];
 char gC_mapPath[PLATFORM_MAX_PATH];
@@ -85,6 +88,9 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
+	gCV_MetaModVersion = FindConVar("metamod_version");
+	gCV_SourceModVersion = FindConVar("sourcemod_Version");
+
 	g_statsModules = new ArrayList();
 	g_loggingModules = new ArrayList();
 	g_retryingModules = new ArrayList();

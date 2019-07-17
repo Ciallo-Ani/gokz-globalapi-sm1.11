@@ -38,11 +38,24 @@ bool HTTPPost(GlobalAPIRequestData hData)
 		request.SetBody(hData, body, maxlength);
 	}
 
+	char mmVersion[32] = "Unknown";
+	if (gCV_MetaModVersion != null)
+	{
+		gCV_MetaModVersion.GetString(mmVersion, sizeof(mmVersion));
+	}
+
+	char smVersion[32] = "Unknown";
+	if (gCV_SourceModVersion != null)
+	{
+		gCV_SourceModVersion.GetString(smVersion, sizeof(smVersion));
+	}
+
 	request.SetData(hData);
 	request.SetTimeout(15);
 	request.SetCallbacks();
 	request.SetAuthHeader();
 	request.SetPoweredByHeader();
+	request.SetEnvironmentHeaders(mmVersion, smVersion);
 	request.SetAcceptHeaders(hData);
 	request.SetContentTypeHeader(hData);
 	request.SetRequestOriginHeader(hData);

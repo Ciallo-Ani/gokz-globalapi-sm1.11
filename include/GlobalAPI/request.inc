@@ -140,6 +140,19 @@ methodmap GlobalAPIRequest < Handle
 		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-Powered-By", GlobalAPI_Plugin_NameVersion);
 	}
 
+	/**
+ 	* Sets envinroment headers (MetaMod & SourceMod)
+ 	*
+  	* @param mmVersion			MetaMod version string
+ 	* @param smVersion			SourceMod version string
+ 	* @return					Whether the operation was successful
+ 	*/
+	public bool SetEnvironmentHeaders(char[] mmVersion, char[] smVersion)
+	{
+		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-MetaMod-Version", mmVersion)
+		&& SteamWorks_SetHTTPRequestHeaderValue(this, "X-SourceMod-Version", smVersion);
+	}
+
    /**
  	* Sets content type header
  	*
