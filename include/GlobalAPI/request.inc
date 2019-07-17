@@ -161,8 +161,6 @@ methodmap GlobalAPIRequest < Handle
 	{
 		char pluginName[GlobalAPI_Max_PluginName_Length + 12];
 		hData.GetString("pluginName", pluginName, sizeof(pluginName));
-		
-		if (hData.isRetried) StrCat(pluginName, sizeof(pluginName), " [Retried]");
 		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-RequestOrigin", pluginName);
 	}
 
