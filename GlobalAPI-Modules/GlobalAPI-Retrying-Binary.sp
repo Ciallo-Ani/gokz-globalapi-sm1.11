@@ -127,9 +127,6 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 	char url[GlobalAPI_Max_BaseUrl_Length];
 	hData.GetString("url", url, sizeof(url));
 
-	char plugin[GlobalAPI_Max_PluginName_Length];
-	hData.GetString("pluginName", plugin, sizeof(plugin));
-
 	char[] params = new char[bodyLength];
 	hData.Encode(params, bodyLength);
 
@@ -138,8 +135,6 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 
 	binaryFile.WriteInt16(strlen(url));
 	binaryFile.WriteString(url, false);
-	binaryFile.WriteInt8(strlen(plugin));
-	binaryFile.WriteString(plugin, false);
 	binaryFile.WriteInt32(strlen(params));
 	binaryFile.WriteString(params, false);
 	binaryFile.WriteInt8(keyRequired);
@@ -190,11 +185,6 @@ public Action CheckForRequests(Handle timer)
 		binaryFile.ReadString(url, length, length);
 		url[length] = '\0';
 
-		binaryFile.ReadInt8(length);
-		char[] plugin = new char[length + 1];
-		binaryFile.ReadString(plugin, length, length);
-		plugin[length] = '\0';
-
 		binaryFile.ReadInt32(length);
 		char[] params = new char[length + 1];
 		binaryFile.ReadString(params, length, length);
@@ -213,17 +203,17 @@ public Action CheckForRequests(Handle timer)
 		binaryFile.ReadInt32(timestamp);
 		binaryFile.Close();
 
-		RetryRequest(url, plugin, params, keyRequired, requestType, bodyLength);
+		RetryRequest(url, params, keyRequired, requestType, bodyLength);
 		DeleteFile(dataFile);
 	}
 	
 	delete dataFiles;
 }
 
-public void RetryRequest(char[] url, char[] plugin, char[] params, bool keyRequired, int requestType, int bodyLength)
+public void RetryRequest(char[] url, char[] params, bool keyRequired, int requestType, int bodyLength)
 {
 	// Pack everything into GlobalAPI plugin friendly format
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(null, plugin);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(GetMyHandle());
 
 	hData.AddUrl(url);
 	hData.Decode(params);
