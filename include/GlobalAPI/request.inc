@@ -181,7 +181,7 @@ methodmap GlobalAPIRequest < Handle
 		char fullPluginDisplay[sizeof(pluginName) + sizeof(pluginVersion) + 6];
 		Format(fullPluginDisplay, sizeof(fullPluginDisplay), "%s (V.%s)", pluginName, pluginVersion); 
 		
-		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-RequestOrigin", fullPluginDisplay);
+		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-Request-Origin", fullPluginDisplay);
 	}
 
    /**
