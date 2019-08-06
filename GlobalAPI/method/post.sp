@@ -5,7 +5,7 @@
 */
 bool HTTPPost(GlobalAPIRequestData hData)
 {
-	if (hData.keyRequired && !gB_usingAPIKey && !gCV_Debug.BoolValue)
+	if (hData.KeyRequired && !gB_usingAPIKey && !gCV_Debug.BoolValue)
 	{
 		LogMessage("[GlobalAPI] Using this method requires an API key, and you dont seem to have one setup!");
 		return false;
@@ -23,7 +23,7 @@ bool HTTPPost(GlobalAPIRequestData hData)
 		return false;
 	}
 
-	if (hData.contentType == GlobalAPIRequestContentType_OctetStream)
+	if (hData.ContentType == GlobalAPIRequestContentType_OctetStream)
 	{
 		char file[PLATFORM_MAX_PATH];
 		hData.GetString("bodyFile", file, sizeof(file));
@@ -31,7 +31,7 @@ bool HTTPPost(GlobalAPIRequestData hData)
 	}
 	else
 	{
-		int maxlength = hData.bodyLength;
+		int maxlength = hData.BodyLength;
 		char[] body = new char[maxlength];
 
 		hData.Encode(body, maxlength);

@@ -45,23 +45,23 @@ public Action Command_AuthCheck(int client, int args)
 
 public void OnAuth(JSON_Object hAuth, GlobalAPIRequestData hData)
 {
-	if (hData.failure == false)
+	if (hData.Failure == false)
 	{
 		APIAuth status = new APIAuth(hAuth);
 	
 		char serverType[30];
 		status.GetType(serverType, sizeof(serverType));
 
-		LogMessage("ID: %d", status.identity);
+		LogMessage("ID: %d", status.Identity);
 		LogMessage("Type: %s", serverType);
-		LogMessage("Validated: %s", status.isValid ? "YES" : "NO");
+		LogMessage("Validated: %s", status.IsValid ? "YES" : "NO");
 	}
 	else
 	{
 		LogMessage("Failure during HTTP Request!");
 	}
 
-	GlobalAPI_DebugMessage("<Get Auth Status> executed in %d ms - status: %d", hData.responseTime, hData.status);
+	GlobalAPI_DebugMessage("<Get Auth Status> executed in %d ms - status: %d", hData.ResponseTime, hData.Status);
 }
 
 // =========================================================== //

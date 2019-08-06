@@ -37,7 +37,7 @@ public void GlobalAPI_OnInitialized()
 
 public void OnMaps(JSON_Object hResponse, GlobalAPIRequestData hData)
 {
-	if (hData.failure == false)
+	if (hData.Failure == false)
 	{
 		APIIterable iterable = new APIIterable(hResponse);
 		
@@ -50,7 +50,7 @@ public void OnMaps(JSON_Object hResponse, GlobalAPIRequestData hData)
 				char mapName[PLATFORM_MAX_PATH];
 				map.GetName(mapName, sizeof(mapName));
 				
-				int mapTier = map.difficulty;
+				int mapTier = map.Difficulty;
 				
 				StringMap mapPack = new StringMap();
 				mapPack.SetString("mapName", mapName);
@@ -66,7 +66,7 @@ public void OnMaps(JSON_Object hResponse, GlobalAPIRequestData hData)
 		LogMessage("Failure during HTTP Request!");
 	}
 
-	GlobalAPI_DebugMessage("<Get Maps> executed in %d ms - status: %d", hData.responseTime, hData.status);
+	GlobalAPI_DebugMessage("<Get Maps> executed in %d ms - status: %d", hData.ResponseTime, hData.Status);
 }
 
 public void BuildTheThingie()

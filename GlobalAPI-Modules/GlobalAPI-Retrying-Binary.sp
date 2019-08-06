@@ -92,7 +92,7 @@ public void OnLibraryRemoved(const char[] name)
 
 public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
 {
-	if (hData.requestType == GlobalAPIRequestType_POST)
+	if (hData.RequestType == GlobalAPIRequestType_POST)
 	{
 		SaveRequestAsBinary(hData);
 	}
@@ -122,7 +122,7 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 	}
 
 	// Start preparing data
-	int bodyLength = hData.bodyLength;
+	int bodyLength = hData.BodyLength;
 	
 	char url[GlobalAPI_Max_BaseUrl_Length];
 	hData.GetString("url", url, sizeof(url));
@@ -130,8 +130,8 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 	char[] params = new char[bodyLength];
 	hData.Encode(params, bodyLength);
 
-	int requestType = hData.requestType;
-	bool keyRequired = hData.keyRequired;
+	int requestType = hData.RequestType;
+	bool keyRequired = hData.KeyRequired;
 
 	binaryFile.WriteInt16(strlen(url));
 	binaryFile.WriteString(url, false);
@@ -221,13 +221,13 @@ public void RetryRequest(char[] url, char[] params, bool keyRequired, int reques
 	// These are set to null until
 	// We have a reliable way of retrieving
 	// The handles from the original plugin
-	hData.data = INVALID_HANDLE;
-	hData.callback = INVALID_HANDLE;
+	hData.Data = INVALID_HANDLE;
+	hData.Callback = INVALID_HANDLE;
 
-	hData.isRetried = true;
-	hData.bodyLength = bodyLength;
-	hData.keyRequired = keyRequired;
-	hData.requestType = requestType;
+	hData.IsRetried = true;
+	hData.BodyLength = bodyLength;
+	hData.KeyRequired = keyRequired;
+	hData.RequestType = requestType;
 
 	GlobalAPI_SendRequest(hData);
 }

@@ -127,7 +127,7 @@ public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData
 	char requestUrl[GlobalAPI_Max_BaseUrl_Length];
 	hData.GetString("url", requestUrl, sizeof(requestUrl));
 	
-	GlobalAPI_DebugMessage("HTTP Request to \"%s\" failed! - Status: %d", requestUrl, hData.status);
+	GlobalAPI_DebugMessage("HTTP Request to \"%s\" failed! - Status: %d", requestUrl, hData.Status);
 }
 
 public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hData)
@@ -135,7 +135,7 @@ public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hDa
 	char requestUrl[GlobalAPI_Max_BaseUrl_Length];
 	hData.GetString("url", requestUrl, sizeof(requestUrl));
 	
-	GlobalAPI_DebugMessage("HTTP Request to \"%s\" completed! - Status: %d", requestUrl, hData.status);
+	GlobalAPI_DebugMessage("HTTP Request to \"%s\" completed! - Status: %d", requestUrl, hData.Status);
 }
 
 // =========================================================== //

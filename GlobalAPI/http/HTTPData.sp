@@ -6,7 +6,7 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 
 	JSON_Object hJson = null;
 
-	if (hData.acceptType == GlobalAPIRequestContentType_OctetStream)
+	if (hData.AcceptType == GlobalAPIRequestContentType_OctetStream)
 	{
 		char path[PLATFORM_MAX_PATH];
 		BuildPath(Path_SM, path, sizeof(path), "data/GlobalAPI/%d_%f.%s",
@@ -25,8 +25,8 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 		hJson = json_decode(response);
 	}
 
-	any data = hData.data;
-	Handle hFwd = hData.callback;
+	any data = hData.Data;
+	Handle hFwd = hData.Callback;
 
 	// Remove temporary key
 	hData.Remove("_requestHandle");

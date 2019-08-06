@@ -34,7 +34,7 @@ methodmap APIAuth < JSON_Object
 	/* 
 		Gets auth "isValid" key from the response
 	*/
-	property bool isValid
+	property bool IsValid
 	{
 		public get() { return this.GetBool("isValid"); }
 	}
@@ -42,7 +42,7 @@ methodmap APIAuth < JSON_Object
 	/*
 		Gets auth "identity" key from the response
 	*/
-	property int identity
+	property int Identity
 	{
 		public get() { return this.GetInt("identity"); }
 	}
@@ -60,7 +60,7 @@ methodmap APIBan < JSON_Object
 	/*
 		Gets ban "updatedById" key from the response
 	*/
-	property int updatedById
+	property int UpdatedById
 	{
 		public get() { return this.GetInt("updated_by_id"); }
 	}
@@ -68,7 +68,7 @@ methodmap APIBan < JSON_Object
 	/*
 		Gets ban "id" key from the response
 	*/
-	property int id
+	property int Id
 	{
 		public get() { return this.GetInt("id"); }
 	}
@@ -112,7 +112,7 @@ methodmap APIBan < JSON_Object
 	/*
 		Gets ban "steamid64" key from the response
 	*/
-	property int steamId64
+	property int SteamId64
 	{
 		public get() { return this.GetInt("steamid64"); }
 	}
@@ -168,7 +168,7 @@ methodmap APIBan < JSON_Object
 	/*
 		Gets ban "server_id" key from the response
 	*/
-	property int serverId
+	property int ServerId
 	{
 		public get() { return this.GetInt("server_id"); }
 	}
@@ -198,7 +198,7 @@ methodmap APIJumpstat < JSON_Object
 	/*
 		Gets jumpstat "id" key from the response
 	*/
-	property int id
+	property int Id
 	{
 		public get() { return this.GetInt("id"); }
 	}
@@ -206,7 +206,7 @@ methodmap APIJumpstat < JSON_Object
 	/*
 		Gets jumpstat "server_id" key from the response
 	*/
-	property int serverId
+	property int ServerId
 	{
 		public get() { return this.GetInt("server_id"); }
 	}
@@ -214,7 +214,7 @@ methodmap APIJumpstat < JSON_Object
 	/*
 		Gets jumpstat "steamid64" key from the response
 	*/
-	property int steamId64
+	property int SteamId64
 	{
 		public get() { return this.GetInt("steamid64"); }
 	}
@@ -246,7 +246,7 @@ methodmap APIJumpstat < JSON_Object
 	/*
 		Gets jumpstat "jump_type" key from the response
 	*/
-	property int jumpType
+	property int JumpType
 	{
 		public get() { return this.GetInt("jump_type"); }
 	}
@@ -254,7 +254,7 @@ methodmap APIJumpstat < JSON_Object
 	/*
 		Gets jumpstat "distance" key from the response
 	*/
-	property float distance
+	property float Distance
 	{
 		public get() { return this.GetFloat("distance"); }
 	}
@@ -262,7 +262,7 @@ methodmap APIJumpstat < JSON_Object
 	/*
 		Gets jumpstat "tickrate" key from the response
 	*/
-	property int tickRate
+	property int TickRate
 	{
 		public get() { return this.GetInt("tickrate"); }
 	}
@@ -270,7 +270,7 @@ methodmap APIJumpstat < JSON_Object
 	/*
 		Gets jumpstat "msl_count" key from the response
 	*/
-	property int mslCount
+	property int MslCount
 	{
 		public get() { return this.GetInt("msl_count"); }
 	}
@@ -278,7 +278,7 @@ methodmap APIJumpstat < JSON_Object
 	/*
 		Gets jumpstat "strafe_count" key from the response
 	*/
-	property int strafeCount
+	property int StrafeCount
 	{
 		public get() { return this.GetInt("strafe_count"); }
 	}
@@ -286,7 +286,7 @@ methodmap APIJumpstat < JSON_Object
 	/*
 		Gets jumpstat "is_crouch_bind" key from the response
 	*/
-	property bool isCrouchBind
+	property bool IsCrouchBind
 	{
 		public get() { return this.GetBool("is_crouch_bind"); }
 	}
@@ -294,7 +294,7 @@ methodmap APIJumpstat < JSON_Object
 	/*
 		Gets jumpstat "is_forward_bind" key from the response
 	*/
-	property bool isForwardBind
+	property bool IsForwardBind
 	{
 		public get() { return this.GetBool("is_forward_bind"); }
 	}
@@ -302,7 +302,7 @@ methodmap APIJumpstat < JSON_Object
 	/*
 		Gets jumpstat "is_crouch_boost" key from the response
 	*/
-	property bool isCrouchBoost
+	property bool IsCrouchBoost
 	{
 		public get() { return this.GetBool("is_crouch_boost"); }
 	}
@@ -310,7 +310,7 @@ methodmap APIJumpstat < JSON_Object
 	/*
 		Gets jumpstat "updated_by_id" key from the response
 	*/
-	property int updatedById
+	property int UpdatedById
 	{
 		public get() { return this.GetInt("updated_by_id"); }
 	}
@@ -352,7 +352,7 @@ methodmap APIMap < JSON_Object
 	/*
 		Gets map "id" key from the response
 	*/
-	property int id
+	property int Id
 	{
 		public get() { return this.GetInt("id"); }
 	}
@@ -372,7 +372,7 @@ methodmap APIMap < JSON_Object
 	/*
 		Gets map "filesize" key from the response
 	*/
-	property int fileSize
+	property int Filesize
 	{
 		public get() { return this.GetInt("filesize"); }
 	}
@@ -380,7 +380,7 @@ methodmap APIMap < JSON_Object
 	/*
 		Gets map "validated" key from the response
 	*/
-	property bool isValidated
+	property bool IsValidated
 	{
 		public get() { return this.GetBool("validated"); }
 	}
@@ -388,7 +388,7 @@ methodmap APIMap < JSON_Object
 	/*
 		Gets map "difficulty" key from the response
 	*/
-	property int difficulty
+	property int Difficulty
 	{
 		public get() { return this.GetInt("difficulty"); }
 	}
@@ -420,7 +420,7 @@ methodmap APIMap < JSON_Object
 	/*
 		Gets map "approved_by_steamid64" key from the response
 	*/
-	property int approvedBySteamId64
+	property int ApprovedBySteamId64
 	{
 		public get() { return this.GetInt("approved_by_steamid64"); }
 	}
@@ -438,7 +438,7 @@ methodmap APIMode < JSON_Object
 	/*
 		Gets mode "id" key from the response
 	*/
-	property int id
+	property int Id
 	{
 		public get() { return this.GetInt("id"); }
 	}
@@ -470,7 +470,7 @@ methodmap APIMode < JSON_Object
 	/*
 		Gets mode "latest_version" key from the response
 	*/
-	property int latestVersion
+	property int LatestVersion
 	{
 		public get() { return this.GetInt("latest_version"); }
 	}
@@ -514,7 +514,7 @@ methodmap APIMode < JSON_Object
 	/*
 		Gets mode "contact_steamid64" key from the response
 	*/
-	property int contactSteamId64
+	property int ContactSteamId64
 	{
 		public get() { return this.GetInt("contact_steamid64"); }
 	}
@@ -548,7 +548,7 @@ methodmap APIMode < JSON_Object
 	/*
 		Gets mode "updated_by_id" key from the response
 	*/
-	property int updatedById
+	property int UpdatedById
 	{
 		public get() { return this.GetInt("updated_by_id"); }
 	}
@@ -566,7 +566,7 @@ methodmap APIPlayer < JSON_Object
 	/*
 		Gets player "steamid64" key from the response
 	*/
-	property int steamId64
+	property int SteamId64
 	{
 		public get() { return this.GetInt("steamid64"); }
 	}
@@ -586,7 +586,7 @@ methodmap APIPlayer < JSON_Object
 	/*
 		Gets player "is_banned" key from the response
 	*/
-	property bool isBanned
+	property bool IsBanned
 	{
 		public get() { return this.GetBool("is_banned"); }
 	}
@@ -594,7 +594,7 @@ methodmap APIPlayer < JSON_Object
 	/*
 		Gets player "total_records" key from the response
 	*/
-	property int totalRecords
+	property int TotalRecords
 	{
 		public get() { return this.GetInt("total_records"); }
 	}
@@ -624,7 +624,7 @@ methodmap APIRecord < JSON_Object
 	/*
 		Gets record "id" key from the response
 	*/
-	property int id
+	property int Id
 	{
 		public get() { return this.GetInt("id"); }
 	}
@@ -632,7 +632,7 @@ methodmap APIRecord < JSON_Object
 	/*
 		Gets record "steamid64" key from the response
 	*/
-	property int steamId64
+	property int SteamId64
 	{
 		public get() { return this.GetInt("steamid64"); }
 	}
@@ -664,7 +664,7 @@ methodmap APIRecord < JSON_Object
 	/*
 		Gets record "server_id" key from the response
 	*/
-	property int serverId
+	property int ServerId
 	{
 		public get() { return this.GetInt("server_id"); }
 	}
@@ -672,7 +672,7 @@ methodmap APIRecord < JSON_Object
 	/*
 		Gets record "map_id" key from the response
 	*/
-	property int mapId
+	property int MapId
 	{
 		public get() { return this.GetInt("map_id"); }
 	}
@@ -680,7 +680,7 @@ methodmap APIRecord < JSON_Object
 	/*
 		Gets record "stage" key from the response
 	*/
-	property int stage
+	property int Stage
 	{
 		public get() { return this.GetInt("stage"); }
 	}
@@ -700,7 +700,7 @@ methodmap APIRecord < JSON_Object
 	/*
 		Gets record "tickrate" key from the response
 	*/
-	property int tickRate
+	property int TickRate
 	{
 		public get() { return this.GetInt("tickrate"); }
 	}
@@ -708,7 +708,7 @@ methodmap APIRecord < JSON_Object
 	/*
 		Gets record "time" key from the response
 	*/
-	property float time
+	property float Time
 	{
 		public get() { return this.GetFloat("time"); }
 	}
@@ -716,7 +716,7 @@ methodmap APIRecord < JSON_Object
 	/*
 		Gets record "teleports" key from the response
 	*/
-	property int teleports
+	property int Teleports
 	{
 		public get() { return this.GetInt("teleports"); }
 	}
@@ -748,7 +748,7 @@ methodmap APIRecord < JSON_Object
 	/*
 		Gets record "updated_by" key from the response
 	*/
-	property int updatedBySteamId64
+	property int UpdatedBySteamId64
 	{
 		public get() { return this.GetInt("updated_by"); }
 	}
@@ -790,7 +790,7 @@ methodmap APIServer < JSON_Object
 	/*
 		Gets server "port" key from the response
 	*/
-	property int port
+	property int Port
 	{
 		public get() { return this.GetInt("port"); }
 	}
@@ -822,7 +822,7 @@ methodmap APIServer < JSON_Object
 	/*
 		Gets server "owner_steamid64" key from the response
 	*/
-	property int ownerSteamId64
+	property int OwnerSteamId64
 	{
 		public get() { return this.GetInt("owner_steamid64"); }
 	}
@@ -840,7 +840,7 @@ methodmap APIRecordFilter < JSON_Object
 	/*
 		Gets record filter "id" key from the response
 	*/ 
-	property int id
+	property int Id
 	{
 		public get() { return this.GetInt("id"); }
 	}
@@ -848,7 +848,7 @@ methodmap APIRecordFilter < JSON_Object
 	/*
 		Gets record filter "map_id" key from the response
 	*/ 
-	property int mapId
+	property int MapId
 	{
 		public get() { return this.GetInt("map_id"); }
 	}
@@ -856,7 +856,7 @@ methodmap APIRecordFilter < JSON_Object
 	/*
 		Gets record filter "stage" key from the response
 	*/ 
-	property int stage
+	property int Stage
 	{
 		public get() { return this.GetInt("stage"); }
 	}
@@ -864,7 +864,7 @@ methodmap APIRecordFilter < JSON_Object
 	/*
 		Gets record filter "mode_id" key from the response
 	*/
-	property int modeId
+	property int ModeId
 	{
 		public get() { return this.GetInt("mode_id"); }
 	}
@@ -872,7 +872,7 @@ methodmap APIRecordFilter < JSON_Object
 	/*
 		Gets record filter "tickrate" key from the response
 	*/
-	property int tickRate
+	property int TickRate
 	{
 		public get() { return this.GetInt("tickrate"); }
 	}
@@ -880,7 +880,7 @@ methodmap APIRecordFilter < JSON_Object
 	/*
 		Gets record filter "has_teleports" key from the response
 	*/
-	property bool hasTeleports
+	property bool HasTeleports
 	{
 		public get() { return this.GetBool("has_teleports"); }
 	}
@@ -912,7 +912,7 @@ methodmap APIRecordFilter < JSON_Object
 	/*
 		Gets record filter "updated_by_id" key from the response
 	*/
-	property int updatedById
+	property int UpdatedById
 	{
 		public get() { return this.GetInt("updated_by_id"); }
 	}

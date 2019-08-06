@@ -37,7 +37,7 @@ methodmap GlobalAPIRequestData < JSON_Object
 	public GlobalAPIRequestData(Handle plugin = null, char[] pluginName = "Unknown", char[] pluginVersion = "Unknown")
 	{
 		JSON_Object requestData = new JSON_Object();
-		
+
 		if (plugin == null)
 		{
 			requestData.SetString("pluginName", pluginName);
@@ -128,7 +128,7 @@ methodmap GlobalAPIRequestData < JSON_Object
     /*
  		Get or set the request's "acceptType"
  	*/
-	property int acceptType
+	property int AcceptType
 	{
 		public get()
 		{
@@ -143,7 +143,7 @@ methodmap GlobalAPIRequestData < JSON_Object
     /*
  		Get or set the request's "contentType"
  	*/
-	property int contentType
+	property int ContentType
 	{
 		public get()
 		{
@@ -158,7 +158,7 @@ methodmap GlobalAPIRequestData < JSON_Object
     /*
  		Get or set the request's "keyRequired"
  	*/
-	property bool keyRequired
+	property bool KeyRequired
 	{
 		public get()
 		{
@@ -174,7 +174,7 @@ methodmap GlobalAPIRequestData < JSON_Object
 	/*
 		Get or set the request's "isRetried"
  	*/
-	property bool isRetried
+	property bool IsRetried
 	{
 		public get()
 		{
@@ -190,7 +190,7 @@ methodmap GlobalAPIRequestData < JSON_Object
 	/*
 		Get or set the request's "bodyLength"
  	*/
-	property int bodyLength
+	property int BodyLength
 	{
 		public get()
 		{
@@ -206,7 +206,7 @@ methodmap GlobalAPIRequestData < JSON_Object
     /*
  		Get or set the request's "status"
  	*/
-	property int status
+	property int Status
 	{
 		public get()
 		{
@@ -222,7 +222,7 @@ methodmap GlobalAPIRequestData < JSON_Object
     /*
  		Get or set the request's "responseTime"
  	*/
-	property int responseTime
+	property int ResponseTime
 	{
 		public get()
 		{
@@ -238,7 +238,7 @@ methodmap GlobalAPIRequestData < JSON_Object
     /*
  		Get or set the request's "requestType"
  	*/
-	property int requestType
+	property int RequestType
 	{
 		public get()
 		{
@@ -254,7 +254,7 @@ methodmap GlobalAPIRequestData < JSON_Object
     /*
  		Get or set the request's "failure"
  	*/
-	property bool failure
+	property bool Failure
 	{
 		public get()
 		{
@@ -270,7 +270,7 @@ methodmap GlobalAPIRequestData < JSON_Object
     /*
  		Get or set the request's "callback"
  	*/
-	property Handle callback
+	property Handle Callback
 	{
 		public get()
 		{
@@ -287,7 +287,7 @@ methodmap GlobalAPIRequestData < JSON_Object
 	/*
 		Get or set the request's "data"
  	*/
-	property any data
+	property any Data
 	{
 		public get()
 		{

@@ -60,7 +60,7 @@ methodmap GlobalAPIRequest < Handle
  	*/
 	public bool SetBody(GlobalAPIRequestData hData, char[] body, int maxlength)
 	{
-		return SteamWorks_SetHTTPRequestRawPostBody(this, gC_contentTypePhrases[hData.contentType], body, maxlength);
+		return SteamWorks_SetHTTPRequestRawPostBody(this, gC_contentTypePhrases[hData.ContentType], body, maxlength);
 	}
 	
   /**
@@ -71,7 +71,7 @@ methodmap GlobalAPIRequest < Handle
 	*/
 	public bool SetBodyFromFile(GlobalAPIRequestData hData, char[] file)
 	{
-		return SteamWorks_SetHTTPRequestRawPostBodyFromFile(this, gC_contentTypePhrases[hData.contentType], file);
+		return SteamWorks_SetHTTPRequestRawPostBodyFromFile(this, gC_contentTypePhrases[hData.ContentType], file);
 	}
 
    /**
@@ -127,7 +127,7 @@ methodmap GlobalAPIRequest < Handle
  	*/
 	public bool SetAcceptHeaders(GlobalAPIRequestData hData)
 	{
-		return SteamWorks_SetHTTPRequestHeaderValue(this, "Accept", gC_acceptTypePhrases[hData.acceptType]);
+		return SteamWorks_SetHTTPRequestHeaderValue(this, "Accept", gC_acceptTypePhrases[hData.AcceptType]);
 	}
 	
    /**
@@ -161,7 +161,7 @@ methodmap GlobalAPIRequest < Handle
  	*/
 	public bool SetContentTypeHeader(GlobalAPIRequestData hData)
 	{
-		return SteamWorks_SetHTTPRequestHeaderValue(this, "Content-Type", gC_contentTypePhrases[hData.contentType]);
+		return SteamWorks_SetHTTPRequestHeaderValue(this, "Content-Type", gC_contentTypePhrases[hData.ContentType]);
 	}
 	
    /**

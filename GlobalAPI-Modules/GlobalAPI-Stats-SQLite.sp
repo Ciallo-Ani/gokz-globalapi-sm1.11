@@ -117,8 +117,8 @@ public void OnLibraryRemoved(const char[] name)
 
 public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hData)
 {
-	int responseTime = hData.responseTime;
-	bool responseSuccess = !hData.failure;
+	int responseTime = hData.ResponseTime;
+	bool responseSuccess = !hData.Failure;
 		
 	char endpoint[GlobalAPI_Max_BaseUrl_Length];
 	hData.GetString("endpoint", endpoint, sizeof(endpoint));

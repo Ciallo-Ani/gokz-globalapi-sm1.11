@@ -4,7 +4,7 @@ public int Global_HTTP_DataReceived(Handle request, bool failure, int offset, in
 {
 	GlobalAPI_DebugMessage("HTTP Response data received...");
 
-	if (hData.failure)
+	if (hData.Failure)
 	{
 		Call_Global_OnRequestFailed(request, hData);
 		CallForward_NoResponse(hData);

@@ -35,7 +35,7 @@ public void OnClientAuthorized(int client, const char[] auth)
 
 public void OnPlayer(JSON_Object hResponse, GlobalAPIRequestData hData, int userid)
 {
-	if (hData.failure == false)
+	if (hData.Failure == false)
 	{
 		int client = GetClientOfUserId(userid);
 		APIPlayer player = new APIPlayer(hResponse);
@@ -43,9 +43,9 @@ public void OnPlayer(JSON_Object hResponse, GlobalAPIRequestData hData, int user
 		char steamId[32];
 		GetClientAuthId(client, AuthId_Steam2, steamId, sizeof(steamId));
 		
-		LogMessage("%s is %s", steamId, player.isBanned ? "banned" : "not banned");
+		LogMessage("%s is %s", steamId, player.IsBanned ? "banned" : "not banned");
 
-		if (player.isBanned)
+		if (player.IsBanned)
 		{
 			KickClient(client, "[GlobalAPI] You're globally banned!");
 		}
@@ -55,7 +55,7 @@ public void OnPlayer(JSON_Object hResponse, GlobalAPIRequestData hData, int user
 		LogMessage("Failure during HTTP Request!");
 	}
 
-	GlobalAPI_DebugMessage("<Get Player> executed in %d ms - status: %d", hData.responseTime, hData.status);
+	GlobalAPI_DebugMessage("<Get Player> executed in %d ms - status: %d", hData.ResponseTime, hData.Status);
 }
 
 // =========================================================== //

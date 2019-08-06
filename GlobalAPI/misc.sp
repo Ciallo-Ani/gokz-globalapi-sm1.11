@@ -110,7 +110,7 @@ bool SendRequest(Handle request, GlobalAPIRequestData hData)
 
 bool SendRequestEx(GlobalAPIRequestData hData)
 {
-	switch (hData.requestType)
+	switch (hData.RequestType)
 	{
 		case GlobalAPIRequestType_GET: return HTTPGet(hData);
 		case GlobalAPIRequestType_POST: return HTTPPost(hData);
@@ -125,8 +125,8 @@ bool SendRequestEx(GlobalAPIRequestData hData)
 // We do not care. We call the forward with data as null anyways
 void CallForward_NoResponse(GlobalAPIRequestData hData)
 {
-	any data = hData.data;
-	Handle hFwd = hData.callback;
+	any data = hData.Data;
+	Handle hFwd = hData.Callback;
 
 	CallForward(hFwd, null, hData, data);
 

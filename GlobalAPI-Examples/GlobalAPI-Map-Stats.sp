@@ -98,7 +98,7 @@ public Action Command_GetStatsForMap(int client, int args)
 
 public void OnRecordsGet(JSON_Object hResponse, GlobalAPIRequestData hData, int userid)
 {
-	if (hData.failure == false)
+	if (hData.Failure == false)
 	{
 		if (hResponse != null)
 		{
@@ -116,7 +116,7 @@ public void OnRecordsGet(JSON_Object hResponse, GlobalAPIRequestData hData, int 
 		LogMessage("Failure during HTTP Request!");
 	}
 	
-	GlobalAPI_DebugMessage("<Get Records Top> executed in %d ms - status: %d", hData.responseTime, hData.status);
+	GlobalAPI_DebugMessage("<Get Records Top> executed in %d ms - status: %d", hData.ResponseTime, hData.Status);
 }
 
 static void FormatRecords(int userid, APIIterable records, GlobalAPIRequestData hData)
@@ -132,14 +132,14 @@ static void FormatRecords(int userid, APIIterable records, GlobalAPIRequestData 
 		
 		if (i == 0)
 		{
-			bestTime = record.time;
+			bestTime = record.Time;
 		}
 		else if (i == totalRecords -1)
 		{
-			worstTime = record.time;
+			worstTime = record.Time;
 		}
 
-		totalTime += record.time;
+		totalTime += record.Time;
 		delete record;
 	}
 
