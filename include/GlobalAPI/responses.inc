@@ -69,9 +69,9 @@ methodmap APIBan < JSON_Object
 		this.GetString("expires_on", buffer, maxlength);
 	}
 
-	property int SteamId64
+	public void GetSteamId64(char[] buffer, int maxlength)
 	{
-		public get() { return this.GetInt("steamid64"); }
+		this.GetString("steamid64", buffer, maxlength);
 	}
 
 	public void GetPlayerName(char[] buffer, int maxlength)
@@ -124,9 +124,9 @@ methodmap APIJumpstat < JSON_Object
 		public get() { return this.GetInt("server_id"); }
 	}
 
-	property int SteamId64
+	public void GetSteamId64(char[] buffer, int maxlength)
 	{
-		public get() { return this.GetInt("steamid64"); }
+		this.GetString("steamid64", buffer, maxlength);
 	}
 
 	public void GetName(char[] buffer, int maxlength)
@@ -239,9 +239,9 @@ methodmap APIMap < JSON_Object
 		this.GetString("updated_on", buffer, maxlength);
 	}
 
-	property int ApprovedBySteamId64
+	public void GetApprovedBySteamId64(char[] buffer, int maxlength)
 	{
-		public get() { return this.GetInt("approved_by_steamid64"); }
+		this.GetString("approved_by_steamid64", buffer, maxlength);
 	}
 }
 
@@ -289,11 +289,11 @@ methodmap APIMode < JSON_Object
 		this.GetString("repo", buffer, maxlength);
 	}
 
-	property int ContactSteamId64
+	public void GetContactSteamId64(char[] buffer, int maxlength)
 	{
-		public get() { return this.GetInt("contact_steamid64"); }
+		this.GetString("contact_steamid64", buffer, maxlength);
 	}
-	
+
 	// TODO: Add supported_tickrates
 
 	public void GetCreatedOn(char[] buffer, int maxlength)
@@ -306,9 +306,9 @@ methodmap APIMode < JSON_Object
 		this.GetString("updated_on", buffer, maxlength);
 	}
 
-	property int UpdatedById
+	public void GetUpdatedById(char[] buffer, int maxlength)
 	{
-		public get() { return this.GetInt("updated_by_id"); }
+		this.GetString("updated_by_id", buffer, maxlength);
 	}
 }
 
@@ -321,9 +321,9 @@ methodmap APIPlayer < JSON_Object
 		return view_as<APIPlayer>(hPlayer);
 	}
 
-	property int SteamId64
+	public void GetSteamId64(char[] buffer, int maxlength)
 	{
-		public get() { return this.GetInt("steamid64"); }
+		this.GetString("steamid64", buffer, maxlength);
 	}
 
 	public void GetSteamId(char[] buffer, int maxlength)
@@ -361,9 +361,9 @@ methodmap APIRecord < JSON_Object
 		public get() { return this.GetInt("id"); }
 	}
 
-	property int SteamId64
+	public void GetSteamId64(char[] buffer, int maxlength)
 	{
-		public get() { return this.GetInt("steamid64"); }
+		this.GetString("steamid64", buffer, maxlength);
 	}
 
 	public void GetPlayerName(char[] buffer, int maxlength)
@@ -421,7 +421,7 @@ methodmap APIRecord < JSON_Object
 		this.GetString("updated_on", buffer, maxlength);
 	}
 
-	property int UpdatedBySteamId64
+	property int UpdatedBy
 	{
 		public get() { return this.GetInt("updated_by"); }
 	}
@@ -461,9 +461,9 @@ methodmap APIServer < JSON_Object
 		this.GetString("name", buffer, maxlength);
 	}
 
-	property int OwnerSteamId64
+	public void GetOwnerSteamId64(char[] buffer, int maxlength)
 	{
-		public get() { return this.GetInt("owner_steamid64"); }
+		this.GetString("owner_steamid64", buffer, maxlength);
 	}
 }
 
@@ -516,9 +516,9 @@ methodmap APIRecordFilter < JSON_Object
 		this.GetString("updated_on", buffer, maxlength);
 	}
 
-	property int UpdatedById
+	public void GetUpdatedById(char[] buffer, int maxlength)
 	{
-		public get() { return this.GetInt("updated_by_id"); }
+		this.GetString("updated_by_id", buffer, maxlength);
 	}
 }
 
