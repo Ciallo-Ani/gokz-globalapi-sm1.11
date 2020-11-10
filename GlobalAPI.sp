@@ -45,14 +45,9 @@ int gI_mapFilesize = -1;
 #include "GlobalAPI/misc.sp"
 #include "GlobalAPI/commands.sp"
 
-#include "GlobalAPI/method/get.sp"
-#include "GlobalAPI/method/post.sp"
-
-#include "GlobalAPI/http/HTTPData.sp"
-#include "GlobalAPI/http/HTTPHeaders.sp"
-#include "GlobalAPI/http/HTTPStarted.sp"
-#include "GlobalAPI/http/HTTPCompleted.sp"
-#include "GlobalAPI/http/HTTPDataReceived.sp"
+#include "GlobalAPI/http/get.sp"
+#include "GlobalAPI/http/post.sp"
+#include "GlobalAPI/http/forwards.sp"
 
 // ====================== PLUGIN INFO ======================== //
 
@@ -132,5 +127,3 @@ public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hDa
 	
 	GlobalAPI_DebugMessage("HTTP Request to \"%s\" completed! - Status: %d", requestUrl, hData.Status);
 }
-
-// =========================================================== //

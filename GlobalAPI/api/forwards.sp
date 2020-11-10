@@ -1,9 +1,5 @@
-// =========================================================== //
-
-// Privates
 static Handle H_Private_OnHTTPStart = null;
 
-// Globals
 static Handle H_Global_OnInitialized = null;
 static Handle H_Global_RequestFailed = null;
 static Handle H_Global_RequestStarted = null;
@@ -65,5 +61,3 @@ void Call_Global_OnRequestFinished(Handle request, GlobalAPIRequestData hData)
 	Call_PushCell(hData);
 	Call_Finish();
 }
-
-// =========================================================== //

@@ -221,5 +221,3 @@ public void BuildDateToLogs(BuildLogType type)
 		case BuildLog_Finished:Format(gC_HTTPFinished_LogFile, sizeof(gC_HTTPFinished_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, FINISHEDLOG_NAME, date);
 	}
 }
-
-// =========================================================== //

@@ -1,5 +1,3 @@
-// =========================================================== //
-
 ConVar gCV_Debug = null;
 ConVar gCV_Staging = null;
 
@@ -25,5 +23,3 @@ void ConVarHook(ConVar convar, const char[] oldValue, const char[] newValue)
 		}
 	}
 }
-
-// =========================================================== //

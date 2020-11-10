@@ -211,5 +211,3 @@ public void RetryRequest(char[] url, char[] params, bool keyRequired, int reques
 
 	GlobalAPI_SendRequest(hData);
 }
-
-// =========================================================== //

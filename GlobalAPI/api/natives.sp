@@ -1,6 +1,4 @@
-// =========================================================== //
-
-public void CreateNatives()
+void CreateNatives()
 {
 	// Plugin
 	CreateNative("GlobalAPI_IsInit", Native_IsInit);
@@ -1629,5 +1627,3 @@ public int Native_CreateReplayForRecordId(Handle plugin, int numParams)
 
 	return GlobalAPI_SendRequest(hData);
 }
-
-// =========================================================== //

@@ -1,5 +1,3 @@
-// =========================================================== //
-
 enum
 {
 	Argument_Help = 0,
@@ -120,5 +118,3 @@ public Action Command_ReloadAPIKey(int client, int args)
 	gB_usingAPIKey = ReadAPIKey();
 	ReplyToCommand(client, "[GlobalAPI] API Key reloaded!");
 }
-
-// =========================================================== //

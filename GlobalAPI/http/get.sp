@@ -1,8 +1,3 @@
-// =========================================================== //
-
-/*
-	BASE HTTP GET METHOD FOR NATIVES
-*/
 bool HTTPGet(GlobalAPIRequestData hData)
 {
 	if (hData.KeyRequired && !gB_usingAPIKey && !gCV_Debug.BoolValue)
@@ -40,5 +35,3 @@ bool HTTPGet(GlobalAPIRequestData hData)
 
 	return true;
 }
-
-// =========================================================== //

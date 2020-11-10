@@ -1,8 +1,3 @@
-// =========================================================== //
-
-/*
-	BASE HTTP POST METHOD FOR NATIVES
-*/
 bool HTTPPost(GlobalAPIRequestData hData)
 {
 	if (hData.KeyRequired && !gB_usingAPIKey && !gCV_Debug.BoolValue)
@@ -51,5 +46,3 @@ bool HTTPPost(GlobalAPIRequestData hData)
 
 	return true;
 }
-
-// =========================================================== //
