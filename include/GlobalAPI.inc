@@ -53,16 +53,6 @@ enum
 };
 
 /**
- * Type of the plugin module
- */
-enum ModuleType
-{
-	ModuleType_Stats = 0, 	/**< Is a stats module */
-	ModuleType_Logging,		/**< Is a logging module */
-	ModuleType_Retrying		/**< Is a retrying module */
-};
-
-/**
  * Defines what accept type is used on requests
  */
 enum
