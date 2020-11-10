@@ -23,7 +23,6 @@
 
 // ====================== VARIABLES ========================== //
 
-// Plugin
 bool gB_usingAPIKey = false;
 char gC_apiKey[GlobalAPI_Max_APIKey_Length];
 char gC_baseUrl[GlobalAPI_Max_BaseUrl_Length];
@@ -31,20 +30,13 @@ char gC_baseUrl[GlobalAPI_Max_BaseUrl_Length];
 ConVar gCV_MetaModVersion = null;
 ConVar gCV_SourceModVersion = null;
 
-// Cached vars
 char gC_mapName[64];
 char gC_mapPath[PLATFORM_MAX_PATH];
 int gI_mapFilesize = -1;
 
-// Modules
-ArrayList g_statsModules;
-ArrayList g_loggingModules;
-ArrayList g_retryingModules;
-
 // ======================= INCLUDES ========================== //
 
 #include "GlobalAPI/api/convars.sp"
-#include "GlobalAPI/api/modules.sp"
 #include "GlobalAPI/api/natives.sp"
 #include "GlobalAPI/api/forwards.sp"
 
@@ -90,10 +82,6 @@ public void OnPluginStart()
 {
 	gCV_MetaModVersion = FindConVar("metamod_version");
 	gCV_SourceModVersion = FindConVar("sourcemod_Version");
-
-	g_statsModules = new ArrayList();
-	g_loggingModules = new ArrayList();
-	g_retryingModules = new ArrayList();
 
 	gB_usingAPIKey = ReadAPIKey();
 	AutoExecConfig(true, PLUGIN_NAME, CONFIG_DIR);

@@ -198,48 +198,6 @@ native bool GlobalAPI_SendRequest(GlobalAPIRequestData hData);
 native bool GlobalAPI_DebugMessage(const char[] message, any ...);
 
 /**
- * Loads calling plugin as ModuleType module
- *
- * @param type					Type as ModuleType
- * @return						Whether the module was successfully loaded
- */
-native bool GlobalAPI_LoadModule(ModuleType type);
-
-/**
- * Unloads calling plugin from ModuleType modules
- *
- * @param type					Type as ModuleType
- * @return						Whether the module was successfully unloaded
- */
-native bool GlobalAPI_UnloadModule(ModuleType type);
-
-/**
- * Gets number of ModuleType modules loaded
- *
- * @param type					Type as ModuleType
- * @return						Number of stats modules loaded
- */
-native int GlobalAPI_GetModuleCount(ModuleType type);
-
-/**
- * Gets a copy of ModuleType modules as an ArrayList
- *
- * @note						Plugins in the arraylist are simply plugin handles
- * @param type					Type as ModuleType
- * @return						ArrayList handle of ModuleType modules
- */
-native ArrayList GlobalAPI_GetModuleList(ModuleType type);
-
-/**
- * Prints all modules of ModuleType to client's console
- *
- * @param client				Client index who print to
- * @param type					Type as ModuleType
- * @noreturn
- */
-native void GlobalAPI_PrintModulesToConsole(int client, ModuleType type);
-
-/**
  * Starts a GET HTTP Request to /api/{version}/auth/status
  *
  * @param callback				Callback when request has finished
@@ -809,13 +767,6 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_IsDebugging");
 	MarkNativeAsOptional("GlobalAPI_SendRequest");
 	MarkNativeAsOptional("GlobalAPI_DebugMessage");
-
-	// Modules
-	MarkNativeAsOptional("GlobalAPI_LoadModule");
-	MarkNativeAsOptional("GlobalAPI_UnloadModule");
-	MarkNativeAsOptional("GlobalAPI_GetModuleList");
-	MarkNativeAsOptional("GlobalAPI_GetModuleCount");
-	MarkNativeAsOptional("GlobalAPI_PrintModulesToConsole");
 
 	// Auth
 	MarkNativeAsOptional("GlobalAPI_GetAuthStatus");

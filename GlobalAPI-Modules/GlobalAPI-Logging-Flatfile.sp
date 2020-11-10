@@ -1,8 +1,5 @@
 // ====================== DEFINITIONS ======================== //
 
-#define PLUGIN_NAME "GlobalAPI-Logging-Flatfile"
-#define PLUGIN_AUTHOR "Sikari"
-
 #define LOGS_PATH "logs/GlobalAPI"
 #define FAILEDLOG_NAME "GlobalAPI-failed"
 #define STARTEDLOG_NAME "GlobalAPI-started"
@@ -44,19 +41,14 @@ enum BuildLogType
 
 public Plugin myinfo = 
 {
-	name = PLUGIN_NAME,
-	author = PLUGIN_AUTHOR,
+	name = "GlobalAPI-Logging-Flatfile",
+	author = "The KZ Global Team",
 	description = "Logging for GlobalAPI in Flatfile format",
-	version = GlobalAPI_Plugin_Version,
+	version = "1.0.0",
 	url = GlobalAPI_Plugin_Url
 };
 
 // ======================= MAIN CODE ========================= //
-
-public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
-{
-	RegPluginLibrary(PLUGIN_NAME);
-}
 
 public void OnPluginStart()
 {
@@ -70,19 +62,7 @@ public void OnPluginStart()
 
 public void OnAllPluginsLoaded()
 {
-	if (LibraryExists("GlobalAPI"))
-	{
-		gB_Core = true;
-		GlobalAPI_LoadModule(ModuleType_Logging);
-	}
-}
-
-public void OnPluginEnd()
-{
-	if (gB_Core)
-	{
-		GlobalAPI_LoadModule(ModuleType_Logging);
-	}
+	gB_Core = LibraryExists("GlobalAPI");
 }
 
 public void OnLibraryAdded(const char[] name)

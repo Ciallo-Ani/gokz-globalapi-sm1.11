@@ -9,13 +9,6 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_IsDebugging", Native_IsDebugging);
 	CreateNative("GlobalAPI_SendRequest", Native_SendRequest);
 	CreateNative("GlobalAPI_DebugMessage", Native_DebugMessage);
-	
-	// Modules
-	CreateNative("GlobalAPI_LoadModule", Native_LoadModule);
-	CreateNative("GlobalAPI_UnloadModule", Native_UnloadModule);
-	CreateNative("GlobalAPI_GetModuleList", Native_GetModuleList);
-	CreateNative("GlobalAPI_GetModuleCount", Native_GetModuleCount);
-	CreateNative("GlobalAPI_PrintModulesToConsole", Native_PrintModulesToConsole);
 
 	// Auth
 	CreateNative("GlobalAPI_GetAuthStatus", Native_GetAuthStatus);
@@ -134,71 +127,6 @@ public int Native_DebugMessage(Handle plugin, int numParams)
 	FormatNativeString(0, 1, 2, sizeof(message), _, message);
  
 	return DebugMessage(message);
-}
-
-// =========================================================== //
-
-/*
-	native bool GlobalAPI_LoadModule(ModuleType type)
-*/
-public int Native_LoadModule(Handle plugin, int numParams)
-{
-	ModuleType type = GetNativeCell(1);
-	
-	if (type != ModuleType_Retrying)
-	{
-		return LoadModule(plugin, type);
-	}
-	else
-	{
-		return LoadModule(plugin, type, 1);
-	}
-}
-
-// =========================================================== //
-
-/*
-	native bool GlobalAPI_UnloadModule(ModuleType type)
-*/
-public int Native_UnloadModule(Handle plugin, int numParams)
-{
-	ModuleType type = GetNativeCell(1);
-	return UnloadModule(plugin, type);
-}
-
-// =========================================================== //
-
-/*
-	native ArrayList GlobalAPI_GetModuleList(ModuleType type)
-*/
-public int Native_GetModuleList(Handle plugin, int numParams)
-{
-	ModuleType type = GetNativeCell(1);
-	return view_as<int>(GetModuleList(type));
-}
-
-// =========================================================== //
-
-/*
-	native int GlobalAPI_GetModuleCount(ModuleType type)
-*/
-public int Native_GetModuleCount(Handle plugin, int numParams)
-{
-	ModuleType type = GetNativeCell(1);
-	return GetModuleCount(type);
-}
-
-// =========================================================== //
-
-/*
-	native void GlobalAPI_PrintModulesToConsole(int client, ModuleType type)
-*/
-public int Native_PrintModulesToConsole(Handle plugin, int numParams)
-{
-	int client = GetNativeCell(1);
-	ModuleType type = GetNativeCell(2);
-	
-	PrintModulesToConsole(client, type);
 }
 
 // =========================================================== //

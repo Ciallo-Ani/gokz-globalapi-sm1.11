@@ -3,7 +3,6 @@
 enum
 {
 	Argument_Help = 0,
-	Argument_ShowModules,
 	Argument_ShowMapInfo,
 	ARGUMENT_COUNT
 };
@@ -11,7 +10,6 @@ enum
 static char validArgs[ARGUMENT_COUNT][] =
 {
 	"--help",
-	"--show-modules",
 	"--show-map-info"
 };
 
@@ -62,23 +60,6 @@ public Action Command_Info(int client, int args)
 			else
 			{
 				Format(errorString, sizeof(errorString), "\"%s\" must be supplied alone", argument);
-				errorMessages.PushString(errorString);
-			}
-		}
-
-		// --show-modules
-		else if (StrEqual(argument, validArgs[Argument_ShowModules]))
-		{
-			if (usedArguments.FindValue(Argument_ShowModules) == -1)
-			{
-				GlobalAPI_PrintModulesToConsole(client, ModuleType_Stats);
-				GlobalAPI_PrintModulesToConsole(client, ModuleType_Logging);
-				GlobalAPI_PrintModulesToConsole(client, ModuleType_Retrying);
-				usedArguments.Push(Argument_ShowModules);
-			}
-			else
-			{
-				Format(errorString, sizeof(errorString), "Command option \"%s\" already used", argument);
 				errorMessages.PushString(errorString);
 			}
 		}

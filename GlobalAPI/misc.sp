@@ -194,9 +194,6 @@ void PrintInfoHeaderToConsole(int client)
 	PrintToConsole(client, "-- Tickrate:  \t\t %d", RoundFloat(1.0 / GetTickInterval()));
 	PrintToConsole(client, "-- Staging:   \t\t %s", GlobalAPI_IsStaging() ? "Y" : "N");
 	PrintToConsole(client, "-- Debugging: \t\t %s", GlobalAPI_IsDebugging() ? "Y" : "N");
-	PrintToConsole(client, "-- Stats:	  \t %s",   GlobalAPI_GetModuleCount(ModuleType_Stats) > 0 ? "Y" : "N");
-	PrintToConsole(client, "-- Logging:   \t\t %s", GlobalAPI_GetModuleCount(ModuleType_Logging) > 0 ? "Y" : "N");
-	PrintToConsole(client, "-- Retrying:  \t\t %s", GlobalAPI_GetModuleCount(ModuleType_Retrying) > 0 ? "Y" : "N");
 }
 
 // =========================================================== //

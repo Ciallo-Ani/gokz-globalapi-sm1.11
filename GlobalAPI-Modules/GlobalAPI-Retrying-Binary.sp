@@ -1,8 +1,5 @@
 // ====================== DEFINITIONS ======================== //
 
-#define PLUGIN_NAME "GlobalAPI-Retrying-Binary"
-#define PLUGIN_AUTHOR "Sikari"
-
 #define DATA_PATH "data/GlobalAPI-Retrying"
 #define DATA_FILE "retrying_{timestamp}_{gametick}.dat"
 
@@ -27,19 +24,14 @@ bool gB_Core = false;
 
 public Plugin myinfo = 
 {
-	name = PLUGIN_NAME,
-	author = PLUGIN_AUTHOR,
+	name = "GlobalAPI-Retrying-Binary",
+	author = "The KZ Global Team",
 	description = "Retrying for GlobalAPI in binary format",
-	version = GlobalAPI_Plugin_Version,
+	version = "1.0.0",
 	url = GlobalAPI_Plugin_Url
 };
 
 // =========================================================== //
-
-public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
-{
-	RegPluginLibrary(PLUGIN_NAME);
-}
 
 public void OnPluginStart()
 {
@@ -50,26 +42,14 @@ public void OnPluginStart()
 	{
 		SetFailState("[%s] Failed to create directory [%s]", PLUGIN_NAME, path);
 	}
-	
-	// This is not the final solution!!!!!
+
+	// TODO: Rethink this?
 	CreateTimer(30.0, CheckForRequests, _, TIMER_REPEAT);
 }
 
 public void OnAllPluginsLoaded()
 {
-	if (LibraryExists("GlobalAPI"))
-	{
-		gB_Core = true;
-		GlobalAPI_LoadModule(ModuleType_Retrying);
-	}
-}
-
-public void OnPluginEnd()
-{
-	if (gB_Core)
-	{
-		GlobalAPI_UnloadModule(ModuleType_Retrying);
-	}
+	gB_Core = LibraryExists("GlobalAPI");
 }
 
 public void OnLibraryAdded(const char[] name)
