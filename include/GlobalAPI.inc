@@ -830,5 +830,3 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_CreateReplayForRecordId");
 }
 #endif
-
-// =========================================================== //
