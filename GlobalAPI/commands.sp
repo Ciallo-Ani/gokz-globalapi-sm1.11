@@ -11,7 +11,7 @@ static char validArgs[ARGUMENT_COUNT][] =
 	"--show-map-info"
 };
 
-// =========================================================== //
+// =====[ PUBLIC ]=====
 
 void CreateCommands()
 {
@@ -19,15 +19,13 @@ void CreateCommands()
 	RegAdminCmd("sm_globalapi_reload_apikey", Command_ReloadAPIKey, ADMFLAG_ROOT, "Reloads the API Key");
 }
 
-// =========================================================== //
-
 public Action Command_Info(int client, int args)
 {
 	PrintInfoHeaderToConsole(client);
-	
+
 	char argument[32];
 	ArrayList usedArguments = new ArrayList();
-	
+
 	char errorString[64];
 	ArrayList errorMessages = new ArrayList(ByteCountToCells(sizeof(errorString)));
 
@@ -41,7 +39,7 @@ public Action Command_Info(int client, int args)
 		}
 
 		GetCmdArg(arg, argument, sizeof(argument));
-		
+
 		// --help
 		if (StrEqual(argument, validArgs[Argument_Help]))
 		{
@@ -103,18 +101,38 @@ public Action Command_Info(int client, int args)
 		}
 	}
 
-	// Cleanup
-	errorMessages.Clear();
-	usedArguments.Clear();
-
 	delete errorMessages;
 	delete usedArguments;
 }
-
-// =========================================================== //
 
 public Action Command_ReloadAPIKey(int client, int args)
 {
 	gB_usingAPIKey = ReadAPIKey();
 	ReplyToCommand(client, "[GlobalAPI] API Key reloaded!");
+}
+
+// =====[ PRIVATE ]=====
+
+static void PrintInfoHeaderToConsole(int client)
+{
+	char infoStr[128];
+	int paddingSize = Format(infoStr, sizeof(infoStr), "[GlobalAPI Plugin v%s for backend %s]",
+														GlobalAPI_Plugin_Version, GlobalAPI_Backend_Version);
+
+	char[] padding = new char[paddingSize];
+	for (int i = 0; i < paddingSize; i++) padding[i] = '-';
+
+	PrintToConsole(client, padding);
+	PrintToConsole(client, infoStr);
+	PrintToConsole(client, padding);
+	PrintToConsole(client, "-- Tickrate:  \t\t %d", RoundFloat(1.0 / GetTickInterval()));
+	PrintToConsole(client, "-- Staging:   \t\t %s", GlobalAPI_IsStaging() ? "Y" : "N");
+	PrintToConsole(client, "-- Debugging: \t\t %s", GlobalAPI_IsDebugging() ? "Y" : "N");
+}
+
+static void PrintMapInfoToConsole(int client)
+{
+	PrintToConsole(client, "-- Map Name: \t\t %s", gC_mapName);
+	PrintToConsole(client, "-- Map Path: \t\t {gamedir}/%s", gC_mapPath);
+	PrintToConsole(client, "-- Map Size: \t\t %d bytes", gI_mapFilesize);
 }

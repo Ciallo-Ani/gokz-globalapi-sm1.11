@@ -11,14 +11,6 @@
 
 // =========================================================== //
 
-// TODO: Consider adding some of the properties on the constructor
-// Such as isRetried, keyRequired, these properties are only set
-// if the plugin does so, GetBool() would return false on
-// non existing properties, but if we wanted to dump the properties
-// these keys would not exist. This might be useful for debugging.
-
-
-
 /*
 	Helper methodmap for wrapping data related to requests
 */
@@ -430,87 +422,70 @@ methodmap GlobalAPIRequestData < JSON_Object
 		for (int i = 0; i < paramsMap.Length; i++)
 		{
 			paramsMap.GetKey(i, key, sizeof(key));
-
-			if (!this.GetKeyHidden(key) && !json_is_meta_key(key))
+			if (this.GetKeyHidden(key) || json_is_meta_key(key))
 			{
-				switch(this.GetKeyType(key))
-				{
-					case Type_String:
-					{
-						this.GetString(key, value, sizeof(value));
-						AppendToQueryString(paramCount, queryString, maxlength, key, value);
-					}
-					case Type_Float:
-					{
-						float temp = this.GetFloat(key);
-						FloatToString(temp, value, sizeof(value));
-						AppendToQueryString(paramCount, queryString, maxlength, key, value);
-					}
-					case Type_Int:
-					{
-						int temp = this.GetInt(key);
-						IntToString(temp, value, sizeof(value));
-						AppendToQueryString(paramCount, queryString, maxlength, key, value);
-					}
-					case Type_Bool:
-					{
-						bool temp = this.GetBool(key);
-						BoolToString(temp, value, sizeof(value));
-						AppendToQueryString(paramCount, queryString, maxlength, key, value);
-					}
-					case Type_Object:
-					{
-						JSON_Object hObject = this.GetObject(key);
-						
-						if (!hObject.IsArray) continue;
+				continue;
+			}
 
-						for (int x = 0; x < hObject.Length; x++)
+			switch(this.GetKeyType(key))
+			{
+				case Type_String:
+				{
+					this.GetString(key, value, sizeof(value));
+					AppendToQueryString(paramCount, queryString, maxlength, key, value);
+				}
+				case Type_Float:
+				{
+					float temp = this.GetFloat(key);
+					FloatToString(temp, value, sizeof(value));
+					AppendToQueryString(paramCount, queryString, maxlength, key, value);
+				}
+				case Type_Int:
+				{
+					int temp = this.GetInt(key);
+					IntToString(temp, value, sizeof(value));
+					AppendToQueryString(paramCount, queryString, maxlength, key, value);
+				}
+				case Type_Bool:
+				{
+					bool temp = this.GetBool(key);
+					BoolToString(temp, value, sizeof(value));
+					AppendToQueryString(paramCount, queryString, maxlength, key, value);
+				}
+				case Type_Object:
+				{
+					JSON_Object hObject = this.GetObject(key);
+					
+					if (!hObject.IsArray) continue;
+
+					for (int x = 0; x < hObject.Length; x++)
+					{
+						switch (hObject.GetKeyTypeIndexed(x))
 						{
-							switch (hObject.GetKeyTypeIndexed(x))
+							case Type_Int:
 							{
-								case Type_Int:
-								{
-									int temp = hObject.GetIntIndexed(x);
-									IntToString(temp, value, sizeof(value));
-									AppendToQueryString(paramCount, queryString, maxlength, key, value);
-								}
+								int temp = hObject.GetIntIndexed(x);
+								IntToString(temp, value, sizeof(value));
+								AppendToQueryString(paramCount, queryString, maxlength, key, value);
 							}
 						}
 					}
 				}
 			}
 		}
+
 		delete paramsMap;
 	}
 }
 
-// ======================== HELPERS ========================== //
+// =====[ PRIVATE ]=====
 
-/**
- * Converts a boolean into a string representation
- *
- * @param value					Boolean value to convert
- * @param buffer				Buffer to store the result in
- * @param maxlength				Max length of the buffer
- * @noreturn
- */
-stock void BoolToString(bool value, char[] buffer, int maxlength)
+static void BoolToString(bool value, char[] buffer, int maxlength)
 {
 	FormatEx(buffer, maxlength, "%s", value ? "true" : "false");
 }
 
-/**
- * Appends key and value into a query string representation
- *
- * @note						Index 0 "constructs" the query string, other numbers will "append"
- * @param index					Index of the key & value
- * @param buffer				Buffer to store result in
- * @param maxlength				Max length of the buffer
- * @param key					Key to append
- * @param value					Value of the key
- * @noreturn
- */
-stock void AppendToQueryString(int &index, char[] buffer, int maxlength, char[] key, char[] value)
+static void AppendToQueryString(int &index, char[] buffer, int maxlength, char[] key, char[] value)
 {
 	if (index == 0)
 	{
@@ -523,5 +498,3 @@ stock void AppendToQueryString(int &index, char[] buffer, int maxlength, char[] 
 		Format(buffer, maxlength, "%s&%s=%s", buffer, key, value);
 	}
 }
-
-// =========================================================== //

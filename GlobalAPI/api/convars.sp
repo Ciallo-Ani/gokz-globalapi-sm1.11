@@ -1,8 +1,6 @@
 ConVar gCV_Debug = null;
 ConVar gCV_Staging = null;
 
-// =========================================================== //
-
 void CreateConvars()
 {
 	gCV_Debug = CreateConVar("GlobalAPI_Debug", "0", "", _, true, 0.0, true, 1.0);
@@ -11,15 +9,13 @@ void CreateConvars()
 	gCV_Staging.AddChangeHook(ConVarHook);
 }
 
-// =========================================================== //
-
 void ConVarHook(ConVar convar, const char[] oldValue, const char[] newValue)
 {
 	if (!StrEqual(newValue, oldValue))
 	{
 		if (convar == gCV_Staging)
 		{
-			Format(gC_baseUrl, sizeof(gC_baseUrl), "%s", convar.BoolValue ? GlobalAPI_Staging_BaseUrl : GlobalAPI_BaseUrl);
+			gC_baseUrl = convar.BoolValue ? GlobalAPI_Staging_BaseUrl : GlobalAPI_BaseUrl;
 		}
 	}
 }

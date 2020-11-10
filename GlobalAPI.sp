@@ -1,10 +1,7 @@
 // ====================== DEFINITIONS ======================== //
 
-#define PLUGIN_NAME "GlobalAPI"
-#define PLUGIN_AUTHOR "Sikari"
-
 #define DATA_DIR "data/GlobalAPI"
-#define CONFIG_DIR "sourcemod/GlobalAPI"
+#define CONFIG_DIR "cfg/sourcemod/GlobalAPI"
  
 #define APIKEY_PATH "cfg/sourcemod/GlobalAPI/GlobalAPI-key.cfg"
 
@@ -53,8 +50,8 @@ int gI_mapFilesize = -1;
 
 public Plugin myinfo = 
 {
-	name = PLUGIN_NAME,
-	author = PLUGIN_AUTHOR,
+	name = "GlobalAPI",
+	author = "The KZ Global Team",
 	description = GlobalAPI_Plugin_Desc,
 	version = GlobalAPI_Plugin_Version,
 	url = GlobalAPI_Plugin_Url
@@ -64,15 +61,17 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	RegPluginLibrary(PLUGIN_NAME);
+	RegPluginLibrary("GlobalAPI");
 
 	CreateConvars();
 	CreateNatives();
 	CreateForwards();
 	CreateCommands();
 
-	CreateDataDir();
-	CreateConfigDir();
+	TryCreateDirectory(DATA_DIR);
+	TryCreateDirectory(CONFIG_DIR);
+
+	// TODO: Create empty apikey file?
 }
 
 public void OnPluginStart()
@@ -84,7 +83,7 @@ public void OnPluginStart()
 	sourcemodCvar.GetString(gC_SourcemodVersion, sizeof(gC_SourcemodVersion));
 
 	gB_usingAPIKey = ReadAPIKey();
-	AutoExecConfig(true, PLUGIN_NAME, CONFIG_DIR);
+	AutoExecConfig(true, "GlobalAPI", "sourcemod/GlobalAPI");
 }
 
 public void OnMapStart()
@@ -97,12 +96,7 @@ public void OnMapStart()
 public void OnConfigsExecuted()
 {
 	Initialize();
-
-	gB_IsInit = true;
-	Call_Global_OnInitialized();
 }
-
-// =========================================================== //
 
 public void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hData)
 {

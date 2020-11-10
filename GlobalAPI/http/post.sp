@@ -36,12 +36,12 @@ bool HTTPPost(GlobalAPIRequestData hData)
 	request.SetData(hData);
 	request.SetTimeout(15);
 	request.SetCallbacks();
-	request.SetAuthHeader();
 	request.SetPoweredByHeader();
 	request.SetEnvironmentHeaders(gC_MetamodVersion, gC_SourcemodVersion);
 	request.SetAcceptHeaders(hData);
 	request.SetContentTypeHeader(hData);
 	request.SetRequestOriginHeader(hData);
+	request.SetAuthenticationHeader(gC_apiKey);
 	request.Send(hData);
 
 	return true;

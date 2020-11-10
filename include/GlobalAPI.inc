@@ -740,6 +740,7 @@ native bool GlobalAPI_GetReplayByReplayId(OnAPICallFinished callback = INVALID_F
  */
 native bool GlobalAPI_CreateReplayForRecordId(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 												int recordId, char[] replayFile);
+
 // ======================= PLUGIN INFO ======================= //
 
 public SharedPlugin __pl_GlobalAPI =
@@ -752,8 +753,6 @@ public SharedPlugin __pl_GlobalAPI =
 	required = 0,
 	#endif
 };
-
-// =========================================================== //
 
 #if !defined REQUIRE_PLUGIN
 public void __pl_GlobalAPI_SetNTVOptional()

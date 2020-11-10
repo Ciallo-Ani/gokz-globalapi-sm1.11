@@ -90,3 +90,16 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 	delete hJson;
 	delete hData;
 }
+
+// =====[ PRIVATE ]=====
+
+static int CalculateResponseTime(GlobalAPIRequestData hData)
+{
+	float timeNow = GetEngineTime();
+	float startTime = hData.GetFloat("_requestStartTime");
+
+	// Remove temporary key
+	hData.Remove("_requestStartTime");
+
+	return RoundFloat((timeNow - startTime) * 1000);
+}

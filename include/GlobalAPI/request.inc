@@ -21,9 +21,6 @@ static char gC_contentTypePhrases[][] =
 
 // =========================================================== //
 
-/*
-	Helper methodmap for wrapping SteamWorks requests
-*/
 methodmap GlobalAPIRequest < Handle
 {
    /**
@@ -62,8 +59,8 @@ methodmap GlobalAPIRequest < Handle
 	{
 		return SteamWorks_SetHTTPRequestRawPostBody(this, gC_contentTypePhrases[hData.ContentType], body, maxlength);
 	}
-	
-  /**
+
+   /**
 	* Sets request body from a file
 	*
 	* @param hData				GlobalAPIRequestData containing contentType
@@ -80,23 +77,11 @@ methodmap GlobalAPIRequest < Handle
  	* @param data				Any data to pass
  	* @return					Whether the operation was successful
  	*/
-	public bool SetData(any data)
-	{
-		return SteamWorks_SetHTTPRequestContextValue(this, data);
-	}
-	
-   /**
- 	* Sets 2 request context values
- 	*
- 	* @param data				Any data to pass
- 	* @param data2				Any other data to pass
- 	* @return					Whether the operation was successful
- 	*/
-	public bool SetContextValue(any data1, any data2)
+	public bool SetData(any data1, any data2 = 0)
 	{
 		return SteamWorks_SetHTTPRequestContextValue(this, data1, data2);
 	}
-	
+
    /**
  	* Sets predefined HTTP callbacks
  	*
@@ -107,16 +92,6 @@ methodmap GlobalAPIRequest < Handle
 	public void SetCallbacks()
 	{
 		SteamWorks_SetHTTPCallbacks(this, Global_HTTP_Completed, Global_HTTP_Headers, Global_HTTP_DataReceived);
-	}
-	
-   /**
- 	* Builds an authentication header
- 	*
- 	* @return					Whether the operation was successful
- 	*/
-	public bool SetAuthHeader()
-	{
-		return BuildAuthenticationHeader(this);
 	}
 	
    /**
@@ -140,7 +115,17 @@ methodmap GlobalAPIRequest < Handle
 		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-Powered-By", GlobalAPI_Plugin_NameVersion);
 	}
 
-	/**
+   /**
+ 	* Sets authentication header
+ 	*
+ 	* @return					Whether the operation was successful
+ 	*/
+	public bool SetAuthenticationHeader(char[] apiKey)
+	{
+		return SteamWorks_SetHTTPRequestHeaderValue(this, "X-ApiKey", apiKey);
+	}
+
+   /**
  	* Sets envinroment headers (MetaMod & SourceMod)
  	*
   	* @param mmVersion			MetaMod version string
@@ -192,7 +177,8 @@ methodmap GlobalAPIRequest < Handle
  	*/
 	public bool Send(GlobalAPIRequestData hData)
 	{
-		return SendRequest(this, hData);
+		Call_Private_OnHTTPStart(this, hData);
+		return SteamWorks_SendHTTPRequest(this);
 	}
 }
 
