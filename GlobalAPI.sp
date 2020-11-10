@@ -29,8 +29,8 @@ bool gB_usingAPIKey = false;
 char gC_apiKey[GlobalAPI_Max_APIKey_Length];
 char gC_baseUrl[GlobalAPI_Max_BaseUrl_Length];
 
-ConVar gCV_MetaModVersion = null;
-ConVar gCV_SourceModVersion = null;
+char gC_MetamodVersion[32];
+char gC_SourcemodVersion[32];
 
 char gC_mapName[64];
 char gC_mapPath[PLATFORM_MAX_PATH];
@@ -82,8 +82,11 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
-	gCV_MetaModVersion = FindConVar("metamod_version");
-	gCV_SourceModVersion = FindConVar("sourcemod_Version");
+	ConVar metamodCvar = FindConVar("metamod_version");
+	metamodCvar.GetString(gC_MetamodVersion, sizeof(gC_MetamodVersion));
+
+	ConVar sourcemodCvar = FindConVar("sourcemod_Version");
+	sourcemodCvar.GetString(gC_SourcemodVersion, sizeof(gC_SourcemodVersion));
 
 	gB_usingAPIKey = ReadAPIKey();
 	AutoExecConfig(true, PLUGIN_NAME, CONFIG_DIR);
