@@ -3,6 +3,7 @@
 public void CreateNatives()
 {
 	// Plugin
+	CreateNative("GlobalAPI_IsInit", Native_IsInit);
 	CreateNative("GlobalAPI_GetAPIKey", Native_GetAPIKey);
 	CreateNative("GlobalAPI_HasAPIKey", Native_HasAPIKey);
 	CreateNative("GlobalAPI_IsStaging", Native_IsStaging);
@@ -62,6 +63,16 @@ public void CreateNatives()
 	CreateNative("GlobalAPI_GetReplayByRecordId", Native_GetReplayByRecordId);
 	CreateNative("GlobalAPI_GetReplayByReplayId", Native_GetReplayByReplayId);
 	CreateNative("GlobalAPI_CreateReplayForRecordId", Native_CreateReplayForRecordId);
+}
+
+// =========================================================== //
+
+/*
+	native bool GlobalAPI_IsInit();
+*/
+public int Native_IsInit(Handle plugin, int numParams)
+{
+	return gB_IsInit;
 }
 
 // =========================================================== //

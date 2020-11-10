@@ -147,6 +147,14 @@ forward void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hD
 // ======================= NATIVES =========================== //
 
 /**
+ * Gets a boolean of whether GlobalAPI plugin is initialized.
+ *
+ * @note						See GlobalAPI_OnInitialized for the event version.
+ * @return						Whether GlobalAPI plugin is initialized.
+ */
+native bool GlobalAPI_IsInit();
+
+/**
  * Gets the API Key used by GlobalAPI plugin
  *
  * @param buffer				Buffer to store result in
@@ -761,6 +769,7 @@ public SharedPlugin __pl_GlobalAPI =
 public void __pl_GlobalAPI_SetNTVOptional()
 {
 	// Plugin
+	MarkNativeAsOptional("GlobalAPI_IsInit");
 	MarkNativeAsOptional("GlobalAPI_GetAPIKey");
 	MarkNativeAsOptional("GlobalAPI_HasAPIKey");
 	MarkNativeAsOptional("GlobalAPI_IsStaging");

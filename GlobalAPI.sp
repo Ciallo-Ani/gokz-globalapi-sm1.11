@@ -23,6 +23,8 @@
 
 // ====================== VARIABLES ========================== //
 
+bool gB_IsInit = false;
+
 bool gB_usingAPIKey = false;
 char gC_apiKey[GlobalAPI_Max_APIKey_Length];
 char gC_baseUrl[GlobalAPI_Max_BaseUrl_Length];
@@ -97,6 +99,8 @@ public void OnMapStart()
 public void OnConfigsExecuted()
 {
 	Initialize();
+
+	gB_IsInit = true;
 	Call_Global_OnInitialized();
 }
 
