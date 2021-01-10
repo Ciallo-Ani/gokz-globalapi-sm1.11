@@ -21,17 +21,17 @@ methodmap APIAuth < JSON_Object
 
 	public bool GetType(char[] buffer, int maxlength)
 	{
-		return this.GetString("type", buffer, maxlength);
+		return this.GetString("Type", buffer, maxlength);
 	}
 
 	property bool IsValid
 	{
-		public get() { return this.GetBool("isValid"); }
+		public get() { return this.GetBool("IsValid"); }
 	}
 
 	property int Identity
 	{
-		public get() { return this.GetInt("identity"); }
+		public get() { return this.GetInt("Identity"); }
 	}
 }
 
