@@ -69,7 +69,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateCommands();
 
 	TryCreateDirectory(DATA_DIR);
-	TryCreateDirectory(CONFIG_DIR);
+	TryCreateDirectory(CONFIG_DIR, false);
 
 	// TODO: Create empty apikey file?
 }
