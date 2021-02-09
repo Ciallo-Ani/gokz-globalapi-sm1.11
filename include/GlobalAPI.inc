@@ -668,7 +668,8 @@ native bool GlobalAPI_GetRecordFilters(OnAPICallFinished callback = INVALID_FUNC
 										int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
 										int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
 										int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
-										bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+										bool hasTeleports = DEFAULT_BOOL, bool isOverall = DEFAULT_BOOL,
+										int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
 /**
  * Starts a GET HTTP Request to /api/{version}/record_filters/distributions
@@ -696,7 +697,8 @@ native bool GlobalAPI_GetRecordFilterDistributions(OnAPICallFinished callback = 
 													int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
 													int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
 													int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
-													bool hasTeleports = DEFAULT_BOOL, int offset = DEFAULT_INT, int limit = DEFAULT_INT);
+													bool hasTeleports = DEFAULT_BOOL, bool isOverall = DEFAULT_BOOL,
+													int offset = DEFAULT_INT, int limit = DEFAULT_INT);
 
 /**
  * Starts a GET HTTP Request to /api/{version}/records/replay/list

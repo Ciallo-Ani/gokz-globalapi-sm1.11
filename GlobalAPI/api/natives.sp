@@ -1323,8 +1323,10 @@ public int Native_GetRecordFilters(Handle plugin, int numParams)
 	int tickRatesLength = GetNativeCell(12);
 	
 	bool hasTeleports = GetNativeCell(13);
-	int offset = GetNativeCell(14);
-	int limit = GetNativeCell(15);
+	bool isOverall = GetNativeCell(14);
+
+	int offset = GetNativeCell(15);
+	int limit = GetNativeCell(16);
 
 	GlobalAPIRequestData hData = CreateRequestData(plugin, callback, data);
 	hData.AddIntArray("ids", ids, idsLength);
@@ -1333,6 +1335,7 @@ public int Native_GetRecordFilters(Handle plugin, int numParams)
 	hData.AddIntArray("mode_ids", modeIds, modeIdsLength);
 	hData.AddIntArray("tickrates", tickRates, tickRatesLength);
 	hData.AddBool("has_teleports", hasTeleports);
+	hData.AddBool("is_overall", isOverall);
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
@@ -1376,8 +1379,10 @@ public int Native_GetRecordFilterDistributions(Handle plugin, int numParams)
 	int tickRatesLength = GetNativeCell(12);
 	
 	bool hasTeleports = GetNativeCell(13);
-	int offset = GetNativeCell(14);
-	int limit = GetNativeCell(15);
+	bool isOverall = GetNativeCell(14);
+
+	int offset = GetNativeCell(15);
+	int limit = GetNativeCell(16);
 
 	GlobalAPIRequestData hData = CreateRequestData(plugin, callback, data);
 	hData.AddIntArray("ids", ids, idsLength);
@@ -1386,6 +1391,7 @@ public int Native_GetRecordFilterDistributions(Handle plugin, int numParams)
 	hData.AddIntArray("mode_ids", modeIds, modeIdsLength);
 	hData.AddIntArray("tickrates", tickRates, tickRatesLength);
 	hData.AddBool("has_teleports", hasTeleports);
+	hData.AddBool("is_overall", isOverall);
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
 
