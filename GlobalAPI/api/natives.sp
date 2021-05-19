@@ -202,7 +202,8 @@ public int Native_GetBans(Handle plugin, int numParams)
 	char ipAddress[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(6, ipAddress, sizeof(ipAddress));
 
-	int steamId64 = GetNativeCell(7);
+	char steamId64[GlobalAPI_Max_QueryParam_Length];
+	GetNativeString(7, steamId64, sizeof(steamId64));
 	
 	char steamId[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(8, steamId, sizeof(steamId));
@@ -229,7 +230,7 @@ public int Native_GetBans(Handle plugin, int numParams)
 	hData.AddString("ban_types_list", banTypesList);
 	hData.AddBool("is_expired", isExpired);
 	hData.AddString("ip", ipAddress);
-	hData.AddNum("steamid64", steamId64);
+	hData.AddString("steamid64", steamId64);
 	hData.AddString("steam_id", steamId);
 	hData.AddString("notes_contains", notesContain);
 	hData.AddString("stats_contains", statsContain);
@@ -318,7 +319,9 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 	
 	int id = GetNativeCell(3);
 	int serverId = GetNativeCell(4);
-	int steamId64 = GetNativeCell(5);
+
+	char steamId64[GlobalAPI_Max_QueryParam_Length];
+	GetNativeString(5, steamId64, sizeof(steamId64));
 	
 	char steamId[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(6, steamId, sizeof(steamId));
@@ -355,7 +358,7 @@ public int Native_GetJumpstats(Handle plugin, int numParams)
 	GlobalAPIRequestData hData = CreateRequestData(plugin, callback, data);
 	hData.AddNum("id", id);
 	hData.AddNum("server_id", serverId);
-	hData.AddNum("steamid64", steamId64);
+	hData.AddString("steamid64", steamId64);
 	hData.AddString("steam_id", steamId);
 	hData.AddString("jumptype", jumpType);
 	hData.AddString("steamid64_list", steamId64List);
@@ -461,7 +464,9 @@ public int Native_GetJumpstatTop(Handle plugin, int numParams)
 
 	int id = GetNativeCell(4);
 	int serverId = GetNativeCell(5);
-	int steamId64 = GetNativeCell(6);
+
+	char steamId64[GlobalAPI_Max_QueryParam_Length];
+	GetNativeString(6, steamId64, sizeof(steamId64));
 
 	char steamId[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(7, steamId, sizeof(steamId));
@@ -492,7 +497,7 @@ public int Native_GetJumpstatTop(Handle plugin, int numParams)
 	GlobalAPIRequestData hData = CreateRequestData(plugin, callback, data);
 	hData.AddNum("id", id);
 	hData.AddNum("server_id", serverId);
-	hData.AddNum("steamid64", steamId64);
+	hData.AddString("steamid64", steamId64);
 	hData.AddString("steam_id", steamId);
 	hData.AddString("steamid64_list", steamId64List);
 	hData.AddString("jumptype_list", jumpTypeList);
@@ -929,7 +934,9 @@ public int Native_GetRecordsTop(Handle plugin, int numParams)
 	char steamId[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(3, steamId, sizeof(steamId));
 
-	int steamId64 = GetNativeCell(4);
+	char steamId64[GlobalAPI_Max_QueryParam_Length];
+	GetNativeString(4, steamId64, sizeof(steamId64));
+
 	int mapId = GetNativeCell(5);
 
 	char mapName[GlobalAPI_Max_QueryParam_Length];
@@ -951,7 +958,7 @@ public int Native_GetRecordsTop(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = CreateRequestData(plugin, callback, data);
 	hData.AddString("steam_id", steamId);
-	hData.AddNum("steamid64", steamId64);
+	hData.AddString("steamid64", steamId64);
 	hData.AddNum("map_id", mapId);
 	hData.AddString("map_name", mapName);
 	hData.AddNum("tickrate", tickRate);
@@ -992,7 +999,9 @@ public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
 	char steamId[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(3, steamId, sizeof(steamId));
 
-	int steamId64 = GetNativeCell(4);
+	char steamId64[GlobalAPI_Max_QueryParam_Length];
+	GetNativeString(4, steamId64, sizeof(steamId64));
+
 	int mapId = GetNativeCell(5);
 
 	char mapName[GlobalAPI_Max_QueryParam_Length];
@@ -1019,7 +1028,7 @@ public int Native_GetRecordsTopRecent(Handle plugin, int numParams)
 
 	GlobalAPIRequestData hData = CreateRequestData(plugin, callback, data);
 	hData.AddString("steam_id", steamId);
-	hData.AddNum("steamid64", steamId64);
+	hData.AddString("steamid64", steamId64);
 	hData.AddNum("map_id", mapId);
 	hData.AddString("map_name", mapName);
 	hData.AddNum("tickrate", tickRate);
@@ -1135,7 +1144,9 @@ public int Native_GetServers(Handle plugin, int numParams)
 	char name[GlobalAPI_Max_QueryParam_Length];
 	GetNativeString(6, name, sizeof(name));
 
-	int ownerSteamId64 = GetNativeCell(7);
+	char ownerSteamId64[GlobalAPI_Max_QueryParam_Length];
+	GetNativeString(7, ownerSteamId64, sizeof(ownerSteamId64));
+
 	int approvalStatus = GetNativeCell(8);
 	int offset = GetNativeCell(9);
 	int limit = GetNativeCell(10);
@@ -1145,7 +1156,7 @@ public int Native_GetServers(Handle plugin, int numParams)
 	hData.AddNum("port", port);
 	hData.AddString("ip", ip);
 	hData.AddString("name", name);
-	hData.AddNum("owner_steamid64", ownerSteamId64);
+	hData.AddString("owner_steamid64", ownerSteamId64);
 	hData.AddNum("approval_status", approvalStatus);
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
