@@ -1293,13 +1293,10 @@ public int Native_GetPlayerRanks(Handle plugin, int numParams)
 	hData.AddNum("limit", limit);
 
 	// Add comma-separated steamid64s
-	char steamId64s[sizeof(steamId64List)][sizeof(steamId64List[])];
+	char steamId64s[GlobalAPI_Max_QueryParam_Array_Length][GlobalAPI_Max_QueryParam_Length];
 	int count = ExplodeString(steamId64List, ",", steamId64s, sizeof(steamId64s), sizeof(steamId64s[]));
 
-	for (int i = 0; i < count; i++)
-	{
-		hData.AddString("steamid64s", steamId64s[i]);
-	}
+	hData.AddStringArray("steamid64s", steamId64s, count);
 
 	hData.RequestType = GlobalAPIRequestType_GET;
 
