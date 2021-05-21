@@ -614,8 +614,7 @@ native bool GlobalAPI_GetServersByName(OnAPICallFinished callback = INVALID_FUNC
  * @param averageGreaterThan	Average greater than to query
  * @param ratingGreaterThan		Rating greater than to query
  * @param finishesGreaterThan	Finishes greater than to query
- * @param steamId64s			Array of steamid64s to query
- * @param steamId64sLength		Length of the steamid64s array
+ * @param steamId64List			Comma-separated stirng of steamid64s to query
  * @param recordFilterIds		Array of record filter ids to query
  * @param recordFilterIdsLength	Length of the record filter ids array
  * @param mapIds				Array of map ids to query
@@ -634,6 +633,7 @@ native bool GlobalAPI_GetServersByName(OnAPICallFinished callback = INVALID_FUNC
 native bool GlobalAPI_GetPlayerRanks(OnAPICallFinished callback = INVALID_FUNCTION, any data = DEFAULT_DATA,
 										int pointsGreaterThan = DEFAULT_INT, float averageGreaterThan = DEFAULT_FLOAT,
 										float ratingGreaterThan = DEFAULT_FLOAT, int finishesGreaterThan = DEFAULT_INT,
+										const char[] steamId64List = DEFAULT_STRING,
 										int[] recordFilterIds = DEFAULT_INT, int recordFilterIdsLength = DEFAULT_INT,
 										int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
 										int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,

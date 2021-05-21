@@ -1251,40 +1251,38 @@ public int Native_GetPlayerRanks(Handle plugin, int numParams)
 	float ratingGreaterThan = GetNativeCell(5);
 	int finishesGreaterThan = GetNativeCell(6);
 
-	int steamId64s[GlobalAPI_Max_QueryParam_Array_Length];
-	GetNativeArray(7, steamId64s, sizeof(steamId64s));
-	int steamId64sLength = GetNativeCell(8);
+	char steamId64List[GlobalAPI_Max_QueryParam_Length * GlobalAPI_Max_QueryParam_Array_Length];
+	GetNativeString(7, steamId64List, sizeof(steamId64List));
 
 	int recordFilterIds[GlobalAPI_Max_QueryParam_Array_Length];
-	GetNativeArray(9, recordFilterIds, sizeof(recordFilterIds));
-	int recordFilterIdsLength = GetNativeCell(10);
+	GetNativeArray(8, recordFilterIds, sizeof(recordFilterIds));
+	int recordFilterIdsLength = GetNativeCell(9);
 
 	int mapIds[GlobalAPI_Max_QueryParam_Array_Length];
-	GetNativeArray(11, mapIds, sizeof(mapIds));
-	int mapIdsLength = GetNativeCell(12);
+	GetNativeArray(10, mapIds, sizeof(mapIds));
+	int mapIdsLength = GetNativeCell(11);
 
 	int stages[GlobalAPI_Max_QueryParam_Array_Length];
-	GetNativeArray(13, stages, sizeof(stages));
-	int stagesLength = GetNativeCell(14);
+	GetNativeArray(12, stages, sizeof(stages));
+	int stagesLength = GetNativeCell(13);
 
 	int modeIds[GlobalAPI_Max_QueryParam_Array_Length];
-	GetNativeArray(15, modeIds, sizeof(modeIds));
-	int modeIdsLength = GetNativeCell(16);
+	GetNativeArray(14, modeIds, sizeof(modeIds));
+	int modeIdsLength = GetNativeCell(15);
 
 	int tickRates[GlobalAPI_Max_QueryParam_Array_Length];
-	GetNativeArray(17, tickRates, sizeof(tickRates));
-	int tickRatesLength = GetNativeCell(18);
+	GetNativeArray(16, tickRates, sizeof(tickRates));
+	int tickRatesLength = GetNativeCell(17);
 	
-	bool hasTeleports = GetNativeCell(19);
-	int offset = GetNativeCell(20);
-	int limit = GetNativeCell(21);
+	bool hasTeleports = GetNativeCell(18);
+	int offset = GetNativeCell(19);
+	int limit = GetNativeCell(20);
 
 	GlobalAPIRequestData hData = CreateRequestData(plugin, callback, data);
 	hData.AddNum("points_greater_than", pointsGreaterThan);
 	hData.AddFloat("average_greater_than", averageGreaterThan);
 	hData.AddFloat("rating_greater_than", ratingGreaterThan);
 	hData.AddNum("finishes_greater_than", finishesGreaterThan);
-	hData.AddIntArray("steamid64s", steamId64s, steamId64sLength);
 	hData.AddIntArray("record_filter_ids", recordFilterIds, recordFilterIdsLength);
 	hData.AddIntArray("map_ids", mapIds, mapIdsLength);
 	hData.AddIntArray("stages", stages, stagesLength);
@@ -1293,6 +1291,15 @@ public int Native_GetPlayerRanks(Handle plugin, int numParams)
 	hData.AddBool("has_teleports", hasTeleports);
 	hData.AddNum("offset", offset);
 	hData.AddNum("limit", limit);
+
+	// Add comma-separated steamid64s
+	char steamId64s[sizeof(steamId64List)][sizeof(steamId64List[])];
+	int count = ExplodeString(steamId64List, ",", steamId64s, sizeof(steamId64s), sizeof(steamId64s[]));
+
+	for (int i = 0; i < count; i++)
+	{
+		hData.AddString("steamid64s", steamId64s[i]);
+	}
 
 	hData.RequestType = GlobalAPIRequestType_GET;
 
