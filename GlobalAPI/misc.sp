@@ -32,6 +32,11 @@ bool TryCreateDirectory(char directory[PLATFORM_MAX_PATH], bool isSmPath = true)
 		BuildPath(Path_SM, fullPath, sizeof(fullPath), directory);
 	}
 
+	if (DirExists(fullPath))
+	{
+		return true;
+	}
+
 	if (!CreateDirectory(fullPath, 511))
 	{
 		LogError("Failed to create directory '%s'!", fullPath);
