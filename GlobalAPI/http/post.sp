@@ -30,7 +30,7 @@ bool HTTPPost(GlobalAPIRequestData hData)
 		char[] body = new char[maxlength];
 
 		hData.Encode(body, maxlength);
-		request.SetBody(hData, body, maxlength);
+		request.SetBody(hData, body, strlen(body));
 	}
 
 	request.SetData(hData);
