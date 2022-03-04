@@ -63,7 +63,7 @@ void FormatPathParam(char[] buffer, int maxlength, char[] param, char[] value = 
 {
 	char paramKey[128];
 	Format(paramKey, sizeof(paramKey), "{%s}", param);
-	
+
 	if (intValue != -1)
 	{
 		char tempBuffer[64];

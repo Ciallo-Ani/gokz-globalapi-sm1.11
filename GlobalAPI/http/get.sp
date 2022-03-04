@@ -5,7 +5,7 @@ bool HTTPGet(GlobalAPIRequestData hData)
 		LogMessage("[GlobalAPI] Using this method requires an API key, and you dont seem to have one setup!");
 		return false;
 	}
-	
+
 	char requestParams[GlobalAPI_Max_QueryParams_Length];
 	hData.ToString(requestParams, sizeof(requestParams));
 
@@ -14,7 +14,7 @@ bool HTTPGet(GlobalAPIRequestData hData)
 	StrCat(requestUrl, sizeof(requestUrl), requestParams);
 
 	GlobalAPIRequest request = new GlobalAPIRequest(requestUrl, k_EHTTPMethodGET);
-	
+
 	if (request == null)
 	{
 		delete hData;

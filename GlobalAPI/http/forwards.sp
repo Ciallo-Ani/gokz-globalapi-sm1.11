@@ -2,7 +2,7 @@ public void Global_HTTP_Started(Handle request, GlobalAPIRequestData hData)
 {
 	hData.SetFloat("_requestStartTime", GetEngineTime());
 	hData.SetKeyHidden("_requestStartTime", true);
-	
+
 	Call_Global_OnRequestStarted(request, hData);
 }
 
@@ -60,7 +60,7 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 		char path[PLATFORM_MAX_PATH];
 		BuildPath(Path_SM, path, sizeof(path), "data/GlobalAPI/%d_%f.%s",
 												GetTime(),
-												GetEngineTime(), 
+												GetEngineTime(),
 												GlobalAPI_Data_File_Extension);
 
 		hData.AddDataPath(path);

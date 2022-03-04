@@ -46,7 +46,7 @@ methodmap GlobalAPIRequest < Handle
 	{
 		return SteamWorks_SetHTTPRequestAbsoluteTimeoutMS(this, seconds * 1000);
 	}
-	
+
    /**
  	* Sets request body
  	*

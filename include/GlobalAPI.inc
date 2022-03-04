@@ -149,7 +149,7 @@ native bool GlobalAPI_IsInit();
  *
  * @param buffer				Buffer to store result in
  * @param maxlength				Max length of the buffer
- * @noreturn		
+ * @noreturn
  */
 native void GlobalAPI_GetAPIKey(char[] buffer, int maxlength);
 
@@ -356,7 +356,7 @@ native bool GlobalAPI_GetJumpstatTop30(OnAPICallFinished callback = INVALID_FUNC
  * @param isValidated			Whether to query for isValidated or not
  * @param difficulty			Map difficulty to query
  * @param createdSince			Created since date to query
- * @param updatedSince 			Updated since date to query 
+ * @param updatedSince 			Updated since date to query
  * @param offset				Offset of the dataset to query
  * @param limit					Amount of items returned for the query
  * @return						Whether request was successfully sent
@@ -769,7 +769,7 @@ public void __pl_GlobalAPI_SetNTVOptional()
 
 	// Auth
 	MarkNativeAsOptional("GlobalAPI_GetAuthStatus");
-	
+
 	// Bans
 	MarkNativeAsOptional("GlobalAPI_GetBans");
 	MarkNativeAsOptional("GlobalAPI_CreateBan");
@@ -805,10 +805,10 @@ public void __pl_GlobalAPI_SetNTVOptional()
 	MarkNativeAsOptional("GlobalAPI_GetServers");
 	MarkNativeAsOptional("GlobalAPI_GetServerById");
 	MarkNativeAsOptional("GlobalAPI_GetServersByName");
-	
+
 	// Ranks
 	MarkNativeAsOptional("GlobalAPI_GetPlayerRanks");
-	
+
 	// Record Filters
 	MarkNativeAsOptional("GlobalAPI_GetRecordFilters");
 	MarkNativeAsOptional("GlobalAPI_GetRecordFilterDistributions");

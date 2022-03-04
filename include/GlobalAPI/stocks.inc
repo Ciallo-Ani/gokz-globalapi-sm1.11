@@ -62,6 +62,6 @@ stock void GetMapFullPath(char[] buffer, int maxlength)
 {
 	char mapPath[PLATFORM_MAX_PATH];
 	GetCurrentMap(mapPath, sizeof(mapPath));
-	
+
 	Format(buffer, maxlength, "maps/%s.bsp", mapPath);
 }

@@ -30,7 +30,7 @@ methodmap APIIterable < JSON_Object
 		}
 		return view_as<APIIterable>(hItems);
 	}
-	
+
 	/*
 		Gets count of the items in the array
 	*/
@@ -38,7 +38,7 @@ methodmap APIIterable < JSON_Object
 	{
 		public get() { return this.Length; }
 	}
-	
+
    /**
  	* Gets an object from the array by index
  	*

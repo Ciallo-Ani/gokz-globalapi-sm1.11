@@ -2,7 +2,7 @@
 
 #define DATA_DIR "data/GlobalAPI"
 #define CONFIG_DIR "cfg/sourcemod/GlobalAPI"
- 
+
 #define APIKEY_PATH "cfg/sourcemod/GlobalAPI/GlobalAPI-key.cfg"
 
 // =========================================================== //
@@ -48,7 +48,7 @@ int gI_mapFilesize = -1;
 
 // ====================== PLUGIN INFO ======================== //
 
-public Plugin myinfo = 
+public Plugin myinfo =
 {
 	name = "GlobalAPI",
 	author = "The KZ Global Team",
@@ -110,7 +110,7 @@ public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData
 {
 	char requestUrl[GlobalAPI_Max_BaseUrl_Length];
 	hData.GetString("url", requestUrl, sizeof(requestUrl));
-	
+
 	GlobalAPI_DebugMessage("HTTP Request to \"%s\" failed! - Status: %d", requestUrl, hData.Status);
 }
 
@@ -118,6 +118,6 @@ public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hDa
 {
 	char requestUrl[GlobalAPI_Max_BaseUrl_Length];
 	hData.GetString("url", requestUrl, sizeof(requestUrl));
-	
+
 	GlobalAPI_DebugMessage("HTTP Request to \"%s\" completed! - Status: %d", requestUrl, hData.Status);
 }

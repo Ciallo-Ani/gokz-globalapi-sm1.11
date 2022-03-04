@@ -66,7 +66,7 @@ methodmap GlobalAPIRequestData < JSON_Object
 		this.SetHandle(key);
 		this.SetKeyHidden(key, true);
 	}
-	
+
    /**
  	* Sets url to the request data
  	*
@@ -78,7 +78,7 @@ methodmap GlobalAPIRequestData < JSON_Object
 		this.SetString("url", url);
 		this.SetKeyHidden("url", true);
 	}
-	
+
    /**
  	* Sets endpoint to the request data
  	*
@@ -90,7 +90,7 @@ methodmap GlobalAPIRequestData < JSON_Object
 		this.SetString("endpoint", endpoint);
 		this.SetKeyHidden("endpoint", true);
 	}
-	
+
    /**
 	* Sets body file path to the request data
 	*
@@ -146,7 +146,7 @@ methodmap GlobalAPIRequestData < JSON_Object
 			this.SetInt("contentType", type);
 		}
 	}
-	
+
     /*
  		Get or set the request's "keyRequired"
  	*/
@@ -162,7 +162,7 @@ methodmap GlobalAPIRequestData < JSON_Object
 			this.SetKeyHidden("keyRequired", true);
 		}
 	}
-	
+
 	/*
 		Get or set the request's "isRetried"
  	*/
@@ -178,7 +178,7 @@ methodmap GlobalAPIRequestData < JSON_Object
 			this.SetKeyHidden("isRetried", true);
 		}
 	}
-	
+
 	/*
 		Get or set the request's "bodyLength"
  	*/
@@ -275,7 +275,7 @@ methodmap GlobalAPIRequestData < JSON_Object
 			this.SetKeyHidden("callback", true);
 		}
 	}
-	
+
 	/*
 		Get or set the request's "data"
  	*/
@@ -375,7 +375,7 @@ methodmap GlobalAPIRequestData < JSON_Object
 			this.SetBool(key, value);
 		}
 	}
-	
+
    /**
  	* Adds integer array to the request data
  	*
