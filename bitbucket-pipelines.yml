@@ -1,4 +1,4 @@
-image: i386/alpine:3.8
+image: alpine:3.13
 
 definitions:
   steps:
@@ -11,7 +11,7 @@ definitions:
           - apk add wget libc6-compat libstdc++
           - mkdir smdir
           - wget -q -O - "http://sourcemod.net/latest.php?os=linux&version=1.10" | tar x -C ./smdir -vzf -
-          - for file in *.sp; do ./smdir/addons/sourcemod/scripting/spcomp $file -i ./include; done;
+          - for file in *.sp; do ./smdir/addons/sourcemod/scripting/spcomp64 $file -i ./include; done;
           - mv ./*.smx ./smdir/addons/sourcemod/plugins/
 
     - step: &build
