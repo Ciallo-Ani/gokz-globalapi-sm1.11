@@ -10,9 +10,8 @@ definitions:
           - apk update
           - apk add wget libc6-compat libstdc++
           - mkdir smdir
-          - wget -q -O - "http://sourcemod.net/latest.php?os=linux&version=1.9" | tar x -C ./smdir -vzf -
+          - wget -q -O - "http://sourcemod.net/latest.php?os=linux&version=1.10" | tar x -C ./smdir -vzf -
           - for file in *.sp; do ./smdir/addons/sourcemod/scripting/spcomp $file -i ./include; done;
-          - for file in GlobalAPI-Modules/*.sp; do ./smdir/addons/sourcemod/scripting/spcomp $file -i ./include; done;
           - mv ./*.smx ./smdir/addons/sourcemod/plugins/
 
     - step: &build
