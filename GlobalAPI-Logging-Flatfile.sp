@@ -39,7 +39,7 @@ enum BuildLogType
 
 // ====================== PLUGIN INFO ======================== //
 
-public Plugin myinfo = 
+public Plugin myinfo =
 {
 	name = "GlobalAPI-Logging-Flatfile",
 	author = "The KZ Global Team",
@@ -216,8 +216,13 @@ public void BuildDateToLogs(BuildLogType type)
 
 	switch(type)
 	{
-		case BuildLog_Failed:Format(gC_HTTPFailed_LogFile, sizeof(gC_HTTPFailed_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, FAILEDLOG_NAME, date);
-		case BuildLog_Started:Format(gC_HTTPStarted_LogFile, sizeof(gC_HTTPStarted_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, STARTEDLOG_NAME, date);
-		case BuildLog_Finished:Format(gC_HTTPFinished_LogFile, sizeof(gC_HTTPFinished_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, FINISHEDLOG_NAME, date);
+		case BuildLog_Failed:
+            Format(gC_HTTPFailed_LogFile, sizeof(gC_HTTPFailed_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, FAILEDLOG_NAME, date);
+
+		case BuildLog_Started:
+            Format(gC_HTTPStarted_LogFile, sizeof(gC_HTTPStarted_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, STARTEDLOG_NAME, date);
+
+		case BuildLog_Finished:
+            Format(gC_HTTPFinished_LogFile, sizeof(gC_HTTPFinished_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, FINISHEDLOG_NAME, date);
 	}
 }

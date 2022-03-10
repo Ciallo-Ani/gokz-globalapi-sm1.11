@@ -15,8 +15,8 @@ static char validArgs[ARGUMENT_COUNT][] =
 
 void CreateCommands()
 {
-	RegConsoleCmd("sm_globalapi_info", Command_Info);
-	RegAdminCmd("sm_globalapi_reload_apikey", Command_ReloadAPIKey, ADMFLAG_ROOT, "Reloads the API Key");
+	RegAdminCmd("sm_globalapi_info", Command_Info, ADMFLAG_ROOT, "Displays GlobalAPI info");
+	RegAdminCmd("sm_globalapi_reload_apikey", Command_ReloadAPIKey, ADMFLAG_ROOT, "Reloads GlobalAPI Key");
 }
 
 public Action Command_Info(int client, int args)
@@ -120,7 +120,10 @@ static void PrintInfoHeaderToConsole(int client)
 														GlobalAPI_Plugin_Version, GlobalAPI_Backend_Version);
 
 	char[] padding = new char[paddingSize];
-	for (int i = 0; i < paddingSize; i++) padding[i] = '-';
+	for (int i = 0; i < paddingSize; i++)
+    {
+        padding[i] = '-';
+    }
 
 	PrintToConsole(client, padding);
 	PrintToConsole(client, infoStr);

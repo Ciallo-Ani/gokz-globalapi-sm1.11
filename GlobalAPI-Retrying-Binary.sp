@@ -16,13 +16,9 @@
 
 bool gB_Core = false;
 
-// ======================= INCLUDES ========================== //
-
-// ...
-
 // ====================== PLUGIN INFO ======================== //
 
-public Plugin myinfo = 
+public Plugin myinfo =
 {
 	name = "GlobalAPI-Retrying-Binary",
 	author = "The KZ Global Team",
@@ -82,10 +78,10 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 {
 	char szTimestamp[32];
 	IntToString(GetTime(), szTimestamp, sizeof(szTimestamp));
-	
+
 	char szGameTime[32];
 	FloatToString(GetEngineTime(), szGameTime, sizeof(szGameTime));
-	
+
 	char dataFile[PLATFORM_MAX_PATH] = DATA_FILE;
 	ReplaceString(dataFile, sizeof(dataFile), "{gametick}", szGameTime);
 	ReplaceString(dataFile, sizeof(dataFile), "{timestamp}", szTimestamp);
@@ -103,7 +99,7 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 
 	// Start preparing data
 	int bodyLength = hData.BodyLength;
-	
+
 	char url[GlobalAPI_Max_BaseUrl_Length];
 	hData.GetString("url", url, sizeof(url));
 
@@ -169,13 +165,13 @@ public Action CheckForRequests(Handle timer)
 		char[] params = new char[length + 1];
 		binaryFile.ReadString(params, length, length);
 		params[length] = '\0';
-		
+
 		bool keyRequired;
 		binaryFile.ReadInt8(keyRequired);
-		
+
 		int requestType;
 		binaryFile.ReadInt8(requestType);
-		
+
 		int bodyLength;
 		binaryFile.ReadInt32(bodyLength);
 
@@ -186,7 +182,7 @@ public Action CheckForRequests(Handle timer)
 		RetryRequest(url, params, keyRequired, requestType, bodyLength);
 		DeleteFile(dataFile);
 	}
-	
+
 	delete dataFiles;
 }
 
