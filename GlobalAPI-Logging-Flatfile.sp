@@ -17,8 +17,6 @@
 
 // ====================== VARIABLES ========================== //
 
-bool gB_Core = false;
-
 // Paths
 char gC_HTTPLogs_Directory[PLATFORM_MAX_PATH];
 char gC_HTTPFailed_LogFile[PLATFORM_MAX_PATH];
@@ -54,30 +52,9 @@ public void OnPluginStart()
 {
 	BuildPath(Path_SM, gC_HTTPLogs_Directory, sizeof(gC_HTTPLogs_Directory), LOGS_PATH);
 
-	if (!CreateDirectoryIfNotExist(gC_HTTPLogs_Directory))
+	if (!TryCreateDirectory(gC_HTTPLogs_Directory))
 	{
-		SetFailState("[%s] Failed to create directory %s", PLUGIN_NAME, gC_HTTPLogs_Directory);
-	}
-}
-
-public void OnAllPluginsLoaded()
-{
-	gB_Core = LibraryExists("GlobalAPI");
-}
-
-public void OnLibraryAdded(const char[] name)
-{
-	if (StrEqual(name, "GlobalAPI"))
-	{
-		gB_Core = true;
-	}
-}
-
-public void OnLibraryRemoved(const char[] name)
-{
-	if (StrEqual(name, "GlobalAPI"))
-	{
-		gB_Core = false;
+		SetFailState("Failed to create directory", gC_HTTPLogs_Directory);
 	}
 }
 

@@ -12,10 +12,6 @@
 
 #pragma newdecls required
 
-// ====================== VARIABLES ========================== //
-
-bool gB_Core = false;
-
 // ====================== PLUGIN INFO ======================== //
 
 public Plugin myinfo =
@@ -34,34 +30,13 @@ public void OnPluginStart()
 	char path[PLATFORM_MAX_PATH];
 	BuildPath(Path_SM, path, sizeof(path), DATA_PATH);
 
-	if (!CreateDirectoryIfNotExist(path))
+	if (!TryCreateDirectory(path))
 	{
-		SetFailState("[%s] Failed to create directory [%s]", PLUGIN_NAME, path);
+		SetFailState("Failed to create directory %s", path);
 	}
 
 	// TODO: Rethink this?
 	CreateTimer(30.0, CheckForRequests, _, TIMER_REPEAT);
-}
-
-public void OnAllPluginsLoaded()
-{
-	gB_Core = LibraryExists("GlobalAPI");
-}
-
-public void OnLibraryAdded(const char[] name)
-{
-	if (StrEqual(name, "GlobalAPI"))
-	{
-		gB_Core = true;
-	}
-}
-
-public void OnLibraryRemoved(const char[] name)
-{
-	if (StrEqual(name, "GlobalAPI"))
-	{
-		gB_Core = false;
-	}
 }
 
 // ======================= MAIN CODE ========================= //
@@ -93,7 +68,7 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 
 	if (binaryFile == null)
 	{
-		LogError("[%s] Could not open or create binary file [%s]", PLUGIN_NAME, path);
+		LogError("Could not open or create binary file %s", path);
 		return;
 	}
 
@@ -129,7 +104,7 @@ public Action CheckForRequests(Handle timer)
 
 	if (dataFiles == null)
 	{
-		LogError("[%s] Could not open directory [%s]", PLUGIN_NAME, path);
+		LogError("Could not open directory %s", path);
 		delete dataFiles;
 		return;
 	}
@@ -150,7 +125,7 @@ public Action CheckForRequests(Handle timer)
 
 		if (binaryFile == null)
 		{
-			LogError("[%s] Could not open binary file [%s]", PLUGIN_NAME, path);
+			LogError("Could not open binary file %s", path);
 			return;
 		}
 
