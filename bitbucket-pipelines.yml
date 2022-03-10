@@ -8,7 +8,7 @@ definitions:
           - smdir/addons/sourcemod/plugins/GlobalAPI*.smx
         script:
           - apk update
-          - apk add wget libc6-compat libstdc++
+          - apk add wget gcompat libstdc++
           - mkdir smdir
           - wget -q -O - "http://sourcemod.net/latest.php?os=linux&version=1.10" | tar x -C ./smdir -vzf -
           - for file in *.sp; do ./smdir/addons/sourcemod/scripting/spcomp64 $file -i ./include; done;
@@ -43,7 +43,7 @@ pipelines:
   branches:
     '{master,dev}':
       - step: *compile
-  
+
   pull-requests:
     '*':
       - step: *compile
