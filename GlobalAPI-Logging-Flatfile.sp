@@ -1,8 +1,5 @@
 // ====================== DEFINITIONS ======================== //
 
-#define PLUGIN_NAME "GlobalAPI-Logging-Flatfile"
-#define PLUGIN_AUTHOR "Sikari"
-
 #define LOGS_PATH "logs/GlobalAPI"
 #define FAILEDLOG_NAME "GlobalAPI-failed"
 #define STARTEDLOG_NAME "GlobalAPI-started"
@@ -42,21 +39,16 @@ enum BuildLogType
 
 // ====================== PLUGIN INFO ======================== //
 
-public Plugin myinfo = 
+public Plugin myinfo =
 {
-	name = PLUGIN_NAME,
-	author = PLUGIN_AUTHOR,
+	name = "GlobalAPI-Logging-Flatfile",
+	author = "The KZ Global Team",
 	description = "Logging for GlobalAPI in Flatfile format",
-	version = GlobalAPI_Plugin_Version,
+	version = "1.0.0",
 	url = GlobalAPI_Plugin_Url
 };
 
 // ======================= MAIN CODE ========================= //
-
-public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
-{
-	RegPluginLibrary(PLUGIN_NAME);
-}
 
 public void OnPluginStart()
 {
@@ -70,19 +62,7 @@ public void OnPluginStart()
 
 public void OnAllPluginsLoaded()
 {
-	if (LibraryExists("GlobalAPI"))
-	{
-		gB_Core = true;
-		GlobalAPI_LoadModule(ModuleType_Logging);
-	}
-}
-
-public void OnPluginEnd()
-{
-	if (gB_Core)
-	{
-		GlobalAPI_LoadModule(ModuleType_Logging);
-	}
+	gB_Core = LibraryExists("GlobalAPI");
 }
 
 public void OnLibraryAdded(const char[] name)
@@ -117,7 +97,7 @@ public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData
 	hData.GetString("pluginName", pluginName, sizeof(pluginName));
 
 	char method[5];
-	FormatEx(method, sizeof(method), gC_HTTPMethodPhrases[hData.requestType]);
+	FormatEx(method, sizeof(method), gC_HTTPMethodPhrases[hData.RequestType]);
 
 	char logTag[128];
 	FormatTime(logTag, sizeof(logTag), "[GlobalAPI-Logging] %m/%d/%Y - %H:%M:%S");
@@ -126,15 +106,15 @@ public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData
 
 	hLogFile.WriteLine("%s (%s) API call failed!", logTag, pluginName);
 	hLogFile.WriteLine("%s  => Method: %s", logTag, method);
-	hLogFile.WriteLine("%s   => Status: %d", logTag, hData.status);
+	hLogFile.WriteLine("%s   => Status: %d", logTag, hData.Status);
 	hLogFile.WriteLine("%s    => URL: %s", logTag, url);
 
-	if (hData.requestType == GlobalAPIRequestType_GET)
+	if (hData.RequestType == GlobalAPIRequestType_GET)
 	{
 		hLogFile.WriteLine("%s      => Params: %s", logTag, params);
 	}
 
-	else if (hData.requestType == GlobalAPIRequestType_POST)
+	else if (hData.RequestType == GlobalAPIRequestType_POST)
 	{
 		hData.Encode(params, sizeof(params));
 		hLogFile.WriteLine("%s      => Body: %s", logTag, params);
@@ -159,7 +139,7 @@ public void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hDat
 	hData.GetString("pluginName", pluginName, sizeof(pluginName));
 
 	char method[5];
-	FormatEx(method, sizeof(method), gC_HTTPMethodPhrases[hData.requestType]);
+	FormatEx(method, sizeof(method), gC_HTTPMethodPhrases[hData.RequestType]);
 
 	char logTag[128];
 	FormatTime(logTag, sizeof(logTag), "[GlobalAPI-Logging] %m/%d/%Y - %H:%M:%S");
@@ -170,12 +150,12 @@ public void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hDat
 	hLogFile.WriteLine("%s  => Method: %s", logTag, method);
 	hLogFile.WriteLine("%s   => URL: %s", logTag, url);
 
-	if (hData.requestType == GlobalAPIRequestType_GET)
+	if (hData.RequestType == GlobalAPIRequestType_GET)
 	{
 		hLogFile.WriteLine("%s      => Params: %s", logTag, params);
 	}
 
-	else if (hData.requestType == GlobalAPIRequestType_POST)
+	else if (hData.RequestType == GlobalAPIRequestType_POST)
 	{
 		hData.Encode(params, sizeof(params));
 		hLogFile.WriteLine("%s      => Body: %s", logTag, params);
@@ -200,7 +180,7 @@ public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hDa
 	hData.GetString("pluginName", pluginName, sizeof(pluginName));
 
 	char method[5];
-	FormatEx(method, sizeof(method), gC_HTTPMethodPhrases[hData.requestType]);
+	FormatEx(method, sizeof(method), gC_HTTPMethodPhrases[hData.RequestType]);
 
 	char logTag[128];
 	FormatTime(logTag, sizeof(logTag), "[GlobalAPI-Logging] %m/%d/%Y - %H:%M:%S");
@@ -209,16 +189,16 @@ public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hDa
 
 	hLogFile.WriteLine("%s (%s) API call finished!", logTag, pluginName);
 	hLogFile.WriteLine("%s  => Method: %s", logTag, method);
-	hLogFile.WriteLine("%s   => Status: %d", logTag, hData.status);
-	hLogFile.WriteLine("%s    => Failure: %s", logTag, hData.failure ? "YES" : "NO");
+	hLogFile.WriteLine("%s   => Status: %d", logTag, hData.Status);
+	hLogFile.WriteLine("%s    => Failure: %s", logTag, hData.Failure ? "YES" : "NO");
 	hLogFile.WriteLine("%s     => URL: %s", logTag, url);
 
-	if (hData.requestType == GlobalAPIRequestType_GET)
+	if (hData.RequestType == GlobalAPIRequestType_GET)
 	{
 		hLogFile.WriteLine("%s      => Params: %s", logTag, params);
 	}
 
-	else if (hData.requestType == GlobalAPIRequestType_POST)
+	else if (hData.RequestType == GlobalAPIRequestType_POST)
 	{
 		hData.Encode(params, sizeof(params));
 		hLogFile.WriteLine("%s      => Body: %s", logTag, params);
@@ -236,10 +216,13 @@ public void BuildDateToLogs(BuildLogType type)
 
 	switch(type)
 	{
-		case BuildLog_Failed:Format(gC_HTTPFailed_LogFile, sizeof(gC_HTTPFailed_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, FAILEDLOG_NAME, date);
-		case BuildLog_Started:Format(gC_HTTPStarted_LogFile, sizeof(gC_HTTPStarted_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, STARTEDLOG_NAME, date);
-		case BuildLog_Finished:Format(gC_HTTPFinished_LogFile, sizeof(gC_HTTPFinished_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, FINISHEDLOG_NAME, date);
+		case BuildLog_Failed:
+            Format(gC_HTTPFailed_LogFile, sizeof(gC_HTTPFailed_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, FAILEDLOG_NAME, date);
+
+		case BuildLog_Started:
+            Format(gC_HTTPStarted_LogFile, sizeof(gC_HTTPStarted_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, STARTEDLOG_NAME, date);
+
+		case BuildLog_Finished:
+            Format(gC_HTTPFinished_LogFile, sizeof(gC_HTTPFinished_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, FINISHEDLOG_NAME, date);
 	}
 }
-
-// =========================================================== //

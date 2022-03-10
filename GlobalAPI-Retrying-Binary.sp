@@ -1,8 +1,5 @@
 // ====================== DEFINITIONS ======================== //
 
-#define PLUGIN_NAME "GlobalAPI-Retrying-Binary"
-#define PLUGIN_AUTHOR "Sikari"
-
 #define DATA_PATH "data/GlobalAPI-Retrying"
 #define DATA_FILE "retrying_{timestamp}_{gametick}.dat"
 
@@ -19,27 +16,18 @@
 
 bool gB_Core = false;
 
-// ======================= INCLUDES ========================== //
-
-// ...
-
 // ====================== PLUGIN INFO ======================== //
 
-public Plugin myinfo = 
+public Plugin myinfo =
 {
-	name = PLUGIN_NAME,
-	author = PLUGIN_AUTHOR,
+	name = "GlobalAPI-Retrying-Binary",
+	author = "The KZ Global Team",
 	description = "Retrying for GlobalAPI in binary format",
-	version = GlobalAPI_Plugin_Version,
+	version = "1.0.0",
 	url = GlobalAPI_Plugin_Url
 };
 
 // =========================================================== //
-
-public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
-{
-	RegPluginLibrary(PLUGIN_NAME);
-}
 
 public void OnPluginStart()
 {
@@ -50,26 +38,14 @@ public void OnPluginStart()
 	{
 		SetFailState("[%s] Failed to create directory [%s]", PLUGIN_NAME, path);
 	}
-	
-	// This is not the final solution!!!!!
+
+	// TODO: Rethink this?
 	CreateTimer(30.0, CheckForRequests, _, TIMER_REPEAT);
 }
 
 public void OnAllPluginsLoaded()
 {
-	if (LibraryExists("GlobalAPI"))
-	{
-		gB_Core = true;
-		GlobalAPI_LoadModule(ModuleType_Retrying);
-	}
-}
-
-public void OnPluginEnd()
-{
-	if (gB_Core)
-	{
-		GlobalAPI_UnloadModule(ModuleType_Retrying);
-	}
+	gB_Core = LibraryExists("GlobalAPI");
 }
 
 public void OnLibraryAdded(const char[] name)
@@ -92,7 +68,7 @@ public void OnLibraryRemoved(const char[] name)
 
 public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
 {
-	if (hData.requestType == GlobalAPIRequestType_POST)
+	if (hData.RequestType == GlobalAPIRequestType_POST)
 	{
 		SaveRequestAsBinary(hData);
 	}
@@ -102,10 +78,10 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 {
 	char szTimestamp[32];
 	IntToString(GetTime(), szTimestamp, sizeof(szTimestamp));
-	
+
 	char szGameTime[32];
 	FloatToString(GetEngineTime(), szGameTime, sizeof(szGameTime));
-	
+
 	char dataFile[PLATFORM_MAX_PATH] = DATA_FILE;
 	ReplaceString(dataFile, sizeof(dataFile), "{gametick}", szGameTime);
 	ReplaceString(dataFile, sizeof(dataFile), "{timestamp}", szTimestamp);
@@ -122,24 +98,19 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 	}
 
 	// Start preparing data
-	int bodyLength = hData.bodyLength;
-	
+	int bodyLength = hData.BodyLength;
+
 	char url[GlobalAPI_Max_BaseUrl_Length];
 	hData.GetString("url", url, sizeof(url));
-
-	char plugin[GlobalAPI_Max_PluginName_Length];
-	hData.GetString("pluginName", plugin, sizeof(plugin));
 
 	char[] params = new char[bodyLength];
 	hData.Encode(params, bodyLength);
 
-	int requestType = hData.requestType;
-	bool keyRequired = hData.keyRequired;
+	int requestType = hData.RequestType;
+	bool keyRequired = hData.KeyRequired;
 
 	binaryFile.WriteInt16(strlen(url));
 	binaryFile.WriteString(url, false);
-	binaryFile.WriteInt8(strlen(plugin));
-	binaryFile.WriteString(plugin, false);
 	binaryFile.WriteInt32(strlen(params));
 	binaryFile.WriteString(params, false);
 	binaryFile.WriteInt8(keyRequired);
@@ -190,22 +161,17 @@ public Action CheckForRequests(Handle timer)
 		binaryFile.ReadString(url, length, length);
 		url[length] = '\0';
 
-		binaryFile.ReadInt8(length);
-		char[] plugin = new char[length + 1];
-		binaryFile.ReadString(plugin, length, length);
-		plugin[length] = '\0';
-
 		binaryFile.ReadInt32(length);
 		char[] params = new char[length + 1];
 		binaryFile.ReadString(params, length, length);
 		params[length] = '\0';
-		
+
 		bool keyRequired;
 		binaryFile.ReadInt8(keyRequired);
-		
+
 		int requestType;
 		binaryFile.ReadInt8(requestType);
-		
+
 		int bodyLength;
 		binaryFile.ReadInt32(bodyLength);
 
@@ -213,17 +179,17 @@ public Action CheckForRequests(Handle timer)
 		binaryFile.ReadInt32(timestamp);
 		binaryFile.Close();
 
-		RetryRequest(url, plugin, params, keyRequired, requestType, bodyLength);
+		RetryRequest(url, params, keyRequired, requestType, bodyLength);
 		DeleteFile(dataFile);
 	}
-	
+
 	delete dataFiles;
 }
 
-public void RetryRequest(char[] url, char[] plugin, char[] params, bool keyRequired, int requestType, int bodyLength)
+public void RetryRequest(char[] url, char[] params, bool keyRequired, int requestType, int bodyLength)
 {
 	// Pack everything into GlobalAPI plugin friendly format
-	GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
+	GlobalAPIRequestData hData = new GlobalAPIRequestData(GetMyHandle());
 
 	hData.AddUrl(url);
 	hData.Decode(params);
@@ -231,15 +197,13 @@ public void RetryRequest(char[] url, char[] plugin, char[] params, bool keyRequi
 	// These are set to null until
 	// We have a reliable way of retrieving
 	// The handles from the original plugin
-	hData.data = INVALID_HANDLE;
-	hData.callback = INVALID_HANDLE;
+	hData.Data = INVALID_HANDLE;
+	hData.Callback = INVALID_HANDLE;
 
-	hData.isRetried = true;
-	hData.bodyLength = bodyLength;
-	hData.keyRequired = keyRequired;
-	hData.requestType = requestType;
+	hData.IsRetried = true;
+	hData.BodyLength = bodyLength;
+	hData.KeyRequired = keyRequired;
+	hData.RequestType = requestType;
 
 	GlobalAPI_SendRequest(hData);
 }
-
-// =========================================================== //
