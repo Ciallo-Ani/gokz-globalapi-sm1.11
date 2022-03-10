@@ -65,3 +65,30 @@ stock void GetMapFullPath(char[] buffer, int maxlength)
 
     Format(buffer, maxlength, "maps/%s.bsp", mapPath);
 }
+
+// TODO: Docs
+stock bool TryCreateDirectory(char directory[PLATFORM_MAX_PATH], bool isSmPath = true)
+{
+	char fullPath[PLATFORM_MAX_PATH];
+	if (!isSmPath)
+	{
+		fullPath = directory;
+	}
+	else
+	{
+		BuildPath(Path_SM, fullPath, sizeof(fullPath), directory);
+	}
+
+	if (DirExists(fullPath))
+	{
+		return true;
+	}
+
+	if (!CreateDirectory(fullPath, 511))
+	{
+		LogError("Failed to create directory '%s'!", fullPath);
+		return false;
+	}
+
+	return true;
+}
