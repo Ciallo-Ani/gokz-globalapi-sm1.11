@@ -61,17 +61,20 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	RegPluginLibrary("GlobalAPI");
+    RegPluginLibrary("GlobalAPI");
 
-	CreateConvars();
-	CreateNatives();
-	CreateForwards();
-	CreateCommands();
+    CreateConvars();
+    CreateNatives();
+    CreateForwards();
+    CreateCommands();
 
-	TryCreateDirectory(DATA_DIR);
-	TryCreateDirectory(CONFIG_DIR, false);
+    char dataDir[PLATFORM_MAX_PATH];
+    BuildPath(Path_SM, dataDir, sizeof(dataDir), "%s", DATA_DIR);
 
-	// TODO: Create empty apikey file?
+    TryCreateDirectory(dataDir);
+    TryCreateDirectory(CONFIG_DIR);
+
+    // TODO: Create empty apikey file?
 }
 
 public void OnPluginStart()

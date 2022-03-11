@@ -42,7 +42,7 @@ public Plugin myinfo =
 	name = "GlobalAPI-Logging-Flatfile",
 	author = "The KZ Global Team",
 	description = "Logging for GlobalAPI in Flatfile format",
-	version = "1.0.0",
+	version = GlobalAPI_Plugin_Version,
 	url = GlobalAPI_Plugin_Url
 };
 
@@ -50,11 +50,11 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	BuildPath(Path_SM, gC_HTTPLogs_Directory, sizeof(gC_HTTPLogs_Directory), LOGS_PATH);
+	BuildPath(Path_SM, gC_HTTPLogs_Directory, sizeof(gC_HTTPLogs_Directory), "%s", LOGS_PATH);
 
 	if (!TryCreateDirectory(gC_HTTPLogs_Directory))
 	{
-		SetFailState("Failed to create directory", gC_HTTPLogs_Directory);
+		SetFailState("Failed to create directory %s", gC_HTTPLogs_Directory);
 	}
 }
 

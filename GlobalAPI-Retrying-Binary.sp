@@ -19,7 +19,7 @@ public Plugin myinfo =
 	name = "GlobalAPI-Retrying-Binary",
 	author = "The KZ Global Team",
 	description = "Retrying for GlobalAPI in binary format",
-	version = "1.0.0",
+	version = GlobalAPI_Plugin_Version,
 	url = GlobalAPI_Plugin_Url
 };
 
@@ -28,14 +28,13 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
 	char path[PLATFORM_MAX_PATH];
-	BuildPath(Path_SM, path, sizeof(path), DATA_PATH);
+	BuildPath(Path_SM, path, sizeof(path), "%s", DATA_PATH);
 
 	if (!TryCreateDirectory(path))
 	{
 		SetFailState("Failed to create directory %s", path);
 	}
 
-	// TODO: Rethink this?
 	CreateTimer(30.0, CheckForRequests, _, TIMER_REPEAT);
 }
 
