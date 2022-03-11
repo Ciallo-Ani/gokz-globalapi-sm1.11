@@ -74,9 +74,9 @@ stock bool TryCreateDirectory(char directory[PLATFORM_MAX_PATH])
 		return true;
 	}
 
-	if (!CreateDirectory(fullPath, 511))
+	if (!CreateDirectory(directory, 511))
 	{
-		LogError("Failed to create directory %s", fullPath);
+		LogError("Failed to create directory %s", directory);
 		return false;
 	}
 
