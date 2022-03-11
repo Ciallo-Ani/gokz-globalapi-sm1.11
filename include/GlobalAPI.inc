@@ -13,7 +13,7 @@
 #define DEFAULT_FLOAT -1.0
 #define DEFAULT_BOOL view_as<bool>(-1)
 
-#define GlobalAPI_Plugin_Version "2.0.2"
+#define GlobalAPI_Plugin_Version "2.0.3"
 #define GlobalAPI_Plugin_Desc "Plugin helper for GlobalAPI Production & Staging"
 #define GlobalAPI_Plugin_Url "https://bitbucket.org/kztimerglobalteam/GlobalAPI-SMPlugin"
 #define GlobalAPI_Plugin_NameVersion "GlobalAPI Plugin " ... GlobalAPI_Plugin_Version
