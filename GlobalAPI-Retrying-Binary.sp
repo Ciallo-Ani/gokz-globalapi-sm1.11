@@ -104,7 +104,6 @@ public Action CheckForRequests(Handle timer)
     if (dataFiles == null)
     {
         LogError("Could not open directory %s", path);
-        delete dataFiles;
         return;
     }
 
