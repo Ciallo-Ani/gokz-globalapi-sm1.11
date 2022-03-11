@@ -1,9 +1,7 @@
 // ====================== DEFINITIONS ======================== //
 
 #define DATA_DIR "data/GlobalAPI"
-#define CONFIG_DIR "cfg/sourcemod/GlobalAPI"
-
-#define APIKEY_PATH "cfg/sourcemod/GlobalAPI/GlobalAPI-key.cfg"
+#define APIKEY_PATH "cfg/sourcemod/globalapi-key.cfg"
 
 // =========================================================== //
 
@@ -72,7 +70,6 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
     BuildPath(Path_SM, dataDir, sizeof(dataDir), "%s", DATA_DIR);
 
     TryCreateDirectory(dataDir);
-    TryCreateDirectory(CONFIG_DIR);
 
     // TODO: Create empty apikey file?
 }
@@ -86,7 +83,7 @@ public void OnPluginStart()
 	sourcemodCvar.GetString(gC_SourcemodVersion, sizeof(gC_SourcemodVersion));
 
 	gB_usingAPIKey = ReadAPIKey();
-	AutoExecConfig(true, "GlobalAPI", "sourcemod/GlobalAPI");
+	AutoExecConfig(true, "globalapi-convars");
 }
 
 public void OnMapStart()
