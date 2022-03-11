@@ -10,6 +10,7 @@
 
 // ====================== FORMATTING ========================= //
 
+#pragma dynamic 131072
 #pragma newdecls required
 
 // ====================== PLUGIN INFO ======================== //
