@@ -1,7 +1,6 @@
 // ====================== DEFINITIONS ======================== //
 
 #define DATA_DIR "data/GlobalAPI"
-#define APIKEY_PATH "cfg/sourcemod/globalapi-key.cfg"
 
 // =========================================================== //
 
