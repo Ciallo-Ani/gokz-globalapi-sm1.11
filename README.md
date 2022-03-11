@@ -13,3 +13,4 @@ This is a complete rewrite (v2) of [GlobalAPI plugin](https://bitbucket.org/kzti
 2. Download [the latest release](https://bitbucket.org/kztimerglobalteam/globalapi-smplugin/downloads/GlobalAPI-latest.zip).
 3. Extract the release into `/csgo`.
 4. Optional, but recommended: Place your API key into `cfg/sourcemod/globalapi-key.cfg`.
+    - `addons/sourcemod/configs/globalapi-key.cfg` is also a valid location if you need it.
