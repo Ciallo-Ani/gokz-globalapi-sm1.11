@@ -107,8 +107,8 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 
         while (!srcFile.EndOfFile())
         {
-            int readCount = ReadFile(srcFile, buffer, sizeof(buffer), 1);
-            WriteFile(destFile, buffer, readCount, 1);
+            int readCount = srcFile.Read(buffer, sizeof(buffer), 1);
+            destFile.Write(buffer, readCount, 1);
         }
 
         delete srcFile;
