@@ -292,6 +292,11 @@ methodmap GlobalAPIRequestData < JSON_Object
         }
     }
 
+    public void GetBodyFile(char[] buffer, int maxlength)
+    {
+        this.GetString("bodyFile", buffer, maxlength);
+    }
+
    /**
      * Adds a number to the request data
      *
