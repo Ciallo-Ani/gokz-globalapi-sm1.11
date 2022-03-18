@@ -92,7 +92,6 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
 
         BuildPath(Path_SM, bodyFilePath, sizeof(bodyFilePath), "%s/files/%s", DATA_PATH, dataFile);
 
-        // Assume file body
         File srcFile = OpenFile(srcFilePath, "rb");
         File destFile = OpenFile(bodyFilePath, "wb");
 

@@ -56,9 +56,9 @@ methodmap GlobalAPIRequestData < JSON_Object
    /**
      * Sets a key as default
      *
-     * @note                        This sets them as "Handle" type
-     * @note                        - See GlobalAPI.inc for default values
-     * @param key                Key to set as default
+     * @note                This sets them as "Handle" type
+     * @note                See GlobalAPI.inc for default values
+     * @param key           Key to set as default
      * @noreturn
      */
     public void SetDefault(char[] key)
@@ -70,7 +70,7 @@ methodmap GlobalAPIRequestData < JSON_Object
    /**
      * Sets url to the request data
      *
-     * @param url                Url to set
+     * @param url           Url to set
      * @noreturn
      */
     public void AddUrl(char[] url)
@@ -82,7 +82,7 @@ methodmap GlobalAPIRequestData < JSON_Object
    /**
      * Sets endpoint to the request data
      *
-     * @param endpoint            Endpoint to set
+     * @param endpoint      Endpoint to set
      * @noreturn
      */
     public void AddEndpoint(char[] endpoint)
@@ -94,8 +94,8 @@ methodmap GlobalAPIRequestData < JSON_Object
    /**
     * Sets body file path to the request data
     *
-    * @note                        Path to file with data to be posted
-    * @param path                Body file (path) to set
+    * @note                 Path to file with data to be posted
+    * @param path           Body file (path) to set
     * @noreturn
     */
     public void AddBodyFile(char[] path)
@@ -107,8 +107,8 @@ methodmap GlobalAPIRequestData < JSON_Object
    /**
     * Sets data file path to the request data
     *
-    * @note                        Path for downloaded files
-    * @param path                Data path to set
+    * @note                 Path for downloaded files
+    * @param path           Data path to set
     * @noreturn
     */
     public void AddDataPath(char[] path)
@@ -292,6 +292,13 @@ methodmap GlobalAPIRequestData < JSON_Object
         }
     }
 
+    /**
+     * Gets the body filepath from the request data
+     *
+     * @param buffer        Buffer to store the result in
+     * @param maxlength     Maxlength of the buffer
+     * @noreturn
+     */
     public void GetBodyFile(char[] buffer, int maxlength)
     {
         this.GetString("bodyFile", buffer, maxlength);
@@ -300,10 +307,10 @@ methodmap GlobalAPIRequestData < JSON_Object
    /**
      * Adds a number to the request data
      *
-     * @note                        Default values are added as "defaults"
-     * @note                        See GlobalAPI.inc for the default values
-     * @param key                Key name to set
-     * @param value                Value of the key
+     * @note                Default values are added as "defaults"
+     * @note                See GlobalAPI.inc for the default values
+     * @param key           Key name to set
+     * @param value         Value of the key
      * @noreturn
      */
     public void AddNum(char[] key, int value)
@@ -321,10 +328,10 @@ methodmap GlobalAPIRequestData < JSON_Object
    /**
      * Adds a float to the request data
      *
-     * @note                        Default values are added as "defaults"
-     * @note                        See GlobalAPI.inc for the default values
-     * @param key                Key name to set
-     * @param value                Value of the key
+     * @note                Default values are added as "defaults"
+     * @note                See GlobalAPI.inc for the default values
+     * @param key           Key name to set
+     * @param value         Value of the key
      * @noreturn
      */
     public void AddFloat(char[] key, float value)
@@ -342,10 +349,10 @@ methodmap GlobalAPIRequestData < JSON_Object
    /**
      * Adds a string to the request data
      *
-     * @note                        Default values are added as "defaults"
-     * @note                        See GlobalAPI.inc for the default values
-     * @param key                Key name to set
-     * @param value                Value of the key
+     * @note                Default values are added as "defaults"
+     * @note                See GlobalAPI.inc for the default values
+     * @param key           Key name to set
+     * @param value         Value of the key
      * @noreturn
      */
     public void AddString(char[] key, char[] value)
@@ -363,10 +370,10 @@ methodmap GlobalAPIRequestData < JSON_Object
    /**
      * Adds a boolean to the request data
      *
-     * @note                        Default values are added as "defaults"
-     * @note                        See GlobalAPI.inc for the default values
-     * @param key                Key name to set
-     * @param value                Value of the key
+     * @note                Default values are added as "defaults"
+     * @note                See GlobalAPI.inc for the default values
+     * @param key           Key name to set
+     * @param value         Value of the key
      * @noreturn
      */
     public void AddBool(char[] key, bool value)
@@ -384,10 +391,10 @@ methodmap GlobalAPIRequestData < JSON_Object
    /**
      * Adds integer array to the request data
      *
-     * @note                        Max length <= 0 are added as defaults
-     * @param key                Key name to set
-     * @param value                Values (array) of the key
-     * @param maxlength            Max length of the values array
+     * @note                Max length <= 0 are added as defaults
+     * @param key           Key name to set
+     * @param value         Values (array) of the key
+     * @param maxlength     Max length of the values array
      * @noreturn
      */
     public void AddIntArray(char[] key, int[] value, int maxlength)
@@ -412,9 +419,9 @@ methodmap GlobalAPIRequestData < JSON_Object
    /**
      * Adds string array to the request data
      *
-     * @note                        Item count <= 0 are added as defaults
-     * @param key                Key name to set
-     * @param itemCount            Amount of strings in the array
+     * @note                Item count <= 0 are added as defaults
+     * @param key           Key name to set
+     * @param itemCount     Amount of strings in the array
      * @noreturn
      */
     public void AddStringArray(char[] key, char[][] value, int itemCount)
@@ -439,9 +446,9 @@ methodmap GlobalAPIRequestData < JSON_Object
    /**
      * Converts all of the request data into a query string representation
      *
-     * @note                        This ignores "hidden" keys
-     * @param queryString        Buffer to store the result in
-     * @param maxlength            Max length of the buffer
+     * @note                    This ignores "hidden" keys
+     * @param queryString       Buffer to store the result in
+     * @param maxlength         Max length of the buffer
      * @noreturn
      */
     public void ToString(char[] queryString, int maxlength)
