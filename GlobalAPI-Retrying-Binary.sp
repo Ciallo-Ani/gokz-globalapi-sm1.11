@@ -121,17 +121,14 @@ public void SaveRequestAsBinary(GlobalAPIRequestData hData)
     char params[8192];
     hData.Encode(params, sizeof(params));
 
-    int requestType = hData.RequestType;
-    bool keyRequired = hData.KeyRequired;
-
     binaryFile.WriteInt32(MAGIC_BYTES);
     binaryFile.WriteInt8(FORMAT_VERSION);
     binaryFile.WriteInt16(strlen(url));
     binaryFile.WriteString(url, false);
     binaryFile.WriteInt32(strlen(params));
     binaryFile.WriteString(params, false);
-    binaryFile.WriteInt8(keyRequired);
-    binaryFile.WriteInt8(requestType);
+    binaryFile.WriteInt8(hData.KeyRequired);
+    binaryFile.WriteInt8(hData.RequestType);
     binaryFile.WriteInt32(hData.BodyLength);
     binaryFile.WriteInt32(StringToInt(szTimestamp));
     binaryFile.WriteInt16(strlen(bodyFilePath));
@@ -244,7 +241,7 @@ public GlobalAPIRequestData Deserialize(char filePath[PLATFORM_MAX_PATH])
     bodyFilePath[length] = '\0';
 
     hData.AddUrl(url);
-    hData.AddUrl(params);
+    hData.Decode(params);
 
     // These are set to null until
     // We have a reliable way of retrieving
