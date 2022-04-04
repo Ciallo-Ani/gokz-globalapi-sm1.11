@@ -152,16 +152,24 @@ public Action CheckForRequests(Handle timer)
     char dataFile[PLATFORM_MAX_PATH];
     FileType fileType = FileType_Unknown;
 
+    bool gotFile = false;
+
     while (dataFiles.GetNext(dataFile, sizeof(dataFile), fileType))
     {
         if (fileType == FileType_File)
         {
             Format(dataFile, sizeof(dataFile), "%s/%s", path, dataFile);
+            gotFile = true;
             break;
         }
     }
 
     delete dataFiles;
+
+    if (!gotFile)
+    {
+        return;
+    }
 
     GlobalAPIRequestData requestData = Deserialize(dataFile);
     if (requestData == null)
@@ -241,7 +249,10 @@ public GlobalAPIRequestData Deserialize(char filePath[PLATFORM_MAX_PATH])
     bodyFilePath[length] = '\0';
 
     hData.AddUrl(url);
-    hData.Decode(params);
+    hData.Merge(json_decode(params));
+
+    JSON_Object hParams = json_decode(params);
+    hData.Merge(hParams);
 
     // These are set to null until
     // We have a reliable way of retrieving
@@ -258,6 +269,8 @@ public GlobalAPIRequestData Deserialize(char filePath[PLATFORM_MAX_PATH])
     {
         hData.AddBodyFile(bodyFilePath);
     }
+
+    json_cleanup_and_delete(hParams);
 
     delete file;
     return hData;
