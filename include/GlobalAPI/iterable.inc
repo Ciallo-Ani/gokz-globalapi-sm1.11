@@ -14,7 +14,7 @@
 /*
     Helper methodmap for JSON_Object arrays
 */
-methodmap APIIterable < JSON_Object
+methodmap APIIterable < JSON_Array
 {
    /**
     * Creates a new APIIterable
@@ -22,12 +22,13 @@ methodmap APIIterable < JSON_Object
     * @param hItems     JSON_Object array handle
     * @return           A new APIIterable handle
     */
-    public APIIterable(JSON_Object hItems)
+    public APIIterable(JSON_Array hItems)
     {
         if (hItems.HasKey("result"))
         {
             return view_as<APIIterable>(hItems.GetObject("result"));
         }
+
         return view_as<APIIterable>(hItems);
     }
 
@@ -48,7 +49,7 @@ methodmap APIIterable < JSON_Object
     */
     public JSON_Object GetById(int index)
     {
-        return this.GetObjectIndexed(index);
+        return this.GetObject(index);
     }
 }
 

@@ -66,28 +66,25 @@ void CallForward_NoResponse(GlobalAPIRequestData hData)
     CallForward(hFwd, null, hData, data);
 
     // Cleanup
-    if (hData != null)
-    {
-        hData.Cleanup();
-    }
+    json_cleanup_and_delete(hData);
 
     delete hFwd;
-    delete hData;
 }
 
 GlobalAPIRequestData CreateRequestData(Handle plugin, Function callback, any data)
 {
     GlobalAPIRequestData hData = new GlobalAPIRequestData(plugin);
 
+    Handle hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell);
+
     if (callback != INVALID_FUNCTION)
     {
-        Handle hFwd = CreateForward(ET_Ignore, Param_Cell, Param_Cell, Param_Cell);
         AddToForward(hFwd, plugin, callback);
-
-        hData.Callback = hFwd;
     }
 
     hData.Data = data;
+    hData.Callback = hFwd;
+
     return hData;
 }
 

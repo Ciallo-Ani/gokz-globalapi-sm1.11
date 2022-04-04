@@ -1,7 +1,7 @@
 public void Global_HTTP_Started(Handle request, GlobalAPIRequestData hData)
 {
     hData.SetFloat("_requestStartTime", GetEngineTime());
-    hData.SetKeyHidden("_requestStartTime", true);
+    hData.SetHidden("_requestStartTime", true);
 
     Call_Global_OnRequestStarted(request, hData);
 }
@@ -68,7 +68,6 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
         Handle request = hData.GetHandle("_requestHandle");
         SteamWorks_WriteHTTPResponseBodyToFile(request, path);
     }
-
     else
     {
         hJson = json_decode(response);
@@ -83,12 +82,10 @@ public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
     CallForward(hFwd, hJson, hData, data);
 
     // Cleanup
-    if (hJson != null) hJson.Cleanup();
-    if (hData != null) hData.Cleanup();
+    json_cleanup_and_delete(hJson);
+    json_cleanup_and_delete(hData);
 
     delete hFwd;
-    delete hJson;
-    delete hData;
 }
 
 // =====[ PRIVATE ]=====

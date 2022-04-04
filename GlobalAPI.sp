@@ -81,7 +81,9 @@ public void OnPluginStart()
     ConVar sourcemodCvar = FindConVar("sourcemod_Version");
     sourcemodCvar.GetString(gC_SourcemodVersion, sizeof(gC_SourcemodVersion));
 
+    gC_baseUrl = GlobalAPI_BaseUrl;
     gB_usingAPIKey = ReadAPIKey();
+
     AutoExecConfig(true, "globalapi-convars");
 }
 
