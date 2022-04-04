@@ -13,7 +13,7 @@ bool HTTPPost(GlobalAPIRequestData hData)
 
     if (request == null)
     {
-        delete hData;
+        json_cleanup_and_delete(hData);
         delete request;
         return false;
     }
