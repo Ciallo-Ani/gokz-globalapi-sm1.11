@@ -257,7 +257,6 @@ public GlobalAPIRequestData Deserialize(char filePath[PLATFORM_MAX_PATH])
     bodyFilePath[length] = '\0';
 
     hData.AddUrl(url);
-    hData.Merge(json_decode(params));
 
     JSON_Object hParams = json_decode(params);
     hData.Merge(hParams);
