@@ -54,10 +54,18 @@ public void OnPluginStart()
 
 public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
 {
-    if (hData.RequestType == GlobalAPIRequestType_POST)
+    if (IsRetryableRequest(hData))
     {
         SaveRequestAsBinary(hData);
     }
+}
+
+bool IsRetryableRequest(GlobalAPIRequestData hData)
+{
+    int status = hData.Status;
+
+    return hData.RequestType == GlobalAPIRequestType_POST
+        && (status == 0 || status == 429 || status >= 500);
 }
 
 public void SaveRequestAsBinary(GlobalAPIRequestData hData)
