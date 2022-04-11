@@ -1,10 +1,3 @@
-// ====================== DEFINITIONS ======================== //
-
-#define LOGS_PATH "logs/GlobalAPI"
-#define FAILEDLOG_NAME "GlobalAPI-failed"
-#define STARTEDLOG_NAME "GlobalAPI-started"
-#define FINISHEDLOG_NAME "GlobalAPI-finished"
-
 // =========================================================== //
 
 #include <GlobalAPI>
@@ -15,25 +8,41 @@
 #pragma dynamic 131072
 #pragma newdecls required
 
-// ====================== VARIABLES ========================== //
-
-// Paths
-char gC_HTTPLogs_Directory[PLATFORM_MAX_PATH];
-char gC_HTTPFailed_LogFile[PLATFORM_MAX_PATH];
-char gC_HTTPStarted_LogFile[PLATFORM_MAX_PATH];
-char gC_HTTPFinished_LogFile[PLATFORM_MAX_PATH];
-
-// Phrases
-char gC_HTTPMethodPhrases[][] = { "GET", "POST" };
-
 // ======================= ENUMS ============================= //
 
-enum BuildLogType
+enum LogType
 {
-    BuildLog_Failed,
-    BuildLog_Started,
-    BuildLog_Finished
-}
+    LogType_Failed,
+    LogType_Started,
+    LogType_Finished
+};
+
+enum LogLevel
+{
+    LogLevel_None = 0,
+    LogLevel_Error,
+    LogLevel_Info,
+    LogLevel_Debug
+};
+
+// ====================== VARIABLES ========================== //
+
+char gC_LogsDir[PLATFORM_MAX_PATH];
+
+ConVar gCV_LoggingLevel = null;
+
+static char gC_LogTypes[][] =
+{
+    "failed",
+    "started",
+    "finished"
+};
+
+static char gC_HTTPMethods[][] =
+{
+    "GET",
+    "POST"
+};
 
 // ====================== PLUGIN INFO ======================== //
 
@@ -50,105 +59,51 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-    BuildPath(Path_SM, gC_HTTPLogs_Directory, sizeof(gC_HTTPLogs_Directory), "%s", LOGS_PATH);
+    BuildPath(Path_SM, gC_LogsDir, sizeof(gC_LogsDir), "logs/GlobalAPI");
 
-    if (!TryCreateDirectory(gC_HTTPLogs_Directory))
+    if (!TryCreateDirectory(gC_LogsDir))
     {
-        SetFailState("Failed to create directory %s", gC_HTTPLogs_Directory);
+        SetFailState("Failed to create directory %s", gC_LogsDir);
     }
-}
 
-// =========================================================== //
+    gCV_LoggingLevel = CreateConVar("globalapi_logging_level", "1", "Logging level", _, true, 0.0, true, 3.0);
+
+    AutoExecConfig(true, "globalapi-logging");
+}
 
 public void GlobalAPI_OnRequestFailed(Handle request, GlobalAPIRequestData hData)
 {
-    BuildDateToLogs(BuildLog_Failed);
-
-    char params[GlobalAPI_Max_QueryParams_Length] = "-";
-    hData.ToString(params, sizeof(params));
-
-    char url[GlobalAPI_Max_BaseUrl_Length];
-    hData.GetString("url", url, sizeof(url));
-
-    char pluginName[GlobalAPI_Max_PluginName_Length];
-    hData.GetString("pluginName", pluginName, sizeof(pluginName));
-
-    char method[5];
-    FormatEx(method, sizeof(method), gC_HTTPMethodPhrases[hData.RequestType]);
-
-    char logTag[128];
-    FormatTime(logTag, sizeof(logTag), "[GlobalAPI-Logging] %m/%d/%Y - %H:%M:%S");
-
-    File hLogFile = OpenFile(gC_HTTPFailed_LogFile, "a+");
-
-    hLogFile.WriteLine("%s (%s) API call failed!", logTag, pluginName);
-    hLogFile.WriteLine("%s  => Method: %s", logTag, method);
-    hLogFile.WriteLine("%s   => Status: %d", logTag, hData.Status);
-    hLogFile.WriteLine("%s    => URL: %s", logTag, url);
-
-    if (hData.RequestType == GlobalAPIRequestType_GET)
+    if (IsLevelEnabled(LogLevel_Error))
     {
-        hLogFile.WriteLine("%s      => Params: %s", logTag, params);
+        DoLog(LogType_Failed, hData);
     }
-
-    else if (hData.RequestType == GlobalAPIRequestType_POST)
-    {
-        hData.Encode(params, sizeof(params));
-        hLogFile.WriteLine("%s      => Body: %s", logTag, params);
-    }
-
-    delete hLogFile;
 }
-
-// =========================================================== //
 
 public void GlobalAPI_OnRequestStarted(Handle request, GlobalAPIRequestData hData)
 {
-    BuildDateToLogs(BuildLog_Started);
-
-    char params[GlobalAPI_Max_QueryParams_Length] = "-";
-    hData.ToString(params, sizeof(params));
-
-    char url[GlobalAPI_Max_BaseUrl_Length];
-    hData.GetString("url", url, sizeof(url));
-
-    char pluginName[GlobalAPI_Max_PluginName_Length];
-    hData.GetString("pluginName", pluginName, sizeof(pluginName));
-
-    char method[5];
-    FormatEx(method, sizeof(method), gC_HTTPMethodPhrases[hData.RequestType]);
-
-    char logTag[128];
-    FormatTime(logTag, sizeof(logTag), "[GlobalAPI-Logging] %m/%d/%Y - %H:%M:%S");
-
-    File hLogFile = OpenFile(gC_HTTPStarted_LogFile, "a+");
-
-    hLogFile.WriteLine("%s (%s) API call started!", logTag, pluginName);
-    hLogFile.WriteLine("%s  => Method: %s", logTag, method);
-    hLogFile.WriteLine("%s   => URL: %s", logTag, url);
-
-    if (hData.RequestType == GlobalAPIRequestType_GET)
+    if (IsLevelEnabled(LogLevel_Debug))
     {
-        hLogFile.WriteLine("%s      => Params: %s", logTag, params);
+        DoLog(LogType_Started, hData);
     }
-
-    else if (hData.RequestType == GlobalAPIRequestType_POST)
-    {
-        hData.Encode(params, sizeof(params));
-        hLogFile.WriteLine("%s      => Body: %s", logTag, params);
-    }
-
-    delete hLogFile;
 }
-
-// =========================================================== //
 
 public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hData)
 {
-    BuildDateToLogs(BuildLog_Finished);
+    if (IsLevelEnabled(LogLevel_Debug))
+    {
+        DoLog(LogType_Finished, hData);
+    }
+}
 
-    char params[GlobalAPI_Max_QueryParams_Length] = "-";
-    hData.ToString(params, sizeof(params));
+// =========================================================== //
+
+void DoLog(LogType type, GlobalAPIRequestData hData)
+{
+    char logPath[PLATFORM_MAX_PATH];
+    GetLogFilePathForType(type, logPath);
+
+    char logPrefix[64];
+    FormatTime(logPrefix, sizeof(logPrefix), "%m/%d/%Y - %H:%M:%S");
 
     char url[GlobalAPI_Max_BaseUrl_Length];
     hData.GetString("url", url, sizeof(url));
@@ -156,50 +111,52 @@ public void GlobalAPI_OnRequestFinished(Handle request, GlobalAPIRequestData hDa
     char pluginName[GlobalAPI_Max_PluginName_Length];
     hData.GetString("pluginName", pluginName, sizeof(pluginName));
 
-    char method[5];
-    FormatEx(method, sizeof(method), gC_HTTPMethodPhrases[hData.RequestType]);
+    char method[5] = "N/A";
+    FormatEx(method, sizeof(method), gC_HTTPMethods[hData.RequestType]);
 
-    char logTag[128];
-    FormatTime(logTag, sizeof(logTag), "[GlobalAPI-Logging] %m/%d/%Y - %H:%M:%S");
+    File file = OpenFile(logPath, "a+");
 
-    File hLogFile = OpenFile(gC_HTTPFinished_LogFile, "a+");
+    file.WriteLine("%s HTTP %s %s", logPrefix, method, gC_LogTypes[type]);
+    file.WriteLine("%s - Callee: %s", logPrefix, pluginName);
+    file.WriteLine("%s - URL: %s", logPrefix, url);
 
-    hLogFile.WriteLine("%s (%s) API call finished!", logTag, pluginName);
-    hLogFile.WriteLine("%s  => Method: %s", logTag, method);
-    hLogFile.WriteLine("%s   => Status: %d", logTag, hData.Status);
-    hLogFile.WriteLine("%s    => Failure: %s", logTag, hData.Failure ? "YES" : "NO");
-    hLogFile.WriteLine("%s     => URL: %s", logTag, url);
+    if (type == LogType_Finished)
+    {
+        file.WriteLine("%s - Failure: %s", logPrefix, hData.Failure ? "YES" : "NO");
+    }
+
+    if (type == LogType_Finished || type == LogType_Failed)
+    {
+        file.WriteLine("%s - Status: %d", logPrefix, hData.Status);
+    }
 
     if (hData.RequestType == GlobalAPIRequestType_GET)
     {
-        hLogFile.WriteLine("%s      => Params: %s", logTag, params);
-    }
+        char params[GlobalAPI_Max_QueryParams_Length];
+        hData.ToString(params, sizeof(params));
 
+        file.WriteLine("%s - Query params: %s", logPrefix, params);
+    }
     else if (hData.RequestType == GlobalAPIRequestType_POST)
     {
-        hData.Encode(params, sizeof(params));
-        hLogFile.WriteLine("%s      => Body: %s", logTag, params);
+        char body[8192];
+        hData.Encode(body, sizeof(body));
+
+        file.WriteLine("%s - Request body: %s", logPrefix, body);
     }
 
-    delete hLogFile;
+    delete file;
 }
 
-// =========================================================== //
+bool IsLevelEnabled(LogLevel level)
+{
+    return gCV_LoggingLevel.IntValue >= view_as<int>(level);
+}
 
-public void BuildDateToLogs(BuildLogType type)
+void GetLogFilePathForType(LogType type, char buffer[PLATFORM_MAX_PATH])
 {
     char date[64];
     FormatTime(date, sizeof(date), "%Y%m%d");
 
-    switch(type)
-    {
-        case BuildLog_Failed:
-            Format(gC_HTTPFailed_LogFile, sizeof(gC_HTTPFailed_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, FAILEDLOG_NAME, date);
-
-        case BuildLog_Started:
-            Format(gC_HTTPStarted_LogFile, sizeof(gC_HTTPStarted_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, STARTEDLOG_NAME, date);
-
-        case BuildLog_Finished:
-            Format(gC_HTTPFinished_LogFile, sizeof(gC_HTTPFinished_LogFile), "%s/%s_%s.log", gC_HTTPLogs_Directory, FINISHEDLOG_NAME, date);
-    }
+    Format(buffer, sizeof(buffer), "%s/%s_%s.log", gC_LogsDir, gC_LogTypes[type], date);
 }
