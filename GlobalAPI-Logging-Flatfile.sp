@@ -111,23 +111,26 @@ void DoLog(LogType type, GlobalAPIRequestData hData)
     char pluginName[GlobalAPI_Max_PluginName_Length];
     hData.GetString("pluginName", pluginName, sizeof(pluginName));
 
+    char pluginVersion[GlobalAPI_Max_PluginVersion_Length];
+    hData.GetString("pluginVersion", pluginVersion, sizeof(pluginVersion));
+
     char method[5] = "N/A";
     FormatEx(method, sizeof(method), gC_HTTPMethods[hData.RequestType]);
 
     File file = OpenFile(logPath, "a+");
 
     file.WriteLine("%s HTTP %s %s", logPrefix, method, gC_LogTypes[type]);
-    file.WriteLine("%s - Callee: %s", logPrefix, pluginName);
-    file.WriteLine("%s - URL: %s", logPrefix, url);
+    file.WriteLine("%s  - Callee: %s (V.%s)", logPrefix, pluginName, pluginVersion);
+    file.WriteLine("%s  - URL: %s", logPrefix, url);
 
     if (type == LogType_Finished)
     {
-        file.WriteLine("%s - Failure: %s", logPrefix, hData.Failure ? "YES" : "NO");
+        file.WriteLine("%s  - Failure: %s", logPrefix, hData.Failure ? "YES" : "NO");
     }
 
     if (type == LogType_Finished || type == LogType_Failed)
     {
-        file.WriteLine("%s - Status: %d", logPrefix, hData.Status);
+        file.WriteLine("%s  - Status: %d", logPrefix, hData.Status);
     }
 
     if (hData.RequestType == GlobalAPIRequestType_GET)
@@ -137,7 +140,7 @@ void DoLog(LogType type, GlobalAPIRequestData hData)
 
         if (strlen(params) > 0)
         {
-            file.WriteLine("%s - Query params: %s", logPrefix, params);
+            file.WriteLine("%s  - Query params: %s", logPrefix, params);
         }
     }
     else if (hData.RequestType == GlobalAPIRequestType_POST)
@@ -147,7 +150,7 @@ void DoLog(LogType type, GlobalAPIRequestData hData)
 
         if (strlen(body) > 0)
         {
-            file.WriteLine("%s - Request body: %s", logPrefix, body);
+            file.WriteLine("%s  - Request body: %s", logPrefix, body);
         }
     }
 
