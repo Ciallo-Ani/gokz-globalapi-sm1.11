@@ -135,14 +135,20 @@ void DoLog(LogType type, GlobalAPIRequestData hData)
         char params[GlobalAPI_Max_QueryParams_Length];
         hData.ToString(params, sizeof(params));
 
-        file.WriteLine("%s - Query params: %s", logPrefix, params);
+        if (strlen(params) > 0)
+        {
+            file.WriteLine("%s - Query params: %s", logPrefix, params);
+        }
     }
     else if (hData.RequestType == GlobalAPIRequestType_POST)
     {
         char body[8192];
         hData.Encode(body, sizeof(body));
 
-        file.WriteLine("%s - Request body: %s", logPrefix, body);
+        if (strlen(body) > 0)
+        {
+            file.WriteLine("%s - Request body: %s", logPrefix, body);
+        }
     }
 
     delete file;
