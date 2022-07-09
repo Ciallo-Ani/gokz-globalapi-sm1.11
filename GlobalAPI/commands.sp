@@ -103,12 +103,16 @@ public Action Command_Info(int client, int args)
 
     delete errorMessages;
     delete usedArguments;
+
+    return Plugin_Handled;
 }
 
 public Action Command_ReloadAPIKey(int client, int args)
 {
     gB_usingAPIKey = ReadAPIKey();
     ReplyToCommand(client, "[GlobalAPI] API Key reloaded!");
+
+    return Plugin_Handled;
 }
 
 // =====[ PRIVATE ]=====

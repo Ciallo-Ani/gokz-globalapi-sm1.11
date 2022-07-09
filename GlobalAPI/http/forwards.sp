@@ -6,12 +6,12 @@ public void Global_HTTP_Started(Handle request, GlobalAPIRequestData hData)
     Call_Global_OnRequestStarted(request, hData);
 }
 
-public int Global_HTTP_Headers(Handle request, bool failure, GlobalAPIRequestData hData)
+public void Global_HTTP_Headers(Handle request, bool failure, GlobalAPIRequestData hData)
 {
     GlobalAPI_DebugMessage("HTTP Response headers received...");
 }
 
-public int Global_HTTP_Completed(Handle request, bool failure, bool requestSuccessful, EHTTPStatusCode statusCode, GlobalAPIRequestData hData)
+public void Global_HTTP_Completed(Handle request, bool failure, bool requestSuccessful, EHTTPStatusCode statusCode, GlobalAPIRequestData hData)
 {
     hData.Status = view_as<int>(statusCode);
     hData.Failure = (failure || !requestSuccessful || statusCode != k_EHTTPStatusCode200OK);
@@ -20,7 +20,7 @@ public int Global_HTTP_Completed(Handle request, bool failure, bool requestSucce
     Call_Global_OnRequestFinished(request, hData);
 }
 
-public int Global_HTTP_DataReceived(Handle request, bool failure, int offset, int bytesReceived, GlobalAPIRequestData hData)
+public void Global_HTTP_DataReceived(Handle request, bool failure, int offset, int bytesReceived, GlobalAPIRequestData hData)
 {
     GlobalAPI_DebugMessage("HTTP Response data received...");
 
@@ -49,7 +49,7 @@ public int Global_HTTP_DataReceived(Handle request, bool failure, int offset, in
     delete request;
 }
 
-public int Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
+public void Global_HTTP_Data(const char[] response, GlobalAPIRequestData hData)
 {
     GlobalAPI_DebugMessage("HTTP Response data...");
 

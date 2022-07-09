@@ -71,6 +71,8 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
     TryCreateDirectory(dataDir);
 
     // TODO: Create empty apikey file?
+
+    return APLRes_Success;
 }
 
 public void OnPluginStart()

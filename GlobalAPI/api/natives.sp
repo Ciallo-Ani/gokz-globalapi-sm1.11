@@ -81,7 +81,7 @@ public int Native_IsInit(Handle plugin, int numParams)
 public int Native_GetAPIKey(Handle plugin, int numParams)
 {
     int maxlength = GetNativeCell(2);
-    SetNativeString(1, gC_apiKey, maxlength);
+    return SetNativeString(1, gC_apiKey, maxlength);
 }
 
 // =========================================================== //

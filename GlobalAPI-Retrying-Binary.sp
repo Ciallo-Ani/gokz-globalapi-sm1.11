@@ -105,7 +105,7 @@ public Action CheckForRequests(Handle timer)
     if (dataFiles == null)
     {
         LogError("Could not open directory %s", path);
-        return;
+        return Plugin_Continue;
     }
 
     char dataFile[PLATFORM_MAX_PATH];
@@ -127,7 +127,7 @@ public Action CheckForRequests(Handle timer)
         if (binaryFile == null)
         {
             LogError("Could not open binary file %s", path);
-            return;
+            return Plugin_Continue;
         }
 
         int length;
@@ -158,6 +158,8 @@ public Action CheckForRequests(Handle timer)
         RetryRequest(url, params, keyRequired, requestType, bodyLength);
         DeleteFile(dataFile);
     }
+
+    return Plugin_Continue;
 }
 
 public void RetryRequest(char[] url, char[] params, bool keyRequired, int requestType, int bodyLength)

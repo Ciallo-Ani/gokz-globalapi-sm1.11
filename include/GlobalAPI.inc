@@ -9,6 +9,7 @@
 
 #define DEFAULT_DATA 0
 #define DEFAULT_INT -1
+#define DEFAULT_INT_ARRAY {-1}
 #define DEFAULT_STRING ""
 #define DEFAULT_FLOAT -1.0
 #define DEFAULT_BOOL view_as<bool>(-1)
@@ -664,11 +665,11 @@ native bool GlobalAPI_GetRecordsTopRecent(
 native bool GlobalAPI_GetRecordsTopWorldRecords(
     OnAPICallFinished callback = INVALID_FUNCTION,
     any data = DEFAULT_DATA,
-    int[] ids = DEFAULT_INT, int idsLength = DEFAULT_INT,
-    int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
-    int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
-    int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
-    int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
+    int[] ids = DEFAULT_INT_ARRAY, int idsLength = DEFAULT_INT,
+    int[] mapIds = DEFAULT_INT_ARRAY, int mapIdsLength = DEFAULT_INT,
+    int[] stages = DEFAULT_INT_ARRAY, int stagesLength = DEFAULT_INT,
+    int[] modeIds = DEFAULT_INT_ARRAY, int modeIdsLength = DEFAULT_INT,
+    int[] tickRates = DEFAULT_INT_ARRAY, int tickRatesLength = DEFAULT_INT,
     bool hasTeleports = DEFAULT_BOOL,
     char[] mapTag = DEFAULT_STRING,
     int offset = DEFAULT_INT,
@@ -756,11 +757,11 @@ native bool GlobalAPI_GetPlayerRanks(
     float ratingGreaterThan = DEFAULT_FLOAT,
     int finishesGreaterThan = DEFAULT_INT,
     const char[] steamId64List = DEFAULT_STRING,
-    int[] recordFilterIds = DEFAULT_INT, int recordFilterIdsLength = DEFAULT_INT,
-    int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
-    int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
-    int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
-    int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
+    int[] recordFilterIds = DEFAULT_INT_ARRAY, int recordFilterIdsLength = DEFAULT_INT,
+    int[] mapIds = DEFAULT_INT_ARRAY, int mapIdsLength = DEFAULT_INT,
+    int[] stages = DEFAULT_INT_ARRAY, int stagesLength = DEFAULT_INT,
+    int[] modeIds = DEFAULT_INT_ARRAY, int modeIdsLength = DEFAULT_INT,
+    int[] tickRates = DEFAULT_INT_ARRAY, int tickRatesLength = DEFAULT_INT,
     bool hasTeleports = DEFAULT_BOOL,
     int offset = DEFAULT_INT,
     int limit = DEFAULT_INT
@@ -789,11 +790,11 @@ native bool GlobalAPI_GetPlayerRanks(
 native bool GlobalAPI_GetRecordFilters(
     OnAPICallFinished callback = INVALID_FUNCTION,
     any data = DEFAULT_DATA,
-    int[] ids = DEFAULT_INT, int idsLength = DEFAULT_INT,
-    int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
-    int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
-    int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
-    int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
+    int[] ids = DEFAULT_INT_ARRAY, int idsLength = DEFAULT_INT,
+    int[] mapIds = DEFAULT_INT_ARRAY, int mapIdsLength = DEFAULT_INT,
+    int[] stages = DEFAULT_INT_ARRAY, int stagesLength = DEFAULT_INT,
+    int[] modeIds = DEFAULT_INT_ARRAY, int modeIdsLength = DEFAULT_INT,
+    int[] tickRates = DEFAULT_INT_ARRAY, int tickRatesLength = DEFAULT_INT,
     bool hasTeleports = DEFAULT_BOOL,
     bool isOverall = DEFAULT_BOOL,
     int offset = DEFAULT_INT,
@@ -823,11 +824,11 @@ native bool GlobalAPI_GetRecordFilters(
 native bool GlobalAPI_GetRecordFilterDistributions(
     OnAPICallFinished callback = INVALID_FUNCTION,
     any data = DEFAULT_DATA,
-    int[] ids = DEFAULT_INT, int idsLength = DEFAULT_INT,
-    int[] mapIds = DEFAULT_INT, int mapIdsLength = DEFAULT_INT,
-    int[] stages = DEFAULT_INT, int stagesLength = DEFAULT_INT,
-    int[] modeIds = DEFAULT_INT, int modeIdsLength = DEFAULT_INT,
-    int[] tickRates = DEFAULT_INT, int tickRatesLength = DEFAULT_INT,
+    int[] ids = DEFAULT_INT_ARRAY, int idsLength = DEFAULT_INT,
+    int[] mapIds = DEFAULT_INT_ARRAY, int mapIdsLength = DEFAULT_INT,
+    int[] stages = DEFAULT_INT_ARRAY, int stagesLength = DEFAULT_INT,
+    int[] modeIds = DEFAULT_INT_ARRAY, int modeIdsLength = DEFAULT_INT,
+    int[] tickRates = DEFAULT_INT_ARRAY, int tickRatesLength = DEFAULT_INT,
     bool hasTeleports = DEFAULT_BOOL,
     bool isOverall = DEFAULT_BOOL,
     int offset = DEFAULT_INT,
